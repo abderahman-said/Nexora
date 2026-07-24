@@ -1,219 +1,219 @@
-"use client";
+'use client';
 
-import { useEffect, useRef } from "react";
-import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { useEffect, useRef } from 'react';
+import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
 gsap.registerPlugin(ScrollTrigger);
 
-export default function CrossedBanners() {
-  const sectionRef = useRef(null);
+const TECH_ROW_1 = [
+    { name: 'React', color: '#61dafb' },
+    { name: 'Next.js', color: '#fff' },
+    { name: 'TypeScript', color: '#3178c6' },
+    { name: 'GSAP', color: '#0ae448' },
+    { name: 'Tailwind CSS', color: '#06b6d4' },
+    { name: 'Node.js', color: '#68a063' },
+    { name: 'Redux', color: '#764abc' },
+    { name: 'React Native', color: '#61dafb' },
+];
+const TECH_ROW_2 = [
+    { name: 'AWS', color: '#ff9900' },
+    { name: 'Docker', color: '#2496ed' },
+    { name: 'PostgreSQL', color: '#336791' },
+    { name: 'MongoDB', color: '#4db33d' },
+    { name: 'Figma', color: '#f24e1e' },
+    { name: 'Git', color: '#f05032' },
+    { name: 'React Query', color: '#ff4154' },
+    { name: 'Framer Motion', color: '#bb4be0' },
+];
 
-  useEffect(() => {
-    const ctx = gsap.context(() => {
-      // ── Base speed (xPercent per second equivalent) ──────────────────────
-      const BASE_SPEED_BLACK = -50; // moves LEFT
-      const BASE_SPEED_WHITE =  50; // moves RIGHT
+function MarqueeRow({ items, direction = 1 }) {
+    const trackRef = useRef(null);
 
-      // Tween references so we can tweak timeScale live
-      const blackTween = gsap.to(".black-track", {
-        xPercent: BASE_SPEED_BLACK,
-        ease: "none",
-        duration: 20,
-        repeat: -1,
-      });
+    useEffect(() => {
+        const track = trackRef.current;
+        if (!track) return;
 
-      const whiteTween = gsap.to(".white-track", {
-        xPercent: BASE_SPEED_WHITE,
-        ease: "none",
-        duration: 25,
-        repeat: -1,
-      });
+        const tween = gsap.to(track, {
+            xPercent: direction > 0 ? -50 : 0,
+            ease: 'none',
+            duration: 24,
+            repeat: -1,
+        });
 
-      // ── ScrollTrigger velocity watcher ───────────────────────────────────
-      // velocity > 0  → scrolling DOWN  → speed up (normal direction)
-      // velocity < 0  → scrolling UP    → reverse + speed up slightly
+        if (direction < 0) {
+            gsap.set(track, { xPercent: -50 });
+            gsap.to(track, {
+                xPercent: 0,
+                ease: 'none',
+                duration: 28,
+                repeat: -1,
+            });
+        }
 
-      let currentScale = { black: 1, white: 1 };
-      let rafId;
+        // Pause/speed up on scroll velocity
+        let rafId;
+        let currentScale = 1;
 
-      const TARGET_SCALE  = { black: 1, white: 1 };
-      const LERP           = 0.07; // smoothing (lower = smoother)
-      const BOOST          = 3.5;  // multiplier at full scroll speed
-
-      ScrollTrigger.create({
-        trigger: "body",
-        start: "top top",
-        end: "bottom bottom",
-        onUpdate: (self) => {
-          const vel = self.getVelocity(); // px/s  (+down / -up)
-
-          // Normalise velocity to a reasonable range [-1 … 1]
-          const norm = gsap.utils.clamp(-1, 1, vel / 1200);
-
-          if (norm >= 0) {
-            // Scrolling DOWN → both bands speed up in their natural direction
-            TARGET_SCALE.black =  1 + norm * BOOST;
-            TARGET_SCALE.white =  1 + norm * BOOST;
-          } else {
-            // Scrolling UP → reverse direction, slightly faster
-            TARGET_SCALE.black = norm * (BOOST * 0.7);
-            TARGET_SCALE.white = norm * (BOOST * 0.7);
-          }
-        },
-      });
-
-      // RAF loop: lerp timeScale toward target each frame
-      const tick = () => {
-        currentScale.black = gsap.utils.interpolate(
-          currentScale.black, TARGET_SCALE.black, LERP
-        );
-        currentScale.white = gsap.utils.interpolate(
-          currentScale.white, TARGET_SCALE.white, LERP
-        );
-
-        blackTween.timeScale(currentScale.black);
-        whiteTween.timeScale(currentScale.white);
-
+        const tick = () => {
+            rafId = requestAnimationFrame(tick);
+        };
         rafId = requestAnimationFrame(tick);
-      };
-      rafId = requestAnimationFrame(tick);
 
-      // Return cleanup inside ctx so gsap.context handles it
-      return () => cancelAnimationFrame(rafId);
-    }, sectionRef);
+        return () => {
+            tween.kill();
+            cancelAnimationFrame(rafId);
+        };
+    }, [direction]);
 
-    return () => ctx.revert();
-  }, []);
+    const doubled = [...items, ...items];
 
-  const repeat = (content) =>
-    Array(12)
-      .fill(null)
-      .map((_, i) => (
-        <span key={i} className="band-item">
-          {content} <span className="star">✦</span>
-        </span>
-      ));
-
-  return (
-    <>
-      <style>{`
-        .crossed-section {
-          position: relative;
-          width: 100%;
-          margin: 100px 0;
-          padding: 50px 0;
-          height: 37vh;
-          overflow: hidden;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-        }
-
-        .topo-bg {
-          position: absolute;
-          inset: 0;
-          background: radial-gradient(circle at 50% 50%, rgba(180,150,120,0.05) 0%, transparent 70%);
-          pointer-events: none;
-        }
-
-        .band-wrapper {
-          position: absolute;
-          width: 200%;
-          left: -50%;
-          overflow: hidden;
-          display: flex;
-          align-items: center;
-        }
-
-        .band-wrapper.black {
-          transform: rotate(-2deg);
-          bottom: 20px;
-          height: 110px;
-          background: #03081f;
-          z-index: 2;
-        }
-
-        .band-wrapper.white {
-          transform: rotate(-2deg);
-          top: 10px;
-          height: 110px;
-          background: #ffffff;
-          z-index: 3;
-        }
-
-        .band-track {
-          display: flex;
-          width: max-content;
-          will-change: transform;
-          white-space: nowrap;
-        }
-
-        .band-item {
-          font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-          font-weight: 700;
-          font-size: clamp(22px, 2.8vw, 38px);
-          letter-spacing: 0.04em;
-          text-transform: uppercase;
-          padding: 0 28px;
-          display: inline-flex;
-          align-items: center;
-          gap: 16px;
-        }
-
-        .band-wrapper.black .band-item { color: #fff; }
-        .band-wrapper.white .band-item { color: #111; }
-
-        .star { font-size: 0.7em; }
-
-        @media (max-width: 768px) {
-          .crossed-section {
-            margin: 60px 0;
-            padding: 30px 0;
-            height: 30vh;
-            min-height: 200px;
-          }
-          .band-wrapper.black { bottom: 15px; height: 80px; }
-          .band-wrapper.white { top: 15px;    height: 80px; }
-          .band-item { font-size: clamp(16px, 4vw, 22px); padding: 0 20px; gap: 12px; }
-          .star { font-size: 0.6em; }
-        }
-
-        @media (max-width: 480px) {
-          .crossed-section {
-            margin: 40px 0;
-            padding: 20px 0;
-            height: 25vh;
-            min-height: 180px;
-          }
-          .band-wrapper.black { bottom: 10px; height: 60px; transform: rotate(-1deg); }
-          .band-wrapper.white { top: 10px;    height: 60px; transform: rotate(-1deg); }
-          .band-item { font-size: clamp(14px, 3.5vw, 18px); padding: 0 15px; gap: 10px; }
-          .star { font-size: 0.5em; }
-        }
-
-        @media (max-width: 1024px) and (orientation: landscape) {
-          .crossed-section { height: 25vh; min-height: 150px; }
-          .band-wrapper.black,
-          .band-wrapper.white { height: 70px; }
-        }
-      `}</style>
-
-      <section ref={sectionRef} className="crossed-section">
-        <div className="topo-bg" />
-
-        <div className="band-wrapper black">
-          <div className="band-track black-track">
-            {repeat("FRONTEND DEVELOPER")}
-          </div>
+    return (
+        <div style={{ overflow: 'hidden', width: '100%' }}>
+            <div ref={trackRef} style={{ display: 'flex', width: 'max-content', willChange: 'transform' }}>
+                {doubled.map((item, i) => (
+                    <div key={i} className="tech-chip" style={{ '--chip-color': item.color }}>
+                        <span className="tech-chip-dot" />
+                        <span>{item.name}</span>
+                    </div>
+                ))}
+            </div>
         </div>
+    );
+}
 
-        <div className="band-wrapper white" dir="rtl">
-          <div className="band-track white-track">
-            {repeat("REACT NEXT.js EXPERT")}
-          </div>
-        </div>
-      </section>
-    </>
-  );
+export default function CrossedBanners() {
+    const sectionRef = useRef(null);
+    const headRef    = useRef(null);
+
+    useEffect(() => {
+        gsap.from(headRef.current, {
+            opacity: 0, y: 30, duration: 0.8, ease: 'power3.out',
+            scrollTrigger: { trigger: sectionRef.current, start: 'top 80%' }
+        });
+    }, []);
+
+    return (
+        <>
+            <style>{`
+                .tech-section {
+                    position: relative;
+                    width: 100%;
+                    padding: 120px 0;
+                    background: #000;
+                    border-top: 1px solid rgba(255,255,255,0.05);
+                    overflow: hidden;
+                }
+                .tech-section::before {
+                    content: '';
+                    position: absolute;
+                    top: 50%; left: 50%;
+                    transform: translate(-50%, -50%);
+                    width: 600px; height: 600px;
+                    background: radial-gradient(circle, rgba(0,229,255,0.06) 0%, transparent 70%);
+                    pointer-events: none;
+                }
+                .tech-header {
+                    text-align: center;
+                    margin-bottom: 64px;
+                    padding: 0 24px;
+                }
+                .tech-label {
+                    display: inline-flex;
+                    align-items: center;
+                    gap: 10px;
+                    font-size: 0.7rem;
+                    font-weight: 600;
+                    letter-spacing: 0.2em;
+                    text-transform: uppercase;
+                    color: #00e5ff;
+                    margin-bottom: 20px;
+                }
+                .tech-label::before {
+                    content: '';
+                    display: block;
+                    width: 24px; height: 1px;
+                    background: #00e5ff;
+                }
+                .tech-heading {
+                    font-family: 'Epilogue', sans-serif;
+                    font-size: clamp(1.75rem, 3vw, 2.75rem);
+                    font-weight: 900;
+                    letter-spacing: -0.04em;
+                    color: #fff;
+                }
+                .tech-tracks {
+                    display: flex;
+                    flex-direction: column;
+                    gap: 20px;
+                }
+                .tech-chip {
+                    display: inline-flex;
+                    align-items: center;
+                    gap: 10px;
+                    padding: 12px 24px;
+                    background: rgba(255,255,255,0.03);
+                    border: 1px solid rgba(255,255,255,0.07);
+                    border-radius: 100px;
+                    margin: 0 8px;
+                    white-space: nowrap;
+                    font-size: 0.875rem;
+                    font-weight: 600;
+                    color: rgba(255,255,255,0.65);
+                    transition: border-color 0.3s, color 0.3s;
+                    flex-shrink: 0;
+                }
+                .tech-chip:hover {
+                    border-color: var(--chip-color, rgba(255,255,255,0.2));
+                    color: var(--chip-color, #fff);
+                }
+                .tech-chip-dot {
+                    width: 6px; height: 6px;
+                    border-radius: 50%;
+                    background: var(--chip-color, #00e5ff);
+                    flex-shrink: 0;
+                }
+                .tech-fade-left {
+                    position: absolute;
+                    top: 0; left: 0; bottom: 0;
+                    width: 120px;
+                    background: linear-gradient(to right, #000, transparent);
+                    z-index: 2;
+                    pointer-events: none;
+                }
+                .tech-fade-right {
+                    position: absolute;
+                    top: 0; right: 0; bottom: 0;
+                    width: 120px;
+                    background: linear-gradient(to left, #000, transparent);
+                    z-index: 2;
+                    pointer-events: none;
+                }
+                .tech-marquee-wrapper {
+                    position: relative;
+                    padding: 8px 0;
+                }
+            `}</style>
+
+            <section id="tech" ref={sectionRef} className="tech-section container mx-auto">
+                <div className="tech-header" ref={headRef} suppressHydrationWarning>
+                    <div className="tech-label" suppressHydrationWarning>Technology</div>
+                    <h2 className="tech-heading" suppressHydrationWarning>Our Tech Stack</h2>
+                </div>
+
+                <div className="tech-tracks">
+                    <div className="tech-marquee-wrapper" dir="ltr">
+                        <div className="tech-fade-left" />
+                        <div className="tech-fade-right" />
+                        <MarqueeRow items={TECH_ROW_1} direction={1} />
+                    </div>
+                    <div className="tech-marquee-wrapper">
+                        <div className="tech-fade-left" />
+                        <div className="tech-fade-right" />
+                        <MarqueeRow items={TECH_ROW_2} direction={-1} />
+                    </div>
+                </div>
+            </section>
+        </>
+    );
 }

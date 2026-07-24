@@ -2,36 +2,41 @@ import './globals.css';
 
 export const metadata = {
   title: {
-    default: 'TechNova | Premium Software Development Agency',
-    template: '%s | TechNova',
+    default: 'Nexora Solutions | Premium Digital Agency',
+    template: '%s | Nexora Solutions',
   },
   description:
-    'TechNova is a leading software development company specializing in scalable web applications, native mobile apps, and enterprise cloud solutions.',
+    'Nexora Solutions is a premium digital agency specializing in scalable web applications, native mobile apps, enterprise cloud solutions, and award-winning UI/UX design. Code. Innovate. Elevate.',
   
   keywords: [
-    'Software Company',
+    'Digital Agency',
+    'Software House',
     'Web Development',
     'Mobile Apps',
     'React.js',
     'Next.js',
     'UI/UX Design',
-    'Enterprise Solutions',
+    'Cloud Solutions',
+    'Custom Software',
+    'Nexora Solutions',
+    'Egypt',
   ],
 
-  authors: [{ name: 'TechNova Team' }],
-  creator: 'TechNova',
+  authors: [{ name: 'Nexora Solutions' }],
+  creator: 'Nexora Solutions',
 
   openGraph: {
-    title: 'TechNova | Premium Software Development',
+    title: 'Nexora Solutions | Premium Digital Agency',
     description:
-      'Partner with TechNova to build high-performance web and mobile applications that scale your business.',
-    url: 'https://technova.example.com/',
-    siteName: 'TechNova',
+      'We build digital solutions that drive your business forward. Web apps, mobile products, custom software, and cloud architecture.',
+    url: 'https://nexora-solutions.co/',
+    siteName: 'Nexora Solutions',
     images: [
       {
-        url: 'https://cdn.prod.website-files.com/683703490bc01e1b8c052e06/68381362603d6402ee03c00e_favicon.png', // Update with corporate logo later
+        url: '/assets/logo.jpg',
         width: 1200,
         height: 630,
+        alt: 'Nexora Solutions — Premium Digital Agency',
       },
     ],
     locale: 'en_US',
@@ -40,23 +45,34 @@ export const metadata = {
 
   twitter: {
     card: 'summary_large_image',
-    title: 'TechNova | Premium Software Development',
+    title: 'Nexora Solutions | Premium Digital Agency',
     description:
-      'We build premium digital solutions that empower businesses.',
-    images: ['https://cdn.prod.website-files.com/683703490bc01e1b8c052e06/68381362603d6402ee03c00e_favicon.png'],
+      'Code. Innovate. Elevate. Premium digital solutions for modern businesses.',
+    images: ['/assets/logo.jpg'],
   },
 
   icons: {
-    icon: 'https://cdn.prod.website-files.com/683703490bc01e1b8c052e06/68381362603d6402ee03c00e_favicon.png',
-    shortcut: 'https://cdn.prod.website-files.com/683703490bc01e1b8c052e06/68381362603d6402ee03c00e_favicon.png',
-    apple: 'https://cdn.prod.website-files.com/683703490bc01e1b8c052e06/68381362603d6402ee03c00e_favicon.png',
+    icon: '/assets/logo.jpg',
+    shortcut: '/assets/logo.jpg',
+    apple: '/assets/logo.jpg',
+  },
+
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: { index: true, follow: true, 'max-image-preview': 'large' },
   },
 };
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en" className="dark scroll-smooth">
-      <body className="bg-background text-foreground antialiased selection:bg-primary selection:text-white">
+    <html lang="en" className="dark" style={{ colorScheme: 'dark' }} suppressHydrationWarning>
+      <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta name="theme-color" content="#000000" />
+        <meta name="color-scheme" content="dark" />
+      </head>
+      <body className="bg-black text-white antialiased overflow-x-hidden" suppressHydrationWarning>
         {children}
       </body>
     </html>

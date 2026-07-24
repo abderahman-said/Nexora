@@ -88,8 +88,8 @@ const HorizontalWords = () => {
                     scrollTrigger: {
                         trigger: letter,
                         containerAnimation: scrollTween,
-                        start: 'left 90%',
-                        end: 'left 50%',
+                        start: 'left 120%',
+                        end: 'left 75%',
                         scrub: 0.5
                     }
                 });
@@ -107,8 +107,8 @@ const HorizontalWords = () => {
                     scrollTrigger: {
                         trigger: sticker,
                         containerAnimation: scrollTween,
-                        start: 'left 90%',
-                        end: 'left 50%',
+                        start: 'left 120%',
+                        end: 'left 75%',
                         scrub: 0.5
                     }
                 });
@@ -137,7 +137,7 @@ const HorizontalWords = () => {
         return () => ctx.revert();
     }, []);
 
-    const text = "Elevating digital experiences with Nexora";
+    const text = "We craft premium digital experiences";
 
     return (
         <section
@@ -156,7 +156,7 @@ const HorizontalWords = () => {
                         width="100%"
                         viewBox="0 0 386 127"
                         fill="none"
-                        className="absolute bottom-full left-1/2 text-brand-cyan
+                        className="absolute bottom-full left-1/2
                         w-[23.75em] max-[1024px]:w-[18em] max-[768px]:w-[12em] max-[480px]:w-[10em]
                         [transform:translate(-160%,-35%)] max-[768px]:[transform:translate(-140%,-30%)]"
                     >
@@ -164,32 +164,52 @@ const HorizontalWords = () => {
                         <path d="M2 123C9 35.9999 84.5 17 124 25.9999C217.764 47.3635 207 115 177.5 123C105.777 142.45 110.737 1.99991 232.5 2C310.5 2.00006 366.5 79 376 118L384 97" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"></path>
                     </svg>
 
-                    <img
+                    {/* Tech Sticker 1: Code Brackets */}
+                    <div
                         ref={stickerWatchRef}
-                        src="/assets/HorizontalWords SVG/horizontal-words-sticker-thumps-up.svg"
                         className="absolute top-1/2 z-10
-                        w-[6em] max-[1024px]:w-[5em] max-[768px]:w-[4em] max-[480px]:w-[3.5em]
+                        w-[4.5em] max-[1024px]:w-[3.5em] max-[768px]:w-[3em] max-[480px]:w-[2.5em]
                         left-[17.5%] max-[768px]:left-[20%]
-                        [transform:translate(-50%,-110%)] max-[768px]:[transform:translate(-50%,-90%)]"
-                        alt="thumbs up sticker"
-                    />
-                    <img
+                        [transform:translate(-50%,-110%)] max-[768px]:[transform:translate(-50%,-90%)]
+                        text-[#00e5ff] drop-shadow-[0_0_15px_rgba(0,229,255,0.3)]"
+                        aria-hidden="true"
+                    >
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="w-full h-full">
+                            <polyline points="16 18 22 12 16 6"></polyline>
+                            <polyline points="8 6 2 12 8 18"></polyline>
+                        </svg>
+                    </div>
+
+                    {/* Tech Sticker 2: Layers/Architecture */}
+                    <div
                         ref={stickerCursorRef}
-                        src="/assets/HorizontalWords SVG/horizontal-words-sticker-cursor.svg"
                         className="absolute top-1/2 left-1/2 z-10
-                        w-[7.5em] max-[1024px]:w-[5em] max-[768px]:w-[4em] max-[480px]:w-[3.5em]
-                        [transform:translate(-50%,10%)] max-[768px]:[transform:translate(-50%,15%)]"
-                        alt="cursor sticker"
-                    />
-                    <img
+                        w-[5em] max-[1024px]:w-[4em] max-[768px]:w-[3.5em] max-[480px]:w-[3em]
+                        [transform:translate(-50%,30%)] max-[768px]:[transform:translate(-50%,25%)]
+                        text-[#a78bfa] drop-shadow-[0_0_15px_rgba(167,139,250,0.3)]"
+                        aria-hidden="true"
+                    >
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="w-full h-full">
+                            <polygon points="12 2 2 7 12 12 22 7 12 2"></polygon>
+                            <polyline points="2 17 12 22 22 17"></polyline>
+                            <polyline points="2 12 12 17 22 12"></polyline>
+                        </svg>
+                    </div>
+
+                    {/* Tech Sticker 3: Sparkle/Innovation */}
+                    <div
                         ref={stickerPhoneRef}
-                        src="/assets/HorizontalWords SVG/horizontal-words-sticker-phone.svg"
                         className="absolute top-1/2 z-10
-                        w-[8em] max-[1024px]:w-[5em] max-[768px]:w-[4.5em] max-[480px]:w-[3.5em]
+                        w-[4.5em] max-[1024px]:w-[3.5em] max-[768px]:w-[3em] max-[480px]:w-[2.5em]
                         left-[79%] max-[768px]:left-[85%]
-                        [transform:translate(-50%,-100%)] max-[768px]:[transform:translate(-50%,-80%)]"
-                        alt="phone sticker"
-                    />
+                        [transform:translate(-50%,-100%)] max-[768px]:[transform:translate(-50%,-80%)]
+                        text-[#2563eb] drop-shadow-[0_0_15px_rgba(37,99,235,0.3)]"
+                        aria-hidden="true"
+                    >
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="w-full h-full">
+                            <path d="M12 2l2.4 7.6h8l-6.4 4.7 2.4 7.7-6.4-4.7-6.4 4.7 2.4-7.7-6.4-4.7h8z"></path>
+                        </svg>
+                    </div>
 
                     <svg
                         ref={arrowEndSvgRef}
@@ -197,7 +217,7 @@ const HorizontalWords = () => {
                         width="100%"
                         viewBox="0 0 140 127"
                         fill="none"
-                        className="absolute top-1/2 left-full text-brand-blue
+                        className="absolute top-1/2 left-full
                         w-[8.4375em] max-[1024px]:w-[6em] max-[768px]:w-[4em] max-[480px]:w-[3.5em]
                         [transform:translate(50%)]"
                     >
@@ -210,6 +230,7 @@ const HorizontalWords = () => {
                         text-[9vw] max-[1024px]:text-[8vw] max-[768px]:text-[6vw] max-[480px]:text-[5.5vw]
                         font-[1000] max-[768px]:font-[800]"
                         aria-label={text}
+                        suppressHydrationWarning
                     >
                         {text.split("").map((char, i) =>
                             char === " " ? (
@@ -220,6 +241,7 @@ const HorizontalWords = () => {
                                     ref={addLetterRef}
                                     className="relative inline-block"
                                     aria-hidden="true"
+                                    suppressHydrationWarning
                                 >
                                     {char}
                                 </div>
@@ -239,11 +261,12 @@ const HorizontalWords = () => {
                     text-[1.3rem] max-[1024px]:text-[1.1rem] max-[768px]:text-[0.9rem] max-[480px]:text-[0.85rem]
                     leading-[1.4] max-[768px]:leading-[1.3]
                     font-[450]
-                    max-[768px]:px-[20px] max-[480px]:px-[15px]"
+                    max-[768px]:px-[20px] max-[480px]:px-[15px]
+                    text-[var(--text-color)]/70"
                 >
-                    We are passionate digital architects dedicated to pushing the boundaries<br />
-                    of web design. By blending creative aesthetics with clean, efficient code,<br />
-                    we build scalable solutions that leave a lasting impression.
+                    We are a passionate team of software engineers and system architects dedicated<br />
+                    to building resilient digital infrastructure. By blending scalable architectures<br />
+                    with clean, efficient code, we develop robust products that scale seamlessly.
                 </div>
             </div>
         </section>
