@@ -157,7 +157,6 @@ function injectSideDecorators() {
 
             /* ── Text labels ── */
             .sd-index {
-                font-family: 'Epilogue', sans-serif;
                 font-size: 0.65rem;
                 font-weight: 800;
                 letter-spacing: 0.15em;
@@ -214,7 +213,6 @@ function injectSideDecorators() {
             /* ── Floating glyphs ── */
             .floating-glyph {
                 position: fixed;
-                font-family: 'Epilogue', sans-serif;
                 font-weight: 900;
                 color: rgba(255,255,255,0.025);
                 pointer-events: none;

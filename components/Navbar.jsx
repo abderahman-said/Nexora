@@ -144,7 +144,6 @@ export default function Navbar() {
                 }
 
                 .nav-link {
-                    font-family: 'Epilogue', sans-serif;
                     font-size: 0.85rem;
                     font-weight: 700;
                     color: rgba(255, 255, 255, 0.65);
@@ -189,7 +188,6 @@ export default function Navbar() {
                     border-radius: 100px;
                     background: #fff;
                     color: #050505;
-                    font-family: 'Epilogue', sans-serif;
                     font-weight: 800;
                     font-size: 0.85rem;
                     text-transform: uppercase;

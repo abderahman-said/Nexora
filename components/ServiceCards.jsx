@@ -147,7 +147,6 @@ export default function ServiceCards() {
                     background: #00e5ff;
                 }
                 .services-heading {
-                    font-family: 'Epilogue', sans-serif;
                     font-size: clamp(2rem, 4vw, 3.5rem);
                     font-weight: 900;
                     letter-spacing: -0.04em;
@@ -208,7 +207,6 @@ export default function ServiceCards() {
                     align-items: start;
                 }
                 .bento-card-number {
-                    font-family: 'Epilogue', sans-serif;
                     font-size: 0.7rem;
                     font-weight: 700;
                     letter-spacing: 0.15em;
@@ -224,7 +222,6 @@ export default function ServiceCards() {
                     border: 1px solid rgba(255,255,255,0.08);
                 }
                 .bento-card-title {
-                    font-family: 'Epilogue', sans-serif;
                     font-size: 1.25rem;
                     font-weight: 800;
                     color: #fff;

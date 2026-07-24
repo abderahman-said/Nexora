@@ -136,7 +136,6 @@ export default function CrossedBanners() {
                     background: #00e5ff;
                 }
                 .tech-heading {
-                    font-family: 'Epilogue', sans-serif;
                     font-size: clamp(1.75rem, 3vw, 2.75rem);
                     font-weight: 900;
                     letter-spacing: -0.04em;

@@ -1,11 +1,5 @@
 @import "tailwindcss";
 
-@font-face {
-    font-family: 'DM Sans';
-    src: url('/fonts/DMSans-VariableFont_opsz,wght.ttf') format('truetype');
-    font-weight: 100 900;
-    font-display: swap;
-}
 
 @font-face {
     font-family: 'Epilogue';
@@ -97,12 +91,11 @@
 
     body {
         background-color: var(--bg);
-        font-family: var(--font-dmsans), 'DM Sans', sans-serif;
-        color: var(--light);
-        overflow-x: hidden;
-        line-height: 1.6;
+        font-family: var(--font-epilogue), 'Epilogue', sans-serif;
+        color: var(--white);
         -webkit-font-smoothing: antialiased;
         -moz-osx-font-smoothing: grayscale;
+        overflow-x: hidden;
     }
 
     ::selection {
@@ -320,3 +313,17 @@ body.is-transitioning .js-cursor-bubble {
 
 /* ─── Content Sections ───────────────────────────────────────────────── */
 .content-section { position: relative; }
+  @keyframes pulse-glow {
+                    0%, 100% { opacity: 1; box-shadow: 0 0 0 0 rgba(0,229,255,0.5); }
+                    50% { opacity: 0.5; box-shadow: 0 0 0 4px rgba(0,229,255,0); }
+                }
+                @keyframes fade-in-up {
+                    from { opacity: 0; transform: translate(-50%, 10px); }
+                    to { opacity: 1; transform: translate(-50%, 0); }
+                }
+                @keyframes scroll-line {
+                    0%    { transform: scaleY(0); transform-origin: top; }
+                    50%   { transform: scaleY(1); transform-origin: top; }
+                    50.1% { transform: scaleY(1); transform-origin: bottom; }
+                    100%  { transform: scaleY(0); transform-origin: bottom; }
+                }

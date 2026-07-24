@@ -145,7 +145,6 @@ export default function Footer() {
                     pointer-events: none;
                 }
                 .footer-bg-word span {
-                    font-family: 'Epilogue', sans-serif;
                     font-weight: 900;
                     font-size: clamp(5rem, 18vw, 15rem);
                     line-height: 1;
@@ -223,7 +222,6 @@ export default function Footer() {
                     background: #00e5ff;
                 }
                 .footer-cta-heading {
-                    font-family: 'Epilogue', sans-serif;
                     font-size: clamp(2.5rem, 6vw, 5.5rem);
                     font-weight: 900;
                     letter-spacing: -0.04em;
@@ -307,7 +305,6 @@ export default function Footer() {
                 }
                 .footer-brand {}
                 .footer-brand-logo {
-                    font-family: 'Epilogue', sans-serif;
                     font-weight: 900;
                     font-size: 1.5rem;
                     letter-spacing: -0.04em;
@@ -330,7 +327,6 @@ export default function Footer() {
                     max-width: 240px;
                 }
                 .footer-col-title {
-                    font-family: 'Epilogue', sans-serif;
                     font-size: 0.72rem;
                     font-weight: 700;
                     letter-spacing: 0.14em;

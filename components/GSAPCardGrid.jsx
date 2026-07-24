@@ -239,7 +239,6 @@ export default function GSAPCardGrid() {
                     display: inline-flex;
                     align-items: center;
                     gap: 10px;
-                    font-family: ui-monospace, 'SF Mono', 'JetBrains Mono', monospace;
                     font-size: 0.72rem;
                     font-weight: 600;
                     letter-spacing: 0.16em;
@@ -255,7 +254,6 @@ export default function GSAPCardGrid() {
                     background: currentColor;
                 }
                 .proc-readout {
-                    font-family: ui-monospace, 'SF Mono', 'JetBrains Mono', monospace;
                     font-size: 0.78rem;
                     font-weight: 500;
                     letter-spacing: 0.04em;
@@ -322,7 +320,6 @@ export default function GSAPCardGrid() {
                     display: flex;
                     align-items: center;
                     justify-content: center;
-                    font-family: ui-monospace, 'SF Mono', 'JetBrains Mono', monospace;
                     font-size: 0.68rem;
                     font-weight: 600;
                     border: 1px solid rgba(148, 178, 214, 0.25);
@@ -355,7 +352,6 @@ export default function GSAPCardGrid() {
                     transition: color 0.3s ease;
                 }
                 .proc-tick-status {
-                    font-family: ui-monospace, 'SF Mono', 'JetBrains Mono', monospace;
                     font-size: 0.62rem;
                     letter-spacing: 0.08em;
                     text-transform: uppercase;
@@ -426,7 +422,6 @@ export default function GSAPCardGrid() {
                     opacity: 0.6;
                 }
                 .proc-step-tag {
-                    font-family: ui-monospace, 'SF Mono', 'JetBrains Mono', monospace;
                     font-size: 0.72rem;
                     font-weight: 600;
                     letter-spacing: 0.1em;
@@ -434,7 +429,6 @@ export default function GSAPCardGrid() {
                     margin-bottom: 18px;
                 }
                 .proc-title {
-                    font-family: 'Epilogue', sans-serif;
                     font-size: clamp(2.2rem, 3.6vw, 3.4rem);
                     font-weight: 800;
                     letter-spacing: -0.03em;
@@ -458,7 +452,6 @@ export default function GSAPCardGrid() {
                 }
                 .proc-tags { display: flex; flex-wrap: wrap; gap: 8px; }
                 .proc-tag {
-                    font-family: ui-monospace, 'SF Mono', 'JetBrains Mono', monospace;
                     padding: 6px 12px;
                     border-radius: 4px;
                     border: 1px solid rgba(148, 178, 214, 0.14);
@@ -479,7 +472,6 @@ export default function GSAPCardGrid() {
                     background: rgba(148, 178, 214, 0.03);
                 }
                 .proc-metric-value {
-                    font-family: ui-monospace, 'SF Mono', 'JetBrains Mono', monospace;
                     font-size: 1.6rem;
                     font-weight: 700;
                     color: var(--panel-accent, var(--accent));

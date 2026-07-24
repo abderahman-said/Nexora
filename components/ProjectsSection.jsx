@@ -198,7 +198,6 @@ export default function ProjectsSection() {
           font-weight: 600;
         }
         .proj-intro-text {
-          font-family: 'Epilogue', sans-serif;
           font-size: clamp(40px, 6.5vw, 110px);
           font-weight: 900;
           color: #fff;
@@ -227,7 +226,6 @@ export default function ProjectsSection() {
           flex-wrap: wrap;
         }
         .proj-heading {
-          font-family: 'Epilogue', sans-serif;
           font-size: clamp(36px, 5.5vw, 80px);
           font-weight: 900;
           color: #fff;
@@ -398,7 +396,6 @@ export default function ProjectsSection() {
         .card-body-top {}
 
         .card-name {
-          font-family: 'Epilogue', sans-serif;
           font-size: clamp(20px, 2vw, 28px);
           font-weight: 900;
           color: #fff;
