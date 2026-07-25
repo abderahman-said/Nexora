@@ -1,0 +1,1 @@
+export const phrases = ["The future feels far?", "Actually, it's closer than you think", "We shorten the distance..", "and build the bridge.."];

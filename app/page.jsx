@@ -1,79 +1,67 @@
-'use client';
+import { Suspense } from 'react';
+import dynamic from 'next/dynamic';
 
-import SvgSymbols from '@/components/SvgSymbols';
-import Navbar from '@/components/Navbar';
-import VimeoHero from '@/components/VimeoHero';
-import { lazy, Suspense } from 'react';
+import SvgSymbols from '@/components/icons/SvgSymbols';
+import Navbar from '@/components/layout/Navbar';
+import VimeoHero from '@/components/pages/home/VimeoHero';
+import HorizontalWords from '@/components/pages/home/HorizontalWords';
+import ServiceCards from '@/components/pages/home/ServiceCards';
+import Footer from '@/components/layout/Footer';
+import ClientAnimations from '@/components/animations/ClientAnimations';
 
-const SmoothScroll      = lazy(() => import('@/components/SmoothScroll'));
-const CursorBubble      = lazy(() => import('@/components/CursorBubble'));
-const ScrollAnimations  = lazy(() => import('@/components/ScrollAnimations'));
-const HorizontalWords   = lazy(() => import('@/components/HorizontalWords'));
-const ServiceCards      = lazy(() => import('@/components/ServiceCards'));
-const ProjectsSection   = lazy(() => import('@/components/ProjectsSection'));
-const GSAPCardGrid      = lazy(() => import('@/components/GSAPCardGrid'));
-const CrossedBanners    = lazy(() => import('@/components/CrossedBanners'));
-const Footer            = lazy(() => import('@/components/Footer'));
-const TransitionScribble= lazy(() => import('@/components/TransitionScribble'));
+// ── Dynamic Imports (Lazy Loading for Heavy Below-The-Fold Sections) ──
+const ProjectsSection = dynamic(() => import('@/components/pages/home/ProjectsSection'));
+const GSAPCardGrid = dynamic(() => import('@/components/pages/home/GSAPCardGrid'));
+const CrossedBanners = dynamic(() => import('@/components/pages/home/CrossedBanners'));
 
 export default function Home() {
     return (
         <>
             <SvgSymbols />
-            <Suspense fallback={null}><SmoothScroll /></Suspense>
-            <Suspense fallback={null}><CursorBubble /></Suspense>
-            <Suspense fallback={null}><ScrollAnimations /></Suspense>
+            <ClientAnimations />
 
             {/* ── Sticky Navbar ── */}
             <Navbar />
 
             <main>
-                <section className="scroll-section" style={{ position: 'relative' }}>
+                <section className="scroll-section relative">
                     <VimeoHero />
                 </section>
 
                 {/* ── About / Horizontal Words ── */}
-                <section className="scroll-section" style={{ position: 'relative' }}>
-                    <Suspense fallback={<div style={{ height: '100vh' }} />}>
-                        <HorizontalWords />
-                    </Suspense>
+                <section className="scroll-section relative">
+                    <HorizontalWords />
                 </section>
 
                 {/* ── Services Bento Grid ── */}
-                <section className="scroll-section" style={{ position: 'relative' }}>
-                    <Suspense fallback={<div style={{ height: '60vh' }} />}>
-                        <ServiceCards />
-                    </Suspense>
+                <section className="scroll-section relative">
+                    <ServiceCards />
                 </section>
 
                 {/* ── Portfolio ── */}
-                <section className="scroll-section" style={{ position: 'relative' }}>
-                    <Suspense fallback={<div style={{ height: '100vh' }} />}>
+                <section className="scroll-section relative">
+                    <Suspense fallback={<div className="min-h-[600px] flex items-center justify-center text-slate-400">Loading portfolio...</div>}>
                         <ProjectsSection />
                     </Suspense>
                 </section>
 
                 {/* ── Process ── */}
-                <section className="scroll-section" style={{ position: 'relative' }}>
-                    <Suspense fallback={<div style={{ height: '60vh' }} />}>
+                <section className="scroll-section relative">
+                    <Suspense fallback={<div className="min-h-[500px] flex items-center justify-center text-slate-400">Loading workflow...</div>}>
                         <GSAPCardGrid />
                     </Suspense>
                 </section>
 
                 {/* ── Tech Stack Marquee ── */}
-                <section className="scroll-section" style={{ position: 'relative' }}>
-                    <Suspense fallback={<div style={{ height: '30vh' }} />}>
+                <section className="scroll-section relative">
+                    <Suspense fallback={<div className="min-h-[300px] flex items-center justify-center text-slate-400">Loading stack...</div>}>
                         <CrossedBanners />
                     </Suspense>
                 </section>
             </main>
 
             {/* ── Footer / Contact CTA ── */}
-            <Suspense fallback={<div style={{ height: '100vh' }} />}>
-                <Footer />
-            </Suspense>
-
-            <Suspense fallback={null}><TransitionScribble /></Suspense>
+            <Footer />
         </>
     );
 }
