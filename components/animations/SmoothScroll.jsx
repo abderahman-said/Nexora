@@ -23,7 +23,11 @@ export default function SmoothScroll() {
         // GSAP ticker drives Lenis for frame-perfect sync
         const tickerFn = (time) => lenis.raf(time * 1000);
         gsap.ticker.add(tickerFn);
-        gsap.ticker.lagSmoothing(0);
+        // ✅ PERF: Use recommended lagSmoothing values instead of (0).
+        // lagSmoothing(0) disables all compensation — if a heavy frame hits,
+        // GSAP will try to catch up aggressively causing a jank spike.
+        // (500, 33) = allow up to 500ms lag cap with a 33ms threshold (~30fps).
+        gsap.ticker.lagSmoothing(500, 33);
 
         // Store lenis on window so other components can access it
         window.__lenis = lenis;

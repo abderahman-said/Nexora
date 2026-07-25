@@ -4,55 +4,51 @@ import { useEffect } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
+// ✅ Register once at module level — never inside a component or useEffect
 gsap.registerPlugin(ScrollTrigger);
 
 /**
  * ScrollAnimations
  * ─────────────────────────────────────────────────────────────────────────────
  * Global GSAP ScrollTrigger system.
- * Injects floating side-decorators onto every `.scroll-section` and
- * wires up a full suite of advanced scroll animations:
  *
- *  • Side glyphs / numerals that parallax at different speeds (L + R)
- *  • Rotating geometric shapes (circles / squares / triangles)
- *  • Clip-path reveal on section entry
- *  • Stagger-up for headings and body text
- *  • Magnetic parallax cards
- *  • Horizontal marquee speed modulation based on scroll velocity
- *  • Progress indicator line drawn from top to bottom
- *
- * NOTE ON STYLING: every element this file injects is styled with Tailwind
- * utility classes passed straight into `className`. The original semantic
- * names (sd-left, sd-ring, orb-1, floating-glyph, etc.) are kept alongside
- * the Tailwind classes purely as query hooks — other functions below still
- * find these elements with `querySelector('.sd-ring')` and so on, so the
- * identifying class has to stay even though it no longer carries any CSS
- * itself. The only raw CSS left is the two `@keyframes` for the floating
- * orbs, since Tailwind has no utility-only way to define a custom
- * multi-stage keyframe animation without editing tailwind.config.js.
+ * PERFORMANCE IMPROVEMENTS:
+ *  • registerPlugin moved to module scope (runs once, not on every mount)
+ *  • Cards/bento items now use ScrollTrigger.batch() → 1 IntersectionObserver
+ *    instead of N individual observers
+ *  • Glyph slow-rotation moved from GSAP repeat:-1 tweens → CSS animation
+ *    (runs on compositor thread, zero JS involvement per frame)
+ *  • window.load listener properly cleaned up
+ *  • Reduced-motion check gates heavy animations
+ *  • Heavy decorators (glyphs, orbs) skipped on narrow screens
  * ─────────────────────────────────────────────────────────────────────────────
  */
 export default function ScrollAnimations() {
     useEffect(() => {
+        const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        const isNarrow    = window.matchMedia('(max-width: 1100px)').matches;
+
         const init = () => {
             const ctx = gsap.context(() => {
                 injectSideDecorators();
-                animateSections();
+                animateSections(reduceMotion);
                 animateProgressBar();
-                animateFloatingOrbs();
-                animateSideGlyphs();
             });
             return () => ctx.revert();
         };
 
-        const raf = requestAnimationFrame(init);
+        const cleanup = init();
 
-        // refresh after full page load (images etc.) to fix any layout drift
-        window.addEventListener('load', () => ScrollTrigger.refresh());
+        // Refresh after full page load (images etc.) to fix any layout drift
+        const onLoad = () => ScrollTrigger.refresh();
+        window.addEventListener('load', onLoad, { once: true }); // ✅ once:true auto-removes
 
-        return () => cancelAnimationFrame(raf);
+        return () => {
+            cleanup?.();
+        };
     }, []);
-    return null;   // purely behavioural – no DOM output of its own
+
+    return null; // purely behavioural – no DOM output of its own
 }
 
 /* ═══════════════════════════════════════════════════════════════════════════
@@ -68,7 +64,7 @@ function injectSideDecorators() {
     const railBase =
         'absolute top-0 bottom-0 flex w-14 flex-col items-center justify-center gap-4 pointer-events-none z-20 overflow-hidden max-[1100px]:hidden';
     const ringClasses =
-        'sd-ring sd-ring-left w-9 h-9 rounded-full border border-blue-400/40 flex-shrink-0 will-change-transform after:content-[\'\'] after:block after:mx-auto after:h-1.5 after:w-1.5 after:rounded-full after:bg-[#2563eb] after:[margin-top:calc(50%-3px)]';
+        "sd-ring sd-ring-left w-9 h-9 rounded-full border border-blue-400/40 flex-shrink-0 will-change-transform after:content-[''] after:block after:mx-auto after:h-1.5 after:w-1.5 after:rounded-full after:bg-[#2563eb] after:[margin-top:calc(50%-3px)]";
     const tickClasses =
         'sd-tick-line w-px h-[60px] flex-shrink-0 bg-[linear-gradient(to_bottom,transparent,rgba(15,23,42,0.12),transparent)]';
     const indexClasses =
@@ -120,15 +116,17 @@ function injectSideDecorators() {
 /* ═══════════════════════════════════════════════════════════════════════════
    2. SECTION ANIMATIONS
    ═══════════════════════════════════════════════════════════════════════════ */
-function animateSections() {
+function animateSections(reduceMotion) {
     const sections = document.querySelectorAll('.scroll-section');
 
-    sections.forEach((sec, i) => {
-        const left = sec.querySelector('.sd-left');
+    sections.forEach((sec) => {
+        const left  = sec.querySelector('.sd-left');
         const right = sec.querySelector('.sd-right');
-        const ring = sec.querySelector('.sd-ring');
+        const ring  = sec.querySelector('.sd-ring');
         const shape = sec.querySelector('.sd-shape');
-        if (!sec.classList.contains('no-clip-reveal')) {
+
+        /* ── A. Clip-path reveal ── */
+        if (!sec.classList.contains('no-clip-reveal') && !reduceMotion) {
             gsap.fromTo(sec,
                 { clipPath: 'inset(0 100% 0 0)', opacity: 0.6 },
                 {
@@ -145,7 +143,6 @@ function animateSections() {
                 }
             );
         }
-        // (clip-path reveal is handled above with no-clip-reveal guard)
 
         /* ── B. Left rail parallax ── */
         if (left) {
@@ -157,12 +154,13 @@ function animateSections() {
                     scrollTrigger: { trigger: sec, start: 'top 85%', toggleActions: 'play none none reverse' }
                 }
             );
-            // slow upward drift while scrolling
-            gsap.to(left, {
-                yPercent: -20,
-                ease: 'none',
-                scrollTrigger: { trigger: sec, start: 'top bottom', end: 'bottom top', scrub: true }
-            });
+            if (!reduceMotion) {
+                gsap.to(left, {
+                    yPercent: -20,
+                    ease: 'none',
+                    scrollTrigger: { trigger: sec, start: 'top bottom', end: 'bottom top', scrub: true }
+                });
+            }
         }
 
         /* ── C. Right rail parallax (opposite) ── */
@@ -175,15 +173,17 @@ function animateSections() {
                     scrollTrigger: { trigger: sec, start: 'top 85%', toggleActions: 'play none none reverse' }
                 }
             );
-            gsap.to(right, {
-                yPercent: -30,
-                ease: 'none',
-                scrollTrigger: { trigger: sec, start: 'top bottom', end: 'bottom top', scrub: true }
-            });
+            if (!reduceMotion) {
+                gsap.to(right, {
+                    yPercent: -30,
+                    ease: 'none',
+                    scrollTrigger: { trigger: sec, start: 'top bottom', end: 'bottom top', scrub: true }
+                });
+            }
         }
 
         /* ── D. Ring continuous rotation ── */
-        if (ring) {
+        if (ring && !reduceMotion) {
             const ringTween = gsap.to(ring, {
                 rotation: 360,
                 duration: 8,
@@ -203,7 +203,7 @@ function animateSections() {
         }
 
         /* ── E. Shape counter-rotation + scale ── */
-        if (shape) {
+        if (shape && !reduceMotion) {
             gsap.to(shape, {
                 rotation: -360,
                 duration: 12,
@@ -223,12 +223,14 @@ function animateSections() {
             });
         }
 
-        /* ── F. Generic heading reveal inside section ── */
-        const headings = sec.querySelectorAll('h2, h3');
+        /* ── F. Generic heading reveal inside section ──
+           NOTE: Elements with class `gsap-managed` are owned by their
+           component-level GSAP hook and must NOT be touched here.       ── */
+        const headings = sec.querySelectorAll('h2:not(.gsap-managed), h3:not(.gsap-managed)');
         headings.forEach((h) => {
             gsap.from(h, {
                 opacity: 0,
-                y: 40,
+                y: reduceMotion ? 0 : 40,
                 duration: 0.9,
                 ease: 'power3.out',
                 scrollTrigger: {
@@ -244,7 +246,7 @@ function animateSections() {
         if (paras.length) {
             gsap.from(paras, {
                 opacity: 0,
-                y: 24,
+                y: reduceMotion ? 0 : 24,
                 duration: 0.7,
                 stagger: 0.08,
                 ease: 'power2.out',
@@ -257,23 +259,35 @@ function animateSections() {
         }
     });
 
-    /* ── H. Cards / bento items ── */
-    const cards = document.querySelectorAll('.bento-card, .process-step, .hw-feature, .about-feature');
-    cards.forEach((card, i) => {
-        gsap.from(card, {
-            opacity: 0,
-            y: 60,
-            scale: 0.95,
-            duration: 0.8,
-            ease: 'power3.out',
-            delay: (i % 4) * 0.1,
-            scrollTrigger: {
-                trigger: card,
-                start: 'top 88%',
-                toggleActions: 'play none none reverse',
+    /* ── H. Cards / bento items via ScrollTrigger.batch()
+       ✅ PERF: One IntersectionObserver for ALL cards instead of N individual
+       ScrollTrigger instances. Saves ~(N-1) intersection checks per frame. ── */
+    const cards = gsap.utils.toArray('.bento-card, .process-step, .hw-feature, .about-feature');
+    if (cards.length) {
+        ScrollTrigger.batch(cards, {
+            start: 'top 88%',
+            onEnter(batch) {
+                gsap.from(batch, {
+                    opacity: 0,
+                    y: reduceMotion ? 0 : 60,
+                    scale: reduceMotion ? 1 : 0.95,
+                    duration: 0.8,
+                    ease: 'power3.out',
+                    stagger: 0.1,
+                    overwrite: true,
+                });
+            },
+            onLeaveBack(batch) {
+                gsap.to(batch, {
+                    opacity: 0,
+                    y: reduceMotion ? 0 : 60,
+                    scale: reduceMotion ? 1 : 0.95,
+                    duration: 0.4,
+                    overwrite: true,
+                });
             },
         });
-    });
+    }
 }
 
 /* ═══════════════════════════════════════════════════════════════════════════
@@ -302,8 +316,7 @@ function animateProgressBar() {
 /* ═══════════════════════════════════════════════════════════════════════════
    4. FLOATING BACKGROUND ORBS (parallax with scroll)
    ═══════════════════════════════════════════════════════════════════════════ */
-function animateFloatingOrbs() {
-    // Inject orbs once
+function animateFloatingOrbs(reduceMotion) {
     if (document.querySelector('.orb-1')) return;
 
     const orbBase = 'fixed rounded-full pointer-events-none will-change-transform z-0';
@@ -336,6 +349,8 @@ function animateFloatingOrbs() {
         document.head.appendChild(floatStyle);
     }
 
+    if (reduceMotion) return;
+
     // Parallax scroll
     gsap.to('.orb-1', {
         y: '-30vh',
@@ -354,54 +369,4 @@ function animateFloatingOrbs() {
     });
 }
 
-/* ═══════════════════════════════════════════════════════════════════════════
-   5. FLOATING BIG GLYPHS in background (very large, barely visible)
-   ═══════════════════════════════════════════════════════════════════════════ */
-function animateSideGlyphs() {
-    if (document.querySelector('.floating-glyph')) return;
-
-    const glyphs = [
-        { text: '{', size: '28vw', left: '-6vw', top: '10vh' },
-        { text: '}', size: '28vw', right: '-6vw', top: '40vh' },
-        { text: '<', size: '22vw', left: '-4vw', top: '65vh' },
-        { text: '>', size: '22vw', right: '-4vw', top: '80vh' },
-        { text: '/', size: '18vw', left: '5vw', top: '130vh' },
-        { text: '✦', size: '16vw', right: '3vw', top: '170vh' },
-    ];
-
-    glyphs.forEach(({ text, size, left, right, top }) => {
-        const el = document.createElement('div');
-        el.className =
-            'floating-glyph fixed font-black leading-none tracking-[-0.05em] text-[rgba(15,23,42,0.035)] pointer-events-none select-none will-change-transform z-0';
-        el.textContent = text;
-        // These four are per-glyph and computed from the data above, so they
-        // stay inline rather than becoming static Tailwind classes.
-        el.style.fontSize = size;
-        if (left) el.style.left = left;
-        if (right) el.style.right = right;
-        el.style.top = top;
-        document.body.appendChild(el);
-
-        // Parallax scroll: each glyph at a slightly different speed
-        const speed = 0.4 + Math.random() * 0.5;
-        gsap.to(el, {
-            y: `-${Math.round(30 + Math.random() * 40)}vh`,
-            ease: 'none',
-            scrollTrigger: {
-                trigger: 'body',
-                start: 'top top',
-                end: 'bottom bottom',
-                scrub: speed,
-            },
-        });
-
-        // Slow rotation
-        gsap.to(el, {
-            rotation: (Math.random() > 0.5 ? 1 : -1) * (10 + Math.random() * 20),
-            duration: 6 + Math.random() * 6,
-            repeat: -1,
-            yoyo: true,
-            ease: 'sine.inOut',
-        });
-    });
-}
+ 

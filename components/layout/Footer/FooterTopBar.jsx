@@ -11,7 +11,6 @@ export function FooterTopBar() {
           alt="Nexora Solutions"
           width={240}
           height={80}
-          style={{ width: 'auto', height: 'auto' }}
           className="h-[80px] w-auto object-contain"
         />
 

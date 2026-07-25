@@ -4,118 +4,161 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
 gsap.registerPlugin(ScrollTrigger);
 
-export function useHorizontalWordsGSAP({ sectionRef, relativeRef, arrowSvgRef, arrowEndSvgRef, stickerWatchRef, stickerCursorRef, stickerPhoneRef, lettersRef }) {
+export function useHorizontalWordsGSAP({
+    sectionRef, relativeRef, arrowSvgRef, arrowEndSvgRef,
+    stickerWatchRef, stickerCursorRef, stickerPhoneRef, lettersRef
+}) {
     useEffect(() => {
         const ctx = gsap.context(() => {
             const container = sectionRef.current;
-            const textRef = relativeRef.current;
-            const letters = lettersRef.current;
+            const textRef   = relativeRef.current;
+            const letters   = lettersRef.current;
 
-            const stickers = [stickerWatchRef.current, stickerCursorRef.current, stickerPhoneRef.current];
+            if (!container || !textRef || !letters.length) return;
+
+            const stickers = [
+                stickerWatchRef.current,
+                stickerCursorRef.current,
+                stickerPhoneRef.current,
+            ].filter(Boolean);
+
             const arrows = [
-                ...arrowSvgRef.current.querySelectorAll('path'),
-                ...arrowEndSvgRef.current.querySelectorAll('path'),
+                ...(arrowSvgRef.current?.querySelectorAll('path') ?? []),
+                ...(arrowEndSvgRef.current?.querySelectorAll('path') ?? []),
             ];
 
-            const isMobile = window.innerWidth <= 768;
-            const entranceDistance = isMobile ? window.innerHeight * 0.5 : window.innerHeight;
-            const pinnedDistance = isMobile ? 1500 : 2500;
+            const isMobile = window.matchMedia('(max-width: 768px)').matches;
 
-            const scrollTween = gsap.timeline({
+            /* ─────────────────────────────────────────────────────────────
+               KEY FIX: use a SINGLE ScrollTrigger that does BOTH the pin
+               AND drives the containerAnimation. When pin + scrub live on
+               the same ST, containerAnimation on child elements works
+               correctly because they all share the same progress context.
+            ───────────────────────────────────────────────────────────── */
+            const pinnedDistance = isMobile ? 1800 : 3000;
+            const entranceRatio  = isMobile ? 0.25 : 0.3; // fraction of total
+
+            // How far the text slides before it's centered (entrance phase)
+            const startX = isMobile
+                ? window.innerWidth * 0.5
+                : window.innerWidth * 1.1;
+
+            // How far the text slides during the pinned horizontal scroll phase
+            const endX = () =>
+                isMobile
+                    ? -(textRef.scrollWidth * 0.55)
+                    : -(textRef.scrollWidth - window.innerWidth * 0.45);
+
+            /* ── Master horizontal scroll timeline ── */
+            const masterTl = gsap.timeline({
                 scrollTrigger: {
                     trigger: container,
-                    start: "top bottom",
-                    end: () => `+=${entranceDistance + pinnedDistance}`,
-                    scrub: true,
+                    start: 'top top',
+                    end: `+=${pinnedDistance}`,
+                    pin: true,
+                    pinSpacing: true,
+                    scrub: 1,               // slight smoothing feels more cinematic
+                    anticipatePin: 1,
                     invalidateOnRefresh: true,
                 }
             });
 
-            const startX = isMobile ? window.innerWidth * 0.3 : window.innerWidth;
-            const midX = isMobile ? window.innerWidth * 0.2 : window.innerWidth * 0.5;
+            // Phase 1 — slide in from right to center (entranceRatio of total)
+            masterTl.fromTo(
+                textRef,
+                { x: startX },
+                { x: isMobile ? window.innerWidth * 0.1 : window.innerWidth * 0.35,
+                  ease: 'power2.out',
+                  duration: entranceRatio }
+            );
 
-            scrollTween
-                .fromTo(textRef, {
-                    x: startX
-                }, {
-                    x: midX,
-                    ease: "none",
-                    duration: entranceDistance
-                })
-                .to(textRef, {
-                    x: () => isMobile ?
-                        -(textRef.scrollWidth * 0.6) :
-                        -(textRef.scrollWidth - window.innerWidth * 0.5),
-                    ease: "none",
-                    duration: pinnedDistance
-                });
+            // Phase 2 — horizontal sweep to the left (rest of scroll)
+            masterTl.to(
+                textRef,
+                { x: endX, ease: 'none', duration: 1 - entranceRatio }
+            );
 
-            ScrollTrigger.create({
-                trigger: container,
-                start: "top top",
-                end: () => `+=${pinnedDistance}`,
-                pin: true,
-                pinSpacing: true,
-                invalidateOnRefresh: true
-            });
+            /* ── Letter assembly animation (the "collect from air" effect) ──
+               Each letter flies in from a random Y offset + rotation and
+               lands in place as that part of the scrollTween passes through.
+               containerAnimation links each letter's trigger to masterTl's
+               ScrollTrigger so positions are calculated correctly. ── */
+            const bounceY  = isMobile ? 180 : 420;
+            const bounceR  = isMobile ? 25  : 55;
 
             letters.forEach((letter) => {
-                const bounceIntensity = isMobile ? 200 : 500;
-                const rotationIntensity = isMobile ? 30 : 60;
+                const yFrom = (Math.random() - 0.5) * bounceY;
+                const rFrom = (Math.random() - 0.5) * bounceR;
 
-                gsap.from(letter, {
-                    yPercent: (Math.random() - 0.5) * bounceIntensity,
-                    rotation: (Math.random() - 0.5) * rotationIntensity,
-                    ease: "elastic.out(1.2, 1)",
-                    scrollTrigger: {
-                        trigger: letter,
-                        containerAnimation: scrollTween,
-                        start: 'left 120%',
-                        end: 'left 75%',
-                        scrub: true
-                    }
-                });
-            });
-
-            stickers.forEach((sticker) => {
-                const bounceIntensity = isMobile ? 200 : 400;
-                const rotationIntensity = isMobile ? 30 : 60;
-
-                gsap.from(sticker, {
-                    scale: 0,
-                    yPercent: (Math.random() - 0.5) * bounceIntensity,
-                    rotation: (Math.random() - 0.5) * rotationIntensity,
-                    ease: "elastic.out(1.2, 1)",
-                    scrollTrigger: {
-                        trigger: sticker,
-                        containerAnimation: scrollTween,
-                        start: 'left 120%',
-                        end: 'left 75%',
-                        scrub: true
-                    }
-                });
-            });
-
-            arrows.forEach((arrowPath) => {
-                if (arrowPath.getTotalLength) {
-                    const pathLen = arrowPath.getTotalLength();
-                    gsap.set(arrowPath, { strokeDasharray: pathLen, strokeDashoffset: pathLen });
-                    gsap.to(arrowPath, {
-                        strokeDashoffset: 0,
-                        duration: 1,
+                gsap.fromTo(
+                    letter,
+                    {
+                        y: yFrom,
+                        rotation: rFrom,
+                        opacity: 0,
+                        scale: 0.6,
+                    },
+                    {
+                        y: 0,
+                        rotation: 0,
+                        opacity: 1,
+                        scale: 1,
+                        ease: 'back.out(2)',
                         scrollTrigger: {
-                            trigger: arrowPath.parentElement,
-                            containerAnimation: scrollTween,
-                            start: 'left 90%',
-                            end: 'left 50%',
-                            scrub: true
+                            trigger: letter,
+                            containerAnimation: masterTl,
+                            start: 'left 110%',
+                            end: 'left 65%',
+                            scrub: true,
                         }
-                    });
-                }
+                    }
+                );
+            });
+
+            /* ── Sticker pop-in (scale + yPercent bounce) ── */
+            stickers.forEach((sticker) => {
+                const yFrom = (Math.random() - 0.5) * (isMobile ? 180 : 350);
+                const rFrom = (Math.random() - 0.5) * (isMobile ? 25 : 50);
+
+                gsap.fromTo(
+                    sticker,
+                    { scale: 0, y: yFrom, rotation: rFrom, opacity: 0 },
+                    {
+                        scale: 1, y: 0, rotation: 0, opacity: 1,
+                        ease: 'back.out(1.5)',
+                        scrollTrigger: {
+                            trigger: sticker,
+                            containerAnimation: masterTl,
+                            start: 'left 110%',
+                            end: 'left 55%',
+                            scrub: true,
+                        }
+                    }
+                );
+            });
+
+            /* ── SVG arrow path drawing (strokeDashoffset reveal) ── */
+            arrows.forEach((arrowPath) => {
+                if (!arrowPath.getTotalLength) return;
+                const pathLen = arrowPath.getTotalLength();
+                gsap.set(arrowPath, { strokeDasharray: pathLen, strokeDashoffset: pathLen });
+
+                gsap.to(arrowPath, {
+                    strokeDashoffset: 0,
+                    ease: 'power2.out',
+                    scrollTrigger: {
+                        trigger: arrowPath.closest('svg'),
+                        containerAnimation: masterTl,
+                        start: 'left 95%',
+                        end: 'left 40%',
+                        scrub: true,
+                    }
+                });
             });
 
         }, sectionRef);
 
         return () => ctx.revert();
-    }, [sectionRef, relativeRef, arrowSvgRef, arrowEndSvgRef, stickerWatchRef, stickerCursorRef, stickerPhoneRef, lettersRef]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
 }

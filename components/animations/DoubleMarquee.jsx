@@ -6,6 +6,9 @@ import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { brands, colors } from '@/lib/data';
 
+// ✅ Register once at module level — not inside useEffect
+gsap.registerPlugin(ScrollTrigger);
+
 // ─── Shuffle helpers ─────────────────────────────────────────────────────────
 function shuffleArray(array) {
     const shuffled = [...array];
@@ -63,8 +66,6 @@ export default function DoubleMarquee() {
     const [isMobile, setIsMobile] = useState(false);
 
     useEffect(() => {
-        gsap.registerPlugin(ScrollTrigger);
-
         const mobile = window.matchMedia('(max-width: 768px)').matches;
         setIsMobile(mobile);
         setTracks(buildMarqueeItems(mobile));

@@ -3,6 +3,7 @@
 import { useRef } from 'react';
 import HeroBackground from './HeroBackground';
 import HeroContent from './HeroContent';
+import HeroCircularBadge from './HeroCircularBadge';
 import { useVimeoHeroGSAP } from './useVimeoHeroGSAP';
 
 export default function VimeoHero() {
@@ -35,6 +36,8 @@ export default function VimeoHero() {
                 ctaRef={ctaRef}
                 badgeRef={badgeRef}
             />
+
+            <HeroCircularBadge />
 
             {/* Scroll hint */}
             <div

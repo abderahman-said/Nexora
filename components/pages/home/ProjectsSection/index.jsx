@@ -24,7 +24,7 @@ export default function ProjectsSection() {
   return (
     <div
       id="portfolio"
-      className="pin-container flex min-h-screen w-full flex-col justify-center bg-[#f8fafc] dark:bg-[#090d16] transition-colors duration-300"
+      className="pin-container relative flex min-h-screen w-full flex-col justify-center bg-[#f8fafc] dark:bg-[#090d16] transition-colors duration-300"
       ref={pinContainerRef}
       suppressHydrationWarning
     >
@@ -43,7 +43,7 @@ export default function ProjectsSection() {
           Our Work
         </span>
         <h2
-          className="m-0 text-center text-[clamp(40px,6.5vw,110px)] font-black leading-none tracking-[-0.04em] text-slate-900 dark:text-white [will-change:opacity,transform]"
+          className="gsap-managed m-0 text-center text-[clamp(40px,6.5vw,110px)] font-black leading-none tracking-[-0.04em] text-slate-900 dark:text-white [will-change:opacity,transform]"
           ref={introTextRef}
           suppressHydrationWarning
         >
@@ -62,7 +62,7 @@ export default function ProjectsSection() {
           suppressHydrationWarning
         >
           <h2
-            className="proj-heading m-0 text-[clamp(36px,5.5vw,80px)] font-black leading-[0.95] tracking-[-0.04em] text-slate-900 dark:text-white [will-change:opacity,transform]"
+            className="gsap-managed proj-heading m-0 text-[clamp(36px,5.5vw,80px)] font-black leading-[0.95] tracking-[-0.04em] text-slate-900 dark:text-white [will-change:opacity,transform]"
             suppressHydrationWarning
           >
             Selected{' '}
@@ -83,7 +83,7 @@ export default function ProjectsSection() {
         <div className="scroll-progress-wrap flex items-center gap-4 px-[72px] pb-7 [will-change:opacity,transform] max-lg:px-8 max-lg:pb-6 max-sm:px-5 max-sm:pb-5">
           <div className="h-px flex-1 overflow-hidden rounded-[2px] bg-slate-200 dark:bg-slate-800">
             <div
-              className="h-full w-0 bg-[linear-gradient(90deg,#2563eb,#0284c7)] transition-[width] duration-[80ms] ease-linear"
+              className="h-full w-0 bg-[linear-gradient(90deg,#2563eb,#0284c7)] ease-linear"
               ref={progressRef}
             />
           </div>

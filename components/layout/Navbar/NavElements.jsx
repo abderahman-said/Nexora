@@ -16,8 +16,7 @@ export function NavLogo({ logoRef }) {
                         width={140}
                         height={42}
                         priority
-                        style={{ width: 'auto', height: 'auto' }}
-                        className="h-[42px] w-auto object-contain dark:brightness-110"
+                        className="h-[52px] w-auto object-contain dark:brightness-110"
                     />
                 </Link>
             </Magnet>

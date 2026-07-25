@@ -20,6 +20,7 @@ const RippleGrid = ({
   const targetMouseRef = useRef({ x: 0.5, y: 0.5 });
   const mouseInfluenceRef = useRef(0);
   const uniformsRef = useRef(null);
+  const mouseMovedRef = useRef(false); // ✅ skip lerp when mouse is idle
 
   useEffect(() => {
     if (!containerRef.current) return;
@@ -32,7 +33,7 @@ const RippleGrid = ({
     };
 
     const renderer = new Renderer({
-      dpr: Math.min(window.devicePixelRatio, 2),
+      dpr: Math.min(window.devicePixelRatio, 1.5), // ✅ cap at 1.5 — reduces GPU fill rate on Retina
       alpha: true
     });
     const gl = renderer.gl;
@@ -177,8 +178,9 @@ void main() {
       if (!mouseInteraction || !containerRef.current) return;
       const rect = containerRef.current.getBoundingClientRect();
       const x = (e.clientX - rect.left) / rect.width;
-      const y = 1.0 - (e.clientY - rect.top) / rect.height; // Flip Y coordinate
+      const y = 1.0 - (e.clientY - rect.top) / rect.height;
       targetMouseRef.current = { x, y };
+      mouseMovedRef.current = true; // ✅ flag that mouse moved this frame
     };
 
     const handleMouseEnter = () => {
@@ -199,27 +201,42 @@ void main() {
     }
     resize();
 
+    // ✅ PERF: track RAF id so we can cancel it, and pause when tab is hidden
+    let rafId;
+    let paused = false;
+
     const render = t => {
-      uniforms.iTime.value = t * 0.001;
+      // Skip rendering when the browser tab is not visible — saves GPU entirely
+      if (!paused) {
+        uniforms.iTime.value = t * 0.001;
 
-      const lerpFactor = 0.1;
-      mousePositionRef.current.x += (targetMouseRef.current.x - mousePositionRef.current.x) * lerpFactor;
-      mousePositionRef.current.y += (targetMouseRef.current.y - mousePositionRef.current.y) * lerpFactor;
+        // ✅ Only lerp mouse position when mouse actually moved this frame
+        if (mouseMovedRef.current) {
+          const lerpFactor = 0.1;
+          mousePositionRef.current.x += (targetMouseRef.current.x - mousePositionRef.current.x) * lerpFactor;
+          mousePositionRef.current.y += (targetMouseRef.current.y - mousePositionRef.current.y) * lerpFactor;
+          uniforms.mousePosition.value = [mousePositionRef.current.x, mousePositionRef.current.y];
+          mouseMovedRef.current = false; // reset until next mousemove event
+        }
 
-      const currentInfluence = uniforms.mouseInfluence.value;
-      const targetInfluence = mouseInfluenceRef.current;
-      uniforms.mouseInfluence.value += (targetInfluence - currentInfluence) * 0.05;
+        const currentInfluence = uniforms.mouseInfluence.value;
+        const targetInfluence = mouseInfluenceRef.current;
+        uniforms.mouseInfluence.value += (targetInfluence - currentInfluence) * 0.05;
 
-      uniforms.mousePosition.value = [mousePositionRef.current.x, mousePositionRef.current.y];
-
-      renderer.render({ scene: mesh });
-      requestAnimationFrame(render);
+        renderer.render({ scene: mesh });
+      }
+      rafId = requestAnimationFrame(render);
     };
 
-    requestAnimationFrame(render);
+    const handleVisibility = () => { paused = document.hidden; };
+    document.addEventListener('visibilitychange', handleVisibility);
+
+    rafId = requestAnimationFrame(render);
 
     const container = containerRef.current;
     return () => {
+      document.removeEventListener('visibilitychange', handleVisibility);
+      cancelAnimationFrame(rafId);
       window.removeEventListener('resize', resize);
       if (mouseInteraction && container) {
         container.removeEventListener('mousemove', handleMouseMove);

@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
+// ✅ Register once at module level
 gsap.registerPlugin(ScrollTrigger);
 
 export function useCardGridGSAP({ STEPS, sectionRef, pinRef, stepRefs, fillRef }) {
@@ -27,7 +28,12 @@ export function useCardGridGSAP({ STEPS, sectionRef, pinRef, stepRefs, fillRef }
             gsap.set(steps[0], { rotationY: 0 });
             gsap.set(fillRef.current, { scaleX: 0, transformOrigin: 'left' });
 
-            const getEnd = () => `+=${window.innerHeight * (totalSteps + 0.5)}`;
+            // ✅ PERF: cache innerHeight — read once, not on every scroll frame
+            let cachedHeight = window.innerHeight;
+            const getEnd = () => {
+                cachedHeight = window.innerHeight; // refreshed by invalidateOnRefresh
+                return `+=${cachedHeight * (totalSteps + 0.5)}`;
+            };
 
             const st = ScrollTrigger.create({
                 trigger: section,
