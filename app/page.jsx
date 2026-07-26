@@ -55,14 +55,14 @@ export default function Home() {
                 </section>
 
                 {/* ── Tech Stack Marquee ── */}
-                <section className="scroll-section relative  bg-[#080d1a] dark:bg-[#040711]">
+                <section className="scroll-section relative">
                     <Suspense fallback={<div className="min-h-[300px] flex items-center justify-center text-slate-400">Loading stack...</div>}>
                         <CrossedBanners />
                     </Suspense>
                 </section>
 
                 {/* ── Clients & Partnerships Section ── */}
-                <section className="scroll-section relative  bg-transparent">
+                <section className="scroll-section relative">
                     <Suspense fallback={<div className="min-h-[400px] flex items-center justify-center text-slate-400">Loading clients...</div>}>
                         <ClientsSection />
                     </Suspense>

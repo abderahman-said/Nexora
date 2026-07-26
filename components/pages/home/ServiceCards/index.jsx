@@ -15,7 +15,7 @@ export default function ServiceCards() {
         <section
             id="services"
             ref={sectionRef}
-            className="relative w-full overflow-hidden border-t border-slate-200/80 dark:border-slate-800/80 bg-slate-50/70 dark:bg-[#060913] px-[60px] py-[120px] transition-colors duration-300 max-[900px]:px-6 max-[900px]:py-20"
+            className="relative w-full overflow-hidden border-b border-slate-200/90 dark:border-slate-800/80 bg-white dark:bg-[#060913] px-[60px] py-[120px] transition-colors duration-300 max-[900px]:px-6 max-[900px]:py-20"
             suppressHydrationWarning
         >
             {/* ── Ambient blobs ── */}

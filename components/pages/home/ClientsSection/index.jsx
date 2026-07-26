@@ -43,7 +43,7 @@ export default function ClientsSection() {
         <section
             id="clients"
             ref={sectionRef}
-            className="relative w-full overflow-hidden px-6 py-[120px] max-[900px]:py-20 bg-slate-50/70 dark:bg-[#060913] border-t border-slate-200/80 dark:border-slate-800/80 transition-colors duration-300"
+            className="relative w-full overflow-hidden px-6 py-[120px] max-[900px]:py-20 bg-slate-100/80 dark:bg-[#080c18] border-t border-slate-200/90 dark:border-slate-800/80 transition-colors duration-300"
             suppressHydrationWarning
         >
             <div

@@ -22,7 +22,7 @@ export default function GSAPCardGrid() {
     const totalSteps = STEPS.length;
 
     return (
-        <section ref={sectionRef} className="proc-section relative bg-slate-50/70 dark:bg-[#060913] border-t border-slate-200/80 dark:border-slate-800/80 transition-colors duration-300" suppressHydrationWarning>
+        <section ref={sectionRef} className="proc-section relative bg-white dark:bg-[#060913] border-b border-slate-200/90 dark:border-slate-800/80 transition-colors duration-300" suppressHydrationWarning>
             <div
                 ref={pinRef}
                 className="proc-pin relative max-w-[1280px] mx-auto min-h-screen flex flex-col overflow-hidden [font-feature-settings:'tnum'_1]"

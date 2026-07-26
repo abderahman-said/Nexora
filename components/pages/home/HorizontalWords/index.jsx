@@ -30,7 +30,7 @@ const HorizontalWords = () => {
     return (
         <section
             ref={sectionRef}
-            className="content-section relative w-full h-screen max-[768px]:min-h-[600px] bg-[var(--bg-color)] overflow-hidden"
+            className="content-section relative w-full h-screen max-[768px]:min-h-[600px] bg-slate-100/90 dark:bg-[#0b0f19] border-t border-b border-slate-200/90 dark:border-slate-800/80 site-grid-bg overflow-hidden"
         >
             <div
                 ref={relativeRef}

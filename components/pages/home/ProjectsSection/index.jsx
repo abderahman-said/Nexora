@@ -26,7 +26,7 @@ export default function ProjectsSection() {
   return (
     <div
       id="portfolio"
-      className="pin-container relative flex min-h-screen w-full flex-col justify-center bg-[#f8fafc] dark:bg-[#060913] transition-colors duration-300 border-t border-slate-200/80 dark:border-slate-800/80"
+      className="pin-container relative flex min-h-screen w-full flex-col justify-center bg-slate-100/80 dark:bg-[#080c18] transition-colors duration-300 border-b border-slate-200/90 dark:border-slate-800/80"
       ref={pinContainerRef}
       suppressHydrationWarning
     >
