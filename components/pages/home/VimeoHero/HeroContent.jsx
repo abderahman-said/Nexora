@@ -2,7 +2,9 @@
 
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
+import { ArrowRight, MessageCircle } from "lucide-react";
 import Magnet from "@/components/ui/Magnet";
+import SectionHeader from "@/components/ui/SectionHeader";
 
 const STATS = [
   { value: "50+", label: "Projects Delivered" },
@@ -74,59 +76,19 @@ export default function HeroContent({
 }) {
   return (
     <div className="relative z-10 flex flex-col items-center">
-      {/* Badge */}
-      <div
-        ref={badgeRef}
-        className="
-                    inline-flex items-center gap-2 px-[18px] py-2 mb-6
-                    bg-blue-50 dark:bg-blue-950/60 border border-blue-200/80 dark:border-blue-800/80 rounded-full
-                    backdrop-blur-md text-xs font-bold tracking-[0.12em]
-                    uppercase text-blue-700 dark:text-blue-300 shadow-sm
-                "
-      >
-        <span
-          aria-hidden="true"
-          className="w-1.5 h-1.5 bg-[#2563eb] rounded-full animate-[pulse-glow_2s_infinite]"
-        />
-        <span>Nexora Solutions — Premium Software Engineering</span>
-      </div>
-
-      {/* Headline */}
-      <h1
-        ref={headRef}
-        className="
-                     text-[clamp(2.25rem,5.5vw,5rem)]
-                    font-black tracking-[-0.04em] leading-[1.05] text-slate-900 dark:text-white
-                    max-w-[1200px] mb-5 overflow-hidden
-                "
-      >
-        <span className="split-word">We</span>{" "}
-        <span className="split-word">architect</span>{" "}
-        <span className="split-word">scalable</span>{" "}
-        <span className="split-word">software</span>{" "}
-        <span className="split-word">that</span>{" "}
-        <span className="split-word inline-block bg-[linear-gradient(135deg,#2563eb_0%,#0284c7_60%,#4f46e5_100%)] bg-clip-text text-transparent">
-          powers
-        </span>{" "}
-        <span className="split-word inline-block bg-[linear-gradient(135deg,#2563eb_0%,#0284c7_60%,#4f46e5_100%)] bg-clip-text text-transparent">
-          your
-        </span>{" "}
-        <span className="split-word inline-block bg-[linear-gradient(135deg,#2563eb_0%,#0284c7_60%,#4f46e5_100%)] bg-clip-text text-transparent">
-          business.
-        </span>
-      </h1>
-
-      {/* Sub */}
-      <p
-        ref={subRef}
-        className="
-                    text-[clamp(0.95rem,1.4vw,1.1rem)] text-slate-700 dark:text-slate-300
-                    max-w-[640px] leading-[1.65] mb-8 font-semibold drop-shadow-[0_1px_2px_rgba(255,255,255,0.8)] dark:drop-shadow-[0_1px_2px_rgba(0,0,0,0.8)]
-                "
-      >
-        Enterprise web apps. Native mobile products. Complex cloud architecture.
-        From system design to deployment — we engineer digital excellence.
-      </p>
+      <SectionHeader
+        as="h1"
+        size="hero"
+        tag="Nexora.init()"
+        badge="Code. Innovate. Elevate."
+        badgeColor="info"
+        title="Towards A Better Digital"
+        highlight="Future For Your Business."
+        subtitle="We transform your ideas into integrated digital solutions that make a real difference and support your business growth. Delivering smart, high-performance applications designed to innovate, evolve, and scale efficiently."
+        align="center"
+        titleRef={headRef}
+        className="!mb-6"
+      />
 
       {/* CTAs */}
       <div
@@ -135,7 +97,7 @@ export default function HeroContent({
       >
         <Magnet padding={30} magnetStrength={25}>
           <Link
-            href="#portfolio"
+            href="#services"
             className="
                             group relative inline-flex items-center gap-2.5 overflow-hidden
                             px-[32px] py-[16px] rounded-full bg-gradient-to-r from-blue-600 to-sky-600 text-white
@@ -144,18 +106,13 @@ export default function HeroContent({
                             hover:shadow-xl hover:shadow-blue-500/40 hover:-translate-y-0.5
                         "
           >
-            <span className="relative z-10">See Our Work</span>
-            <span
-              aria-hidden="true"
-              className="relative z-10 transition-transform duration-300 group-hover:translate-x-1"
-            >
-              →
-            </span>
+            <span className="relative z-10">Explore Our Services</span>
+            <ArrowRight className="relative z-10 h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
           </Link>
         </Magnet>
         <Magnet padding={30} magnetStrength={25}>
           <Link
-            href="https://wa.me/201552323225"
+            href="https://wa.me/201117180818"
             target="_blank"
             rel="noopener noreferrer"
             className="
@@ -167,19 +124,7 @@ export default function HeroContent({
                             hover:text-emerald-700 dark:hover:text-emerald-400 hover:-translate-y-0.5
                         "
           >
-            <svg
-              width="18"
-              height="18"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="#10b981"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              aria-hidden="true"
-            >
-              <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z" />
-            </svg>
+            <MessageCircle className="h-4.5 w-4.5 text-emerald-500" />
             <span>WhatsApp Us</span>
           </Link>
         </Magnet>

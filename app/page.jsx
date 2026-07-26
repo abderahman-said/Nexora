@@ -13,6 +13,7 @@ import ClientAnimations from '@/components/animations/ClientAnimations';
 const ProjectsSection = dynamic(() => import('@/components/pages/home/ProjectsSection'));
 const GSAPCardGrid = dynamic(() => import('@/components/pages/home/GSAPCardGrid'));
 const CrossedBanners = dynamic(() => import('@/components/pages/home/CrossedBanners'));
+const ClientsSection = dynamic(() => import('@/components/pages/home/ClientsSection'));
 
 export default function Home() {
     return (
@@ -24,38 +25,46 @@ export default function Home() {
             <Navbar />
 
             <main>
+                {/* ── Hero Section (No background grid) ── */}
                 <section className="scroll-section relative">
                     <VimeoHero />
                 </section>
 
                 {/* ── About / Horizontal Words ── */}
-                <section className="scroll-section relative">
+                <section className="scroll-section relative ">
                     <HorizontalWords />
                 </section>
 
                 {/* ── Services Bento Grid ── */}
-                <section className="scroll-section relative">
+                <section className="scroll-section relative ">
                     <ServiceCards />
                 </section>
 
                 {/* ── Portfolio ── */}
-                <section className="scroll-section relative">
+                <section className="scroll-section relative ">
                     <Suspense fallback={<div className="min-h-[600px] flex items-center justify-center text-slate-400">Loading portfolio...</div>}>
                         <ProjectsSection />
                     </Suspense>
                 </section>
 
                 {/* ── Process ── */}
-                <section className="scroll-section relative">
+                <section className="scroll-section relative ">
                     <Suspense fallback={<div className="min-h-[500px] flex items-center justify-center text-slate-400">Loading workflow...</div>}>
                         <GSAPCardGrid />
                     </Suspense>
                 </section>
 
                 {/* ── Tech Stack Marquee ── */}
-                <section className="scroll-section relative">
+                <section className="scroll-section relative  bg-[#080d1a] dark:bg-[#040711]">
                     <Suspense fallback={<div className="min-h-[300px] flex items-center justify-center text-slate-400">Loading stack...</div>}>
                         <CrossedBanners />
+                    </Suspense>
+                </section>
+
+                {/* ── Clients & Partnerships Section ── */}
+                <section className="scroll-section relative  bg-transparent">
+                    <Suspense fallback={<div className="min-h-[400px] flex items-center justify-center text-slate-400">Loading clients...</div>}>
+                        <ClientsSection />
                     </Suspense>
                 </section>
             </main>

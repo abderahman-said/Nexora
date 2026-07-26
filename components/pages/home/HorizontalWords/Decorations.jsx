@@ -1,3 +1,5 @@
+import { Code, Layers, Star } from 'lucide-react';
+
 export function StartArrow({ arrowSvgRef }) {
     return (
         <svg
@@ -48,10 +50,7 @@ export function Stickers({ stickerWatchRef, stickerCursorRef, stickerPhoneRef })
                 text-[#0284c7] drop-shadow-[0_0_15px_rgba(2,132,199,0.3)]"
                 aria-hidden="true"
             >
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="w-full h-full">
-                    <polyline points="16 18 22 12 16 6"></polyline>
-                    <polyline points="8 6 2 12 8 18"></polyline>
-                </svg>
+                <Code className="w-full h-full" strokeWidth={1.5} />
             </div>
             <div
                 ref={stickerCursorRef}
@@ -61,11 +60,7 @@ export function Stickers({ stickerWatchRef, stickerCursorRef, stickerPhoneRef })
                 text-[#7c3aed] drop-shadow-[0_0_15px_rgba(124,58,237,0.3)]"
                 aria-hidden="true"
             >
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="w-full h-full">
-                    <polygon points="12 2 2 7 12 12 22 7 12 2"></polygon>
-                    <polyline points="2 17 12 22 22 17"></polyline>
-                    <polyline points="2 12 12 17 22 12"></polyline>
-                </svg>
+                <Layers className="w-full h-full" strokeWidth={1.5} />
             </div>
             <div
                 ref={stickerPhoneRef}
@@ -76,9 +71,7 @@ export function Stickers({ stickerWatchRef, stickerCursorRef, stickerPhoneRef })
                 text-[#2563eb] drop-shadow-[0_0_15px_rgba(37,99,235,0.3)]"
                 aria-hidden="true"
             >
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="w-full h-full">
-                    <path d="M12 2l2.4 7.6h8l-6.4 4.7 2.4 7.7-6.4-4.7-6.4 4.7 2.4-7.7-6.4-4.7h8z"></path>
-                </svg>
+                <Star className="w-full h-full" strokeWidth={1.5} />
             </div>
         </>
     )

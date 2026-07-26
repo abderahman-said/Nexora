@@ -1,6 +1,7 @@
 'use client';
 
 import React from 'react';
+import { Sun, Moon } from 'lucide-react';
 import { useTheme } from '@/context/ThemeContext';
 import Magnet from './Magnet';
 
@@ -27,49 +28,23 @@ export default function ThemeToggle({ className = '' }) {
 
                 {/* Icons container with flip transition */}
                 <div className="relative flex h-5 w-5 items-center justify-center">
-                    {/* Sun Icon (shown in dark mode to switch to light mode, or indicates light mode state) */}
-                    <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="currentColor"
-                        strokeWidth="2"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
+                    {/* Sun Icon */}
+                    <Sun
                         className={`absolute h-5 w-5 text-amber-500 transition-all duration-500 ease-[cubic-bezier(0.34,1.56,0.64,1)] ${
                             mounted && isDark
                                 ? 'rotate-0 scale-100 opacity-100'
                                 : '-rotate-90 scale-0 opacity-0'
                         }`}
-                    >
-                        <circle cx="12" cy="12" r="4" />
-                        <path d="M12 2v2" />
-                        <path d="M12 20v2" />
-                        <path d="m4.93 4.93 1.41 1.41" />
-                        <path d="m17.66 17.66 1.41 1.41" />
-                        <path d="M2 12h2" />
-                        <path d="M20 12h2" />
-                        <path d="m6.34 17.66-1.41 1.41" />
-                        <path d="m19.07 4.93-1.41 1.41" />
-                    </svg>
+                    />
 
-                    {/* Moon Icon (shown in light mode to switch to dark mode) */}
-                    <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="currentColor"
-                        strokeWidth="2"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
+                    {/* Moon Icon */}
+                    <Moon
                         className={`absolute h-5 w-5 text-blue-600 transition-all duration-500 ease-[cubic-bezier(0.34,1.56,0.64,1)] dark:text-blue-400 ${
                             mounted && !isDark
                                 ? 'rotate-0 scale-100 opacity-100'
                                 : 'rotate-90 scale-0 opacity-0'
                         }`}
-                    >
-                        <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z" />
-                    </svg>
+                    />
                 </div>
             </button>
         </Magnet>

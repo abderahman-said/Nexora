@@ -111,7 +111,10 @@ const Particles = ({
     mouseRef.current = { x, y };
   }, []);
 
-  const palette = particleColors && particleColors.length > 0 ? particleColors : defaultColors;
+  const palette = useMemo(
+    () => (particleColors && particleColors.length > 0 ? particleColors : defaultColors),
+    [particleColors]
+  );
 
   useEffect(() => {
     const container = containerRef.current;
@@ -239,7 +242,8 @@ const Particles = ({
     cameraDistance,
     disableRotation,
     pixelRatio,
-    handleMouseMove
+    handleMouseMove,
+    palette
   ]);
 
   return <div ref={containerRef} className={`relative w-full h-full ${className}`} />;

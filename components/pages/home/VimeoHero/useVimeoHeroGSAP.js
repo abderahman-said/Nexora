@@ -16,41 +16,55 @@ export function useVimeoHeroGSAP({ heroRef, headRef, subRef, statsRef, ctaRef, b
         const tl = gsap.timeline({ defaults: { ease: 'power4.out' } });
 
         // Badge entrance
-        tl.from(badgeRef.current, { opacity: 0, y: 20, scale: 0.9, duration: 0.7 });
+        if (badgeRef.current) {
+            tl.from(badgeRef.current, { opacity: 0, y: 20, scale: 0.9, duration: 0.7 });
+        }
 
         // Headline words stagger up
-        gsap.set(words, { y: 40, opacity: 0, display: 'inline-block' });
-        tl.to(words, {
-            y: 0, opacity: 1,
-            duration: 0.8,
-            stagger: 0.04,
-            ease: 'power3.out',
-        }, '-=0.2');
+        if (words.length > 0) {
+            gsap.set(words, { y: 40, opacity: 0, display: 'inline-block' });
+            tl.to(words, {
+                y: 0, opacity: 1,
+                duration: 0.8,
+                stagger: 0.04,
+                ease: 'power3.out',
+            }, '-=0.2');
+        }
 
         // Subtitle
-        tl.from(subRef.current, { opacity: 0, y: 30, duration: 0.8 }, '-=0.5');
+        if (subRef.current) {
+            tl.from(subRef.current, { opacity: 0, y: 30, duration: 0.8 }, '-=0.5');
+        }
 
         // CTA
-        tl.from(ctaRef.current?.children || [], {
-            opacity: 0, y: 20, stagger: 0.1, duration: 0.6,
-        }, '-=0.5');
+        const ctaChildren = Array.from(ctaRef.current?.children || []);
+        if (ctaChildren.length > 0) {
+            tl.from(ctaChildren, {
+                opacity: 0, y: 20, stagger: 0.1, duration: 0.6,
+            }, '-=0.5');
+        }
 
         // Stats
-        tl.from(statsRef.current?.children || [], {
-            opacity: 0, y: 20, stagger: 0.08, duration: 0.5,
-        }, '-=0.4');
+        const statsChildren = Array.from(statsRef.current?.children || []);
+        if (statsChildren.length > 0) {
+            tl.from(statsChildren, {
+                opacity: 0, y: 20, stagger: 0.08, duration: 0.5,
+            }, '-=0.4');
+        }
 
         // Scroll parallax — hero moves up slightly
-        gsap.to(heroRef.current, {
-            yPercent: 10,
-            ease: 'none',
-            scrollTrigger: {
-                trigger: heroRef.current,
-                start: 'top top',
-                end: 'bottom top',
-                scrub: true,
-            },
-        });
+        if (heroRef.current) {
+            gsap.to(heroRef.current, {
+                yPercent: 10,
+                ease: 'none',
+                scrollTrigger: {
+                    trigger: heroRef.current,
+                    start: 'top top',
+                    end: 'bottom top',
+                    scrub: true,
+                },
+            });
+        }
 
         // Side decorators parallax at different speeds
         const sideEls = heroRef.current.querySelectorAll('.hero-side-el');

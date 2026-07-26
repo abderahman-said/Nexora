@@ -7,8 +7,9 @@ gsap.registerPlugin(ScrollTrigger);
 export function useFooterGSAP({ footerRef, infoRef, bgWordRef }) {
     useEffect(() => {
         const ctx = gsap.context(() => {
-            if (infoRef.current) {
-                gsap.from(infoRef.current.children || [], {
+            const infoChildren = Array.from(infoRef.current?.children || []);
+            if (infoChildren.length > 0 && footerRef.current) {
+                gsap.from(infoChildren, {
                     opacity: 0,
                     y: 20,
                     duration: 0.5,
@@ -22,7 +23,7 @@ export function useFooterGSAP({ footerRef, infoRef, bgWordRef }) {
                 "(prefers-reduced-motion: reduce)"
             ).matches;
             
-            if (bgWordRef.current && !reduceMotion) {
+            if (bgWordRef.current && footerRef.current && !reduceMotion) {
                 gsap.fromTo(
                     bgWordRef.current,
                     { autoAlpha: 0, scale: 0.94 },

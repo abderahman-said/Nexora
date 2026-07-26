@@ -1,5 +1,7 @@
 import React from "react";
 import Link from "next/link";
+import { Mail, Phone } from "lucide-react";
+import { LinkedinIcon } from "@/components/icons/LinkedinIcon";
 
 export function FooterColumns() {
   return (
@@ -47,25 +49,25 @@ export function FooterColumns() {
 
         {/* Email */}
         <Link
-          href="mailto:abdorady6500@gmail.com"
+          href="mailto:info@nexora-solutions.co"
           className="mt-5  text-[clamp(1.2rem,1.8vw,1.65rem)] font-black tracking-tight text-white transition-colors duration-200 hover:text-blue-400"
         >
-          abdorady6500@gmail.com
+          info@nexora-solutions.co
         </Link>
 
         {/* WhatsApp Link */}
         <Link
-          href="https://wa.me/201552323225"
+          href="https://wa.me/201117180818"
           target="_blank"
           rel="noopener noreferrer"
           className="mt-1.5  text-[clamp(1.3rem,2vw,1.8rem)] font-black tracking-tight text-white transition-colors duration-200 hover:text-emerald-400"
         >
-          send me a whatsapp*
+          +20 111 718 0818
         </Link>
 
         {/* Subtext */}
         <p className="mt-1 font-mono text-[11px] font-medium italic text-slate-400">
-          *feel free to message me anytime!
+          *Feel free to message us anytime!
         </p>
 
         {/* Social Icons Row */}
@@ -78,50 +80,25 @@ export function FooterColumns() {
             aria-label="LinkedIn Profile"
             className="flex h-10 w-10 items-center justify-center rounded-xl bg-slate-800/80 text-white border border-slate-700/80 transition-all duration-300 hover:scale-110 hover:bg-blue-600 hover:border-blue-500 shadow-sm"
           >
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
-              <path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.28 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.75M6.88 8.56a1.68 1.68 0 0 0 1.68-1.68c0-.93-.75-1.69-1.68-1.69a1.69 1.69 0 0 0-1.69 1.69c0 .93.76 1.68 1.69 1.68m1.39 9.94v-8.37H5.5v8.37h2.77Z" />
-            </svg>
+            <LinkedinIcon className="h-4.5 w-4.5" />
           </Link>
 
           {/* Email */}
           <Link
-            href="mailto:abdorady6500@gmail.com"
+            href="mailto:info@nexora-solutions.co"
             aria-label="Send Email"
             className="flex h-10 w-10 items-center justify-center rounded-xl bg-slate-800/80 text-white border border-slate-700/80 transition-all duration-300 hover:scale-110 hover:bg-sky-600 hover:border-sky-500 shadow-sm"
           >
-            <svg
-              width="18"
-              height="18"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2.2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            >
-              <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
-              <polyline points="22,6 12,13 2,6"></polyline>
-            </svg>
+            <Mail className="h-4.5 w-4.5" />
           </Link>
 
           {/* Phone / Call */}
           <Link
-            href="tel:+201552323225"
+            href="tel:+201117180818"
             aria-label="Call Us"
             className="flex h-10 w-10 items-center justify-center rounded-xl bg-slate-800/80 text-white border border-slate-700/80 transition-all duration-300 hover:scale-110 hover:bg-emerald-600 hover:border-emerald-500 shadow-sm"
           >
-            <svg
-              width="18"
-              height="18"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2.2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            >
-              <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
-            </svg>
+            <Phone className="h-4.5 w-4.5" />
           </Link>
         </div>
       </div>

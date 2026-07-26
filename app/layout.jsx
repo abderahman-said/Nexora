@@ -11,16 +11,14 @@ export const metadata = {
   
   keywords: [
     'Digital Agency',
-    'Software House',
-    'Web Development',
+    'Software Engineering',
+    'Application Development',
     'Mobile Apps',
-    'React.js',
-    'Next.js',
     'UI/UX Design',
-    'Cloud Solutions',
+    'Integrated Tech Solutions',
+    'Technical Consulting',
     'Custom Software',
     'Nexora Solutions',
-    'Egypt',
   ],
 
   authors: [{ name: 'Nexora Solutions' }],
@@ -93,7 +91,7 @@ export default function RootLayout({ children }) {
           }}
         />
       </head>
-      <body className="bg-[#f8fafc] text-slate-900 dark:bg-[#090d16] dark:text-slate-100 antialiased overflow-x-hidden transition-colors duration-300" suppressHydrationWarning>
+      <body className="bg-[#f8fafc] site-grid-bg text-slate-900 dark:bg-[#090d16] dark:text-slate-100 antialiased overflow-x-hidden transition-colors duration-300" suppressHydrationWarning>
         <ThemeProvider>
           {children}
         </ThemeProvider>

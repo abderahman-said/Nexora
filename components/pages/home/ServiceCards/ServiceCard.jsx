@@ -67,7 +67,7 @@ export function ServiceCard({ service, index }) {
                             boxShadow: `0 0 24px color-mix(in srgb, var(--accent) 12%, transparent)`,
                         }}
                     >
-                        {service.icon}
+                        {React.createElement(service.icon, { className: "w-6 h-6", style: { color: 'var(--accent)' } })}
                     </div>
 
                     {/* title */}

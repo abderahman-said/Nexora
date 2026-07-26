@@ -4,6 +4,7 @@ import { useRef } from "react";
 import ProjectCard from "./ProjectCard";
 import { projects } from "./projectsData";
 import { useProjectsGSAP } from "./useProjectsGSAP";
+import SectionHeader from "@/components/ui/SectionHeader";
 
 export default function ProjectsSection() {
   const pinContainerRef = useRef(null);
@@ -24,7 +25,7 @@ export default function ProjectsSection() {
   return (
     <div
       id="portfolio"
-      className="pin-container relative flex min-h-screen w-full flex-col justify-center bg-[#f8fafc] dark:bg-[#090d16] transition-colors duration-300"
+      className="pin-container relative flex min-h-screen w-full flex-col justify-center bg-[#f8fafc] dark:bg-[#060913] transition-colors duration-300 border-t border-slate-200/80 dark:border-slate-800/80"
       ref={pinContainerRef}
       suppressHydrationWarning
     >
@@ -35,49 +36,47 @@ export default function ProjectsSection() {
         ref={introRef}
         suppressHydrationWarning
       >
-        <span
-          className="text-[clamp(16px,2vw,24px)] font-bold uppercase tracking-[0.28em] text-[#2563eb]"
-          ref={introLabelRef}
-          suppressHydrationWarning
-        >
-          Our Work
-        </span>
-        <h2
-          className="gsap-managed m-0 text-center text-[clamp(40px,6.5vw,110px)] font-black leading-none tracking-[-0.04em] text-slate-900 dark:text-white [will-change:opacity,transform]"
-          ref={introTextRef}
-          suppressHydrationWarning
-        >
-          Selected{' '}
-          <em className="italic font-normal text-transparent [-webkit-text-stroke:1.5px_rgba(15,23,42,0.3)] dark:[-webkit-text-stroke:1.5px_rgba(255,255,255,0.3)]">
-            Works
-          </em>
-        </h2>
+        <div ref={introLabelRef} suppressHydrationWarning>
+          <SectionHeader
+            tag="Portfolio"
+            badge="Featured Case Studies"
+            badgeColor="success"
+            title="Selected"
+            highlight="Works"
+            align="center"
+            titleRef={introTextRef}
+            animClass="gsap-managed"
+            className="!mb-0"
+          />
+        </div>
       </div>
 
       {/* ── Main content ── */}
       <div className="[will-change:opacity]" ref={contentRef} suppressHydrationWarning>
 
         <div
-          className="proj-heading-wrap flex flex-wrap items-end justify-between gap-8 px-[72px] pb-6 pt-12 max-lg:px-8 max-lg:pb-7 max-sm:flex-col max-sm:items-start max-sm:px-5 max-sm:pb-5 max-sm:pt-10"
+          className="proj-heading-wrap px-[72px] pb-6 pt-12 max-lg:px-8 max-lg:pb-7 max-sm:px-5 max-sm:pb-5 max-sm:pt-10"
           suppressHydrationWarning
         >
-          <h2
-            className="gsap-managed proj-heading m-0 text-[clamp(36px,5.5vw,80px)] font-black leading-[0.95] tracking-[-0.04em] text-slate-900 dark:text-white [will-change:opacity,transform]"
-            suppressHydrationWarning
-          >
-            Selected{' '}
-            <em className="font-normal italic text-transparent [-webkit-text-stroke:1.5px_rgba(15,23,42,0.3)] dark:[-webkit-text-stroke:1.5px_rgba(255,255,255,0.3)]">
-              Works
-            </em>
-          </h2>
-          <div className="proj-meta flex flex-col items-end gap-1.5 pb-1.5 [will-change:opacity,transform] max-sm:items-start">
-            <span className="text-[11px] font-bold uppercase tracking-[0.18em] text-slate-500 dark:text-slate-400">
-              {String(projects.length).padStart(2, "0")} Projects
-            </span>
-            <span className="flex items-center gap-2 text-[11px] font-medium tracking-[0.08em] text-slate-400 dark:text-slate-500 before:inline-block before:h-px before:w-7 before:bg-slate-300 dark:before:bg-slate-700 before:content-[''] max-lg:hidden">
-              Scroll to explore
-            </span>
-          </div>
+          <SectionHeader
+            tag="Portfolio"
+            badge="Featured Case Studies"
+            badgeColor="success"
+            title="Selected"
+            highlight="Works"
+            align="between"
+            animClass="gsap-managed proj-heading"
+            rightElement={
+              <div className="proj-meta flex flex-col items-end gap-1.5 pb-1.5 max-sm:items-start">
+                <span className="text-[11px] font-bold uppercase tracking-[0.18em] text-slate-500 dark:text-slate-400">
+                  {String(projects.length).padStart(2, "0")} Projects
+                </span>
+                <span className="flex items-center gap-2 text-[11px] font-medium tracking-[0.08em] text-slate-400 dark:text-slate-500 before:inline-block before:h-px before:w-7 before:bg-slate-300 dark:before:bg-slate-700 before:content-[''] max-lg:hidden">
+                  Scroll to explore
+                </span>
+              </div>
+            }
+          />
         </div>
 
         <div className="scroll-progress-wrap flex items-center gap-4 px-[72px] pb-7 [will-change:opacity,transform] max-lg:px-8 max-lg:pb-6 max-sm:px-5 max-sm:pb-5">

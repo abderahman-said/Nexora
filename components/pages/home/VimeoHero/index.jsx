@@ -22,7 +22,7 @@ export default function VimeoHero() {
             ref={heroRef}
             className="
                 relative min-h-screen flex flex-col items-center justify-center
-                text-center overflow-hidden bg-[#f8fafc] dark:bg-[#030712] transition-colors duration-300
+                text-center overflow-hidden bg-[#f8fafc] dark:bg-[#060913] transition-colors duration-300
                 px-5 pt-[88px] pb-12
                 md:px-6 md:pt-24 md:pb-14
             "

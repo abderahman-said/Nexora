@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import { ArrowUpRight } from 'lucide-react';
 import OptimizedImage from '@/components/ui/OptimizedImage';
 
 export default function ProjectCard({ p }) {
@@ -11,7 +12,7 @@ export default function ProjectCard({ p }) {
       <Link
         href={p.link}
         target="_blank"
-        rel="noreferrer"
+        rel="noopener noreferrer"
         className="relative min-h-[260px] overflow-hidden max-sm:min-h-[200px]"
         aria-label={`View ${p.name}`}
       >
@@ -68,11 +69,11 @@ export default function ProjectCard({ p }) {
           <Link
             href={p.link}
             target="_blank"
-            rel="noreferrer"
+            rel="noopener noreferrer"
             className="flex h-[38px] w-[38px] flex-shrink-0 items-center justify-center rounded-full border border-slate-200 dark:border-slate-700 text-[15px] text-slate-500 dark:text-slate-400 no-underline transition-[background,color,transform,border-color] duration-300 group-hover:rotate-45 group-hover:border-[#2563eb] group-hover:bg-[#2563eb] group-hover:text-white shadow-sm"
             aria-label={`Open ${p.name}`}
           >
-            ↗
+            <ArrowUpRight className="h-4 w-4 transition-transform duration-300 group-hover:rotate-45" />
           </Link>
         </div>
       </div>

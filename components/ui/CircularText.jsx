@@ -34,7 +34,7 @@ const CircularText = ({ text, spinDuration = 20, onHover = 'speedUp', className 
       const y = factor * i;
       return { rotationDeg, x, y };
     });
-  }, [letters.length]);
+  }, [letters]);
 
   useEffect(() => {
     const start = rotation.get();

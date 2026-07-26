@@ -19,13 +19,16 @@ export function useServiceCardsGSAP(sectionRef) {
             /* ─────────────────────────────────────────
                1. Badge label ("What We Do") slide-in
             ───────────────────────────────────────── */
-            gsap.from(self.selector('.services-badge'), {
-                opacity: 0,
-                x: -20,
-                duration: 0.6,
-                ease: 'power2.out',
-                scrollTrigger: { ...triggerBase },
-            });
+            const badgeEl = self.selector('.services-badge');
+            if (badgeEl.length > 0) {
+                gsap.from(badgeEl, {
+                    opacity: 0,
+                    x: -20,
+                    duration: 0.6,
+                    ease: 'power2.out',
+                    scrollTrigger: { ...triggerBase },
+                });
+            }
 
             /* ─────────────────────────────────────────
                2. Heading — SplitText word stagger
@@ -61,63 +64,69 @@ export function useServiceCardsGSAP(sectionRef) {
             /* ─────────────────────────────────────────
                3. Subtitle paragraph
             ───────────────────────────────────────── */
-            gsap.from(self.selector('.services-subtitle'), {
-                opacity: 0,
-                y: 20,
-                duration: 0.7,
-                ease: 'power2.out',
-                scrollTrigger: { ...triggerBase, start: 'top 75%' },
-            });
+            const subtitleEl = self.selector('.services-subtitle');
+            if (subtitleEl.length > 0) {
+                gsap.from(subtitleEl, {
+                    opacity: 0,
+                    y: 20,
+                    duration: 0.7,
+                    ease: 'power2.out',
+                    scrollTrigger: { ...triggerBase, start: 'top 75%' },
+                });
+            }
 
             /* ─────────────────────────────────────────
                4. Cards — stagger reveal with clip-path
             ───────────────────────────────────────── */
             const cards = self.selector('[data-service-card]');
-
-            gsap.fromTo(
-                cards,
-                {
-                    opacity: 0,
-                    y: 60,
-                    scale: 0.94,
-                    clipPath: 'inset(10% 5% 10% 5% round 28px)',
-                },
-                {
-                    opacity: 1,
-                    y: 0,
-                    scale: 1,
-                    clipPath: 'inset(0% 0% 0% 0% round 28px)',
-                    duration: 0.75,
-                    stagger: {
-                        amount: 0.45,
-                        from: 'start',
-                        ease: 'power1.inOut',
+            if (cards.length > 0) {
+                gsap.fromTo(
+                    cards,
+                    {
+                        opacity: 0,
+                        y: 60,
+                        scale: 0.94,
+                        clipPath: 'inset(10% 5% 10% 5% round 28px)',
                     },
-                    ease: 'power3.out',
-                    scrollTrigger: {
-                        trigger: sectionRef.current,
-                        start: 'top 70%',
-                    },
-                }
-            );
+                    {
+                        opacity: 1,
+                        y: 0,
+                        scale: 1,
+                        clipPath: 'inset(0% 0% 0% 0% round 28px)',
+                        duration: 0.75,
+                        stagger: {
+                            amount: 0.45,
+                            from: 'start',
+                            ease: 'power1.inOut',
+                        },
+                        ease: 'power3.out',
+                        scrollTrigger: {
+                            trigger: sectionRef.current,
+                            start: 'top 70%',
+                        },
+                    }
+                );
+            }
 
             /* ─────────────────────────────────────────
                5. Top accent line on each card — grows on entry (GPU scaleX)
             ───────────────────────────────────────── */
             const lines = self.selector('.service-card-line');
-            gsap.fromTo(lines, 
-                { scaleX: 0, transformOrigin: 'left' },
-                {
-                    scaleX: 1,
-                    duration: 0.9,
-                    stagger: 0.12,
-                    ease: 'expo.out',
-                    scrollTrigger: {
-                        trigger: sectionRef.current,
-                        start: 'top 68%',
-                    },
-                }
-            );
+            if (lines.length > 0) {
+                gsap.fromTo(lines, 
+                    { scaleX: 0, transformOrigin: 'left' },
+                    {
+                        scaleX: 1,
+                        duration: 0.9,
+                        stagger: 0.12,
+                        ease: 'expo.out',
+                        scrollTrigger: {
+                            trigger: sectionRef.current,
+                            start: 'top 68%',
+                        },
+                    }
+                );
+            }
 
             /* ─────────────────────────────────────────
                6. Icon subtle float loop (per card)

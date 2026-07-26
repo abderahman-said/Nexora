@@ -4,6 +4,7 @@ import { useRef } from 'react';
 import { STEPS } from './gsapCardData';
 import { useCardGridGSAP } from './useCardGridGSAP';
 import ProcessPanel from './ProcessPanel';
+import SectionHeader from '@/components/ui/SectionHeader';
 
 export default function GSAPCardGrid() {
     const sectionRef = useRef(null);
@@ -21,18 +22,14 @@ export default function GSAPCardGrid() {
     const totalSteps = STEPS.length;
 
     return (
-        <section ref={sectionRef} className="proc-section relative bg-slate-50 dark:bg-[#0b1329]/90 border-t border-black/10 dark:border-slate-800 transition-colors duration-300" suppressHydrationWarning>
+        <section ref={sectionRef} className="proc-section relative bg-slate-50/70 dark:bg-[#060913] border-t border-slate-200/80 dark:border-slate-800/80 transition-colors duration-300" suppressHydrationWarning>
             <div
                 ref={pinRef}
                 className="proc-pin relative max-w-[1280px] mx-auto min-h-screen flex flex-col overflow-hidden [font-feature-settings:'tnum'_1]"
                 style={{ '--accent': STEPS[0].accent }}
                 suppressHydrationWarning
             >
-                {/* Background grid */}
-                <div
-                    className="absolute inset-0 pointer-events-none z-0 bg-[linear-gradient(rgba(0,0,0,0.04)_1px,transparent_1px),linear-gradient(90deg,rgba(0,0,0,0.04)_1px,transparent_1px)] dark:bg-[linear-gradient(rgba(255,255,255,0.04)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.04)_1px,transparent_1px)] [background-size:56px_56px] [mask-image:radial-gradient(ellipse_at_30%_50%,black_15%,transparent_72%)]"
-                    aria-hidden="true"
-                />
+                
 
                 {/* Technical corner accents */}
                 <div className="absolute top-6 left-6 w-5 h-5 z-10 pointer-events-none opacity-40 max-lg:hidden border-t border-l border-slate-900/30 dark:border-slate-100/30" aria-hidden="true" />
@@ -41,13 +38,21 @@ export default function GSAPCardGrid() {
                 <div className="absolute bottom-6 right-6 w-5 h-5 z-10 pointer-events-none opacity-40 max-lg:hidden border-b border-r border-slate-900/30 dark:border-slate-100/30" aria-hidden="true" />
 
                 {/* Header */}
-                <div className="proc-header relative z-10 px-5 md:px-16 pt-10 md:pt-14 flex items-baseline justify-between gap-6 flex-wrap">
-                    <div className="inline-flex items-center gap-2.5 text-[0.72rem] font-bold uppercase tracking-[0.16em] text-[var(--accent)] transition-colors duration-500 before:block before:w-5 before:h-px before:bg-current">
-                        How we work
-                    </div>
-                    <div ref={readoutRef} className="text-[0.78rem] font-semibold tracking-[0.04em] text-slate-900/50 dark:text-slate-400" aria-live="polite">
-                        SEQ <b className="text-slate-900 dark:text-white font-bold">{String(activeIndex + 1).padStart(2, '0')}</b> / {String(totalSteps).padStart(2, '0')} — {active.title.toUpperCase()}
-                    </div>
+                <div className="proc-header relative z-10 px-5 md:px-16 pt-10 md:pt-14">
+                    <SectionHeader
+                        tag="Workflow"
+                        badge="How We Work"
+                        badgeColor="info"
+                        title="Engineered For"
+                        highlight="Scale & Speed"
+                        align="between"
+                        className="!mb-4"
+                        rightElement={
+                            <div ref={readoutRef} className="text-[0.78rem] font-semibold tracking-[0.04em] text-slate-900/50 dark:text-slate-400 pb-1" aria-live="polite">
+                                SEQ <b className="text-slate-900 dark:text-white font-bold">{String(activeIndex + 1).padStart(2, '0')}</b> / {String(totalSteps).padStart(2, '0')} — {active.title.toUpperCase()}
+                            </div>
+                        }
+                    />
                 </div>
 
                 {/* Progress bar and step tabs */}

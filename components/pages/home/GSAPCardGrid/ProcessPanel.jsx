@@ -1,3 +1,5 @@
+import React from 'react';
+
 export default function ProcessPanel({ s, panelRef }) {
     return (
         <div
@@ -8,7 +10,7 @@ export default function ProcessPanel({ s, panelRef }) {
         >
             <div>
                 <div className="w-16 h-16 relative flex items-center justify-center text-[1.6rem] text-[var(--panel-accent,var(--accent))] mb-7 before:content-[''] before:absolute before:inset-0 before:border before:border-dashed before:border-[var(--panel-accent,var(--accent))] before:rounded-lg before:opacity-60">
-                    {s.icon}
+                    {React.createElement(s.icon, { className: "w-7 h-7" })}
                 </div>
                 <div className="text-[0.72rem] font-bold tracking-[0.1em] text-[var(--panel-accent,var(--accent))] mb-4">
                     §{s.step}

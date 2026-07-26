@@ -1,6 +1,7 @@
 import React from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
+import { ArrowUpRight } from 'lucide-react';
 import Magnet from '../../ui/Magnet';
 import ThemeToggle from '../../ui/ThemeToggle';
 import { NAV_LINKS } from './navData';
@@ -16,7 +17,7 @@ export function NavLogo({ logoRef }) {
                         width={140}
                         height={42}
                         priority
-                        className="h-[52px] w-auto object-contain dark:brightness-110"
+                        className="h-auto max-h-[50px]  w-auto object-contain dark:brightness-110"
                     />
                 </Link>
             </Magnet>
@@ -54,20 +55,7 @@ export function NavCTA({ ctaRef }) {
                     className="group/cta inline-flex items-center gap-2.5 rounded-full bg-gradient-to-r from-blue-600 to-sky-600 px-8 py-[14px] text-[0.85rem] font-extrabold uppercase tracking-[0.05em] text-white no-underline transition-[transform,shadow] duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] will-change-transform hover:-translate-y-0.5 hover:shadow-lg hover:shadow-blue-500/25 shadow-md max-md:p-3"
                 >
                     <span className="label max-md:hidden">Let's Talk</span>
-                    <svg
-                        width="16"
-                        height="16"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="currentColor"
-                        strokeWidth="2.5"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        className="transition-transform duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover/cta:[transform:translate(2px,-2px)]"
-                    >
-                        <line x1="5" y1="19" x2="19" y2="5"></line>
-                        <polyline points="10 5 19 5 19 14"></polyline>
-                    </svg>
+                    <ArrowUpRight className="h-4 w-4 transition-transform duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover/cta:[transform:translate(2px,-2px)]" />
                 </Link>
             </Magnet>
         </div>

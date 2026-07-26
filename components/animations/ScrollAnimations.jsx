@@ -228,6 +228,7 @@ function animateSections(reduceMotion) {
            component-level GSAP hook and must NOT be touched here.       ── */
         const headings = sec.querySelectorAll('h2:not(.gsap-managed), h3:not(.gsap-managed)');
         headings.forEach((h) => {
+            if (!h) return;
             gsap.from(h, {
                 opacity: 0,
                 y: reduceMotion ? 0 : 40,
@@ -242,8 +243,8 @@ function animateSections(reduceMotion) {
         });
 
         /* ── G. Paragraph / body text stagger ── */
-        const paras = sec.querySelectorAll('p:not(.sd-label)');
-        if (paras.length) {
+        const paras = Array.from(sec.querySelectorAll('p:not(.sd-label)'));
+        if (paras.length > 0) {
             gsap.from(paras, {
                 opacity: 0,
                 y: reduceMotion ? 0 : 24,
@@ -262,11 +263,12 @@ function animateSections(reduceMotion) {
     /* ── H. Cards / bento items via ScrollTrigger.batch()
        ✅ PERF: One IntersectionObserver for ALL cards instead of N individual
        ScrollTrigger instances. Saves ~(N-1) intersection checks per frame. ── */
-    const cards = gsap.utils.toArray('.bento-card, .process-step, .hw-feature, .about-feature');
-    if (cards.length) {
+    const cards = gsap.utils.toArray('.bento-card, .process-step, .hw-feature, .about-feature').filter(Boolean);
+    if (cards.length > 0) {
         ScrollTrigger.batch(cards, {
             start: 'top 88%',
             onEnter(batch) {
+                if (!batch || !batch.length) return;
                 gsap.from(batch, {
                     opacity: 0,
                     y: reduceMotion ? 0 : 60,
@@ -278,6 +280,7 @@ function animateSections(reduceMotion) {
                 });
             },
             onLeaveBack(batch) {
+                if (!batch || !batch.length) return;
                 gsap.to(batch, {
                     opacity: 0,
                     y: reduceMotion ? 0 : 60,

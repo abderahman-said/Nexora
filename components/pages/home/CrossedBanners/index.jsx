@@ -1,4 +1,3 @@
-// CrossedBanners.jsx
 'use client';
 
 import { useEffect, useRef } from 'react';
@@ -6,6 +5,7 @@ import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { TECH_ROW_1, TECH_ROW_2 } from './techData';
 import { MarqueeRow } from './MarqueeRow';
+import SectionHeader from '@/components/ui/SectionHeader';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -24,16 +24,18 @@ export default function CrossedBanners() {
         <section
             id="tech"
             ref={sectionRef}
-            className="relative w-full overflow-hidden  pb-[140px] bg-slate-50/70 dark:bg-[#0b1329]/90 transition-colors duration-300"
+            className="relative w-full overflow-hidden py-16 pb-[140px] bg-[#080d1a] dark:bg-[#040711] transition-colors duration-300"
         >
             {/* heading */}
-            <div className="relative z-20 mb-20 px-6 text-center" ref={headRef} suppressHydrationWarning>
-                <div className="mb-5 inline-flex items-center gap-2.5 text-[0.7rem] font-bold uppercase tracking-[0.2em] text-[#0a1628] dark:text-slate-300 before:block before:h-px before:w-6 before:bg-[#0a1628] dark:before:bg-slate-300 before:content-['']">
-                    Technology
-                </div>
-                <h2 className="text-[clamp(1.75rem,3vw,2.75rem)] font-black tracking-[-0.04em] text-[#0a1628] dark:text-white">
-                    Our Tech Stack
-                </h2>
+            <div className="relative z-20 mb-12 px-6" ref={headRef} suppressHydrationWarning>
+                <SectionHeader
+                    tag="TechStack"
+                    badge="What We Build & How"
+                    badgeColor="info"
+                    title="What We Build."
+                    highlight="How We Build It."
+                    align="center"
+                />
             </div>
 
             {/* crossed ribbon banners */}

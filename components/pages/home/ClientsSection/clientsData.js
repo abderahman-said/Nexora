@@ -1,0 +1,67 @@
+export const TESTIMONIALS = [
+  {
+    id: "01",
+    clientName: "Sarah Johnson",
+    role: "Marketing Manager",
+    company: "Bright Digital Agency",
+    comment:
+      "The team exceeded our expectations by delivering a fast, modern, and highly responsive website. Communication was smooth throughout the entire project.",
+    rating: 5,
+    metric: "+85% Engagement",
+    accent: "#00e5ff",
+    avatar: "/images/testimonials/sarah.jpg",
+    initials: "SJ",
+  },
+  {
+    id: "02",
+    clientName: "Michael Carter",
+    role: "Founder & CEO",
+    company: "NovaTech Solutions",
+    comment:
+      "Our platform now performs significantly better thanks to the optimized backend architecture. The scalability improvements have been outstanding.",
+    rating: 5,
+    metric: "2.8x Faster API",
+    accent: "#c084fc",
+    avatar: "/images/testimonials/michael.jpg",
+    initials: "MC",
+  },
+  {
+    id: "03",
+    clientName: "Emily Rodriguez",
+    role: "Product Designer",
+    company: "Pixel Studio",
+    comment:
+      "The attention to UI details and user experience made a huge difference. Our customers immediately noticed the improved interface.",
+    rating: 5,
+    metric: "+42% User Retention",
+    accent: "#2dd4bf",
+    avatar: "/images/testimonials/emily.jpg",
+    initials: "ER",
+  },
+  {
+    id: "04",
+    clientName: "David Wilson",
+    role: "Operations Director",
+    company: "CloudSync Inc.",
+    comment:
+      "From planning to deployment, every stage was handled professionally. The final product was stable, secure, and easy to maintain.",
+    rating: 5,
+    metric: "99.95% Reliability",
+    accent: "#f59e0b",
+    avatar: "/images/testimonials/david.jpg",
+    initials: "DW",
+  },
+  {
+    id: "05",
+    clientName: "Olivia Brown",
+    role: "E-Commerce Manager",
+    company: "UrbanMart",
+    comment:
+      "The new online store dramatically improved customer experience and checkout speed. Sales increased within the first month after launch.",
+    rating: 5,
+    metric: "+120% Sales",
+    accent: "#ec4899",
+    avatar: "/images/testimonials/olivia.jpg",
+    initials: "OB",
+  },
+];

@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect } from "react";
+import { X } from "lucide-react";
 
 export default function VideoModal({ isOpen, onClose, videoUrl = "https://player.vimeo.com/video/76979871?autoplay=1" }) {
   useEffect(() => {
@@ -51,7 +52,7 @@ export default function VideoModal({ isOpen, onClose, videoUrl = "https://player
             aria-label="Close modal"
             className="w-8 h-8 rounded-full flex items-center justify-center text-slate-400 hover:text-white bg-slate-800/80 hover:bg-slate-800 transition-colors cursor-pointer"
           >
-            ✕
+            <X className="w-4 h-4" />
           </button>
         </div>
 

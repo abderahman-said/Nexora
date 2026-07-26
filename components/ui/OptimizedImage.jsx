@@ -1,5 +1,6 @@
 import Image from 'next/image';
-import { useState, useEffect } from 'react';
+
+const DEFAULT_BLUR_DATA_URL = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg==';
 
 const OptimizedImage = ({ 
   src, 
@@ -14,32 +15,7 @@ const OptimizedImage = ({
   blurDataURL,
   ...props 
 }) => {
-  const [isClient, setIsClient] = useState(false);
-
-  useEffect(() => {
-    setIsClient(true);
-  }, []);
-
-  // Generate blur data URL if not provided (only on client)
-  const generateBlurDataURL = (width, height) => {
-    if (!isClient) return 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNkYPhfDwAChwGA60e6kgAAAABJRU5ErkJggg==';
-    
-    const canvas = document.createElement('canvas');
-    canvas.width = width;
-    canvas.height = height;
-    const ctx = canvas.getContext('2d');
-    
-    // Create a simple gradient blur effect
-    const gradient = ctx.createLinearGradient(0, 0, width, height);
-    gradient.addColorStop(0, '#f0f0f0');
-    gradient.addColorStop(1, '#e0e0e0');
-    ctx.fillStyle = gradient;
-    ctx.fillRect(0, 0, width, height);
-    
-    return canvas.toDataURL();
-  };
-
-  const defaultBlurDataURL = blurDataURL || generateBlurDataURL(10, 10);
+  const defaultBlurDataURL = blurDataURL || DEFAULT_BLUR_DATA_URL;
 
   return (
     <Image

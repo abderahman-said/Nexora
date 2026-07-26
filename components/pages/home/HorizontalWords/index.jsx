@@ -13,11 +13,10 @@ const HorizontalWords = () => {
     const stickerCursorRef = useRef(null);
     const stickerPhoneRef = useRef(null);
     const lettersRef = useRef([]);
-    lettersRef.current = [];
 
-    const addLetterRef = (el) => {
-        if (el && !lettersRef.current.includes(el)) {
-            lettersRef.current.push(el);
+    const addLetterRef = (index) => (el) => {
+        if (el) {
+            lettersRef.current[index] = el;
         }
     };
 
@@ -48,9 +47,9 @@ const HorizontalWords = () => {
                     <EndArrow arrowEndSvgRef={arrowEndSvgRef} />
 
                     <h2
-                        className="gsap-managed display relative z-[2] whitespace-nowrap lowercase m-0 leading-none
+                        className="gsap-managed display heading-primary relative z-[2] whitespace-nowrap lowercase m-0 leading-none
                         text-[9vw] max-[1024px]:text-[8vw] max-[768px]:text-[6vw] max-[480px]:text-[5.5vw]
-                        font-[1000] max-[768px]:font-[800] text-slate-900 dark:text-white"
+                        text-slate-900 dark:text-white"
                         aria-label={text}
                         suppressHydrationWarning
                     >
@@ -60,7 +59,7 @@ const HorizontalWords = () => {
                             ) : (
                                 <div
                                     key={i}
-                                    ref={addLetterRef}
+                                    ref={addLetterRef(i)}
                                     className="relative inline-block text-slate-900 dark:text-white"
                                     aria-hidden="true"
                                     suppressHydrationWarning

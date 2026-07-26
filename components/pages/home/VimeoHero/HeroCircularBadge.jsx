@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { Play } from "lucide-react";
 import VideoModal from "./VideoModal";
 
 export default function HeroCircularBadge() {
@@ -43,9 +44,7 @@ export default function HeroCircularBadge() {
           {/* Central Glowing Icon Button */}
           <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
             <div className="w-13 h-13 rounded-full bg-gradient-to-tr from-blue-600 via-sky-500 to-indigo-600 flex items-center justify-center text-white shadow-lg shadow-blue-500/40 group-hover:scale-110 transition-transform duration-300">
-              <svg className="w-6 h-6 ml-0.5" fill="currentColor" viewBox="0 0 24 24">
-                <path d="M8 5v14l11-7z" />
-              </svg>
+              <Play className="w-5 h-5 ml-0.5 fill-current" />
             </div>
           </div>
         </button>

@@ -62,32 +62,44 @@ function buildMarqueeItems(isMobile) {
 }
 
 export default function DoubleMarquee() {
-    const [tracks, setTracks] = useState([[], []]);
-    const [isMobile, setIsMobile] = useState(false);
+    const [tracks, setTracks] = useState(() =>
+        typeof window !== 'undefined'
+            ? buildMarqueeItems(window.innerWidth <= 768)
+            : buildMarqueeItems(false)
+    );
 
     useEffect(() => {
-        const mobile = window.matchMedia('(max-width: 768px)').matches;
-        setIsMobile(mobile);
-        setTracks(buildMarqueeItems(mobile));
+        const paths = document.querySelectorAll('.js-marquee-path path');
+        const underline = document.querySelector('.js-marquee-underline');
+        const hand = document.querySelector('.js-marquee-hand');
+        const section = document.getElementById('marquee-section');
 
-        // Arrow path animation
-        gsap.set('.js-marquee-path path', { strokeDashoffset: 1000 });
+        if (!section) return;
+
+        if (paths.length > 0) {
+            gsap.set(paths, { strokeDashoffset: 1000 });
+        }
 
         const marqueeTl = gsap.timeline({
             scrollTrigger: {
-                trigger: '#marquee-section',
+                trigger: section,
                 start: 'top 70%',
-                toggleActions: 'play none none reverse' // Allow replaying on scroll out/in
+                toggleActions: 'play none none reverse'
             }
         });
 
-        marqueeTl
-            .to('.js-marquee-underline', { scaleX: 1, opacity: 1, duration: 1, ease: 'power2.out' })
-            .to('.js-marquee-hand', { scale: 1, opacity: 1, rotation: -10, duration: 0.6, ease: 'back.out(1.7)' }, '-=0.5')
-            .to('.js-marquee-path path', { strokeDashoffset: 0, duration: 1.5, ease: 'power2.out' }, '-=0.3');
+        if (underline) {
+            marqueeTl.to(underline, { scaleX: 1, opacity: 1, duration: 1, ease: 'power2.out' });
+        }
+        if (hand) {
+            marqueeTl.to(hand, { scale: 1, opacity: 1, rotation: -10, duration: 0.6, ease: 'back.out(1.7)' }, '-=0.5');
+        }
+        if (paths.length > 0) {
+            marqueeTl.to(paths, { strokeDashoffset: 0, duration: 1.5, ease: 'power2.out' }, '-=0.3');
+        }
 
         return () => {
-            ScrollTrigger.getAll().forEach(t => { if (t.vars.trigger === '#marquee-section') t.kill(); });
+            ScrollTrigger.getAll().forEach(t => { if (t.vars.trigger === '#marquee-section' || t.vars.trigger === section) t.kill(); });
         };
     }, []);
 
