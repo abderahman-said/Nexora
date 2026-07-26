@@ -3,21 +3,21 @@ import { ThemeProvider } from '@/context/ThemeContext';
 
 export const metadata = {
   title: {
-    default: 'Nexora Solutions | Premium Digital Agency',
+    default: 'Nexora Solutions | Premium Enterprise Software Agency',
     template: '%s | Nexora Solutions',
   },
   description:
-    'Nexora Solutions is a premium digital agency specializing in scalable web applications, native mobile apps, enterprise cloud solutions, and award-winning UI/UX design. Code. Innovate. Elevate.',
+    'Nexora Solutions is a premium software engineering agency specializing in scalable web platforms, mobile products, cloud architecture, and high-performance UI/UX design. Code. Innovate. Elevate.',
   
   keywords: [
-    'Digital Agency',
+    'Software Agency',
     'Software Engineering',
     'Application Development',
     'Mobile Apps',
-    'UI/UX Design',
+    'UI/UX Design Systems',
     'Integrated Tech Solutions',
     'Technical Consulting',
-    'Custom Software',
+    'Custom Enterprise Software',
     'Nexora Solutions',
   ],
 
@@ -25,9 +25,9 @@ export const metadata = {
   creator: 'Nexora Solutions',
 
   openGraph: {
-    title: 'Nexora Solutions | Premium Digital Agency',
+    title: 'Nexora Solutions | Premium Enterprise Software Agency',
     description:
-      'We build digital solutions that drive your business forward. Web apps, mobile products, custom software, and cloud architecture.',
+      'We build digital solutions that drive business growth. Scalable web apps, mobile products, custom enterprise software, and cloud architecture.',
     url: 'https://nexora-solutions.co/',
     siteName: 'Nexora Solutions',
     images: [
@@ -35,7 +35,7 @@ export const metadata = {
         url: '/assets/logo.jpg',
         width: 1200,
         height: 630,
-        alt: 'Nexora Solutions — Premium Digital Agency',
+        alt: 'Nexora Solutions — Premium Software Agency',
       },
     ],
     locale: 'en_US',
@@ -44,16 +44,16 @@ export const metadata = {
 
   twitter: {
     card: 'summary_large_image',
-    title: 'Nexora Solutions | Premium Digital Agency',
+    title: 'Nexora Solutions | Premium Software Agency',
     description:
-      'Code. Innovate. Elevate. Premium digital solutions for modern businesses.',
+      'Code. Innovate. Elevate. Premium software engineering for modern enterprises.',
     images: ['/assets/logo.jpg'],
   },
 
   icons: {
-    icon: '/assets/logo.jpg',
-    shortcut: '/assets/logo.jpg',
-    apple: '/assets/logo.jpg',
+    icon: '/favicon.png',
+    shortcut: '/favicon.png',
+    apple: '/favicon.png',
   },
 
   robots: {
@@ -63,11 +63,35 @@ export const metadata = {
   },
 };
 
+const jsonLdSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Organization',
+  name: 'Nexora Solutions',
+  url: 'https://nexora-solutions.co/',
+  logo: 'https://nexora-solutions.co/assets/logo.jpg',
+  description: 'Enterprise software engineering agency building scalable web & mobile solutions.',
+  sameAs: [
+    'https://www.linkedin.com',
+    'https://github.com'
+  ],
+  knowsAbout: [
+    'Software Development',
+    'Web Architecture',
+    'Mobile Application Development',
+    'UI/UX Systems',
+    'Cloud Computing'
+  ]
+};
+
 export default function RootLayout({ children }) {
   return (
     <html lang="en" className="light" suppressHydrationWarning>
       <head>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLdSchema) }}
+        />
         <script
           dangerouslySetInnerHTML={{
             __html: `

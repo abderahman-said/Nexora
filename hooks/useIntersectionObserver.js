@@ -3,14 +3,9 @@ import { useEffect, useRef, useCallback, useState } from 'react';
 export const useIntersectionObserver = (callback, options = {}) => {
   const observerRef = useRef(null);
   const targetRefs = useRef(new Set());
-  const [isClient, setIsClient] = useState(false);
-
-  useEffect(() => {
-    setIsClient(true);
-  }, []);
 
   const observe = useCallback((element) => {
-    if (!element || !isClient) return;
+    if (!element || typeof window === 'undefined' || !('IntersectionObserver' in window)) return;
     
     targetRefs.current.add(element);
     
@@ -29,7 +24,7 @@ export const useIntersectionObserver = (callback, options = {}) => {
     }
     
     observerRef.current.observe(element);
-  }, [callback, options, isClient]);
+  }, [callback, options]);
 
   const unobserve = useCallback((element) => {
     if (!element || !observerRef.current) return;

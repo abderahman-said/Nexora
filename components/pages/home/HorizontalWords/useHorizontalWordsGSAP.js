@@ -35,13 +35,13 @@ export function useHorizontalWordsGSAP({
                the same ST, containerAnimation on child elements works
                correctly because they all share the same progress context.
             ───────────────────────────────────────────────────────────── */
-            const pinnedDistance = isMobile ? 1800 : 3000;
-            const entranceRatio  = isMobile ? 0.25 : 0.3; // fraction of total
+            const pinnedDistance = isMobile ? 1600 : 2600;
+            const entranceRatio  = isMobile ? 0.2 : 0.2; // fraction of total
 
-            // How far the text slides before it's centered (entrance phase)
+            // Smooth entrance from just outside right edge to center position
             const startX = isMobile
-                ? window.innerWidth * 0.5
-                : window.innerWidth * 1.1;
+                ? window.innerWidth * 0.6
+                : window.innerWidth * 0.85;
 
             // How far the text slides during the pinned horizontal scroll phase
             const endX = () =>
@@ -57,34 +57,30 @@ export function useHorizontalWordsGSAP({
                     end: `+=${pinnedDistance}`,
                     pin: true,
                     pinSpacing: true,
-                    scrub: 1,               // slight smoothing feels more cinematic
+                    scrub: 0.8,             // smooth cinematic scroll feel
                     anticipatePin: 1,
                     invalidateOnRefresh: true,
                 }
             });
 
-            // Phase 1 — slide in from right to center (entranceRatio of total)
+            // Phase 1 — slide in smoothly from right
             masterTl.fromTo(
                 textRef,
                 { x: startX },
-                { x: isMobile ? window.innerWidth * 0.1 : window.innerWidth * 0.35,
-                  ease: 'power2.out',
+                { x: isMobile ? window.innerWidth * 0.1 : window.innerWidth * 0.25,
+                  ease: 'power1.out',
                   duration: entranceRatio }
             );
 
-            // Phase 2 — horizontal sweep to the left (rest of scroll)
+            // Phase 2 — horizontal sweep to the left
             masterTl.to(
                 textRef,
                 { x: endX, ease: 'none', duration: 1 - entranceRatio }
             );
 
-            /* ── Letter assembly animation (the "collect from air" effect) ──
-               Each letter flies in from a random Y offset + rotation and
-               lands in place as that part of the scrollTween passes through.
-               containerAnimation links each letter's trigger to masterTl's
-               ScrollTrigger so positions are calculated correctly. ── */
-            const bounceY  = isMobile ? 180 : 420;
-            const bounceR  = isMobile ? 25  : 55;
+            /* ── Letter assembly animation ── */
+            const bounceY  = isMobile ? 120 : 220;
+            const bounceR  = isMobile ? 20  : 40;
 
             letters.forEach((letter) => {
                 const yFrom = (Math.random() - 0.5) * bounceY;
@@ -96,18 +92,18 @@ export function useHorizontalWordsGSAP({
                         y: yFrom,
                         rotation: rFrom,
                         opacity: 0,
-                        scale: 0.6,
+                        scale: 0.7,
                     },
                     {
                         y: 0,
                         rotation: 0,
                         opacity: 1,
                         scale: 1,
-                        ease: 'back.out(2)',
+                        ease: 'power2.out',
                         scrollTrigger: {
                             trigger: letter,
                             containerAnimation: masterTl,
-                            start: 'left 110%',
+                            start: 'left 105%',
                             end: 'left 65%',
                             scrub: true,
                         }
@@ -117,8 +113,8 @@ export function useHorizontalWordsGSAP({
 
             /* ── Sticker pop-in (scale + yPercent bounce) ── */
             stickers.forEach((sticker) => {
-                const yFrom = (Math.random() - 0.5) * (isMobile ? 180 : 350);
-                const rFrom = (Math.random() - 0.5) * (isMobile ? 25 : 50);
+                const yFrom = (Math.random() - 0.5) * (isMobile ? 140 : 250);
+                const rFrom = (Math.random() - 0.5) * (isMobile ? 20 : 40);
 
                 gsap.fromTo(
                     sticker,
@@ -129,8 +125,8 @@ export function useHorizontalWordsGSAP({
                         scrollTrigger: {
                             trigger: sticker,
                             containerAnimation: masterTl,
-                            start: 'left 110%',
-                            end: 'left 55%',
+                            start: 'left 105%',
+                            end: 'left 60%',
                             scrub: true,
                         }
                     }
