@@ -1,6 +1,6 @@
 export const TECH_ROW_1 = [
     { name: 'Websites That Convert', color: '#0284c7' },
-    { name: 'Mobile Apps Done Right', color: '#0f172a' },
+    { name: 'Mobile Apps Done Right', color: '#ec4899' },
     { name: 'Pixel-Perfect Design', color: '#3178c6' },
     { name: 'Built Around Your Business', color: '#16a34a' },
     { name: 'Secure by Default', color: '#0284c7' },

@@ -331,7 +331,7 @@ body.is-transitioning .js-cursor-bubble {
 }
 
 /* ─── Universal Grid Background Pseudoelement ────────────────────────── */
-.site-grid-bg {
+/* .site-grid-bg {
   position: relative;
 }
 .site-grid-bg::after {
@@ -347,7 +347,7 @@ body.is-transitioning .js-cursor-bubble {
 .dark .site-grid-bg::after {
   opacity: 0.3;
   filter: invert(1);
-}
+} */
 button {
   cursor: pointer;
 }

@@ -35,7 +35,7 @@ export function MarqueeRow({ items, direction = 1, theme = 'light' }) {
                         <span
                             className={[
                                 'whitespace-nowrap px-6 text-xl font-black uppercase tracking-tight md:text-3xl',
-                                isDark ? 'text-white' : 'text-[#0a1628] dark:text-white',
+                                isDark ? 'text-white' : 'text-slate-950 dark:text-white',
                             ].join(' ')}
                         >
                             {item.name}

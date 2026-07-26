@@ -24,7 +24,7 @@ export default function CrossedBanners() {
         <section
             id="tech"
             ref={sectionRef}
-            className="relative w-full overflow-hidden py-16 pb-[140px] bg-[#080d1a] dark:bg-[#040711] transition-colors duration-300"
+            className="relative w-full overflow-hidden py-16 pb-[140px] bg-[#f8fafc] dark:bg-[#060913] border-t border-b border-slate-200/80 dark:border-slate-800/80 transition-colors duration-300"
         >
             {/* heading */}
             <div className="relative z-20 mb-12 px-6" ref={headRef} suppressHydrationWarning>
@@ -42,14 +42,14 @@ export default function CrossedBanners() {
             <div className="relative flex flex-col gap-4 py-6">
                 {/* Light band — tilted one way */}
                 <div className="relative -rotate-[2.5deg] scale-105">
-                    <div className="w-[130vw] -ml-[15vw] border-y-2 border-[#0a1628]/10 dark:border-slate-800 bg-white dark:bg-slate-900 py-6 shadow-[0_8px_30px_rgba(0,0,0,0.06)]">
+                    <div className="w-[130vw] -ml-[15vw] border-y-2 border-slate-900/90 dark:border-slate-700 bg-white dark:bg-slate-900 py-6 shadow-[0_10px_30px_rgba(0,0,0,0.12)] dark:shadow-[0_10px_30px_rgba(0,0,0,0.4)]">
                         <MarqueeRow items={TECH_ROW_1} direction={1} theme="light" />
                     </div>
                 </div>
 
                 {/* Dark band — tilted the other way, overlapping */}
                 <div className="relative -mt-6 rotate-[2.5deg] scale-105">
-                    <div className="w-[130vw] -ml-[15vw] bg-[#0a1628] py-6  border-y-2 border-[#0a1628]/10 dark:border-slate-800 shadow-[0_12px_40px_rgba(10,22,40,0.35)]">
+                    <div className="w-[130vw] -ml-[15vw] bg-slate-900 dark:bg-[#030712] py-6 border-y-2 border-slate-950 dark:border-slate-800 shadow-[0_16px_45px_rgba(0,0,0,0.25)]">
                         <MarqueeRow items={TECH_ROW_2} direction={-1} theme="dark" />
                     </div>
                 </div>

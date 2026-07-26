@@ -2,11 +2,12 @@
 
 import { useRef } from "react";
 import ProjectCard from "./ProjectCard";
-import { projects } from "./projectsData";
+import { projectService } from "@/lib/services/projectService";
 import { useProjectsGSAP } from "./useProjectsGSAP";
 import SectionHeader from "@/components/ui/SectionHeader";
 
 export default function ProjectsSection() {
+  const projects = projectService.getAllProjects();
   const pinContainerRef = useRef(null);
   const viewportRef = useRef(null);
   const trackRef = useRef(null);
