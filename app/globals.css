@@ -353,3 +353,10 @@ body.is-transitioning .js-cursor-bubble {
 button {
   cursor: pointer;
 }
+
+/* ─── Performance Optimization Utility ──────────────────────────────── */
+.content-visibility-auto {
+  content-visibility: auto;
+  contain-intrinsic-size: 1px 600px;
+}
+

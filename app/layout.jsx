@@ -154,13 +154,7 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en" className="light" suppressHydrationWarning>
       <head>
-        <link
-          rel="preload"
-          href="/assets/hero.webp"
-          as="image"
-          type="image/webp"
-          fetchPriority="high"
-        />
+
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{

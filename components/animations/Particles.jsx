@@ -191,9 +191,18 @@ const Particles = ({
     let animationFrameId;
     let lastTime = performance.now();
     let elapsed = 0;
+    let isVisible = true;
+
+    const observer = new IntersectionObserver(([entry]) => {
+      isVisible = entry.isIntersecting;
+    }, { threshold: 0.05 });
+
+    observer.observe(container);
 
     const update = t => {
       animationFrameId = requestAnimationFrame(update);
+      if (!isVisible) return;
+
       const delta = t - lastTime;
       lastTime = t;
       elapsed += delta * speed;
@@ -220,6 +229,7 @@ const Particles = ({
     animationFrameId = requestAnimationFrame(update);
 
     return () => {
+      observer.disconnect();
       window.removeEventListener('resize', resize);
       if (moveParticlesOnHover) {
         container.removeEventListener('mousemove', handleMouseMove);

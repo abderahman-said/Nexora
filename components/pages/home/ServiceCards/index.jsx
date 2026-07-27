@@ -100,7 +100,7 @@ export default function ServiceCards() {
                 </div>
 
                 {/* ── Overlapping Reusable GSAP Cards Slider Row ── */}
-                <div className="relative z-20   -mt-20 sm:-mt-24 lg:-mt-[250px] px-2 sm:px-4">
+                <div className="relative z-20 -mt-24 lg:-mt-[250px] px-2 sm:px-4">
                     <GSAPSlider
                         items={SERVICES}
                         ItemComponent={ServiceCard}
