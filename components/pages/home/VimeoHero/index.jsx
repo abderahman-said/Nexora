@@ -24,7 +24,7 @@ export default function VimeoHero() {
             id="hero"
             ref={heroRef}
             className="
-                scroll-section relative min-h-[92vh] flex flex-col items-center justify-center
+                scroll-section relative min-h-[100vh] flex flex-col items-center justify-center
                 overflow-hidden bg-[#f8fafc] dark:bg-[#060913] transition-colors duration-300
                 px-4 pt-[96px] pb-14
                 md:px-8 md:pt-24 md:pb-16
