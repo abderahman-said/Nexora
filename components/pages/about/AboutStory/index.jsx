@@ -1,5 +1,3 @@
-'use client';
-
 import React from 'react';
 import { Layers, CheckCircle2, ShieldCheck, Cpu } from 'lucide-react';
 import Image from 'next/image';

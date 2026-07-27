@@ -1,5 +1,3 @@
-'use client';
-
 import React from 'react';
 import Container from '@/components/ui/Container';
 import { ABOUT_STATS } from '../aboutData';
