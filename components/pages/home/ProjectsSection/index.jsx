@@ -39,7 +39,7 @@ export default function ProjectsSection() {
           <SectionHeader
             tag="Portfolio"
             badge="Featured Case Studies"
-            badgeColor="success"
+            badgeColor="info"
             title="Selected"
             highlight="Works"
             align="between"

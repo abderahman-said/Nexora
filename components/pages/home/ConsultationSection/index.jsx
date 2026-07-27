@@ -9,7 +9,7 @@ export default function ConsultationSection() {
     return (
         <section
             id="consultation"
-            className="scroll-section relative w-full py-12 sm:py-24 lg:py-28 bg-gradient-to-b from-white via-slate-50 to-slate-100/80 dark:bg-[#060913] border-b border-slate-200/90 dark:border-slate-800/80 site-grid-bg overflow-hidden"
+            className="scroll-section relative w-full py-12 sm:py-24 lg:py-28  dark:bg-[#060913] border-b border-slate-200/90 dark:border-slate-800/80 site-grid-bg overflow-hidden"
         >
             <Container className="relative z-10">
 

@@ -12,20 +12,6 @@ import {
 export default function ConsultationContent() {
     return (
         <div className="lg:col-span-7 relative z-10 flex flex-col justify-center space-y-5 sm:space-y-6">
-
-            <div
-                aria-hidden="true"
-                role="presentation"
-                className="
-                    absolute -top-12 -right-6 lg:-right-10
-                    text-5xl sm:text-8xl lg:text-[8rem] font-black
-                    text-slate-400/50 dark:text-slate-700/40
-                    select-none pointer-events-none tracking-widest uppercase max-w-full overflow-hidden
-                "
-            >
-                CONSULT
-            </div>
-
             {/* Header Tag Badge */}
             <div>
                 <div className="
