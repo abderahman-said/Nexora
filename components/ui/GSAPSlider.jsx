@@ -3,6 +3,7 @@
 import React, { useRef, useState, useEffect, useCallback } from 'react';
 import { gsap } from 'gsap';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
+import Button from '@/components/ui/Button';
 
 /**
  * Reusable GSAP Cards Slider Component (Design Pattern)
@@ -150,35 +151,33 @@ export default function GSAPSlider({
             {/* ── Side Arrow Buttons (if controlsPosition === 'sides') ── */}
             {showControls && controlsPosition === 'sides' && (
                 <>
-                    <button
+                    <Button
                         type="button"
                         onClick={prevSlide}
                         aria-label="Previous Slide"
+                        variant="primary"
                         className="
                             absolute left-0 sm:-left-6 top-1/2 -translate-y-1/2 z-30
-                            w-10 h-10 sm:w-12 sm:h-12 rounded-full flex items-center justify-center
-                            bg-blue-600/90 dark:bg-blue-600 text-white
-                            shadow-lg shadow-blue-500/30 hover:bg-blue-500
-                            hover:scale-110 active:scale-95 transition-all duration-300 cursor-pointer
+                            w-10 h-10 sm:w-12 sm:h-12 !p-0 rounded-full flex items-center justify-center
+                            shadow-lg shadow-blue-500/30 hover:scale-110 active:scale-95 transition-all duration-300
                         "
                     >
                         <ChevronLeft className="w-5 h-5 sm:w-6 sm:h-6 stroke-[2.2]" />
-                    </button>
+                    </Button>
 
-                    <button
+                    <Button
                         type="button"
                         onClick={nextSlide}
                         aria-label="Next Slide"
+                        variant="primary"
                         className="
                             absolute right-0 sm:-right-6 top-1/2 -translate-y-1/2 z-30
-                            w-10 h-10 sm:w-12 sm:h-12 rounded-full flex items-center justify-center
-                            bg-blue-600/90 dark:bg-blue-600 text-white
-                            shadow-lg shadow-blue-500/30 hover:bg-blue-500
-                            hover:scale-110 active:scale-95 transition-all duration-300 cursor-pointer
+                            w-10 h-10 sm:w-12 sm:h-12 !p-0 rounded-full flex items-center justify-center
+                            shadow-lg shadow-blue-500/30 hover:scale-110 active:scale-95 transition-all duration-300
                         "
                     >
                         <ChevronRight className="w-5 h-5 sm:w-6 sm:h-6 stroke-[2.2]" />
-                    </button>
+                    </Button>
                 </>
             )}
 
@@ -220,21 +219,22 @@ export default function GSAPSlider({
 
                     {/* Previous Button (<) */}
                     {showControls && controlsPosition === 'center' && (
-                        <button
+                        <Button
                             type="button"
                             onClick={prevSlide}
                             aria-label="Previous Slide"
+                            variant="outline"
                             className="
-                                w-10 h-10 sm:w-12 sm:h-12 rounded-full flex items-center justify-center
+                                w-10 h-10 sm:w-12 sm:h-12 !p-0 rounded-full flex items-center justify-center
                                 bg-white dark:bg-slate-900 text-slate-600 dark:text-slate-300
                                 border border-slate-200/90 dark:border-slate-800
                                 shadow-md hover:shadow-lg hover:border-sky-500 dark:hover:border-sky-400
                                 hover:text-sky-500 dark:hover:text-sky-400
-                                hover:scale-105 active:scale-95 transition-all duration-300 cursor-pointer
+                                hover:scale-105 active:scale-95 transition-all duration-300
                             "
                         >
                             <ChevronLeft className="w-5 h-5 stroke-[2.2]" />
-                        </button>
+                        </Button>
                     )}
 
                     {/* Centered Pagination Dots (• • — •) */}
@@ -260,21 +260,22 @@ export default function GSAPSlider({
 
                     {/* Next Button (>) */}
                     {showControls && controlsPosition === 'center' && (
-                        <button
+                        <Button
                             type="button"
                             onClick={nextSlide}
                             aria-label="Next Slide"
+                            variant="outline"
                             className="
-                                w-10 h-10 sm:w-12 sm:h-12 rounded-full flex items-center justify-center
+                                w-10 h-10 sm:w-12 sm:h-12 !p-0 rounded-full flex items-center justify-center
                                 bg-white dark:bg-slate-900 text-slate-600 dark:text-slate-300
                                 border border-slate-200/90 dark:border-slate-800
                                 shadow-md hover:shadow-lg hover:border-sky-500 dark:hover:border-sky-400
                                 hover:text-sky-500 dark:hover:text-sky-400
-                                hover:scale-105 active:scale-95 transition-all duration-300 cursor-pointer
+                                hover:scale-105 active:scale-95 transition-all duration-300
                             "
                         >
                             <ChevronRight className="w-5 h-5 stroke-[2.2]" />
-                        </button>
+                        </Button>
                     )}
                 </div>
             ) : null}

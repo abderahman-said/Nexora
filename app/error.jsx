@@ -3,6 +3,7 @@
 import React, { useEffect } from 'react';
 import { RefreshCw, AlertTriangle } from 'lucide-react';
 import Link from 'next/link';
+import Button from '@/components/ui/Button';
 
 export default function GlobalError({ error, reset }) {
     useEffect(() => {
@@ -23,19 +24,24 @@ export default function GlobalError({ error, reset }) {
             </p>
 
             <div className="flex items-center gap-4">
-                <button
+                <Button
                     onClick={() => reset()}
-                    className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs uppercase tracking-wider transition-colors shadow-md"
+                    variant="primary"
+                    size="md"
+                    className="rounded-full font-bold text-xs uppercase tracking-wider gap-2 shadow-md"
                 >
                     <RefreshCw className="w-4 h-4" />
                     <span>Try Again</span>
-                </button>
-                <Link
+                </Button>
+                <Button
+                    as={Link}
                     href="/"
-                    className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200 font-bold text-xs uppercase tracking-wider hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors"
+                    variant="ghost"
+                    size="md"
+                    className="rounded-full bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200 font-bold text-xs uppercase tracking-wider hover:bg-slate-200 dark:hover:bg-slate-700"
                 >
                     <span>Back to Home</span>
-                </Link>
+                </Button>
             </div>
         </div>
     );

@@ -4,6 +4,7 @@ import React from 'react';
 import { Sun, Moon } from 'lucide-react';
 import { useTheme } from '@/context/ThemeContext';
 import Magnet from './Magnet';
+import Button from './Button';
 
 export default function ThemeToggle({ className = '' }) {
     const { theme, toggleTheme, mounted } = useTheme();
@@ -12,12 +13,13 @@ export default function ThemeToggle({ className = '' }) {
 
     return (
         <Magnet padding={15} magnetStrength={8}>
-            <button
+            <Button
                 type="button"
+                variant="ghost"
                 onClick={toggleTheme}
                 aria-label={isDark ? 'Switch to Light Mode' : 'Switch to Dark Mode'}
                 title={isDark ? 'Switch to Light Mode' : 'Switch to Dark Mode'}
-                className={`group relative flex h-10 w-10 items-center justify-center rounded-full border border-slate-200/80 bg-white/80 p-2 shadow-sm transition-all duration-300 hover:scale-105 hover:border-blue-400 hover:shadow-md dark:border-slate-700/80 dark:bg-slate-800/80 dark:hover:border-blue-500 max-md:h-9 max-md:w-9 ${className}`}
+                className={`group relative flex h-10 w-10 !p-2 items-center justify-center rounded-full border border-slate-200/80 bg-white/80 shadow-sm transition-all duration-300 hover:scale-105 hover:border-blue-400 hover:shadow-md dark:border-slate-700/80 dark:bg-slate-800/80 dark:hover:border-blue-500 max-md:h-9 max-md:w-9 ${className}`}
                 suppressHydrationWarning
             >
                 {/* Ambient glow effect */}
@@ -46,7 +48,7 @@ export default function ThemeToggle({ className = '' }) {
                         }`}
                     />
                 </div>
-            </button>
+            </Button>
         </Magnet>
     );
 }

@@ -7,6 +7,7 @@ import Image from "next/image";
 import { gsap } from "gsap";
 import { ArrowUpRight, Phone, Mail, MapPin, MessageCircle, X } from "lucide-react";
 import { NAV_LINKS } from "./navData";
+import Button from "@/components/ui/Button";
 
 const emptySubscribe = () => () => {};
 const getSnapshot = () => true;
@@ -237,16 +238,19 @@ export function MobileNav() {
                     {/* Mobile Drawer Bottom Info & WhatsApp CTA */}
                     <div ref={footerInfoRef} className="pt-6 border-t border-white/10 space-y-5 relative z-10">
                         {/* Action Button */}
-                        <Link
+                        <Button
+                            as={Link}
                             href="https://wa.me/201117180818"
                             target="_blank"
                             rel="noopener noreferrer"
                             onClick={handleLinkClick}
-                            className="w-full flex items-center justify-center gap-2 py-3.5 px-6 rounded-full bg-gradient-to-r from-blue-600 to-sky-600 font-bold text-sm tracking-wide text-white shadow-lg shadow-blue-600/30 hover:scale-[1.02] active:scale-95 transition-all"
+                            variant="gradient"
+                            size="md"
+                            className="w-full font-bold text-sm tracking-wide text-white shadow-lg shadow-blue-600/30"
                         >
                             <MessageCircle className="h-4 w-4" />
                             <span>Let's Talk on WhatsApp</span>
-                        </Link>
+                        </Button>
 
                         {/* Direct Contact Info */}
                         <div className="grid grid-cols-1 gap-2 text-xs text-slate-400 font-mono pt-1">
