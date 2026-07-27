@@ -1,93 +1,84 @@
 "use client";
 
-import { useRef } from "react";
+import { useState, useRef } from "react";
 import ProjectCard from "./ProjectCard";
 import { projectService } from "@/lib/services/projectService";
-import { useProjectsGSAP } from "./useProjectsGSAP";
 import SectionHeader from "@/components/ui/SectionHeader";
+import Container from "@/components/ui/Container";
+import { useProjectsGSAP } from "./useProjectsGSAP";
 
 export default function ProjectsSection() {
-  const projects = projectService.getAllProjects();
-  const pinContainerRef = useRef(null);
-  const viewportRef = useRef(null);
-  const trackRef = useRef(null);
-  const progressRef = useRef(null);
-  const labelRef = useRef(null);
-  const contentRef = useRef(null);
+  const allProjects = projectService.getAllProjects();
+  const [activeCategory, setActiveCategory] = useState("All");
+  const sectionRef = useRef(null);
+  const gridRef = useRef(null);
 
-  useProjectsGSAP({
-    pinContainerRef, viewportRef, trackRef, progressRef,
-    labelRef, contentRef
-  });
+  const categories = [
+    "All",
+    "Mobile E-Commerce",
+    "SaaS Platform",
+    "Multi-Role Platform",
+    "Hotel Booking",
+  ];
+
+  const filteredProjects = activeCategory === "All"
+    ? allProjects
+    : allProjects.filter((p) => p.category === activeCategory);
+
+  // Hook handles 3D entrance stagger + 3D Scroll Float & Sink Parallax
+  useProjectsGSAP(sectionRef, gridRef, activeCategory);
 
   return (
     <section
       id="portfolio"
-      className="scroll-section no-clip-reveal pin-container relative flex min-h-screen w-full flex-col justify-center bg-white dark:bg-[#080c18] transition-colors duration-300 border-b border-slate-200/90 dark:border-slate-800/80 py-12"
-      ref={pinContainerRef}
-      suppressHydrationWarning
+      ref={sectionRef}
+      className="scroll-section relative w-full py-16 sm:py-24 bg-white dark:bg-[#060913] transition-colors duration-300 border-b border-slate-200/90 dark:border-slate-800/80"
     >
+      <Container>
+        {/* Section Header */}
+        <SectionHeader
+          tag="Portfolio"
+          badge="Featured Case Studies"
+          badgeColor="info"
+          title="Selected"
+          highlight="Works"
+          align="between"
+          rightElement={
+            <div className="flex flex-col items-end gap-1.5 pb-1.5 max-sm:items-start">
+              <span className="text-[11px] font-bold uppercase tracking-[0.18em] text-slate-700 dark:text-slate-300">
+                {String(filteredProjects.length).padStart(2, "0")} / {String(allProjects.length).padStart(2, "0")} Projects
+              </span>
+            </div>
+          }
+        />
 
-      {/* ── Main content (Immediately Visible) ── */}
-      <div className="w-full opacity-100" ref={contentRef} suppressHydrationWarning>
+        {/* Category Filter Tabs */}
+        <div className="flex flex-wrap items-center justify-center gap-2 mb-10 mt-6">
+          {categories.map((cat) => (
+            <button
+              key={cat}
+              onClick={() => setActiveCategory(cat)}
+              className={`px-4 py-2 rounded-full text-xs font-bold transition-all duration-300 cursor-pointer ${
+                activeCategory === cat
+                  ? "bg-blue-600 text-white shadow-lg shadow-blue-500/25 scale-105"
+                  : "bg-slate-100 dark:bg-slate-800/80 text-slate-600 dark:text-slate-400 hover:bg-slate-200 dark:hover:bg-slate-700"
+              }`}
+            >
+              {cat}
+            </button>
+          ))}
+        </div>
 
-        {/* ── Header Row ── */}
+        {/* 3D Interactive Grid */}
         <div
-          className="proj-heading-wrap px-[72px] pb-6 pt-6 max-lg:px-8 max-lg:pb-7 max-sm:px-5 max-sm:pb-5 max-sm:pt-6"
-          suppressHydrationWarning
+          ref={gridRef}
+          className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-8 [perspective:1000px]"
         >
-          <SectionHeader
-            tag="Portfolio"
-            badge="Featured Case Studies"
-            badgeColor="info"
-            title="Selected"
-            highlight="Works"
-            align="between"
-            animClass="proj-heading"
-            rightElement={
-              <div className="proj-meta flex flex-col items-end gap-1.5 pb-1.5 max-sm:items-start">
-                <span className="text-[11px] font-bold uppercase tracking-[0.18em] text-slate-700 dark:text-slate-300">
-                  {String(projects.length).padStart(2, "0")} Projects
-                </span>
-                <span className="flex items-center gap-2 text-[11px] font-medium tracking-[0.08em] text-slate-600 dark:text-slate-400 before:inline-block before:h-px before:w-7 before:bg-slate-400 dark:before:bg-slate-600 before:content-[''] max-lg:hidden">
-                  Scroll to explore
-                </span>
-              </div>
-            }
-          />
+          {filteredProjects.map((p) => (
+            <ProjectCard key={p.id} p={p} />
+          ))}
         </div>
-
-        {/* ── Scroll Progress Bar ── */}
-        <div className="scroll-progress-wrap flex items-center gap-4 px-[72px] pb-7 max-lg:px-8 max-lg:pb-6 max-sm:px-5 max-sm:pb-5">
-          <div className="h-px flex-1 overflow-hidden rounded-[2px] bg-slate-200 dark:bg-slate-800">
-            <div
-              className="h-full w-0 bg-[linear-gradient(90deg,#2563eb,#0284c7)] ease-linear"
-              ref={progressRef}
-            />
-          </div>
-          <span className="min-w-[48px] text-right text-[11px] font-bold tracking-[0.12em] text-slate-700 dark:text-slate-300" ref={labelRef}>
-            01 / {String(projects.length).padStart(2, "0")}
-          </span>
-        </div>
-
-        {/* ── Projects Horizontal Viewport ── */}
-        <div
-          className="proj-viewport overflow-hidden px-[72px] pb-[48px] max-lg:overflow-visible max-lg:px-5 max-lg:pb-16 max-sm:px-5 max-sm:pb-12"
-          ref={viewportRef}
-          suppressHydrationWarning
-        >
-          <div
-            className="flex w-max items-start gap-5 will-change-transform max-lg:grid max-lg:w-full max-lg:grid-cols-1 max-lg:gap-4 max-lg:![transform:none]"
-            ref={trackRef}
-            suppressHydrationWarning
-          >
-            {projects.map((p) => (
-              <ProjectCard key={p.id} p={p} />
-            ))}
-          </div>
-        </div>
-      </div>
-
+      </Container>
     </section>
   );
 }

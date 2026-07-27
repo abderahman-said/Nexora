@@ -60,7 +60,7 @@ export default function ConsultationContent() {
             {/* Action Buttons Row */}
             <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3.5 sm:gap-4 pt-3">
                 <Link
-                    href="#contact"
+                    href="/contact"
                     className="
                         inline-flex items-center justify-center gap-3 px-8 py-3.5 sm:py-4 rounded-xl
                         bg-gradient-to-r from-blue-600 via-sky-500 to-indigo-600 text-white
