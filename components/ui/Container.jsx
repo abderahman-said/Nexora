@@ -4,7 +4,7 @@ export default function Container({
 }) {
   return (
     <div
-      className={`mx-auto w-full max-w-[1500px] px-4 sm:px-6 lg:px-8 ${className}`}
+      className={`mx-auto w-full max-w-[1400px] px-4 sm:px-6 lg:px-8 ${className}`}
     >
       {children}
     </div>

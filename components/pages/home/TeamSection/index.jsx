@@ -16,7 +16,7 @@ export default function TeamSection() {
             <Container className="relative z-10 ">
                 
                 {/* ── Section Header ── */}
-                <div className="relative text-center mb-12 sm:mb-20">
+                <div className="relative text-center mb-6 md:mb-10">
                     {/* Tag Badge */}
                     <div className="relative z-10 inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-blue-50 dark:bg-blue-950/80 border border-blue-200/80 dark:border-blue-800/80 text-blue-600 dark:text-sky-400 font-bold text-xs uppercase tracking-wider mb-4 shadow-sm">
                         <Users className="w-3.5 h-3.5" />
