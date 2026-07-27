@@ -4,40 +4,70 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 gsap.registerPlugin(ScrollTrigger);
 
-export function useFooterGSAP({ footerRef, infoRef, bgWordRef }) {
+export function useFooterGSAP({ footerRef, columnsRef, sidePanelRef, bgRef }) {
     useEffect(() => {
-        const ctx = gsap.context(() => {
-            const infoChildren = Array.from(infoRef.current?.children || []);
-            if (infoChildren.length > 0 && footerRef.current) {
-                gsap.from(infoChildren, {
-                    opacity: 0,
-                    y: 20,
-                    duration: 0.5,
-                    stagger: 0.08,
-                    ease: "power3.out",
-                    scrollTrigger: { trigger: footerRef.current, start: "top 65%" },
-                });
-            }
+        if (!footerRef.current) return;
 
-            const reduceMotion = window.matchMedia(
-                "(prefers-reduced-motion: reduce)"
-            ).matches;
-            
-            if (bgWordRef.current && footerRef.current && !reduceMotion) {
+        const reduceMotion = typeof window !== "undefined" && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+        if (reduceMotion) return;
+
+        const ctx = gsap.context(() => {
+            // 1. Staggered reveal for footer columns
+            if (columnsRef.current) {
+                const columnItems = Array.from(columnsRef.current.children);
                 gsap.fromTo(
-                    bgWordRef.current,
-                    { autoAlpha: 0, scale: 0.94 },
+                    columnItems,
+                    { opacity: 0, y: 30 },
                     {
-                        autoAlpha: 1,
-                        scale: 1,
-                        duration: 1.4,
+                        opacity: 1,
+                        y: 0,
+                        duration: 0.8,
+                        stagger: 0.12,
                         ease: "power2.out",
-                        scrollTrigger: { trigger: footerRef.current, start: "top 85%" },
+                        scrollTrigger: {
+                            trigger: footerRef.current,
+                            start: "top 85%",
+                            once: true,
+                        },
                     }
                 );
+            }
+
+            // 2. Entrance animation for the side CTA panel
+            if (sidePanelRef.current) {
+                gsap.fromTo(
+                    sidePanelRef.current,
+                    { opacity: 0, x: 30 },
+                    {
+                        opacity: 1,
+                        x: 0,
+                        duration: 0.9,
+                        delay: 0.2,
+                        ease: "power2.out",
+                        scrollTrigger: {
+                            trigger: footerRef.current,
+                            start: "top 85%",
+                            once: true,
+                        },
+                    }
+                );
+            }
+
+            // 3. Subtle GPU-accelerated background parallax
+            if (bgRef.current) {
+                gsap.to(bgRef.current, {
+                    yPercent: 15,
+                    ease: "none",
+                    scrollTrigger: {
+                        trigger: footerRef.current,
+                        start: "top bottom",
+                        end: "bottom top",
+                        scrub: 0.5,
+                    },
+                });
             }
         }, footerRef);
 
         return () => ctx.revert();
-    }, [footerRef, infoRef, bgWordRef]);
+    }, [footerRef, columnsRef, sidePanelRef, bgRef]);
 }

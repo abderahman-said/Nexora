@@ -97,12 +97,8 @@ import { ANIMATION_CONFIG } from '@/lib/data';
 
         logoTruusClickable.addEventListener('click', runScribbleAnimation);
 
-        // Auto-run on load
-        const timer = setTimeout(() => runScribbleAnimation(null), 100);
-
         return () => {
             logoTruusClickable.removeEventListener('click', runScribbleAnimation);
-            clearTimeout(timer);
         };
     }, []);
 

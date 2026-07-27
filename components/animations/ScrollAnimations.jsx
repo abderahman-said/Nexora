@@ -26,29 +26,27 @@ gsap.registerPlugin(ScrollTrigger);
 export default function ScrollAnimations() {
     useEffect(() => {
         const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-        const isNarrow    = window.matchMedia('(max-width: 1100px)').matches;
 
-        const init = () => {
+        let cleanup = null;
+        const timer = setTimeout(() => {
             const ctx = gsap.context(() => {
                 injectSideDecorators();
                 animateSections(reduceMotion);
                 animateProgressBar();
             });
-            return () => ctx.revert();
-        };
+            cleanup = () => ctx.revert();
+        }, 150);
 
-        const cleanup = init();
-
-        // Refresh after full page load (images etc.) to fix any layout drift
         const onLoad = () => ScrollTrigger.refresh();
-        window.addEventListener('load', onLoad, { once: true }); // ✅ once:true auto-removes
+        window.addEventListener('load', onLoad, { once: true });
 
         return () => {
+            clearTimeout(timer);
             cleanup?.();
         };
     }, []);
 
-    return null; // purely behavioural – no DOM output of its own
+    return null;
 }
 
 /* ═══════════════════════════════════════════════════════════════════════════
@@ -237,7 +235,8 @@ function animateSections(reduceMotion) {
                 scrollTrigger: {
                     trigger: h,
                     start: 'top 85%',
-                    toggleActions: 'play none none reverse',
+                    toggleActions: 'play none none none',
+                    once: true,
                 },
             });
         });
@@ -254,7 +253,8 @@ function animateSections(reduceMotion) {
                 scrollTrigger: {
                     trigger: paras[0],
                     start: 'top 90%',
-                    toggleActions: 'play none none reverse',
+                    toggleActions: 'play none none none',
+                    once: true,
                 },
             });
         }
@@ -320,6 +320,7 @@ function animateProgressBar() {
    4. FLOATING BACKGROUND ORBS (parallax with scroll)
    ═══════════════════════════════════════════════════════════════════════════ */
 function animateFloatingOrbs(reduceMotion) {
+    if (typeof window === 'undefined' || window.innerWidth < 768 || window.matchMedia('(pointer: coarse)').matches) return;
     if (document.querySelector('.orb-1')) return;
 
     const orbBase = 'fixed rounded-full pointer-events-none will-change-transform z-0';

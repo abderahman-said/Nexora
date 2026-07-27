@@ -1,14 +1,26 @@
+import localFont from 'next/font/local';
 import './globals.css';
 import { ThemeProvider } from '@/context/ThemeContext';
+import SvgSymbols from '@/components/icons/SvgSymbols';
+import Navbar from '@/components/layout/Navbar';
+import Footer from '@/components/layout/Footer';
+import ClientAnimations from '@/components/animations/ClientAnimations';
+
+const epilogue = localFont({
+  src: '../public/fonts/Epilogue-VariableFont_wght.ttf',
+  variable: '--font-epilogue',
+  display: 'swap',
+});
 
 export const metadata = {
+  metadataBase: new URL('https://nexora-solutions.co'),
   title: {
     default: 'Nexora Solutions | Premium Enterprise Software Agency',
     template: '%s | Nexora Solutions',
   },
   description:
     'Nexora Solutions is a premium software engineering agency specializing in scalable web platforms, mobile products, cloud architecture, and high-performance UI/UX design. Code. Innovate. Elevate.',
-  
+
   keywords: [
     'Software Agency',
     'Software Engineering',
@@ -23,6 +35,11 @@ export const metadata = {
 
   authors: [{ name: 'Nexora Solutions' }],
   creator: 'Nexora Solutions',
+  publisher: 'Nexora Solutions',
+
+  alternates: {
+    canonical: 'https://nexora-solutions.co',
+  },
 
   openGraph: {
     title: 'Nexora Solutions | Premium Enterprise Software Agency',
@@ -32,7 +49,7 @@ export const metadata = {
     siteName: 'Nexora Solutions',
     images: [
       {
-        url: '/assets/logo.jpg',
+        url: '/assets/logo.png',
         width: 1200,
         height: 630,
         alt: 'Nexora Solutions — Premium Software Agency',
@@ -47,11 +64,14 @@ export const metadata = {
     title: 'Nexora Solutions | Premium Software Agency',
     description:
       'Code. Innovate. Elevate. Premium software engineering for modern enterprises.',
-    images: ['/assets/logo.jpg'],
+    images: ['/assets/logo.png'],
   },
 
   icons: {
-    icon: '/favicon.png',
+    icon: [
+      { url: '/favicon.ico' },
+      { url: '/favicon.png', type: 'image/png' },
+    ],
     shortcut: '/favicon.png',
     apple: '/favicon.png',
   },
@@ -59,27 +79,73 @@ export const metadata = {
   robots: {
     index: true,
     follow: true,
-    googleBot: { index: true, follow: true, 'max-image-preview': 'large' },
+    googleBot: {
+      index: true,
+      follow: true,
+      'max-video-preview': -1,
+      'max-image-preview': 'large',
+      'max-snippet': -1,
+    },
   },
+};
+
+export const viewport = {
+  width: 'device-width',
+  initialScale: 1,
+  maximumScale: 5,
+  themeColor: [
+    { media: '(prefers-color-scheme: light)', color: '#f8fafc' },
+    { media: '(prefers-color-scheme: dark)', color: '#090d16' },
+  ],
 };
 
 const jsonLdSchema = {
   '@context': 'https://schema.org',
-  '@type': 'Organization',
-  name: 'Nexora Solutions',
-  url: 'https://nexora-solutions.co/',
-  logo: 'https://nexora-solutions.co/assets/logo.jpg',
-  description: 'Enterprise software engineering agency building scalable web & mobile solutions.',
-  sameAs: [
-    'https://www.linkedin.com',
-    'https://github.com'
-  ],
-  knowsAbout: [
-    'Software Development',
-    'Web Architecture',
-    'Mobile Application Development',
-    'UI/UX Systems',
-    'Cloud Computing'
+  '@graph': [
+    {
+      '@type': 'Organization',
+      '@id': 'https://nexora-solutions.co/#organization',
+      name: 'Nexora Solutions',
+      url: 'https://nexora-solutions.co/',
+      logo: {
+        '@type': 'ImageObject',
+        url: 'https://nexora-solutions.co/assets/logo.png',
+      },
+      description: 'Enterprise software engineering agency building scalable web & mobile solutions.',
+      sameAs: [
+        'https://www.linkedin.com',
+        'https://github.com'
+      ],
+      knowsAbout: [
+        'Software Development',
+        'Web Architecture',
+        'Mobile Application Development',
+        'UI/UX Systems',
+        'Cloud Computing'
+      ]
+    },
+    {
+      '@type': 'WebSite',
+      '@id': 'https://nexora-solutions.co/#website',
+      url: 'https://nexora-solutions.co/',
+      name: 'Nexora Solutions',
+      publisher: {
+        '@id': 'https://nexora-solutions.co/#organization'
+      },
+      inLanguage: 'en-US'
+    },
+    {
+      '@type': 'ProfessionalService',
+      '@id': 'https://nexora-solutions.co/#service',
+      name: 'Nexora Solutions Software Engineering',
+      url: 'https://nexora-solutions.co/',
+      image: 'https://nexora-solutions.co/assets/hero.webp',
+      priceRange: '$$$',
+      address: {
+        '@type': 'PostalAddress',
+        addressCountry: 'EG'
+      }
+    }
   ]
 };
 
@@ -87,10 +153,18 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en" className="light" suppressHydrationWarning>
       <head>
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <link
+          rel="preload"
+          href="/assets/hero.webp"
+          as="image"
+          type="image/webp"
+          fetchPriority="high"
+        />
         <script
           type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLdSchema) }}
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify(jsonLdSchema).replace(/</g, '\\u003c'),
+          }}
         />
         <script
           dangerouslySetInnerHTML={{
@@ -115,9 +189,13 @@ export default function RootLayout({ children }) {
           }}
         />
       </head>
-      <body className="bg-[#f8fafc] site-grid-bg text-slate-900 dark:bg-[#090d16] dark:text-slate-100 antialiased overflow-x-hidden transition-colors duration-300" suppressHydrationWarning>
+      <body className={`${epilogue.variable} font-sans bg-[#f8fafc] site-grid-bg text-slate-900 dark:bg-[#090d16] dark:text-slate-100 antialiased overflow-x-hidden transition-colors duration-300`} suppressHydrationWarning>
         <ThemeProvider>
+          <SvgSymbols />
+          <ClientAnimations />
+          <Navbar />
           {children}
+          <Footer />
         </ThemeProvider>
       </body>
     </html>

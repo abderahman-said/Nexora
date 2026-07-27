@@ -5,6 +5,10 @@ import { gsap } from 'gsap';
 
 export default function CursorBubble() {
     useEffect(() => {
+        if (typeof window === 'undefined' || window.innerWidth < 768 || window.matchMedia('(pointer: coarse)').matches) {
+            return;
+        }
+
         const cursorBubble = document.querySelector('.js-cursor-bubble');
         if (!cursorBubble) return;
 
@@ -15,15 +19,6 @@ export default function CursorBubble() {
         let currentTarget = null;
         gsap.set(cursorBubble, { rotation: -30 });
 
-        // ✅ PERF: Use pointermove instead of mousemove (same cost, broader compat)
-        const onMouseMove = (e) => {
-            xTo(e.clientX + 13);
-            yTo(e.clientY - 43);
-        };
-
-        // ✅ PERF: Use event delegation on document with a single selector check.
-        // Previously mouseover fired on every child element — now we use
-        // pointermove's target to detect entry/exit without bubbling overhead.
         const targetSelector = '.js-job-heading, .js-footer-map-link span, .js-email, .js-whatsapp, .js-single-social, .js-logo-truus, .js-nav-work-btn';
 
         const onPointerMove = (e) => {

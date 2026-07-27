@@ -13,20 +13,6 @@ export function ThemeProvider({ children }) {
     const [theme, setThemeState] = useState('light');
     const [mounted, setMounted] = useState(false);
 
-    useEffect(() => {
-        setMounted(true);
-        const storedTheme = localStorage.getItem('nexora-theme');
-        if (storedTheme) {
-            setThemeState(storedTheme);
-            applyTheme(storedTheme);
-        } else {
-            const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-            const initialTheme = systemPrefersDark ? 'dark' : 'light';
-            setThemeState(initialTheme);
-            applyTheme(initialTheme);
-        }
-    }, []);
-
     const applyTheme = (newTheme) => {
         const root = document.documentElement;
         if (newTheme === 'dark') {
@@ -39,6 +25,15 @@ export function ThemeProvider({ children }) {
             root.style.colorScheme = 'light';
         }
     };
+
+    useEffect(() => {
+        const storedTheme = localStorage.getItem('nexora-theme');
+        const initialTheme = storedTheme || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+        // eslint-disable-next-line react-hooks/set-state-in-effect
+        setThemeState(initialTheme);
+        applyTheme(initialTheme);
+        setMounted(true);
+    }, []);
 
     const setTheme = (newTheme) => {
         setThemeState(newTheme);

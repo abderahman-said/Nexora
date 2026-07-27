@@ -1,71 +1,116 @@
 'use client';
 
-import { useRef } from 'react';
+import React from 'react';
+import { Layers, ArrowRight } from 'lucide-react';
+import GSAPSlider from '@/components/ui/GSAPSlider';
 import { SERVICES } from './servicesData';
 import { ServiceCard } from './ServiceCard';
-import { useServiceCardsGSAP } from './useServiceCardsGSAP';
-import SectionHeader from '@/components/ui/SectionHeader';
+import Container from '@/components/ui/Container';
 
 export default function ServiceCards() {
-    const sectionRef = useRef(null);
-
-    useServiceCardsGSAP(sectionRef);
-
     return (
         <section
             id="services"
-            ref={sectionRef}
-            className="relative w-full overflow-hidden border-b border-slate-200/90 dark:border-slate-800/80 bg-white dark:bg-[#060913] px-[60px] py-[120px] transition-colors duration-300 max-[900px]:px-6 max-[900px]:py-20"
-            suppressHydrationWarning
+            className="scroll-section relative w-full py-14 sm:py-24 lg:py-32 bg-slate-100/90 dark:bg-[#060913] border-b border-slate-200/90 dark:border-slate-800/80 site-grid-bg overflow-hidden"
         >
-            {/* ── Ambient blobs ── */}
-            <div
-                className="services-ambient pointer-events-none absolute -left-[160px] -top-[80px] h-[600px] w-[600px] rounded-full bg-[radial-gradient(circle,rgba(37,99,235,0.06)_0%,transparent_70%)] blur-3xl"
-                aria-hidden="true"
-            />
-            <div
-                className="pointer-events-none absolute -bottom-[120px] right-[5%] h-[500px] w-[500px] rounded-full bg-[radial-gradient(circle,rgba(2,132,199,0.05)_0%,transparent_70%)] blur-3xl"
-                aria-hidden="true"
-            />
+            <Container className="relative z-10">
 
-            {/* ── Header ── */}
-            <div className="services-header relative mx-auto mb-12 max-w-[1280px]">
-                <SectionHeader
-                    tag="Services"
-                    badge="What We Do"
-                    badgeColor="info"
-                    title="Our Core"
-                    highlight="Capabilities"
-                    subtitle="End-to-end digital solutions engineered for scale, performance, and measurable growth."
-                    align="between"
-                    rightElement={
-                        <div className="flex gap-8 pt-2">
-                            {[
-                                { value: '50+', label: 'Projects' },
-                                { value: '5★', label: 'Rated' },
-                                { value: '3yr', label: 'Experience' },
-                            ].map(({ value, label }) => (
-                                <div key={label} className="flex flex-col">
-                                    <span className="text-xl font-black tracking-tight text-slate-900 dark:text-white">
-                                        {value}
-                                    </span>
-                                    <span className="text-[0.7rem] font-bold uppercase tracking-widest text-slate-500 dark:text-slate-400">
-                                        {label}
-                                    </span>
-                                </div>
-                            ))}
+                {/* ── Dark Banner Container ── */}
+                <div className="
+                    relative rounded-3xl sm:rounded-[2.5rem]
+                    border border-slate-800/90 shadow-2xl
+                    p-6 sm:p-12 lg:p-16  pb-36 lg:pb-62
+                    overflow-hidden
+                ">
+                    {/* Background Texture Image (service_bg.webp) */}
+                    <div
+                        aria-hidden="true"
+                        className="absolute inset-0 bg-[url('/service_bg.webp')] bg-cover bg-center bg-no-repeat  pointer-events-none"
+                    />
+
+                    {/* Ambient Tech Wave Background Lines (Matches Reference Image) */}
+                    <svg
+                        className="absolute inset-0 w-full h-full pointer-events-none opacity-40"
+                        viewBox="0 0 1200 400"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                    >
+                        <path
+                            d="M-100 200 C 300 50, 700 350, 1300 150"
+                            stroke="url(#serviceWave1)"
+                            strokeWidth="2"
+                        />
+                        <path
+                            d="M-100 280 C 400 100, 800 380, 1300 220"
+                            stroke="url(#serviceWave2)"
+                            strokeWidth="1.5"
+                            strokeDasharray="6 6"
+                        />
+                        <defs>
+                            <linearGradient id="serviceWave1" x1="0%" y1="0%" x2="100%" y2="0%">
+                                <stop offset="0%" stopColor="#2563eb" stopOpacity="0.1" />
+                                <stop offset="50%" stopColor="#38bdf8" stopOpacity="0.8" />
+                                <stop offset="100%" stopColor="#6366f1" stopOpacity="0.1" />
+                            </linearGradient>
+                            <linearGradient id="serviceWave2" x1="0%" y1="0%" x2="100%" y2="0%">
+                                <stop offset="0%" stopColor="#0284c7" stopOpacity="0.1" />
+                                <stop offset="50%" stopColor="#818cf8" stopOpacity="0.6" />
+                                <stop offset="100%" stopColor="#3b82f6" stopOpacity="0.1" />
+                            </linearGradient>
+                        </defs>
+                    </svg>
+
+                    {/* Background Radial Glow */}
+                    <div className="absolute -top-24 -right-24 w-96 h-96 rounded-full bg-blue-600/20 blur-3xl pointer-events-none" />
+
+                    {/* Header Content Row */}
+                    <div className="relative z-10 flex flex-col md:flex-row md:items-end justify-between gap-8">
+                        {/* Left Title & Tag */}
+                        <div className="max-w-2xl space-y-4">
+                            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-blue-950/80 border border-blue-800/80 text-blue-400 font-bold text-xs tracking-wider uppercase shadow-inner">
+                                <Layers className="w-3.5 h-3.5" />
+                                <span>LATEST SERVICES</span>
+                            </div>
+
+                            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-white tracking-tight leading-[1.15]">
+                                We Provide Exclusive Service For{' '}
+                                <span className="bg-gradient-to-r from-blue-400 via-sky-300 to-indigo-400 bg-clip-text text-transparent">
+                                    Your Business
+                                </span>
+                            </h2>
                         </div>
-                    }
-                />
-                <div className="mt-8 h-px w-full bg-gradient-to-r from-transparent via-slate-200 dark:via-slate-800 to-transparent" />
-            </div>
 
-            {/* ── Cards grid ── */}
-            <div className="relative mx-auto grid max-w-[1280px] grid-cols-3 gap-4 max-[1100px]:grid-cols-2 max-[900px]:grid-cols-1">
-                {SERVICES.map((service, i) => (
-                    <ServiceCard key={service.id} service={service} index={i} />
-                ))}
-            </div>
+                        {/* Right Action Button */}
+                        <div className="shrink-0">
+                            <a
+                                href="#contact"
+                                className="
+                                    inline-flex items-center gap-2.5 px-7 py-3.5 rounded-full
+                                    bg-gradient-to-r from-blue-600 to-sky-600 text-white
+                                    font-bold text-xs tracking-wider uppercase
+                                    shadow-lg shadow-blue-500/25 hover:shadow-xl hover:shadow-blue-500/40
+                                    hover:-translate-y-0.5 transition-all duration-300 group
+                                "
+                            >
+                                <span>VIEW ALL SERVICES</span>
+                                <ArrowRight className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" />
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                {/* ── Overlapping Reusable GSAP Cards Slider Row ── */}
+                <div className="relative z-20   -mt-20 sm:-mt-24 lg:-mt-[250px] px-2 sm:px-4">
+                    <GSAPSlider
+                        items={SERVICES}
+                        ItemComponent={ServiceCard}
+                        autoplay={false}
+                        showControls={true}
+                        showDots={true}
+                    />
+                </div>
+
+            </Container>
         </section>
     );
 }

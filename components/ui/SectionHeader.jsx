@@ -49,27 +49,27 @@ function CornerFrame({ children, extraClass = '' }) {
 const STATUS_STYLES = {
     info: {
         dot: 'bg-blue-500 shadow-[0_0_10px_#2563eb]',
-        text: 'text-blue-600 dark:text-blue-400',
+        text: 'text-blue-700 dark:text-sky-400',
         tagBorder: 'border-blue-300/60 dark:border-blue-700/60',
-        highlight: 'text-blue-600 dark:text-blue-400 bg-blue-500/10 dark:bg-blue-400/15 shadow-[0_0_18px_-4px_rgba(37,99,235,0.5)]',
+        highlight: 'text-blue-700 dark:text-sky-400 bg-blue-500/10 dark:bg-blue-400/15 shadow-[0_0_18px_-4px_rgba(37,99,235,0.5)]',
     },
     success: {
         dot: 'bg-emerald-400 shadow-[0_0_10px_#34d399]',
-        text: 'text-emerald-600 dark:text-emerald-300',
+        text: 'text-emerald-700 dark:text-emerald-400',
         tagBorder: 'border-emerald-300/60 dark:border-emerald-700/60',
-        highlight: 'text-emerald-600 dark:text-emerald-300 bg-emerald-400/10 dark:bg-emerald-400/15 shadow-[0_0_18px_-4px_rgba(52,211,153,0.5)]',
+        highlight: 'text-emerald-700 dark:text-emerald-400 bg-emerald-400/10 dark:bg-emerald-400/15 shadow-[0_0_18px_-4px_rgba(52,211,153,0.5)]',
     },
     warning: {
         dot: 'bg-amber-400 shadow-[0_0_10px_#f59e0b]',
-        text: 'text-amber-600 dark:text-amber-300',
+        text: 'text-amber-700 dark:text-amber-400',
         tagBorder: 'border-amber-300/60 dark:border-amber-700/60',
-        highlight: 'text-amber-600 dark:text-amber-300 bg-amber-400/10 dark:bg-amber-400/15 shadow-[0_0_18px_-4px_rgba(245,158,11,0.5)]',
+        highlight: 'text-amber-700 dark:text-amber-400 bg-amber-400/10 dark:bg-amber-400/15 shadow-[0_0_18px_-4px_rgba(245,158,11,0.5)]',
     },
     error: {
         dot: 'bg-rose-400 shadow-[0_0_10px_#fb7185]',
-        text: 'text-rose-600 dark:text-rose-300',
+        text: 'text-rose-700 dark:text-rose-400',
         tagBorder: 'border-rose-300/60 dark:border-rose-700/60',
-        highlight: 'text-rose-600 dark:text-rose-300 bg-rose-400/10 dark:bg-rose-400/15 shadow-[0_0_18px_-4px_rgba(251,113,133,0.5)]',
+        highlight: 'text-rose-700 dark:text-rose-400 bg-rose-400/10 dark:bg-rose-400/15 shadow-[0_0_18px_-4px_rgba(251,113,133,0.5)]',
     },
 };
 
@@ -127,7 +127,7 @@ export default function SectionHeader({
     // Code-tag badge — signature element
     const CodeTagBadge = badge ? (
         <div className={`mb-5 inline-flex items-center gap-3 ${animClass}`}>
-            <span className={`inline-flex items-center gap-1.5 rounded-md border ${s.tagBorder} bg-slate-50/80 dark:bg-slate-900/60 px-2.5 py-1 font-mono text-[0.72rem] tracking-tight text-slate-500 dark:text-slate-400`}>
+            <span className={`inline-flex items-center gap-1.5 rounded-md border ${s.tagBorder} bg-slate-50/80 dark:bg-slate-900/60 px-2.5 py-1 font-mono text-[0.72rem] tracking-tight text-slate-700 dark:text-slate-200`}>
                 <span className="text-slate-400 dark:text-slate-600">&lt;</span>
                 {tag}
                 <span className="text-slate-400 dark:text-slate-600">/&gt;</span>

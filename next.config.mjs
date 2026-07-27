@@ -11,28 +11,26 @@ const nextConfig = {
     },
     compress: true,
     poweredByHeader: false,
-    generateEtags: false,
+    generateEtags: true,
+    reactStrictMode: true,
     httpAgentOptions: {
         keepAlive: true,
     },
+    images: {
+        formats: ['image/avif', 'image/webp'],
+        minimumCacheTTL: 31536000,
+        dangerouslyAllowSVG: true,
+        contentSecurityPolicy: "default-src 'self'; script-src 'none'; sandbox;",
+    },
     experimental: {
-        optimizePackageImports: ['gsap', 'motion', 'ogl'],
+        optimizePackageImports: ['lucide-react', 'gsap'],
     },
     compiler: {
         removeConsole: process.env.NODE_ENV === 'production',
     },
     headers: async () => [
         {
-            source: '/assets/:path*',
-            headers: [
-                {
-                    key: 'Cache-Control',
-                    value: 'public, max-age=31536000, immutable',
-                },
-            ],
-        },
-        {
-            source: '/fonts/:path*',
+            source: '/:all*(svg|jpg|png|webp|avif|ttf|woff|woff2)',
             headers: [
                 {
                     key: 'Cache-Control',

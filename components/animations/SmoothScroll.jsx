@@ -9,40 +9,43 @@ gsap.registerPlugin(ScrollTrigger);
 
 export default function SmoothScroll() {
     useEffect(() => {
-        const lenis = new Lenis({
-            duration: 1.2,
-            easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-            smoothWheel: true,
-            touchMultiplier: 1.5,
-        });
+        let lenis = null;
+        let tickerFn = null;
+        let handleVisibility = null;
 
-        // ✅ Modern Lenis v1 + GSAP integration (no scrollerProxy needed)
-        // Lenis drives scroll → notifies ScrollTrigger on each frame
-        lenis.on('scroll', ScrollTrigger.update);
+        const timer = setTimeout(() => {
+            // Disable Lenis on mobile/touch devices for native 120fps touch scrolling & zero CPU overhead
+            if (window.innerWidth < 768 || window.matchMedia('(pointer: coarse)').matches) {
+                return;
+            }
 
-        // GSAP ticker drives Lenis for frame-perfect sync
-        const tickerFn = (time) => lenis.raf(time * 1000);
-        gsap.ticker.add(tickerFn);
-        // ✅ PERF: Use recommended lagSmoothing values instead of (0).
-        // lagSmoothing(0) disables all compensation — if a heavy frame hits,
-        // GSAP will try to catch up aggressively causing a jank spike.
-        // (500, 33) = allow up to 500ms lag cap with a 33ms threshold (~30fps).
-        gsap.ticker.lagSmoothing(500, 33);
+            lenis = new Lenis({
+                duration: 1.2,
+                easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+                smoothWheel: true,
+                touchMultiplier: 1.5,
+            });
 
-        // Store lenis on window so other components can access it
-        window.__lenis = lenis;
+            lenis.on('scroll', ScrollTrigger.update);
 
-        // Dynamic Tab Title Change
-        const originalTitle = document.title;
-        const handleVisibility = () => {
-            document.title = document.hidden ? "Hey, over here!👋 - Nexora" : originalTitle;
-        };
-        document.addEventListener('visibilitychange', handleVisibility);
+            tickerFn = (time) => lenis.raf(time * 1000);
+            gsap.ticker.add(tickerFn);
+            gsap.ticker.lagSmoothing(500, 33);
+
+            window.__lenis = lenis;
+
+            const originalTitle = document.title;
+            handleVisibility = () => {
+                document.title = document.hidden ? "Hey, over here!👋 - Nexora" : originalTitle;
+            };
+            document.addEventListener('visibilitychange', handleVisibility);
+        }, 100);
 
         return () => {
-            gsap.ticker.remove(tickerFn);
-            lenis.destroy();
-            document.removeEventListener('visibilitychange', handleVisibility);
+            clearTimeout(timer);
+            if (tickerFn) gsap.ticker.remove(tickerFn);
+            if (lenis) lenis.destroy();
+            if (handleVisibility) document.removeEventListener('visibilitychange', handleVisibility);
             delete window.__lenis;
         };
     }, []);

@@ -5,7 +5,7 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 // ✅ Register once at module level
 gsap.registerPlugin(ScrollTrigger);
 
-export function useVimeoHeroGSAP({ heroRef, headRef, subRef, statsRef, ctaRef, badgeRef, glowRef }) {
+export function useVimeoHeroGSAP({ heroRef, headRef, subRef, statsRef, ctaRef, badgeRef, glowRef, imageRef }) {
     useGSAP(() => {
         const head = headRef.current;
         if (!head) return;
@@ -15,9 +15,14 @@ export function useVimeoHeroGSAP({ heroRef, headRef, subRef, statsRef, ctaRef, b
 
         const tl = gsap.timeline({ defaults: { ease: 'power4.out' } });
 
+        // Left Image Entrance
+        if (imageRef?.current) {
+            tl.from(imageRef.current, { opacity: 0, x: -40, scale: 0.95, duration: 0.9 });
+        }
+
         // Badge entrance
-        if (badgeRef.current) {
-            tl.from(badgeRef.current, { opacity: 0, y: 20, scale: 0.9, duration: 0.7 });
+        if (badgeRef?.current) {
+            tl.from(badgeRef.current, { opacity: 0, y: 20, scale: 0.9, duration: 0.6 }, '-=0.6');
         }
 
         // Headline words stagger up
@@ -26,14 +31,14 @@ export function useVimeoHeroGSAP({ heroRef, headRef, subRef, statsRef, ctaRef, b
             tl.to(words, {
                 y: 0, opacity: 1,
                 duration: 0.8,
-                stagger: 0.04,
+                stagger: 0.05,
                 ease: 'power3.out',
-            }, '-=0.2');
+            }, '-=0.4');
         }
 
         // Subtitle
-        if (subRef.current) {
-            tl.from(subRef.current, { opacity: 0, y: 30, duration: 0.8 }, '-=0.5');
+        if (subRef?.current) {
+            tl.from(subRef.current, { opacity: 0, y: 25, duration: 0.7 }, '-=0.5');
         }
 
         // CTA
@@ -41,7 +46,7 @@ export function useVimeoHeroGSAP({ heroRef, headRef, subRef, statsRef, ctaRef, b
         if (ctaChildren.length > 0) {
             tl.from(ctaChildren, {
                 opacity: 0, y: 20, stagger: 0.1, duration: 0.6,
-            }, '-=0.5');
+            }, '-=0.4');
         }
 
         // Stats
@@ -49,13 +54,13 @@ export function useVimeoHeroGSAP({ heroRef, headRef, subRef, statsRef, ctaRef, b
         if (statsChildren.length > 0) {
             tl.from(statsChildren, {
                 opacity: 0, y: 20, stagger: 0.08, duration: 0.5,
-            }, '-=0.4');
+            }, '-=0.3');
         }
 
         // Scroll parallax — hero moves up slightly
         if (heroRef.current) {
             gsap.to(heroRef.current, {
-                yPercent: 10,
+                yPercent: 8,
                 ease: 'none',
                 scrollTrigger: {
                     trigger: heroRef.current,

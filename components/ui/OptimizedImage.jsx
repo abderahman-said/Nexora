@@ -1,19 +1,18 @@
 import Image from 'next/image';
 
-const DEFAULT_BLUR_DATA_URL = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg==';
-
-const OptimizedImage = ({ 
-  src, 
-  alt, 
-  width, 
-  height, 
-  priority = false, 
+const DEFAULT_BLUR_DATA_URL = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAIAAACQd1PeAAAADElEQVR4nGNQTX4NAAIkAXSaGkHUAAAAAElFTkSuQmCC';
+const OptimizedImage = ({
+  src,
+  alt,
+  width,
+  height,
+  priority = false,
   className = '',
   sizes = '(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw',
   quality = 75,
   placeholder = 'blur',
   blurDataURL,
-  ...props 
+  ...props
 }) => {
   const defaultBlurDataURL = blurDataURL || DEFAULT_BLUR_DATA_URL;
 

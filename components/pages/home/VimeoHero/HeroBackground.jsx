@@ -6,19 +6,19 @@ export default function HeroBackground({ glowRef }) {
       {/* Light Image Background */}
       <div
         aria-hidden="true"
-        className="absolute inset-0 bg-[url('/hero-bg-light.png')] bg-cover bg-right md:bg-center bg-no-repeat opacity-70 dark:opacity-0 pointer-events-none transition-opacity duration-500"
+        className="absolute inset-0 bg-[url('/hero-bg-light.svg')] bg-cover bg-center bg-no-repeat opacity-90 dark:opacity-0 pointer-events-none transition-opacity duration-500"
       />
 
       {/* Dark Image Background */}
       <div
         aria-hidden="true"
-        className="absolute inset-0 bg-[url('/hero-bg-dark.png')] bg-cover bg-right md:bg-center bg-no-repeat opacity-0 dark:opacity-50 pointer-events-none transition-opacity duration-500"
+        className="absolute inset-0 bg-[url('/hero-bg-dark.svg')] bg-cover bg-center bg-no-repeat opacity-0 dark:opacity-90 pointer-events-none transition-opacity duration-500"
       />
 
-      {/* Soft Radial Backdrop for Text Contrast & Clarity */}
+      {/* Subtle Central Contrast Radial Vignette */}
       <div
         aria-hidden="true"
-        className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(248,250,252,0.92)_20%,rgba(248,250,252,0.55)_60%,transparent_100%)] dark:bg-[radial-gradient(circle_at_center,rgba(3,7,18,0.85)_20%,rgba(3,7,18,0.6)_60%,transparent_100%)] pointer-events-none transition-colors duration-300"
+        className="absolute inset-0 bg-[radial-gradient(circle_at_50%_35%,rgba(248,250,252,0.45)_0%,rgba(248,250,252,0.1)_60%,transparent_100%)] dark:bg-[radial-gradient(circle_at_50%_35%,rgba(3,7,18,0.45)_0%,rgba(3,7,18,0.1)_60%,transparent_100%)] pointer-events-none transition-colors duration-300"
       />
 
       {/* <div

@@ -1,96 +1,83 @@
 'use client';
 
-import React, { useRef } from 'react';
-import { useHorizontalWordsGSAP } from './useHorizontalWordsGSAP';
-import { StartArrow, EndArrow, Stickers } from './Decorations';
+import React, { useRef  } from 'react';
+import { Layers } from 'lucide-react';
+import AboutVisual from './AboutVisual';
+import AboutVisionMission from './AboutVisionMission';
+import { useAboutGSAP } from './useAboutGSAP';
+import Container from '@/components/ui/Container';
 
 const HorizontalWords = () => {
     const sectionRef = useRef(null);
-    const relativeRef = useRef(null);
-    const arrowSvgRef = useRef(null);
-    const arrowEndSvgRef = useRef(null);
-    const stickerWatchRef = useRef(null);
-    const stickerCursorRef = useRef(null);
-    const stickerPhoneRef = useRef(null);
-    const lettersRef = useRef([]);
+    const visualRef = useRef(null);
+    const contentRef = useRef(null);
 
-    const addLetterRef = (index) => (el) => {
-        if (el) {
-            lettersRef.current[index] = el;
-        }
-    };
-
-    useHorizontalWordsGSAP({
-        sectionRef, relativeRef, arrowSvgRef, arrowEndSvgRef,
-        stickerWatchRef, stickerCursorRef, stickerPhoneRef, lettersRef
-    });
-
-    const text = "We craft premium digital experiences";
+    useAboutGSAP({ sectionRef, visualRef, contentRef });
 
     return (
-        <section
-            ref={sectionRef}
-            className="content-section relative w-full h-screen max-[768px]:min-h-[600px] bg-slate-100/90 dark:bg-[#0b0f19] border-t border-b border-slate-200/90 dark:border-slate-800/80 site-grid-bg overflow-hidden"
-        >
-            <div
-                ref={relativeRef}
-                className="absolute top-1/2 -translate-y-1/2 whitespace-nowrap flex items-center
-                px-[25vw] max-[1024px]:px-[15vw] max-[768px]:px-[10vw] max-[480px]:px-[5vw]"
+        <>
+            <section
+                ref={sectionRef}
+                id="about"
+                className="
+                    scroll-section relative w-full py-14 sm:py-24 lg:py-32
+                    bg-white dark:bg-[#0b0f19]
+                    border-t border-b border-slate-200/90 dark:border-slate-800/80
+                    site-grid-bg overflow-hidden
+                "
             >
-                <div className="w-full relative">
-                    <StartArrow arrowSvgRef={arrowSvgRef} />
-                    <Stickers
-                        stickerWatchRef={stickerWatchRef}
-                        stickerCursorRef={stickerCursorRef}
-                        stickerPhoneRef={stickerPhoneRef}
-                    />
-                    <EndArrow arrowEndSvgRef={arrowEndSvgRef} />
+                {/* Background Ambient Glows */}
+                <div aria-hidden="true" className="absolute inset-0 pointer-events-none overflow-hidden">
+                    <div className="absolute top-1/4 left-0 w-96 h-96 rounded-full bg-blue-500/10 dark:bg-blue-600/10 blur-3xl" />
+                    <div className="absolute bottom-1/4 right-0 w-96 h-96 rounded-full bg-sky-500/10 dark:bg-sky-600/10 blur-3xl" />
+                </div>
 
-                    <h2
-                        className="gsap-managed display heading-primary relative z-[2] whitespace-nowrap lowercase m-0 leading-none
-                        text-[9vw] max-[1024px]:text-[8vw] max-[768px]:text-[6vw] max-[480px]:text-[5.5vw]
-                        text-slate-900 dark:text-white"
-                        aria-label={text}
-                        suppressHydrationWarning
-                    >
-                        {text.split("").map((char, i) =>
-                            char === " " ? (
-                                <React.Fragment key={i}> </React.Fragment>
-                            ) : (
-                                <div
-                                    key={i}
-                                    ref={addLetterRef(i)}
-                                    className="relative inline-block text-slate-900 dark:text-white"
-                                    aria-hidden="true"
-                                    suppressHydrationWarning
-                                >
-                                    {char}
+                <Container className="relative z-10">
+                    <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-16 items-center">
+                        
+                        {/* ── LEFT COLUMN: Structured Team Visual & Glass Chips ── */}
+                        <div className="lg:col-span-6 flex justify-center">
+                            <AboutVisual
+                                visualRef={visualRef}
+                            />
+                        </div>
+
+                        {/* ── RIGHT COLUMN: Content Header & Vision/Mission Cards ── */}
+                        <div ref={contentRef} className="lg:col-span-6 flex flex-col justify-center space-y-5">
+                            
+                            {/* Section Badge / Status Tag */}
+                            <div>
+                                <div className="inline-flex items-center gap-2.5 px-4 py-2 rounded-full bg-blue-50 dark:bg-blue-950/60 border border-blue-200 dark:border-blue-800/60 text-blue-600 dark:text-sky-400 font-bold text-xs tracking-wider uppercase shadow-sm">
+                                    <div className="w-5 h-5 rounded-md bg-blue-600 dark:bg-sky-500 flex items-center justify-center text-white">
+                                        <Layers className="w-3.5 h-3.5" />
+                                    </div>
+                                    <span>ABOUT NEXORA IT SOLUTIONS</span>
                                 </div>
-                            )
-                        )}
-                    </h2>
-                </div>
-            </div>
+                            </div>
 
-            <div
-                className="absolute left-1/2 top-1/2 z-20 w-max text-center flex flex-col items-center
-                [transform:translate(-50%,9em)] max-[768px]:[transform:translate(-50%,6em)]"
-            >
-                <div
-                    className="m-0
-                    max-w-[40em] max-[1024px]:max-w-[35em] max-[768px]:max-w-[90vw]
-                    text-[1.3rem] max-[1024px]:text-[1.1rem] max-[768px]:text-[0.9rem] max-[480px]:text-[0.85rem]
-                    leading-[1.4] max-[768px]:leading-[1.3]
-                    font-[500]
-                    max-[768px]:px-[20px] max-[480px]:px-[15px]
-                    text-slate-600 dark:text-slate-300"
-                >
-                    We are a passionate team of software engineers and system architects dedicated<br />
-                    to building resilient digital infrastructure. By blending scalable architectures<br />
-                    with clean, efficient code, we develop robust products that scale seamlessly.
-                </div>
-            </div>
-        </section>
+                            {/* Main Section Headline */}
+                            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-slate-900 dark:text-white tracking-tight leading-[1.15]">
+                                We Are Increasing Business Success With{' '}
+                                <span className="bg-gradient-to-r from-blue-600 via-sky-500 to-indigo-600 bg-clip-text text-transparent">
+                                    Technology
+                                </span>
+                            </h2>
+
+                            {/* Section Lead Description */}
+                            <p className="text-base sm:text-lg text-slate-600 dark:text-slate-300 leading-relaxed font-normal">
+                                Synergistically incentivize effective imperatives through fully researched intellectual capital. Appropriately fashion client-based enterprise software solutions and scalable architectures.
+                            </p>
+
+                            {/* ── Vision & Mission (Replacing Tabs) ── */}
+                            <AboutVisionMission />
+                        </div>
+
+                    </div>
+                </Container>
+            </section>
+
+           
+        </>
     );
 };
 

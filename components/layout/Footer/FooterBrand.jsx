@@ -1,53 +1,34 @@
-import React from 'react';
-import Image from 'next/image';
-import Link from 'next/link';
-import { Mail, Phone } from 'lucide-react';
-import { LinkedinIcon } from "@/components/icons/LinkedinIcon";
-import { SOCIAL_ICONS } from "@/lib/data";
+"use client";
 
-const ICON_MAP = {
-    Linkedin: LinkedinIcon,
-    Mail,
-    Phone,
-};
+import React from "react";
+import Image from "next/image";
+import Link from "next/link";
+import { FooterSocials } from "./FooterSocials";
 
 export function FooterBrand() {
     return (
-        <div>
-            <div className="mb-[18px] flex items-center gap-2.5 text-2xl font-black tracking-[-0.04em] text-slate-900 dark:text-white">
+        <div className="flex flex-col items-start space-y-4">
+            <Link href="/" className="inline-block mb-1 group">
                 <Image
                     src="/assets/logo.png"
                     alt="Nexora Solutions"
                     width={160}
-                    height={50}
-                    style={{ width: 'auto', height: 'auto' }}
-                    className="h-[50px] w-auto object-contain"
+                    height={60}
+                    className="h-12 w-auto object-contain brightness-110 transition-transform duration-300 group-hover:scale-105"
                 />
-            </div>
-            <p className="max-w-[240px] text-[0.85rem] font-medium leading-[1.7] text-slate-600 dark:text-slate-300">
-                Premium Software Engineering. Building robust digital infrastructure
-                and scalable applications.
+            </Link>
+            <p className="text-xs md:text-sm font-normal leading-relaxed text-slate-300 text-left max-w-[340px]">
+                Nexora Solutions is a leading technology agency specializing in enterprise software development, SaaS architectures, and cloud solutions worldwide.
             </p>
 
-            {/* Socials moved under brand for better visual balance */}
-            <div className="mt-6 flex flex-wrap gap-3">
-                {(SOCIAL_ICONS || []).map(({ href, label, icon }) => {
-                    const IconComponent = ICON_MAP[icon] || Mail;
-                    return (
-                        <Link
-                            key={label}
-                            href={href}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="flex h-10 w-10 items-center justify-center rounded-[10px] border border-slate-200 bg-white text-slate-600 shadow-sm transition-all duration-[250ms] hover:-translate-y-0.5 hover:border-slate-300 hover:bg-slate-50 hover:text-slate-900 dark:border-slate-800 dark:bg-slate-900/80 dark:text-slate-400 dark:hover:border-slate-700 dark:hover:bg-slate-800 dark:hover:text-white"
-                            aria-label={label}
-                        >
-                            <IconComponent className="h-5 w-5" />
-                        </Link>
-                    );
-                })}
+            {/* Trust Badge */}
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-500/10 border border-blue-500/20 text-[11px] font-medium text-blue-300">
+                <span className="h-1.5 w-1.5 rounded-full bg-emerald-400 animate-pulse" />
+                <span>Enterprise Certified Tech Partner</span>
             </div>
+            
+            {/* Rich Social Icons Row */}
+            <FooterSocials />
         </div>
     );
 }
-

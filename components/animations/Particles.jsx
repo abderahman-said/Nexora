@@ -228,7 +228,17 @@ const Particles = ({
       if (container.contains(gl.canvas)) {
         container.removeChild(gl.canvas);
       }
-      renderer.dispose();
+      if (geometry && typeof geometry.remove === 'function') {
+        geometry.remove();
+      }
+      if (program && typeof program.remove === 'function') {
+        program.remove();
+      }
+      if (typeof renderer?.dispose === 'function') {
+        renderer.dispose();
+      } else if (gl && typeof gl.getExtension === 'function') {
+        gl.getExtension('WEBGL_lose_context')?.loseContext();
+      }
     };
   }, [
     particleCount,

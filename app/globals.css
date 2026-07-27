@@ -271,8 +271,17 @@ body.is-transitioning .js-cursor-bubble {
 }
 
 /* ─── Content Sections ───────────────────────────────────────────────── */
-.content-section {
+.scroll-section {
   position: relative;
+  content-visibility: auto;
+  contain-intrinsic-size: 1px 600px;
+}
+
+/* استثناء الأقسام اللي فيها GSAP ScrollTrigger pinning */
+.scroll-section.pin-container,
+.scroll-section:has(.pin-container) {
+  content-visibility: visible;
+  contain-intrinsic-size: auto;
 }
 /* ─── Keyframes ──────────────────────────────────────────────────────── */
 @keyframes spin {

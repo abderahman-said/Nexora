@@ -1,55 +1,93 @@
-'use client';
-
 import React from 'react';
-import { Star } from 'lucide-react';
+import { Star, Quote } from 'lucide-react';
+import Image from 'next/image';
 
-export default function ClientCard({ testimonial, itemsPerView }) {
-    const { id, accent, rating, comment, clientName, role, company, metric } = testimonial;
-
+export function ClientCard({ client }) {
     return (
         <div
-            className="shrink-0 px-3"
-            style={{ width: `${100 / itemsPerView}%` }}
+            className="
+                group relative flex flex-col justify-between
+                bg-white dark:bg-[#0c101d]
+                border border-slate-200/90 dark:border-slate-800/90
+                rounded-3xl p-7 pt-4
+                shadow-xl shadow-slate-200/40 dark:shadow-none
+                hover:border-blue-500/60 dark:hover:border-sky-400/60
+                hover:shadow-2xl hover:shadow-blue-500/20 dark:hover:shadow-blue-500/20
+                hover:-translate-y-2 hover:scale-[1.01]
+                transition-all duration-500 ease-out
+                h-full
+            "
         >
-            <div className="flex h-full flex-col justify-between rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900/60 p-7 shadow-sm dark:shadow-none transition-all duration-300 hover:border-cyan-400/40">
-                <div>
-                    <div className="mb-5 flex items-center justify-between border-b border-dashed border-slate-200 dark:border-slate-700/80 pb-3">
-                        <span className="font-mono text-[0.68rem] tracking-widest text-slate-400 dark:text-slate-500">
-                            REC/{id}
-                        </span>
-                        <span
-                            className="rounded border-2 border-double px-2 py-0.5 font-mono text-[0.6rem] font-bold uppercase tracking-widest"
-                            style={{ borderColor: accent, color: accent }}
-                        >
-                            {metric}
-                        </span>
+            {/* ── Top Hover Inner Gradient Overlay ── */}
+            <div className="absolute inset-0 bg-gradient-to-b from-blue-500/5 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none rounded-3xl" />
+
+            {/* ── Card Header: Avatar Protruding with Negative Margin & Black Border ── */}
+            <div className="relative z-10 flex items-end justify-between -mt-14 mb-4">
+                
+                {/* Larger Avatar Photo with Black Border & Centered Quote Radar Badge */}
+                <div className="relative">
+                    <div className="
+                        w-20 h-20 sm:w-24 sm:h-24 rounded-2xl overflow-hidden
+                        border-[6px] border-slate-950 dark:border-slate-900
+                        bg-slate-950 shadow-xl shadow-slate-950/20
+                        group-hover:border-blue-600 dark:group-hover:border-sky-400
+                        transition-colors duration-300
+                    ">
+                        <Image 
+                            src={client.avatar}
+                            alt={client.clientName}
+                            width={88}
+                            height={88}
+                            loading="lazy"
+                            decoding="async"
+                            sizes="96px"
+                            className="w-full h-full object-cover object-center group-hover:scale-110 transition-transform duration-500 ease-out"
+                        />
                     </div>
 
-                    <div className="mb-4 flex gap-0.5 text-amber-400">
-                        {[...Array(rating)].map((_, i) => (
-                            <Star key={i} className="h-3.5 w-3.5 fill-amber-400 text-amber-400" />
-                        ))}
-                    </div>
+                    {/* Centered Circular Purple Quote Badge with Animated Radar Effect */}
+                    <div className="
+                        absolute -bottom-3 left-1/2 -translate-x-1/2
+                        w-8 h-8 rounded-full
+                        bg-gradient-to-br from-blue-600 via-sky-500 to-indigo-600 text-white
+                        flex items-center justify-center
+                        shadow-lg shadow-blue-500/40
+                        group-hover:shadow-xl group-hover:shadow-blue-500/60 group-hover:scale-110 group-hover:rotate-12
+                        transition-all duration-500 ease-out z-20
+                    ">
+                        {/* Continuous Radar Ring Effect */}
+                        <span className="absolute inset-0 rounded-full bg-blue-500/40 animate-ping opacity-60 pointer-events-none" />
+                        <span className="absolute -inset-1 rounded-full bg-gradient-to-r from-blue-500 to-sky-400 opacity-0 group-hover:opacity-50 blur-sm transition-opacity duration-500 pointer-events-none" />
 
-                    <p className="mb-8 text-sm font-medium leading-[1.75] text-slate-700 dark:text-slate-300">
-                        {comment}
-                    </p>
+                        {/* Quote Icon */}
+                        <Quote className="w-3.5 h-3.5 fill-current stroke-none rotate-180 relative z-10 transform transition-transform duration-500 ease-out group-hover:rotate-12 group-hover:scale-110" />
+                    </div>
                 </div>
 
-                <div className="flex items-center gap-3 border-t border-dashed border-slate-200 dark:border-slate-700/80 pt-5">
-                    <div
-                        className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full font-mono text-[0.65rem] font-black text-white"
-                        style={{ backgroundColor: accent }}
-                    >
-                        {clientName.slice(0, 2).toUpperCase()}
-                    </div>
-                    <div>
-                        <h4 className="text-sm font-bold text-slate-900 dark:text-white">{clientName}</h4>
-                        <p className="text-xs font-medium text-slate-500 dark:text-slate-400">
-                            {role} — {company}
-                        </p>
-                    </div>
+                {/* 5-Star Rating */}
+                <div className="flex items-center gap-1 pb-2">
+                    {Array.from({ length: client.rating || 5 }).map((_, starIdx) => (
+                        <Star
+                            key={starIdx}
+                            className="w-4 h-4 fill-blue-600 text-blue-600 dark:fill-sky-400 dark:text-sky-400"
+                        />
+                    ))}
                 </div>
+            </div>
+
+            {/* ── Testimonial Quote Comment ── */}
+            <p className="relative z-10 text-xs sm:text-sm text-slate-600 dark:text-slate-300 leading-relaxed font-normal my-4 text-left">
+                {client.comment}
+            </p>
+
+            {/* ── Client Name & Role Title ── */}
+            <div className="relative z-10 text-left pt-3 border-t border-slate-100 dark:border-slate-800/80 mt-auto">
+                <h3 className="text-lg font-extrabold text-slate-900 dark:text-white tracking-tight group-hover:text-blue-600 dark:group-hover:text-sky-400 transition-colors duration-300">
+                    {client.clientName}
+                </h3>
+                <p className="text-xs font-semibold text-slate-400 dark:text-slate-500 mt-0.5">
+                    {client.role}
+                </p>
             </div>
         </div>
     );

@@ -1,46 +1,42 @@
 'use client';
 
-import { useEffect } from 'react';
-import Button from '@/components/ui/Button';
+import React, { useEffect } from 'react';
 import { RefreshCw, AlertTriangle } from 'lucide-react';
+import Link from 'next/link';
 
-/**
- * 💡 Error Boundary Pattern: app/error.jsx
- * Catches uncaught runtime errors in Next.js App Router tree gracefully,
- * preventing total app crash and providing a stylish recovery mechanism.
- */
-export default function Error({ error, reset }) {
-  useEffect(() => {
-    // Log the error to an analytics/logging service if needed
-    console.error('Unhandled runtime error in Nexora App:', error);
-  }, [error]);
+export default function GlobalError({ error, reset }) {
+    useEffect(() => {
+        console.error('App Error Boundary caught:', error);
+    }, [error]);
 
-  return (
-    <div className="flex min-h-screen w-full flex-col items-center justify-center bg-[#f8fafc] dark:bg-[#060913] px-6 text-center transition-colors duration-300">
-      <div className="flex flex-col items-center gap-5 max-w-md p-8 rounded-3xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900/90 shadow-2xl">
-        <div className="h-16 w-16 rounded-2xl bg-rose-500/10 border border-rose-500/20 text-rose-500 flex items-center justify-center">
-          <AlertTriangle className="h-8 w-8" />
+    return (
+        <div className="min-h-[70vh] flex flex-col items-center justify-center text-center px-4 py-20 bg-white dark:bg-[#060913]">
+            <div className="w-16 h-16 rounded-2xl bg-red-50 dark:bg-red-950/50 text-red-600 dark:text-red-400 flex items-center justify-center mb-6 shadow-sm">
+                <AlertTriangle className="w-8 h-8" />
+            </div>
+
+            <h2 className="text-2xl sm:text-3xl font-extrabold text-slate-900 dark:text-white tracking-tight mb-2">
+                Something went wrong!
+            </h2>
+            <p className="text-slate-600 dark:text-slate-400 text-sm max-w-md mb-8">
+                An unexpected error occurred while loading this page. Please try refreshing or returning to the homepage.
+            </p>
+
+            <div className="flex items-center gap-4">
+                <button
+                    onClick={() => reset()}
+                    className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs uppercase tracking-wider transition-colors shadow-md"
+                >
+                    <RefreshCw className="w-4 h-4" />
+                    <span>Try Again</span>
+                </button>
+                <Link
+                    href="/"
+                    className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200 font-bold text-xs uppercase tracking-wider hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors"
+                >
+                    <span>Back to Home</span>
+                </Link>
+            </div>
         </div>
-
-        <h2 className="text-2xl font-black tracking-tight text-slate-900 dark:text-white">
-          Something went wrong
-        </h2>
-
-        <p className="text-sm font-medium text-slate-500 dark:text-slate-400">
-          An unexpected error occurred. You can attempt to recover by clicking the retry button below.
-        </p>
-
-        <div className="mt-4 flex gap-3">
-          <Button
-            onClick={() => reset()}
-            variant="gradient"
-            size="md"
-            className="flex items-center gap-2"
-          >
-            <RefreshCw className="h-4 w-4" /> Try Again
-          </Button>
-        </div>
-      </div>
-    </div>
-  );
+    );
 }

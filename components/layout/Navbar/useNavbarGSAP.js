@@ -19,25 +19,33 @@ export function useNavbarGSAP({ navRef, navInnerRef, logoRef, linksRef, ctaRef }
                 duration: 1.2,
                 ease: "expo.out"
             })
-            .from(logoRef.current, {
-                opacity: 0,
-                x: -20,
-                duration: 1,
-                ease: "power3.out"
-            }, "-=0.8")
-            .from(linksRef.current?.children || [], {
-                opacity: 0,
-                y: -15,
-                duration: 0.8,
-                stagger: 0.05,
-                ease: "power3.out"
-            }, "-=0.8")
-            .from(ctaRef.current, {
-                opacity: 0,
-                scale: 0.9,
-                duration: 0.8,
-                ease: "back.out(1.5)"
-            }, "-=0.6");
+            if (logoRef?.current) {
+                tl.from(logoRef.current, {
+                    opacity: 0,
+                    x: -20,
+                    duration: 1,
+                    ease: "power3.out"
+                }, "-=0.8");
+            }
+
+            if (linksRef?.current?.children?.length) {
+                tl.from(linksRef.current.children, {
+                    opacity: 0,
+                    y: -15,
+                    duration: 0.8,
+                    stagger: 0.05,
+                    ease: "power3.out"
+                }, "-=0.8");
+            }
+
+            if (ctaRef?.current) {
+                tl.from(ctaRef.current, {
+                    opacity: 0,
+                    scale: 0.9,
+                    duration: 0.8,
+                    ease: "back.out(1.5)"
+                }, "-=0.6");
+            }
 
             let lastScrollY = window.scrollY;
             

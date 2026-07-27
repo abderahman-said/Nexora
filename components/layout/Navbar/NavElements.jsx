@@ -5,6 +5,7 @@ import { ArrowUpRight } from 'lucide-react';
 import Magnet from '../../ui/Magnet';
 import ThemeToggle from '../../ui/ThemeToggle';
 import { NAV_LINKS } from './navData';
+import { MobileNav } from './MobileNav';
 
 export function NavLogo({ logoRef }) {
     return (
@@ -17,7 +18,7 @@ export function NavLogo({ logoRef }) {
                         width={140}
                         height={42}
                         priority
-                        className="h-auto max-h-[50px]  w-auto object-contain dark:brightness-110"
+                        className="h-auto max-h-[44px] md:max-h-[50px] w-auto object-contain dark:brightness-110"
                     />
                 </Link>
             </Magnet>
@@ -44,21 +45,22 @@ export function NavLinks({ linksRef }) {
 
 export function NavCTA({ ctaRef }) {
     return (
-        <div ref={ctaRef} className="flex items-center gap-3">
+        <div ref={ctaRef} className="flex items-center gap-2.5 sm:gap-3">
             <ThemeToggle />
             <Magnet padding={20} magnetStrength={10}>
                 <Link
-
-                    href="https://wa.me/201552323225"
+                    href="https://wa.me/201117180818"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="group/cta inline-flex items-center gap-2.5 rounded-full bg-gradient-to-r from-blue-600 to-sky-600 px-8 py-[14px] text-[0.85rem] font-extrabold uppercase tracking-[0.05em] text-white no-underline transition-[transform,shadow] duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] will-change-transform hover:-translate-y-0.5 hover:shadow-lg hover:shadow-blue-500/25 shadow-md max-md:p-3"
+                    className="group/cta inline-flex items-center gap-2.5 rounded-full bg-gradient-to-r from-blue-600 to-sky-600 px-6 sm:px-8 py-2.5 sm:py-[14px] text-[0.8rem] sm:text-[0.85rem] font-extrabold uppercase tracking-[0.05em] text-white no-underline transition-[transform,shadow] duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] will-change-transform hover:-translate-y-0.5 hover:shadow-lg hover:shadow-blue-500/25 shadow-md max-md:p-2.5"
                 >
                     <span className="label max-md:hidden">Let's Talk</span>
                     <ArrowUpRight className="h-4 w-4 transition-transform duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover/cta:[transform:translate(2px,-2px)]" />
                 </Link>
             </Magnet>
+            <MobileNav />
         </div>
     );
 }
+
 
