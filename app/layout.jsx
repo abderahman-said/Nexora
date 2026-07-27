@@ -1,4 +1,4 @@
-import localFont from 'next/font/local';
+import { Epilogue } from 'next/font/google';
 import './globals.css';
 import { ThemeProvider } from '@/context/ThemeContext';
 import SvgSymbols from '@/components/icons/SvgSymbols';
@@ -6,10 +6,11 @@ import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
 import ClientAnimations from '@/components/animations/ClientAnimations';
 
-const epilogue = localFont({
-  src: '../public/fonts/Epilogue-VariableFont_wght.ttf',
+const epilogue = Epilogue({
+  subsets: ['latin'],
   variable: '--font-epilogue',
   display: 'swap',
+  preload: true,
 });
 
 export const metadata = {

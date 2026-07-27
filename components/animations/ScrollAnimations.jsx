@@ -115,6 +115,7 @@ function injectSideDecorators() {
    2. SECTION ANIMATIONS
    ═══════════════════════════════════════════════════════════════════════════ */
 function animateSections(reduceMotion) {
+    const isMobile = typeof window !== 'undefined' && (window.innerWidth < 768 || window.matchMedia('(pointer: coarse)').matches);
     const sections = document.querySelectorAll('.scroll-section');
 
     sections.forEach((sec) => {
@@ -123,8 +124,8 @@ function animateSections(reduceMotion) {
         const ring  = sec.querySelector('.sd-ring');
         const shape = sec.querySelector('.sd-shape');
 
-        /* ── A. Clip-path reveal ── */
-        if (!sec.classList.contains('no-clip-reveal') && !reduceMotion) {
+        /* ── A. Clip-path reveal (Desktop only) ── */
+        if (!sec.classList.contains('no-clip-reveal') && !reduceMotion && !isMobile) {
             gsap.fromTo(sec,
                 { clipPath: 'inset(0 100% 0 0)', opacity: 0.6 },
                 {
@@ -152,7 +153,7 @@ function animateSections(reduceMotion) {
                     scrollTrigger: { trigger: sec, start: 'top 85%', toggleActions: 'play none none reverse' }
                 }
             );
-            if (!reduceMotion) {
+            if (!reduceMotion && !isMobile) {
                 gsap.to(left, {
                     yPercent: -20,
                     ease: 'none',
@@ -171,7 +172,7 @@ function animateSections(reduceMotion) {
                     scrollTrigger: { trigger: sec, start: 'top 85%', toggleActions: 'play none none reverse' }
                 }
             );
-            if (!reduceMotion) {
+            if (!reduceMotion && !isMobile) {
                 gsap.to(right, {
                     yPercent: -30,
                     ease: 'none',

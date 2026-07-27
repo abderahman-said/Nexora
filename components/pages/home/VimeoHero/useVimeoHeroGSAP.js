@@ -57,8 +57,8 @@ export function useVimeoHeroGSAP({ heroRef, headRef, subRef, statsRef, ctaRef, b
             }, '-=0.3');
         }
 
-        // Scroll parallax — hero moves up slightly
-        if (heroRef.current) {
+        // Scroll parallax — hero moves up slightly (Desktop only for 60fps mobile scrolling)
+        if (heroRef.current && typeof window !== 'undefined' && window.innerWidth >= 768) {
             gsap.to(heroRef.current, {
                 yPercent: 8,
                 ease: 'none',
@@ -69,25 +69,25 @@ export function useVimeoHeroGSAP({ heroRef, headRef, subRef, statsRef, ctaRef, b
                     scrub: true,
                 },
             });
-        }
 
-        // Side decorators parallax at different speeds
-        const sideEls = heroRef.current.querySelectorAll('.hero-side-el');
-        sideEls.forEach((el, i) => {
-            const speed = 0.3 + i * 0.15;
-            const dir   = i % 2 === 0 ? -1 : 1;
-            gsap.to(el, {
-                y: `${dir * 120}px`,
-                rotation: dir * 25,
-                ease: 'none',
-                scrollTrigger: {
-                    trigger: heroRef.current,
-                    start: 'top top',
-                    end: 'bottom top',
-                    scrub: speed,
-                },
+            // Side decorators parallax at different speeds
+            const sideEls = heroRef.current.querySelectorAll('.hero-side-el');
+            sideEls.forEach((el, i) => {
+                const speed = 0.3 + i * 0.15;
+                const dir   = i % 2 === 0 ? -1 : 1;
+                gsap.to(el, {
+                    y: `${dir * 120}px`,
+                    rotation: dir * 25,
+                    ease: 'none',
+                    scrollTrigger: {
+                        trigger: heroRef.current,
+                        start: 'top top',
+                        end: 'bottom top',
+                        scrub: speed,
+                    },
+                });
             });
-        });
+        }
 
         // Glow circle follows mouse — center on cursor
         const hero = heroRef.current;
