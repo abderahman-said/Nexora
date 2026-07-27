@@ -79,6 +79,7 @@ export function InteractiveCircleButton({ href, children }) {
             href={href}
             target="_blank"
             rel="noopener noreferrer"
+            aria-label={typeof children === 'string' ? children : 'Contact Us'}
             onMouseEnter={handleMouseEnter}
             onMouseMove={handleMouseMove}
             onMouseLeave={handleMouseLeave}

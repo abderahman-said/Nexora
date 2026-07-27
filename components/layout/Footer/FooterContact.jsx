@@ -7,10 +7,10 @@ import Link from "next/link";
 export function FooterContact() {
     return (
         <div className="flex flex-col items-start space-y-4">
-            <h4 className="text-base md:text-lg font-bold text-white tracking-wide border-b border-blue-500/40 pb-1.5 flex items-center gap-2">
+            <h3 className="text-base md:text-lg font-bold text-white tracking-wide border-b border-blue-500/40 pb-1.5 flex items-center gap-2">
                 <span>Contact Us</span>
                 <ShieldCheck className="h-3.5 w-3.5 text-emerald-400" />
-            </h4>
+            </h3>
             <div className="space-y-3 text-xs md:text-sm text-slate-300">
                 <div className="flex items-start gap-2.5">
                     <MapPin className="h-4 w-4 text-blue-400 shrink-0 mt-0.5" />

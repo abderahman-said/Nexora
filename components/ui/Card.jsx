@@ -46,10 +46,8 @@ Card.Image = function CardImage({ src, alt, href, id, category, accent, classNam
         </span>
       )}
       {category && (
-        <span
-          className="absolute bottom-[14px] left-[14px] z-[2] rounded-full px-3 py-[5px] text-[10px] font-bold uppercase tracking-[0.1em] text-white shadow-sm"
-          style={{ background: accent || '#2563eb' }}
-        >
+        <span className="absolute bottom-[14px] left-[14px] z-[2] inline-flex items-center gap-1.5 rounded-full bg-slate-950/90 px-3 py-[5px] text-[10px] font-bold uppercase tracking-[0.1em] text-white shadow-md border border-white/15 backdrop-blur-md">
+          <span className="h-1.5 w-1.5 rounded-full shrink-0" style={{ backgroundColor: accent || '#3b82f6' }} />
           {category}
         </span>
       )}

@@ -52,6 +52,7 @@ export function NavCTA({ ctaRef }) {
                     href="https://wa.me/201117180818"
                     target="_blank"
                     rel="noopener noreferrer"
+                    aria-label="Contact us on WhatsApp"
                     className="group/cta inline-flex items-center gap-2.5 rounded-full bg-gradient-to-r from-blue-600 to-sky-600 px-6 sm:px-8 py-2.5 sm:py-[14px] text-[0.8rem] sm:text-[0.85rem] font-extrabold uppercase tracking-[0.05em] text-white no-underline transition-[transform,shadow] duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] will-change-transform hover:-translate-y-0.5 hover:shadow-lg hover:shadow-blue-500/25 shadow-md max-md:p-2.5"
                 >
                     <span className="label max-md:hidden">Let's Talk</span>

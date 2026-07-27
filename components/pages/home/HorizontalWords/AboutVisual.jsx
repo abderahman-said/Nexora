@@ -18,7 +18,7 @@ export default function AboutVisual({ visualRef }) {
                     className="object-cover object-center transform transition-transform duration-700 group-hover:scale-105"
                     loading="lazy"
                     decoding="async"
-                    sizes="(max-width: 768px) 100vw, 50vw"
+                    sizes="(max-width: 640px) 380px, (max-width: 1024px) 50vw, 560px"
                 />
 
                 {/* Subtle Image Gradient Overlay */}

@@ -239,21 +239,25 @@ export default function GSAPSlider({
 
                     {/* Centered Pagination Dots (• • — •) */}
                     {showDots && (
-                        <div className="flex items-center gap-2 px-2">
+                        <div className="flex items-center gap-1 px-2">
                             {Array.from({ length: maxIndex + 1 }).map((_, dotIdx) => (
                                 <button
                                     key={dotIdx}
                                     type="button"
                                     onClick={() => goToSlide(dotIdx)}
                                     aria-label={`Go to slide ${dotIdx + 1}`}
-                                    className={`
-                                        h-2.5 rounded-full transition-all duration-500 cursor-pointer
-                                        ${currentIndex === dotIdx
-                                            ? 'w-7 bg-sky-400 dark:bg-sky-400 shadow-sm shadow-sky-400/50'
-                                            : 'w-2.5 bg-slate-300 dark:bg-slate-700 hover:bg-slate-400'
-                                        }
-                                    `}
-                                />
+                                    className="group relative p-2 flex items-center justify-center min-w-[40px] min-h-[40px] sm:min-w-[44px] sm:min-h-[44px] cursor-pointer"
+                                >
+                                    <span
+                                        className={`
+                                            h-2.5 rounded-full transition-all duration-500
+                                            ${currentIndex === dotIdx
+                                                ? 'w-7 bg-sky-500 dark:bg-sky-400 shadow-sm shadow-sky-400/50'
+                                                : 'w-2.5 bg-slate-300 dark:bg-slate-700 group-hover:bg-slate-400'
+                                            }
+                                        `}
+                                    />
+                                </button>
                             ))}
                         </div>
                     )}

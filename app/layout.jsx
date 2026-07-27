@@ -154,6 +154,13 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en" className="light" suppressHydrationWarning>
       <head>
+        <link
+          rel="preload"
+          href="/hero-bg-light.svg"
+          as="image"
+          type="image/svg+xml"
+          fetchPriority="high"
+        />
 
         <script
           type="application/ld+json"
