@@ -1,18 +1,29 @@
+import Image from "next/image";
 import Particles from "@/components/animations/Particles";
 
 export default function HeroBackground({ glowRef }) {
   return (
     <>
-      {/* Light Image Background */}
-      <div
+      {/* Light Image Background (LCP Optimized) */}
+      <Image
+        src="/hero-bg-light.svg"
+        alt=""
+        fill
+        priority
+        sizes="100vw"
         aria-hidden="true"
-        className="absolute inset-0 bg-[url('/hero-bg-light.svg')] bg-cover bg-center bg-no-repeat opacity-90 dark:opacity-0 pointer-events-none transition-opacity duration-500"
+        className="object-cover object-center opacity-90 dark:opacity-0 pointer-events-none transition-opacity duration-500"
       />
 
       {/* Dark Image Background */}
-      <div
+      <Image
+        src="/hero-bg-dark.svg"
+        alt=""
+        fill
+        priority
+        sizes="100vw"
         aria-hidden="true"
-        className="absolute inset-0 bg-[url('/hero-bg-dark.svg')] bg-cover bg-center bg-no-repeat opacity-0 dark:opacity-90 pointer-events-none transition-opacity duration-500"
+        className="object-cover object-center opacity-0 dark:opacity-90 pointer-events-none transition-opacity duration-500"
       />
 
       {/* Subtle Central Contrast Radial Vignette */}
