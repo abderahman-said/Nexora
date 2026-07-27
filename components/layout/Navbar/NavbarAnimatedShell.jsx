@@ -1,10 +1,10 @@
 "use client";
 
-import { useRef} from "react";
+import { useRef } from "react";
 import { useNavbarGSAP } from "./useNavbarGSAP";
 import Container from "@/components/ui/Container";
 
-export function NavbarAnimatedShell({ children}) {
+export function NavbarAnimatedShell({ children }) {
   const navRef = useRef(null);
   const navInnerRef = useRef(null);
 
@@ -13,7 +13,7 @@ export function NavbarAnimatedShell({ children}) {
   return (
     <header
       ref={navRef}
-      className="group fixed left-0 top-0 z-[1000] w-full px-12 py-6 pointer-events-none transition-[padding] duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] [&.is-floating]:py-4 max-md:px-5 max-md:py-4 max-md:[&.is-floating]:px-5 max-md:[&.is-floating]:py-3"
+      className="group absolute left-0 top-0 z-[1000] w-full px-12 py-6 pointer-events-none transition-[padding] duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] [&.is-floating]:py-4 max-md:px-5 max-md:py-4 max-md:[&.is-floating]:px-5 max-md:[&.is-floating]:py-3"
     >
       <Container
         ref={navInnerRef}

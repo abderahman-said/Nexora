@@ -21,9 +21,10 @@ export default function ProjectsSection() {
     "Hotel Booking",
   ];
 
-  const filteredProjects = activeCategory === "All"
-    ? allProjects
-    : allProjects.filter((p) => p.category === activeCategory);
+  const filteredProjects =
+    activeCategory === "All"
+      ? allProjects
+      : allProjects.filter((p) => p.category === activeCategory);
 
   // Hook handles 3D entrance stagger + 3D Scroll Float & Sink Parallax
   useProjectsGSAP(sectionRef, gridRef, activeCategory);
@@ -32,7 +33,7 @@ export default function ProjectsSection() {
     <section
       id="portfolio"
       ref={sectionRef}
-      className="scroll-section relative w-full py-16 sm:py-24 bg-white dark:bg-[#060913] transition-colors duration-300 border-b border-slate-200/90 dark:border-slate-800/80"
+      className="scroll-section relative w-full py-8 md:py-12 transition-colors duration-300"
     >
       <Container>
         {/* Section Header */}
@@ -46,7 +47,8 @@ export default function ProjectsSection() {
           rightElement={
             <div className="flex flex-col items-end gap-1.5 pb-1.5 max-sm:items-start">
               <span className="text-[11px] font-bold uppercase tracking-[0.18em] text-slate-700 dark:text-slate-300">
-                {String(filteredProjects.length).padStart(2, "0")} / {String(allProjects.length).padStart(2, "0")} Projects
+                {String(filteredProjects.length).padStart(2, "0")} /{" "}
+                {String(allProjects.length).padStart(2, "0")} Projects
               </span>
             </div>
           }

@@ -65,10 +65,12 @@ export function useNavbarGSAP({
         );
       }
 
-      let lastScrollY = typeof window !== "undefined" ? window.scrollY : 0;
+      let lastScrollY =
+        typeof window !== "undefined" ? Math.max(0, window.scrollY) : 0;
+      let isHidden = false;
 
       const handleScroll = () => {
-        const currentScrollY = window.scrollY;
+        const currentScrollY = Math.max(0, window.scrollY);
         const scrollDelta = currentScrollY - lastScrollY;
 
         // Toggle floating glassmorphism style past top hero area
@@ -81,33 +83,43 @@ export function useNavbarGSAP({
         // Smooth Hide / Show logic:
         // 1. Always show when at or near top
         if (currentScrollY <= 80) {
-          gsap.to(nav, {
-            yPercent: 0,
-            duration: 0.4,
-            ease: "power2.out",
-            overwrite: "auto",
-          });
+          if (isHidden) {
+            gsap.to(nav, {
+              yPercent: 0,
+              duration: 0.4,
+              ease: "power2.out",
+              overwrite: "auto",
+            });
+            isHidden = false;
+          }
+          lastScrollY = currentScrollY;
         }
         // 2. Hide when scrolling DOWN past 80px
-        else if (scrollDelta > 5) {
-          gsap.to(nav, {
-            yPercent: -130,
-            duration: 0.4,
-            ease: "power2.out",
-            overwrite: "auto",
-          });
+        else if (scrollDelta > 2) {
+          if (!isHidden) {
+            gsap.to(nav, {
+              yPercent: -130,
+              duration: 0.4,
+              ease: "power2.out",
+              overwrite: "auto",
+            });
+            isHidden = true;
+          }
+          lastScrollY = currentScrollY;
         }
         // 3. Show when scrolling UP
-        else if (scrollDelta < -5) {
-          gsap.to(nav, {
-            yPercent: 0,
-            duration: 0.4,
-            ease: "power2.out",
-            overwrite: "auto",
-          });
+        else if (scrollDelta < -2) {
+          if (isHidden) {
+            gsap.to(nav, {
+              yPercent: 0,
+              duration: 0.4,
+              ease: "power2.out",
+              overwrite: "auto",
+            });
+            isHidden = false;
+          }
+          lastScrollY = currentScrollY;
         }
-
-        lastScrollY = Math.max(0, currentScrollY);
       };
 
       window.addEventListener("scroll", handleScroll, { passive: true });
