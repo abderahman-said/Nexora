@@ -23,7 +23,7 @@ export function FooterSidePanel({ sidePanelRef }) {
     return (
         <div 
             ref={sidePanelRef}
-            className="w-full lg:w-[350px] xl:w-[390px] bg-[#141418] p-8 lg:p-10 flex flex-col justify-between items-center text-center shrink-0 border-t lg:border-t-0 border-white/10 relative overflow-hidden"
+            className="w-full lg:w-[350px] xl:w-[390px] bg-[#0c1120] p-8 lg:p-10 flex flex-col justify-between items-center text-center shrink-0 border-t lg:border-t-0 border-slate-800/80 relative overflow-hidden"
         >
             {/* Ambient Glow Pill in Sidebar */}
             <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-48 h-48 bg-blue-600/10 rounded-full blur-3xl pointer-events-none" />

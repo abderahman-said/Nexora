@@ -17,7 +17,7 @@ export function NavbarAnimatedShell({ children }) {
     >
       <Container
         ref={navInnerRef}
-        className="nexora-nav-inner   pointer-events-auto flex items-center justify-between rounded-full border border-slate-200/60 bg-[rgba(255,255,255,0.75)] px-6 py-3 transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] backdrop-blur-md dark:border-slate-800/80 dark:bg-[rgba(15,23,42,0.75)] group-[.is-floating]:border-slate-200/90 group-[.is-floating]:bg-[rgba(255,255,255,0.9)] dark:group-[.is-floating]:border-slate-800 dark:group-[.is-floating]:bg-[rgba(15,23,42,0.9)] group-[.is-floating]:px-7 group-[.is-floating]:shadow-[0_10px_30px_rgba(0,0,0,0.06)] dark:group-[.is-floating]:shadow-[0_10px_30px_rgba(0,0,0,0.4)] group-[.is-floating]:backdrop-blur-[24px] max-md:group-[.is-floating]:px-5 max-md:group-[.is-floating]:py-2.5"
+        className="nexora-nav-inner pointer-events-auto flex items-center justify-between rounded-full border border-slate-200/50 bg-white/70 dark:border-slate-800/50 dark:bg-slate-900/70 px-6 py-3 transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group-[.is-floating]:border-slate-200/90 group-[.is-floating]:bg-white/90 dark:group-[.is-floating]:border-slate-800 dark:group-[.is-floating]:bg-[#0f172a]/90 group-[.is-floating]:px-7 group-[.is-floating]:shadow-[0_10px_30px_rgba(0,0,0,0.08)] dark:group-[.is-floating]:shadow-[0_10px_30px_rgba(0,0,0,0.5)] group-[.is-floating]:backdrop-blur-xl max-md:group-[.is-floating]:px-5 max-md:group-[.is-floating]:py-2.5"
       >
         {children}
       </Container>

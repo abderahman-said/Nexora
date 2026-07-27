@@ -21,7 +21,7 @@ export function FooterBrand() {
 
             {/* Trust Badge */}
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-500/10 border border-blue-500/20 text-[11px] font-medium text-blue-300">
-                <span className="h-1.5 w-1.5 rounded-full bg-emerald-400 animate-pulse" />
+                <span className="h-1.5 w-1.5 rounded-full bg-blue-400 animate-pulse" />
                 <span>Enterprise Certified Tech Partner</span>
             </div>
             

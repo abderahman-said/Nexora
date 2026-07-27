@@ -15,7 +15,7 @@ export function FooterNav() {
         <div className="flex flex-col items-start space-y-4">
             <h3 className="text-base md:text-lg font-bold text-white tracking-wide border-b border-blue-500/40 pb-1.5 flex items-center gap-2">
                 <span>Navigation</span>
-                <Sparkles className="h-3.5 w-3.5 text-blue-400" />
+                <Sparkles className="h-3.5 w-3.5 text-slate-400" />
             </h3>
             <ul className="space-y-2.5 text-xs md:text-sm text-slate-300">
                 {navItems.map((item) => (

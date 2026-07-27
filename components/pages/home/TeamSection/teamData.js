@@ -14,9 +14,9 @@ export const TEAM_MEMBERS = [
     {
         id: 2,
         name: 'Ahmed Rashed',
-        role: 'QA Tester',
+        role: 'Android Developer',
         image: '/team/AhmedRashed.jpeg',
-        bio: 'Ensure that our software and applications are free of errors and bugs before they reach our clients',
+        bio: 'Transforming complex requirements into seamless, scalable Android applications that users love.',
         socials: {
             linkedin: '#',
             twitter: '#',
@@ -25,10 +25,10 @@ export const TEAM_MEMBERS = [
     },
     {
         id: 3,
-        name: 'Mohamed khairy',
-        role: 'Android Developer',
+        name: 'Mohamed Khairy',
+        role: 'QA Tester',
         image: '/team/Mohamedkhairy.jpeg',
-        bio: 'Transforming complex requirements into seamless, scalable Android applications that users love.',
+        bio: 'Ensure that our software and applications are free of errors and bugs before they reach our clients.',
         socials: {
             linkedin: '#',
             twitter: '#',

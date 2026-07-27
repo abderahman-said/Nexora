@@ -73,7 +73,7 @@ export function FooterSocials() {
                 href="https://wa.me/201117180818" 
                 target="_blank" 
                 aria-label="WhatsApp"
-                className="p-2 rounded-lg bg-white/5 border border-white/10 hover:border-emerald-500/50 hover:bg-emerald-600/20 hover:text-emerald-400 transition-all duration-300 hover:scale-110"
+                className="p-2 rounded-lg bg-white/5 border border-white/10 hover:border-blue-500/50 hover:bg-blue-600/20 hover:text-blue-400 transition-all duration-300 hover:scale-110"
             >
                 <MessageCircle className="h-4 w-4" />
             </Link>

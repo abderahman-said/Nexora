@@ -65,65 +65,106 @@ export function useNavbarGSAP({
         );
       }
 
+      const THRESHOLD = 15; // 15px threshold to prevent flickering during small scroll movements
+      const PIN_THRESHOLD = 40; // below this scrollY, nav stays absolute (in-flow) at page top
       let lastScrollY =
-        typeof window !== "undefined" ? Math.max(0, window.scrollY) : 0;
+        typeof window !== "undefined"
+          ? Math.max(0, window.__lenis ? window.__lenis.scroll : window.scrollY)
+          : 0;
+      let accumulatedDown = 0;
+      let accumulatedUp = 0;
       let isHidden = false;
+      let isPinned = false; // true = position:fixed, false = position:absolute
 
-      const handleScroll = () => {
-        const currentScrollY = Math.max(0, window.scrollY);
-        const scrollDelta = currentScrollY - lastScrollY;
+      // Set position directly via inline style — bypasses any CSS specificity issues
+      const setPinned = (pinned) => {
+        if (pinned === isPinned) return;
+        isPinned = pinned;
+        nav.style.position = pinned ? "fixed" : "absolute";
+      };
 
-        // Toggle floating glassmorphism style past top hero area
-        if (currentScrollY > 80) {
+      // Initial position: absolute by default, matches whatever markup/CSS provides.
+      nav.style.position = "absolute";
+
+      // Sync initial state in case the page loads already scrolled down
+      if (lastScrollY > PIN_THRESHOLD) {
+        setPinned(true);
+      }
+
+      const checkScroll = () => {
+        const currentScrollY = Math.max(
+          0,
+          typeof window !== "undefined"
+            ? window.__lenis
+              ? window.__lenis.scroll
+              : window.scrollY
+            : 0
+        );
+        const delta = currentScrollY - lastScrollY;
+
+        // Apply subtle backdrop blur & shadow floating class ONLY after page is scrolled (> 40px)
+        if (currentScrollY > 40) {
           nav.classList.add("is-floating");
         } else {
           nav.classList.remove("is-floating");
         }
 
-        // Smooth Hide / Show logic:
-        // 1. Always show when at or near top
-        if (currentScrollY <= 80) {
+        // Always show near top (<= PIN_THRESHOLD) and revert to absolute/in-flow
+        if (currentScrollY <= PIN_THRESHOLD) {
           if (isHidden) {
             gsap.to(nav, {
               yPercent: 0,
-              duration: 0.4,
+              duration: 0.35,
               ease: "power2.out",
               overwrite: "auto",
             });
             isHidden = false;
           }
-          lastScrollY = currentScrollY;
-        }
-        // 2. Hide when scrolling DOWN past 80px
-        else if (scrollDelta > 2) {
-          if (!isHidden) {
-            gsap.to(nav, {
-              yPercent: -130,
-              duration: 0.4,
-              ease: "power2.out",
-              overwrite: "auto",
-            });
-            isHidden = true;
+          setPinned(false);
+          accumulatedDown = 0;
+          accumulatedUp = 0;
+        } else {
+          if (delta > 0.5) {
+            // Scrolling DOWN: accumulate movement and hide once threshold is reached
+            accumulatedDown += delta;
+            accumulatedUp = 0;
+
+            if (accumulatedDown >= THRESHOLD && !isHidden && currentScrollY > 60) {
+              gsap.to(nav, {
+                yPercent: -130,
+                duration: 0.4,
+                ease: "power2.out",
+                overwrite: "auto",
+              });
+              isHidden = true;
+            }
+          } else if (delta < -0.5) {
+            // Scrolling UP: accumulate movement and reveal immediately, pinned to viewport
+            accumulatedUp += Math.abs(delta);
+            accumulatedDown = 0;
+
+            if (accumulatedUp >= 10 && isHidden) {
+              setPinned(true);
+              gsap.to(nav, {
+                yPercent: 0,
+                duration: 0.35,
+                ease: "power2.out",
+                overwrite: "auto",
+              });
+              isHidden = false;
+            }
           }
-          lastScrollY = currentScrollY;
         }
-        // 3. Show when scrolling UP
-        else if (scrollDelta < -2) {
-          if (isHidden) {
-            gsap.to(nav, {
-              yPercent: 0,
-              duration: 0.4,
-              ease: "power2.out",
-              overwrite: "auto",
-            });
-            isHidden = false;
-          }
-          lastScrollY = currentScrollY;
-        }
+
+        lastScrollY = currentScrollY;
       };
 
-      window.addEventListener("scroll", handleScroll, { passive: true });
-      return () => window.removeEventListener("scroll", handleScroll);
+      // High-performance GSAP Ticker loop (runs on requestAnimationFrame for native & Lenis smooth scroll)
+      gsap.ticker.add(checkScroll);
+
+      return () => {
+        gsap.ticker.remove(checkScroll);
+      };
     }, navRef);
 
     return () => ctx.revert();

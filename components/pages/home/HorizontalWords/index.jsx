@@ -19,7 +19,7 @@ const HorizontalWords = () => {
       <section
         ref={sectionRef}
         id="about"
-        className="scroll-section relative w-full py-8 md:py-12 site-grid-bg overflow-hidden"
+        className="scroll-section relative mt-16 w-full py-8 md:py-12 site-grid-bg overflow-hidden"
       >
         {/* Background Ambient Glows */}
         <div
@@ -33,14 +33,14 @@ const HorizontalWords = () => {
         <Container className="relative z-10">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-16 items-center">
             {/* ── LEFT COLUMN: Structured Team Visual & Glass Chips ── */}
-            <div className="lg:col-span-6 flex justify-center">
+            <div className="lg:col-span-5 flex justify-center">
               <AboutVisual visualRef={visualRef} />
             </div>
 
             {/* ── RIGHT COLUMN: Content Header & Vision/Mission Cards ── */}
             <div
               ref={contentRef}
-              className="lg:col-span-6 flex flex-col justify-center space-y-5"
+              className="lg:col-span-7 flex flex-col justify-center space-y-5"
             >
               {/* Section Badge / Status Tag */}
               <div>

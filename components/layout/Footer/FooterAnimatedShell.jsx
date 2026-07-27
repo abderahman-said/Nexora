@@ -15,7 +15,7 @@ export function FooterAnimatedShell({ columns, sidePanel, bottomBar }) {
         <footer
             id="contact"
             ref={footerRef}
-            className="relative w-full overflow-hidden bg-[#0e0e11] text-white font-sans border-t border-white/10"
+            className="relative w-full overflow-hidden bg-[#060913] text-white font-sans border-t border-slate-800/80"
         >
             <div className="absolute top-0 inset-x-0 h-[1px] bg-gradient-to-r from-transparent via-blue-500/60 to-transparent z-20 pointer-events-none" />
             <div
