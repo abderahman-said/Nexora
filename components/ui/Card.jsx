@@ -57,8 +57,8 @@ Card.Image = function CardImage({ src, alt, href, id, category, accent, classNam
         alt={alt || ''}
         width={360}
         height={280}
-        sizes="(max-width: 768px) 100vw, 35vw"
-        quality={85}
+        sizes="(max-width: 640px) 320px, (max-width: 1024px) 250px, 320px"
+        quality={75}
       />
     </Link>
   );
