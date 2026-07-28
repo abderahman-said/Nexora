@@ -262,7 +262,7 @@ export function MobileNav() {
               </Button>
 
               <div className="grid grid-cols-1 gap-2 text-xs text-slate-500 dark:text-slate-400 font-mono pt-1">
-                <a
+                <Link
                   href={map.linkUrl}
                   target="_blank"
                   rel="noopener noreferrer"
@@ -270,7 +270,7 @@ export function MobileNav() {
                 >
                   <MapPin className="h-3.5 w-3.5 text-blue-600 dark:text-blue-400 shrink-0" />
                   <span>{contact.shortAddress}</span>
-                </a>
+                </Link>
                 <div className="flex items-center gap-2">
                   <Phone className="h-3.5 w-3.5 text-emerald-600 dark:text-emerald-400 shrink-0" />
                   <Link

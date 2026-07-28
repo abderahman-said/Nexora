@@ -12,14 +12,13 @@ export default function ScrollAnimations() {
       "(prefers-reduced-motion: reduce)",
     ).matches;
 
-    let cleanup: (() => void) | null = null;
+    let ctx: ReturnType<typeof gsap.context> | null = null;
     const timer = setTimeout(() => {
-      const ctx = gsap.context(() => {
+      ctx = gsap.context(() => {
         injectSideDecorators();
         animateSections(reduceMotion);
         animateProgressBar();
       });
-      cleanup = () => ctx.revert();
     }, 150);
 
     const onLoad = () => ScrollTrigger.refresh();
@@ -27,7 +26,8 @@ export default function ScrollAnimations() {
 
     return () => {
       clearTimeout(timer);
-      cleanup?.();
+      ctx?.revert();
+      window.removeEventListener("load", onLoad);
     };
   }, []);
 
@@ -117,17 +117,18 @@ function animateSections(reduceMotion: boolean) {
     ) {
       gsap.fromTo(
         sec,
-        { clipPath: "inset(0 100% 0 0)", opacity: 0.6 },
+        { opacity: 0, y: 15 },
         {
-          clipPath: "inset(0 0% 0 0)",
           opacity: 1,
-          duration: 1.2,
-          ease: "power4.out",
+          y: 0,
+          duration: 0.8,
+          ease: "power3.out",
+          clearProps: "opacity,transform",
           scrollTrigger: {
             trigger: sec,
             start: "top 92%",
-            end: "top 30%",
-            scrub: true,
+            toggleActions: "play none none none",
+            once: true,
           },
         },
       );
@@ -280,28 +281,23 @@ function animateSections(reduceMotion: boolean) {
   if (cards.length > 0) {
     ScrollTrigger.batch(cards as Element[], {
       start: "top 88%",
+      once: true,
       onEnter(batch) {
         if (!batch || !batch.length) return;
-        gsap.from(batch, {
-          opacity: 0,
-          y: reduceMotion ? 0 : 60,
-          scale: reduceMotion ? 1 : 0.95,
-          duration: 0.8,
-          ease: "power3.out",
-          stagger: 0.1,
-          overwrite: true,
-          clearProps: "opacity,transform,translate,rotate,scale",
-        });
-      },
-      onLeaveBack(batch) {
-        if (!batch || !batch.length) return;
-        gsap.to(batch, {
-          opacity: 0,
-          y: reduceMotion ? 0 : 60,
-          scale: reduceMotion ? 1 : 0.95,
-          duration: 0.4,
-          overwrite: true,
-        });
+        gsap.fromTo(
+          batch,
+          { opacity: 0, y: reduceMotion ? 0 : 60, scale: reduceMotion ? 1 : 0.95 },
+          {
+            opacity: 1,
+            y: 0,
+            scale: 1,
+            duration: 0.8,
+            ease: "power3.out",
+            stagger: 0.1,
+            overwrite: true,
+            clearProps: "opacity,transform,translate,rotate,scale",
+          }
+        );
       },
     });
   }

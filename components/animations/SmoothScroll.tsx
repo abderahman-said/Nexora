@@ -39,7 +39,7 @@ export default function SmoothScroll() {
 
       tickerFn = (time: number) => lenis?.raf(time * 1000);
       gsap.ticker.add(tickerFn);
-      gsap.ticker.lagSmoothing(500, 33);
+      gsap.ticker.lagSmoothing(1000, 16);
 
       window.__lenis = lenis;
 
