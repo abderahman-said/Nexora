@@ -136,7 +136,7 @@ export function MobileNav() {
                     <div
                         ref={menuOverlayRef}
                         style={{ clipPath: "circle(0% at 90% 0%)", display: "none" }}
-                        className="fixed inset-0 w-screen h-screen z-[99999] flex flex-col justify-between bg-white/98 dark:bg-[#0a0a0e]/98 text-slate-900 dark:text-white backdrop-blur-3xl p-6 sm:p-10 pt-6 pb-8 overflow-y-auto transition-colors duration-300"
+                        className="fixed inset-0 w-screen h-screen z-[99999] flex flex-col gap-[50px] bg-white/98 dark:bg-[#0a0a0e]/98 text-slate-900 dark:text-white backdrop-blur-3xl p-6 sm:p-10 pt-6 pb-8 overflow-y-auto transition-colors duration-300"
                     >
                         {/* Ambient background glow */}
                         <div className="absolute top-1/3 right-1/4 h-72 w-72 rounded-full bg-blue-500/10 dark:bg-blue-600/20 blur-3xl pointer-events-none" />
@@ -170,7 +170,7 @@ export function MobileNav() {
                         </div>
 
                         {/* Staggered nav links */}
-                        <div className="my-auto py-5 relative z-10">
+                        <div className=" py-5 relative z-10">
                             <ul ref={linksContainerRef} className="space-y-3 list-none p-0 m-0">
                                 {NAV_LINKS.map(({ label, href }) => (
                                     <li key={href}>

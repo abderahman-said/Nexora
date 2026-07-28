@@ -87,19 +87,19 @@ export function InteractiveCircleButton({ href, children }: InteractiveCircleBut
             onMouseEnter={handleMouseEnter}
             onMouseMove={handleMouseMove}
             onMouseLeave={handleMouseLeave}
-            className="relative flex h-36 w-36 flex-col items-center justify-center rounded-full border border-white/25 bg-white/5 backdrop-blur-sm overflow-hidden text-white shadow-xl cursor-pointer group transition-all duration-300 hover:border-blue-400 hover:shadow-[0_0_30px_rgba(59,130,246,0.3)]"
+            className="relative flex h-36 w-36 flex-col items-center justify-center rounded-full border border-slate-300 dark:border-white/25 bg-slate-200/50 dark:bg-white/5 backdrop-blur-sm overflow-hidden text-slate-900 dark:text-white shadow-xl cursor-pointer group transition-all duration-300 hover:border-blue-500 dark:hover:border-blue-400 hover:shadow-[0_0_30px_rgba(59,130,246,0.2)] dark:hover:shadow-[0_0_30px_rgba(59,130,246,0.3)]"
         >
             <span
                 ref={circleRef}
-                className="absolute w-36 h-36 rounded-full bg-gradient-to-tr from-blue-600 via-indigo-600 to-cyan-400 pointer-events-none -translate-x-1/2 -translate-y-1/2 opacity-0 shadow-[0_0_30px_rgba(59,130,246,0.5)]"
+                className="absolute w-36 h-36 rounded-full bg-gradient-to-tr from-blue-500 via-indigo-500 to-cyan-400 dark:from-blue-600 dark:via-indigo-600 dark:to-cyan-400 pointer-events-none -translate-x-1/2 -translate-y-1/2 opacity-0 shadow-[0_0_30px_rgba(59,130,246,0.3)] dark:shadow-[0_0_30px_rgba(59,130,246,0.5)]"
                 aria-hidden="true"
             />
 
             <span className="relative z-10 flex flex-col items-center gap-1.5 pointer-events-none select-none">
-                <span className="text-base md:text-lg font-bold tracking-wide text-slate-100 group-hover:text-white transition-colors duration-300">
+                <span className="text-base md:text-lg font-bold tracking-wide text-slate-800 dark:text-slate-100 group-hover:text-white transition-colors duration-300">
                     {children}
                 </span>
-                <ArrowUpRight className="h-5 w-5 text-blue-400 group-hover:text-white group-hover:translate-x-1 group-hover:-translate-y-1 transition-all duration-300" />
+                <ArrowUpRight className="h-5 w-5 text-blue-600 dark:text-blue-400 group-hover:text-white group-hover:translate-x-1 group-hover:-translate-y-1 transition-all duration-300" />
             </span>
         </Link>
     );
