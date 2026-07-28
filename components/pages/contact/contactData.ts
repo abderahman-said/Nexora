@@ -10,44 +10,52 @@ export interface ContactInfoItem {
     actionText: string;
 }
 
-export const CONTACT_INFO: ContactInfoItem[] = [
-    {
-        id: 1,
-        title: 'Direct Email',
-        value: 'info@nexora-solutions.co',
-        subtext: 'Our team responds within 2 hours',
-        icon: Mail,
-        action: 'mailto:info@nexora-solutions.co',
-        actionText: 'Send Email',
-    },
-    {
-        id: 2,
-        title: 'Call / WhatsApp',
-        value: '+20 111 718 0818',
-        subtext: 'Mon - Fri, 9:00 AM - 6:00 PM EST',
-        icon: Phone,
-        action: 'https://wa.me/201117180818',
-        actionText: 'WhatsApp Us',
-    },
-    {
-        id: 3,
-        title: 'Headquarters',
-        value: 'Cairo Digital Hub, Egypt',
-        subtext: 'Tech Innovation District',
-        icon: MapPin,
-        action: 'https://maps.app.goo.gl/sveAc9g5PgNTHrvj6?g_st=iwb',
-        actionText: 'View Location',
-    },
-    {
-        id: 4,
-        title: 'Global SLA Support',
-        value: '24/7 Monitoring',
-        subtext: 'Dedicated enterprise hotline',
-        icon: Clock,
-        action: '#consultation',
-        actionText: 'Enterprise SLA',
-    },
-];
+import { useSiteData } from '@/hooks/useSiteData';
+
+export function useContactInfo() {
+    const siteData = useSiteData();
+
+    const CONTACT_INFO: ContactInfoItem[] = [
+        {
+            id: 1,
+            title: 'Direct Email',
+            value: siteData.contact.email,
+            subtext: 'Our team responds within 2 hours',
+            icon: Mail,
+            action: `mailto:${siteData.contact.email}`,
+            actionText: 'Send Email',
+        },
+        {
+            id: 2,
+            title: 'Call / WhatsApp',
+            value: siteData.contact.phone,
+            subtext: siteData.contact.workingHours,
+            icon: Phone,
+            action: siteData.contact.whatsapp,
+            actionText: 'WhatsApp Us',
+        },
+        {
+            id: 3,
+            title: 'Headquarters',
+            value: siteData.contact.shortAddress,
+            subtext: 'Tech Innovation District',
+            icon: MapPin,
+            action: siteData.map.linkUrl,
+            actionText: 'View Location',
+        },
+        {
+            id: 4,
+            title: 'Global SLA Support',
+            value: '24/7 Monitoring',
+            subtext: 'Dedicated enterprise hotline',
+            icon: Clock,
+            action: '#consultation',
+            actionText: 'Enterprise SLA',
+        },
+    ];
+
+    return CONTACT_INFO;
+}
 
 export const SERVICE_CATEGORIES: string[] = [
     'Custom Web & Enterprise App Development',

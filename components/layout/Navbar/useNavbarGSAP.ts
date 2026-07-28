@@ -82,7 +82,7 @@ export function useNavbarGSAP({
       // 2. Smart Scroll Handling
       let lastScrollY =
         typeof window !== "undefined"
-          ? Math.max(0, window.__lenis ? window.__lenis.scroll : window.scrollY)
+          ? Math.max(0, (window as any).__lenis ? (window as any).__lenis.scroll : window.scrollY)
           : 0;
       let isHidden = false;
 
@@ -90,13 +90,16 @@ export function useNavbarGSAP({
         const currentScrollY = Math.max(
           0,
           typeof window !== "undefined"
-            ? window.__lenis
-              ? window.__lenis.scroll
+            ? (window as any).__lenis
+              ? (window as any).__lenis.scroll
               : window.scrollY
             : 0
         );
 
         const diff = currentScrollY - lastScrollY;
+
+        // Prevent tiny jitter from triggering hide/show
+        if (Math.abs(diff) < 3) return;
 
         if (currentScrollY <= 60) {
           nav.classList.remove("is-floating");
@@ -112,7 +115,7 @@ export function useNavbarGSAP({
         } else {
           nav.classList.add("is-floating");
 
-          if (diff > 2 && !isHidden) {
+          if (diff > 0 && !isHidden) {
             gsap.to(nav, {
               y: -140,
               duration: 0.35,
@@ -120,7 +123,7 @@ export function useNavbarGSAP({
               overwrite: "auto",
             });
             isHidden = true;
-          } else if (diff < -2 && isHidden) {
+          } else if (diff < 0 && isHidden) {
             gsap.to(nav, {
               y: 0,
               duration: 0.3,
@@ -135,11 +138,15 @@ export function useNavbarGSAP({
       };
 
       window.addEventListener("scroll", handleScroll, { passive: true });
-      gsap.ticker.add(handleScroll);
+      if (typeof window !== "undefined" && (window as any).__lenis) {
+          (window as any).__lenis.on('scroll', handleScroll);
+      }
 
       return () => {
         window.removeEventListener("scroll", handleScroll);
-        gsap.ticker.remove(handleScroll);
+        if (typeof window !== "undefined" && (window as any).__lenis) {
+            (window as any).__lenis.off('scroll', handleScroll);
+        }
       };
     }, navRef);
 

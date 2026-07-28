@@ -1,5 +1,7 @@
+'use client';
 import React, { SVGProps } from "react";
 import Link from "next/link";
+import { useSiteData } from "@/hooks/useSiteData";
 
 function LinkedInIcon(props: SVGProps<SVGSVGElement>) {
     return (
@@ -28,10 +30,12 @@ function InstagramIcon(props: SVGProps<SVGSVGElement>) {
 }
 
 export function FooterSocials() {
+    const { social } = useSiteData();
+
     return (
         <div className="flex items-center gap-2.5 pt-2 text-slate-300">
             <Link 
-                href="https://www.facebook.com/share/1LG3q28mVc/?mibextid=wwXIfr" 
+                href={social.facebook} 
                 target="_blank" 
                 rel="noopener noreferrer"
                 aria-label="Facebook"
@@ -40,7 +44,7 @@ export function FooterSocials() {
                 <FacebookIcon className="h-4 w-4" />
             </Link>
             <Link 
-                href="https://www.instagram.com/nexora.solutions.eg?igsh=OXp1eWRta3pveXhm&utm_source=qr" 
+                href={social.instagram} 
                 target="_blank" 
                 rel="noopener noreferrer"
                 aria-label="Instagram"
@@ -49,7 +53,7 @@ export function FooterSocials() {
                 <InstagramIcon className="h-4 w-4" />
             </Link>
             <Link 
-                href="https://www.linkedin.com/company/nexora-solutions-co/" 
+                href={social.linkedin} 
                 target="_blank" 
                 rel="noopener noreferrer"
                 aria-label="LinkedIn"

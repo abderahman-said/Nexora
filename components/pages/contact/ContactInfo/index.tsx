@@ -1,9 +1,12 @@
+'use client';
 import React from 'react';
 import { ArrowUpRight } from 'lucide-react';
 import Container from '@/components/ui/Container';
-import { CONTACT_INFO } from '../contactData';
+import { useContactInfo } from '../contactData';
 
 export default function ContactInfo() {
+    const contactInfoArray = useContactInfo();
+
     return (
         <section
             id="contact-info"
@@ -11,7 +14,7 @@ export default function ContactInfo() {
         >
             <Container className="relative z-10">
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-                    {CONTACT_INFO.map((item) => {
+                    {contactInfoArray.map((item) => {
                         const Icon = item.icon;
                         return (
                             <div

@@ -42,17 +42,18 @@ export default function ProjectsSection() {
         />
 
         <div ref={sliderWrapperRef} className="w-full mt-[-10px] md:!mt-[-35px]">
-          <GSAPSlider
-            items={allProjects}
-            defaultVisibleCount={3}
-            showControls={true}
-            controlsPosition="center"
-            showDots={true}
-            autoplay={true}
-            autoplayInterval={1500}
-            pauseOnHover={false}
-            renderItem={(p) => <ProjectCard key={p.id} p={p} />}
-          />
+         <GSAPSlider
+  items={allProjects}
+  defaultVisibleCount={3}
+  showControls={true}
+  controlsPosition="center"
+  showDots={true}
+  autoplay={true}
+  autoplayInterval={4500} // ✅ كان 1500 - ده كان السبب الرئيسي في السرعة
+  pauseOnHover={false}
+  enableDrag={false} // ✅ يوقف السحب اليدوي في سكشن المشاريع بس
+  renderItem={(p) => <ProjectCard key={p.id} p={p} />}
+/>
         </div>
       </Container>
     </section>

@@ -8,6 +8,7 @@ import { gsap } from "gsap";
 import { ArrowUpRight, Phone, Mail, MapPin, MessageCircle, X } from "lucide-react";
 import { NAV_LINKS } from "./navData";
 import Button from "@/components/ui/Button";
+import { useSiteData } from "@/hooks/useSiteData";
 
 const emptySubscribe = () => () => {};
 const getSnapshot = () => true;
@@ -16,6 +17,7 @@ const getServerSnapshot = () => false;
 export function MobileNav() {
     const [isOpen, setIsOpen] = useState(false);
     const mounted = useSyncExternalStore(emptySubscribe, getSnapshot, getServerSnapshot);
+    const { contact, map } = useSiteData();
 
     const topBarRef = useRef<HTMLSpanElement>(null);
     const midBarRef = useRef<HTMLSpanElement>(null);
@@ -195,14 +197,14 @@ export function MobileNav() {
                                 alt="Nexora Solutions"
                                 width={120}
                                 height={38}
-                                className="h-9 w-auto object-contain dark:hidden"
+                                className="h-16 w-auto object-contain dark:hidden"
                             />
                             <Image
                                 src="/assets/logo_dark.PNG"
                                 alt="Nexora Solutions Dark"
                                 width={120}
                                 height={38}
-                                className="h-9 w-auto object-contain hidden dark:block"
+                                className="h-16 w-auto object-contain hidden dark:block"
                             />
                         </Link>
                         <button
@@ -215,25 +217,17 @@ export function MobileNav() {
                     </div>
 
                     {/* Staggered Navigation Links */}
-                    <div className="my-auto py-8 relative z-10 space-y-6">
-                        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-500/10 border border-blue-500/20 text-xs font-mono text-blue-400 uppercase tracking-widest">
-                            <span className="h-1.5 w-1.5 rounded-full bg-blue-400 animate-pulse" />
-                            <span>Navigation Menu</span>
-                        </div>
-                        
-                        <ul ref={linksContainerRef} className="space-y-5 list-none p-0 m-0">
-                            {NAV_LINKS.map(({ label, href }, index) => (
+                    <div className="my-auto py-5 relative z-10">
+                        <ul ref={linksContainerRef} className="space-y-3 list-none p-0 m-0">
+                            {NAV_LINKS.map(({ label, href }) => (
                                 <li key={href}>
                                     <Link
                                         href={href}
                                         onClick={handleLinkClick}
-                                        className="group flex items-center justify-between text-3xl font-extrabold tracking-tight text-slate-100 hover:text-blue-400 transition-colors py-2 border-b border-white/5"
+                                        className="group flex items-center justify-between text-2xl font-extrabold tracking-tight text-slate-100 hover:text-blue-400 transition-colors py-2 border-b border-white/5"
                                     >
-                                        <div className="flex items-center gap-4">
-                                            <span className="text-xs font-mono text-slate-500 group-hover:text-blue-400 transition-colors">
-                                                0{index + 1}
-                                            </span>
-                                            <span>{label}</span>
+                                        <div>
+                                            {label} 
                                         </div>
                                         <ArrowUpRight className="h-6 w-6 text-slate-600 group-hover:text-blue-400 group-hover:translate-x-1 group-hover:-translate-y-1 transition-all duration-300" />
                                     </Link>
@@ -243,11 +237,11 @@ export function MobileNav() {
                     </div>
 
                     {/* Mobile Drawer Bottom Info & WhatsApp CTA */}
-                    <div ref={footerInfoRef} className="pt-6 border-t border-white/10 space-y-5 relative z-10">
+                    <div ref={footerInfoRef} className=" space-y-5 relative z-10">
                         {/* Action Button */}
                         <Button
                             as={Link}
-                            href="https://wa.me/201117180818"
+                            href={contact.whatsapp}
                             target="_blank"
                             rel="noopener noreferrer"
                             onClick={handleLinkClick}
@@ -262,21 +256,21 @@ export function MobileNav() {
                         {/* Direct Contact Info */}
                         <div className="grid grid-cols-1 gap-2 text-xs text-slate-400 font-mono pt-1">
                             <a
-                                href="https://maps.app.goo.gl/sveAc9g5PgNTHrvj6?g_st=iwb"
+                                href={map.linkUrl}
                                 target="_blank"
                                 rel="noopener noreferrer"
                                 className="flex items-center gap-2 hover:text-white transition-colors"
                             >
                                 <MapPin className="h-3.5 w-3.5 text-blue-400 shrink-0" />
-                                <span>Cairo & Mansoura, Egypt</span>
+                                <span>{contact.shortAddress}</span>
                             </a>
                             <div className="flex items-center gap-2">
                                 <Phone className="h-3.5 w-3.5 text-emerald-400 shrink-0" />
-                                <Link href="tel:+201117180818" className="hover:text-white transition-colors">+20 111 718 0818</Link>
+                                <Link href={`tel:${contact.phone.replace(/\s/g, '')}`} className="hover:text-white transition-colors">{contact.phone}</Link>
                             </div>
                             <div className="flex items-center gap-2">
                                 <Mail className="h-3.5 w-3.5 text-sky-400 shrink-0" />
-                                <Link href="mailto:info@nexora-solutions.co" className="hover:text-white transition-colors">info@nexora-solutions.co</Link>
+                                <Link href={`mailto:${contact.email}`} className="hover:text-white transition-colors">{contact.email}</Link>
                             </div>
                         </div>
                     </div>
