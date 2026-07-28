@@ -22,7 +22,7 @@ export default function SharedHero({
     return (
         <section
             id={id}
-            className="scroll-section relative w-full pt-32 pb-16 sm:pt-40 sm:pb-24 lg:pt-44 lg:pb-28 bg-slate-50/90 dark:bg-[#060913] text-slate-900 dark:text-white overflow-hidden transition-colors duration-300 border-b border-slate-200/90 dark:border-slate-800/80 site-grid-bg"
+            className="scroll-section relative w-full pt-32 pb-16 sm:pt-40 lg:pt-44 lg:pb-20 bg-slate-50/90 dark:bg-[#060913] text-slate-900 dark:text-white overflow-hidden transition-colors duration-300 border-b border-slate-200/90 dark:border-slate-800/80 site-grid-bg"
         >
             <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden">
                 <Image
