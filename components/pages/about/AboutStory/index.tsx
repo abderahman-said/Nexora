@@ -23,8 +23,6 @@ export default function AboutStory() {
                                     className="object-cover hover:scale-105 transition-transform duration-700"
                                     priority
                                 />
-                                <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-transparent to-transparent" />
-                                
                                 <div className="absolute bottom-6 left-6 right-6 p-4 sm:p-6 rounded-2xl bg-white/90 dark:bg-[#060913]/90 backdrop-blur-md border border-slate-200/80 dark:border-slate-800/80 shadow-xl flex items-center justify-between">
                                     <div>
                                         <h4 className="text-lg font-extrabold text-slate-900 dark:text-white">Enterprise Standards</h4>

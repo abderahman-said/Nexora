@@ -1,6 +1,7 @@
 import { Epilogue } from 'next/font/google';
 import './globals.css';
 import { ThemeProvider } from '@/context/ThemeContext';
+import { LanguageProvider } from '@/context/LanguageContext';
 import SvgSymbols from '@/components/icons/SvgSymbols';
 import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
@@ -167,8 +168,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             __html: `
               (function() {
                 try {
-                  var stored = localStorage.getItem('nexora-theme');
-                  var theme = stored || 'dark';
+                  var storedTheme = localStorage.getItem('nexora-theme');
+                  var theme = storedTheme || 'dark';
                   if (theme === 'dark') {
                     document.documentElement.classList.add('dark');
                     document.documentElement.classList.remove('light');
@@ -178,6 +179,16 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                     document.documentElement.classList.remove('dark');
                     document.documentElement.style.colorScheme = 'light';
                   }
+                  
+                  var storedLang = localStorage.getItem('nexora-language');
+                  var lang = storedLang || 'en';
+                  if (lang === 'ar') {
+                    document.documentElement.setAttribute('lang', 'ar');
+                    document.documentElement.setAttribute('dir', 'rtl');
+                  } else {
+                    document.documentElement.setAttribute('lang', 'en');
+                    document.documentElement.setAttribute('dir', 'ltr');
+                  }
                 } catch (e) {}
               })();
             `,
@@ -186,11 +197,13 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       </head>
       <body className={`${epilogue.variable} font-sans bg-[#f8fafc] site-grid-bg text-slate-900 dark:bg-[#090d16] dark:text-slate-100 antialiased overflow-x-hidden transition-colors duration-300`} suppressHydrationWarning>
         <ThemeProvider>
-          <SvgSymbols />
-          <ClientAnimations />
-          <Navbar />
-          {children}
-          <Footer />
+          <LanguageProvider>
+            <SvgSymbols />
+            <ClientAnimations />
+            <Navbar />
+            {children}
+            <Footer />
+          </LanguageProvider>
         </ThemeProvider>
       </body>
     </html>
