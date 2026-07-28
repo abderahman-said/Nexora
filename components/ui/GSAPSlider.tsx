@@ -18,6 +18,7 @@ export interface GSAPSliderProps<T = any> {
     showControls?: boolean;
     controlsPosition?: 'center' | 'sides';
     showDots?: boolean;
+    pauseOnHover?: boolean;
     className?: string;
 }
 
@@ -31,6 +32,7 @@ export default function GSAPSlider<T extends { id?: string | number }>({
     showControls = true,
     controlsPosition = 'center',
     showDots = true,
+    pauseOnHover = true,
     className = '',
 }: GSAPSliderProps<T>) {
     const totalItems = items.length;
@@ -218,9 +220,10 @@ export default function GSAPSlider<T extends { id?: string | number }>({
     useEffect(() => {
         if (!autoplay || isPaused || totalItems <= visibleCards) return;
 
-        autoplayTimerRef.current = setInterval(nextSlide, autoplayInterval);
+        const timer = setInterval(nextSlide, autoplayInterval);
+        autoplayTimerRef.current = timer;
         return () => {
-            if (autoplayTimerRef.current) clearInterval(autoplayTimerRef.current);
+            clearInterval(timer);
         };
     }, [autoplay, isPaused, totalItems, visibleCards, autoplayInterval, nextSlide]);
 
@@ -243,8 +246,8 @@ export default function GSAPSlider<T extends { id?: string | number }>({
     return (
         <div
             className={`relative w-full ${className}`}
-            onMouseEnter={() => setIsPaused(true)}
-            onMouseLeave={() => setIsPaused(false)}
+            onMouseEnter={() => pauseOnHover && setIsPaused(true)}
+            onMouseLeave={() => pauseOnHover && setIsPaused(false)}
         >
             {showSideControls && (
                 <>

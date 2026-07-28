@@ -50,6 +50,7 @@ export default function ProjectsSection() {
             showDots={true}
             autoplay={true}
             autoplayInterval={1500}
+            pauseOnHover={false}
             renderItem={(p) => <ProjectCard key={p.id} p={p} />}
           />
         </div>
