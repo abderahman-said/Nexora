@@ -2,12 +2,14 @@
 
 import React, { RefObject } from "react";
 import { InteractiveCircleButton } from "./InteractiveCircleButton";
+import { useSiteData } from "@/hooks/useSiteData";
 
 export interface FooterSidePanelProps {
     sidePanelRef?: RefObject<HTMLDivElement | null>;
 }
 
 export function FooterSidePanel({ sidePanelRef }: FooterSidePanelProps) {
+    const { contact } = useSiteData();
     return (
         <div 
             ref={sidePanelRef}
@@ -25,7 +27,7 @@ export function FooterSidePanel({ sidePanelRef }: FooterSidePanelProps) {
             </div>
 
             <div className="my-6 flex items-center justify-center relative z-10">
-                <InteractiveCircleButton href="https://wa.me/201117180818">
+                <InteractiveCircleButton href={contact.whatsapp}>
                     Contact us
                 </InteractiveCircleButton>
             </div>
@@ -33,9 +35,9 @@ export function FooterSidePanel({ sidePanelRef }: FooterSidePanelProps) {
             <div className="space-y-1.5 text-xs text-slate-300 relative z-10">
                 <p className="font-mono font-semibold text-slate-200 text-sm tracking-wider flex items-center justify-center gap-2">
                     <span className="inline-block h-2 w-2 rounded-full bg-emerald-400 animate-pulse" />
-                    <span>09:00 AM - 10:30 PM</span>
+                    <span>{contact.workingHours}</span>
                 </p>
-                <p className="text-slate-400 text-xs">Saturday - Thursday (Cairo, Egypt)</p>
+                <p className="text-slate-400 text-xs">{contact.address}</p>
             </div>
 
         </div>

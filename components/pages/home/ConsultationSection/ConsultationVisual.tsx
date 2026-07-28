@@ -1,8 +1,10 @@
 import React from 'react';
 import Image from 'next/image';
 import { Headphones, Sparkles } from 'lucide-react';
+import { useSiteData } from '@/hooks/useSiteData';
 
 export default function ConsultationVisual() {
+    const { contact } = useSiteData();
     return (
         <div className="lg:col-span-5 relative group">
             {/* Outer Glow frame on hover */}
@@ -48,7 +50,7 @@ export default function ConsultationVisual() {
                         </span>
                         <div>
                             <p suppressHydrationWarning className="text-xs font-extrabold text-white leading-none">Live Consultation Active</p>
-                            <p suppressHydrationWarning className="text-[0.65rem] text-slate-300 mt-0.5">Working Hours: 9:00 AM - 5:00 PM</p>
+                            <p suppressHydrationWarning className="text-[0.65rem] text-slate-300 mt-0.5">Working Hours: {contact.workingHours}</p>
                         </div>
                     </div>
 
