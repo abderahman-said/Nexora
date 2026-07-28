@@ -183,14 +183,14 @@ export function MobileNav() {
                 <div
                     ref={menuOverlayRef}
                     style={{ clipPath: "circle(0% at 90% 0%)", display: "none" }}
-                    className="fixed inset-0 w-screen h-screen z-[99999] flex flex-col justify-between bg-[#0a0a0e]/98 text-white backdrop-blur-3xl p-6 sm:p-10 pt-6 pb-8 overflow-y-auto"
+                    className="fixed inset-0 w-screen h-screen z-[99999] flex flex-col justify-between bg-white/98 dark:bg-[#0a0a0e]/98 text-slate-900 dark:text-white backdrop-blur-3xl p-6 sm:p-10 pt-6 pb-8 overflow-y-auto transition-colors duration-300"
                 >
                     {/* Ambient Radial Background Glow */}
-                    <div className="absolute top-1/3 right-1/4 h-72 w-72 rounded-full bg-blue-600/20 blur-3xl pointer-events-none" />
-                    <div className="absolute bottom-10 left-10 h-56 w-56 rounded-full bg-sky-500/10 blur-3xl pointer-events-none" />
+                    <div className="absolute top-1/3 right-1/4 h-72 w-72 rounded-full bg-blue-500/10 dark:bg-blue-600/20 blur-3xl pointer-events-none" />
+                    <div className="absolute bottom-10 left-10 h-56 w-56 rounded-full bg-sky-500/5 dark:bg-sky-500/10 blur-3xl pointer-events-none" />
 
                     {/* Top Bar with Logo & Close Button */}
-                    <div className="flex items-center justify-between relative z-10 pb-6 border-b border-white/10">
+                    <div className="flex items-center justify-between relative z-10 pb-6 border-b border-slate-200 dark:border-white/10">
                         <Link href="/" onClick={handleLinkClick} className="inline-block">
                             <Image
                                 src="/assets/logo.png"
@@ -210,7 +210,7 @@ export function MobileNav() {
                         <button
                             onClick={() => setIsOpen(false)}
                             aria-label="Close menu"
-                            className="p-2 rounded-full bg-white/10 text-slate-300 hover:text-white hover:bg-white/20 transition-colors"
+                            className="p-2 rounded-full bg-slate-100 dark:bg-white/10 text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white hover:bg-slate-200 dark:hover:bg-white/20 transition-colors"
                         >
                             <X className="h-6 w-6" />
                         </button>
@@ -224,12 +224,12 @@ export function MobileNav() {
                                     <Link
                                         href={href}
                                         onClick={handleLinkClick}
-                                        className="group flex items-center justify-between text-2xl font-extrabold tracking-tight text-slate-100 hover:text-blue-400 transition-colors py-2 border-b border-white/5"
+                                        className="group flex items-center justify-between text-2xl font-extrabold tracking-tight text-slate-800 dark:text-slate-100 hover:text-blue-600 dark:hover:text-blue-400 transition-colors py-2 border-b border-slate-200 dark:border-white/5"
                                     >
                                         <div>
-                                            {label} 
+                                            {label}
                                         </div>
-                                        <ArrowUpRight className="h-6 w-6 text-slate-600 group-hover:text-blue-400 group-hover:translate-x-1 group-hover:-translate-y-1 transition-all duration-300" />
+                                        <ArrowUpRight className="h-6 w-6 text-slate-400 dark:text-slate-600 group-hover:text-blue-600 dark:group-hover:text-blue-400 group-hover:translate-x-1 group-hover:-translate-y-1 transition-all duration-300" />
                                     </Link>
                                 </li>
                             ))}
@@ -254,23 +254,23 @@ export function MobileNav() {
                         </Button>
 
                         {/* Direct Contact Info */}
-                        <div className="grid grid-cols-1 gap-2 text-xs text-slate-400 font-mono pt-1">
+                        <div className="grid grid-cols-1 gap-2 text-xs text-slate-500 dark:text-slate-400 font-mono pt-1">
                             <a
                                 href={map.linkUrl}
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                className="flex items-center gap-2 hover:text-white transition-colors"
+                                className="flex items-center gap-2 hover:text-slate-900 dark:hover:text-white transition-colors"
                             >
-                                <MapPin className="h-3.5 w-3.5 text-blue-400 shrink-0" />
+                                <MapPin className="h-3.5 w-3.5 text-blue-600 dark:text-blue-400 shrink-0" />
                                 <span>{contact.shortAddress}</span>
                             </a>
                             <div className="flex items-center gap-2">
-                                <Phone className="h-3.5 w-3.5 text-emerald-400 shrink-0" />
-                                <Link href={`tel:${contact.phone.replace(/\s/g, '')}`} className="hover:text-white transition-colors">{contact.phone}</Link>
+                                <Phone className="h-3.5 w-3.5 text-emerald-600 dark:text-emerald-400 shrink-0" />
+                                <Link href={`tel:${contact.phone.replace(/\s/g, '')}`} className="hover:text-slate-900 dark:hover:text-white transition-colors">{contact.phone}</Link>
                             </div>
                             <div className="flex items-center gap-2">
-                                <Mail className="h-3.5 w-3.5 text-sky-400 shrink-0" />
-                                <Link href={`mailto:${contact.email}`} className="hover:text-white transition-colors">{contact.email}</Link>
+                                <Mail className="h-3.5 w-3.5 text-sky-600 dark:text-sky-400 shrink-0" />
+                                <Link href={`mailto:${contact.email}`} className="hover:text-slate-900 dark:hover:text-white transition-colors">{contact.email}</Link>
                             </div>
                         </div>
                     </div>
