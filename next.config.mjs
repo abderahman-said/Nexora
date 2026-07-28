@@ -21,6 +21,12 @@ const nextConfig = {
         minimumCacheTTL: 31536000,
         dangerouslyAllowSVG: true,
         contentSecurityPolicy: "default-src 'self'; script-src 'none'; sandbox;",
+        remotePatterns: [
+            {
+                protocol: 'https',
+                hostname: 'flagcdn.com',
+            },
+        ],
     },
     experimental: {
         optimizePackageImports: ['lucide-react', 'gsap', 'motion'],
