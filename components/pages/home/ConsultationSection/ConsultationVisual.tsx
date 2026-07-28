@@ -30,17 +30,17 @@ export default function ConsultationVisual() {
                 <div className="
                     absolute top-4 right-4 z-10
                     inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full
-                    bg-slate-900/80 backdrop-blur-md border border-slate-700/80
-                    text-sky-400 font-bold text-xs shadow-lg
+                    bg-white/90 dark:bg-slate-900/80 backdrop-blur-md border border-slate-200 dark:border-slate-700/80
+                    text-blue-600 dark:text-sky-400 font-bold text-xs shadow-lg
                 ">
-                    <Sparkles className="w-3.5 h-3.5 text-sky-400 animate-pulse" />
+                    <Sparkles className="w-3.5 h-3.5 text-blue-500 dark:text-sky-400 animate-pulse" />
                     <span>Senior Tech Advisor</span>
                 </div>
 
                 {/* Floating Bottom Badge: 24/7 Available Indicator */}
                 <div className="
                     absolute bottom-4 left-4 right-4 z-10 p-3.5 rounded-xl
-                    bg-slate-900/85 backdrop-blur-md border border-slate-700/80
+                    bg-white/95 dark:bg-slate-900/85 backdrop-blur-md border border-slate-200/80 dark:border-slate-700/80
                     flex items-center justify-between gap-3 shadow-xl
                 ">
                     <div className="flex items-center gap-2.5">
@@ -49,12 +49,12 @@ export default function ConsultationVisual() {
                             <span className="relative inline-flex rounded-full h-3 w-3 bg-emerald-500" />
                         </span>
                         <div>
-                            <p suppressHydrationWarning className="text-xs font-extrabold text-white leading-none">Live Consultation Active</p>
-                            <p suppressHydrationWarning className="text-[0.65rem] text-slate-300 mt-0.5">Working Hours: {contact.workingHours}</p>
+                            <p suppressHydrationWarning className="text-xs font-extrabold text-slate-900 dark:text-white leading-none">Live Consultation Active</p>
+                            <p suppressHydrationWarning className="text-[0.65rem] text-slate-500 dark:text-slate-300 mt-0.5">Working Hours: {contact.workingHours}</p>
                         </div>
                     </div>
 
-                    <div className="w-8 h-8 rounded-lg bg-blue-600/30 border border-blue-500/50 flex items-center justify-center text-sky-400 shrink-0">
+                    <div className="w-8 h-8 rounded-lg bg-blue-500/10 dark:bg-blue-600/30 border border-blue-500/20 dark:border-blue-500/50 flex items-center justify-center text-blue-600 dark:text-sky-400 shrink-0">
                         <Headphones className="w-4 h-4" />
                     </div>
                 </div>

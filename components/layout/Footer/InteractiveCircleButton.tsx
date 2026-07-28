@@ -87,7 +87,7 @@ export function InteractiveCircleButton({ href, children }: InteractiveCircleBut
             onMouseEnter={handleMouseEnter}
             onMouseMove={handleMouseMove}
             onMouseLeave={handleMouseLeave}
-            className="relative flex h-36 w-36 flex-col items-center justify-center rounded-full border border-slate-300 dark:border-white/25 bg-slate-200/50 dark:bg-white/5 backdrop-blur-sm overflow-hidden text-slate-900 dark:text-white shadow-xl cursor-pointer group transition-all duration-300 hover:border-blue-500 dark:hover:border-blue-400 hover:shadow-[0_0_30px_rgba(59,130,246,0.2)] dark:hover:shadow-[0_0_30px_rgba(59,130,246,0.3)]"
+            className="relative flex h-36 w-36 flex-col items-center justify-center rounded-full border border-slate-300 dark:border-white/25 bg-white dark:bg-white/5 backdrop-blur-sm overflow-hidden text-slate-900 dark:text-white shadow-xl cursor-pointer group transition-all duration-300 hover:border-blue-500 dark:hover:border-blue-400 hover:shadow-[0_0_30px_rgba(59,130,246,0.2)] dark:hover:shadow-[0_0_30px_rgba(59,130,246,0.3)]"
         >
             <span
                 ref={circleRef}
