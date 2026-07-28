@@ -3,7 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import Magnet from "../../ui/Magnet";
 import ThemeToggle from "../../ui/ThemeToggle";
-import LanguageToggle from "../../ui/LanguageToggle";
+// import LanguageToggle from "../../ui/LanguageToggle";
 import { NAV_LINKS } from "./navData";
 import { MobileNav } from "./MobileNav";
 
@@ -74,7 +74,7 @@ export interface NavCTAProps {
 export function NavCTA({ ctaRef }: NavCTAProps) {
   return (
     <div ref={ctaRef} className="flex items-center gap-2.5 sm:gap-3">
-      <LanguageToggle />
+      {/* <LanguageToggle /> */}
       <ThemeToggle />
       <MobileNav />
     </div>
