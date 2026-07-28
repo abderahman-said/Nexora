@@ -60,10 +60,7 @@ export function validateForm(data: FormData, phoneLength?: number): FormErrors {
 
         if (field === 'phone' && phoneLength) {
             // Exact digit count validation based on selected country
-            const digitCount = value.replace(/\D/g, '').replace(/^\d+/, (m) => {
-                // remove the country code digits from the count
-                return '';
-            });
+
             const subscriberOnlyDigits = subscriberDigits.replace(/\D/g, '');
             if (subscriberOnlyDigits.length !== phoneLength) {
                 errors[field] = `Phone number must be exactly ${phoneLength} digits for this country`;
