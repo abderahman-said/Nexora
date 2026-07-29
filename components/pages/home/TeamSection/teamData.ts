@@ -1,17 +1,5 @@
-export interface TeamMemberSocials {
-    linkedin: string;
-    twitter: string;
-    email: string;
-}
+import type { TeamMember } from './types';
 
-export interface TeamMember {
-    id: number;
-    name: string;
-    role: string;
-    image: string;
-    bio: string;
-    socials: TeamMemberSocials;
-}
 export const TEAM_MEMBERS: TeamMember[] = [
     {
         id: 1,

@@ -47,11 +47,11 @@ export default function ContactInquiryForm() {
                     {/* Name & Email Row */}
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-5">
                         <FormInput
-                            label="Full Name"
+                            label="Name"
                             required
                             icon={User}
                             type="text"
-                            placeholder="e.g. John Doe"
+                            placeholder="e.g. John"
                             value={formData.name}
                             error={errors.name}
                             onChange={(e: React.ChangeEvent<HTMLInputElement>) => handleChange('name', e.target.value)}

@@ -2,12 +2,15 @@
 
 import React from "react";
 import { Layers, ArrowRight } from "lucide-react";
+import Link from "next/link";
+import { useLocale } from 'next-intl';
 import GSAPSlider from "@/components/ui/GSAPSlider";
 import { SERVICES } from "./servicesData";
 import { ServiceCard } from "./ServiceCard";
 import Container from "@/components/ui/Container";
 
 export default function ServiceCards() {
+  const locale = useLocale();
   return (
     <section
       id="services"
@@ -83,8 +86,8 @@ export default function ServiceCards() {
 
             {/* Right Action Button */}
             <div className="shrink-0">
-              <a
-                href="/contact"
+              <Link
+                href={`/${locale}/contact`}
                 className="
                                     inline-flex items-center gap-2.5 px-7 py-3.5 rounded-full
                                     bg-gradient-to-r from-blue-600 to-sky-600 text-white
@@ -95,7 +98,7 @@ export default function ServiceCards() {
               >
                 <span>VIEW ALL SERVICES</span>
                 <ArrowRight className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" />
-              </a>
+              </Link>
             </div>
           </div>
         </div>

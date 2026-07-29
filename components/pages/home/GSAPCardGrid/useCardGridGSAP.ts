@@ -1,14 +1,9 @@
 import { useEffect } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import type { UseCardGridGSAPProps } from './types';
 
 gsap.registerPlugin(ScrollTrigger);
-
-interface UseCardGridGSAPProps {
-  sectionRef: React.RefObject<HTMLDivElement | null>;
-  cardsRef: React.RefObject<(HTMLDivElement | null)[]>;
-  waveRef: React.RefObject<SVGSVGElement | null>;
-}
 
 export function useCardGridGSAP({ sectionRef, cardsRef, waveRef }: UseCardGridGSAPProps) {
     useEffect(() => {

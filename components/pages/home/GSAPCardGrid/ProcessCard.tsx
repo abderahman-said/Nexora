@@ -2,19 +2,7 @@
 
 import React from 'react';
 import InteractiveCard from '@/components/ui/InteractiveCard';
-
-interface ProcessCardProps {
-  step: {
-    step: string;
-    badge: string;
-    icon: React.ComponentType<{ className?: string }>;
-    title: string;
-    description: string;
-    features: string[];
-    accent: string;
-    link: string;
-  };
-}
+import type { ProcessCardProps } from './types';
 
 export function ProcessCard({ step }: ProcessCardProps) {
     return (

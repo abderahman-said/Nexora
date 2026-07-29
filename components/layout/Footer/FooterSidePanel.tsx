@@ -1,12 +1,9 @@
 "use client";
 
-import React, { RefObject } from "react";
+import React from "react";
 import { InteractiveCircleButton } from "./InteractiveCircleButton";
 import { useSiteData } from "@/hooks/useSiteData";
-
-export interface FooterSidePanelProps {
-    sidePanelRef?: RefObject<HTMLDivElement | null>;
-}
+import type { FooterSidePanelProps } from './types';
 
 export function FooterSidePanel({ sidePanelRef }: FooterSidePanelProps) {
     const { contact } = useSiteData();

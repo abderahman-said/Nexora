@@ -1,12 +1,9 @@
 "use client";
 
-import React, { useRef, ReactNode } from "react";
+import React, { useRef  } from "react";
 import { useNavbarGSAP } from "./useNavbarGSAP";
 import Container from "@/components/ui/Container";
-
-export interface NavbarAnimatedShellProps {
-  children: ReactNode;
-}
+import type { NavbarAnimatedShellProps } from './types';
 
 export function NavbarAnimatedShell({ children }: NavbarAnimatedShellProps) {
   const navRef = useRef<HTMLElement>(null);

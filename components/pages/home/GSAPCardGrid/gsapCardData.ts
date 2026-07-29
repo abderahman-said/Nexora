@@ -1,16 +1,5 @@
 import { ClipboardList, MonitorCheck, Settings2, TrendingUp } from 'lucide-react';
-import { LucideIcon } from 'lucide-react';
-
-export interface Step {
-    step: string;
-    title: string;
-    badge: string;
-    description: string;
-    features: string[];
-    icon: LucideIcon;
-    accent: string;
-    link: string;
-}
+import type { Step } from './types';
 
 export const STEPS: Step[] = [
     {

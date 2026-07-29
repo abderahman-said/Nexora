@@ -1,15 +1,13 @@
-import React, { RefObject } from "react";
+import React from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { useTranslations, useLocale } from 'next-intl';
 import Magnet from "../../ui/Magnet";
 import ThemeToggle from "../../ui/ThemeToggle";
 // import LanguageToggle from "../../ui/LanguageToggle";
-import { NAV_LINKS } from "./navData";
+import { getNavLinks } from "./navData";
 import { MobileNav } from "./MobileNav";
-
-export interface NavLogoProps {
-  logoRef?: RefObject<HTMLDivElement | null>;
-}
+import type { NavLogoProps, NavLinksProps, NavCTAProps } from './types';
 
 export function NavLogo({ logoRef }: NavLogoProps) {
   return (
@@ -42,18 +40,18 @@ export function NavLogo({ logoRef }: NavLogoProps) {
   );
 }
 
-export interface NavLinksProps {
-  linksRef?: RefObject<HTMLUListElement | null>;
-}
-
 export function NavLinks({ linksRef }: NavLinksProps) {
+  const t = useTranslations();
+  const locale = useLocale();
+  const navLinks = getNavLinks(t, locale);
+
   return (
     <ul
       ref={linksRef}
       className="m-0 flex list-none items-center gap-12 p-0 max-lg:gap-6 max-md:hidden"
       role="list"
     >
-      {NAV_LINKS.map(({ label, href }) => (
+      {navLinks.map(({ label, href }) => (
         <li key={href}>
           <Link
             href={href}
@@ -65,10 +63,6 @@ export function NavLinks({ linksRef }: NavLinksProps) {
       ))}
     </ul>
   );
-}
-
-export interface NavCTAProps {
-  ctaRef?: RefObject<HTMLDivElement | null>;
 }
 
 export function NavCTA({ ctaRef }: NavCTAProps) {

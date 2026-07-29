@@ -1,0 +1,28 @@
+{
+  "common": {
+    "loading": "Loading...",
+    "error": "An error occurred",
+    "submit": "Submit",
+    "cancel": "Cancel",
+    "close": "Close"
+  },
+  "nav": {
+    "about": "About",
+    "services": "Services",
+    "ourWork": "Our Work",
+    "process": "Process",
+    "contact": "Contact"
+  },
+  "footer": {
+    "navigation": "Navigation",
+    "aboutUs": "About Us",
+    "ourServices": "Our Services",
+    "getInTouch": "Get in Touch",
+    "contactUs": "Contact Us",
+    "brandDescription": "Nexora Solutions is a leading technology agency specializing in enterprise software development, SaaS architectures, and cloud solutions worldwide.",
+    "enterpriseCertified": "Enterprise Certified Tech Partner",
+    "rights": "All Rights Reserved",
+    "tagline": "Code. Innovate. Elevate.",
+    "responseTime": "Response Time"
+  }
+}

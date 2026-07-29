@@ -1,13 +1,8 @@
 "use client";
 
 import { useFooterGSAP } from "./useFooterGSAP";
-import React, { useRef, ReactNode, ReactElement } from "react";
-
-export interface FooterAnimatedShellProps {
-  columns: ReactNode;
-  sidePanel: ReactElement;
-  bottomBar: ReactNode;
-}
+import React, { useRef, ReactElement } from "react";
+import type { FooterAnimatedShellProps } from './types';
 
 export function FooterAnimatedShell({
   columns,

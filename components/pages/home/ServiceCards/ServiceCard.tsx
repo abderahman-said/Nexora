@@ -2,18 +2,24 @@
 
 import React from 'react';
 import InteractiveCard from '@/components/ui/InteractiveCard';
-import { Service } from './servicesData';
+import type { ServiceCardProps } from './types';
+import { BarChart3, Cpu, Globe, Palette } from 'lucide-react';
 
-export interface ServiceCardProps {
-    service: Service;
-}
+const ICON_MAP: Record<string, React.ComponentType<{ className?: string }>> = {
+    BarChart3,
+    Cpu,
+    Globe,
+    Palette,
+};
 
 export function ServiceCard({ service }: ServiceCardProps) {
+    const IconComponent = ICON_MAP[service.icon] || BarChart3;
+    
     return (
         <InteractiveCard
             serial={service.id}
             badge={service.badge}
-            icon={service.icon}
+            icon={IconComponent}
             title={service.title}
             description={service.description}
             features={service.features}

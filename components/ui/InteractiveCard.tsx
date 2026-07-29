@@ -1,21 +1,9 @@
 'use client';
 
-import React, { ElementType } from 'react';
+import React from 'react';
 import { ArrowRight, CheckCircle2  } from 'lucide-react';
 import Link from 'next/link';
-
-export interface InteractiveCardProps {
-    stepNumber?: string | number;
-    serial?: string | number;
-    badge?: string;
-    icon?: ElementType;
-    title: string;
-    description: string;
-    features?: string[];
-    buttonText?: string;
-    buttonLink?: string;
-    className?: string;
-}
+import type { InteractiveCardProps } from './types';
 
 export default function InteractiveCard({
     stepNumber,

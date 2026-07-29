@@ -1,16 +1,5 @@
-import React, { forwardRef, ElementType, ComponentPropsWithRef } from 'react';
-
-export interface FormInputProps extends ComponentPropsWithRef<'input'> {
-    label?: string;
-    required?: boolean;
-    icon?: ElementType | null;
-    isTextarea?: boolean;
-    rows?: number;
-    error?: string;
-    containerClassName?: string;
-    inputClassName?: string;
-    [key: string]: any;
-}
+import React, { forwardRef } from 'react';
+import type { FormInputProps } from './types';
 
 const FormInput = forwardRef<HTMLInputElement | HTMLTextAreaElement, FormInputProps>(
     function FormInput(

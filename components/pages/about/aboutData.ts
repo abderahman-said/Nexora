@@ -1,34 +1,5 @@
-import { Shield, Target, Zap, HeartHandshake, Globe, Rocket, Award, Users, LucideIcon } from 'lucide-react';
-
-export interface AboutStat {
-    id: number;
-    label: string;
-    value: string;
-    icon: LucideIcon;
-    color: string;
-}
-
-export interface CoreValue {
-    step: string;
-    badge: string;
-    icon: LucideIcon;
-    title: string;
-    description: string;
-    features: string[];
-}
-
-export interface CompanyHighlight {
-    title: string;
-    desc: string;
-}
-
-export interface CompanyStory {
-    subtitle: string;
-    title: string;
-    description: string;
-    paragraphs: string[];
-    highlights: CompanyHighlight[];
-}
+import { Shield, Target, Zap, HeartHandshake, Globe, Rocket, Award, Users } from 'lucide-react';
+import type { AboutStat, CoreValue, CompanyStory } from './types';
 
 export const ABOUT_STATS: AboutStat[] = [
     { id: 1, label: 'Projects Completed', value: '150+', icon: Rocket, color: 'from-blue-600 to-sky-500' },

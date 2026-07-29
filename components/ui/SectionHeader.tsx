@@ -1,9 +1,5 @@
-import React, { ElementType, ReactNode, Ref } from 'react';
-
-interface CornerFrameProps {
-    children: ReactNode;
-    extraClass?: string;
-}
+import React from 'react';
+import type { CornerFrameProps, StatusStyle, SectionHeaderProps } from './types';
 
 function CornerFrame({ children, extraClass = '' }: CornerFrameProps) {
     return (
@@ -13,15 +9,6 @@ function CornerFrame({ children, extraClass = '' }: CornerFrameProps) {
             {children}
         </div>
     );
-}
-
-export type StatusColor = 'info' | 'success' | 'warning' | 'error' | 'blue' | 'cyan' | 'indigo' | 'amber';
-
-interface StatusStyle {
-    dot: string;
-    text: string;
-    tagBorder: string;
-    highlight: string;
 }
 
 const STATUS_STYLES: Record<string, StatusStyle> = {
@@ -55,22 +42,6 @@ STATUS_STYLES.blue = STATUS_STYLES.info;
 STATUS_STYLES.cyan = STATUS_STYLES.info;
 STATUS_STYLES.indigo = STATUS_STYLES.success;
 STATUS_STYLES.amber = STATUS_STYLES.warning;
-
-export interface SectionHeaderProps {
-    badge?: string;
-    tag?: string;
-    badgeColor?: StatusColor;
-    title?: ReactNode;
-    highlight?: string;
-    subtitle?: string;
-    align?: 'left' | 'center' | 'between';
-    as?: ElementType;
-    size?: 'hero' | 'default';
-    titleRef?: Ref<any>;
-    rightElement?: ReactNode;
-    className?: string;
-    animClass?: string;
-}
 
 export default function SectionHeader({
     badge,

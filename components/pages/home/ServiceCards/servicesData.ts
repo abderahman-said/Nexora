@@ -1,55 +1,48 @@
-import { BarChart3, Cpu, Globe, Palette, LucideIcon } from 'lucide-react';
-
-export interface Service {
-    id: string;
-    title: string;
-    badge: string;
-    description: string;
-    features: string[];
-    icon: LucideIcon;
-    accent: string;
-    link: string;
-}
+import type { Service } from './types';
 
 export const SERVICES: Service[] = [
     {
         id: '01',
+        slug: 'business-analysis',
         title: 'Business Analysis',
         badge: 'STRATEGY',
         description: 'Continually engage customized data strategies and quality growth models tailored for enterprise scalability.',
         features: ['Market Intelligence', 'Data Modeling', 'ROI Optimization'],
-        icon: BarChart3,
+        icon: 'BarChart3',
         accent: '#2563eb',
-        link: '#contact',
+        link: '/services/business-analysis',
     },
     {
         id: '02',
+        slug: 'software-services',
         title: 'Software Services',
         badge: 'ARCHITECTURE',
         description: 'End-to-end custom software architecture engineered for high performance, security, and seamless integration.',
         features: ['Custom Microservices', 'Enterprise Security', 'Cloud Automation'],
-        icon: Cpu,
+        icon: 'Cpu',
         accent: '#0284c7',
-        link: '#contact',
+        link: '/services/software-services',
     },
     {
         id: '03',
+        slug: 'web-development',
         title: 'Web Development',
         badge: 'FULL-STACK',
         description: 'High-speed, responsive web platforms built with Next.js, modern frameworks, and cloud-native backends.',
         features: ['Next.js & React', 'API Integration', 'High Performance'],
-        icon: Globe,
+        icon: 'Globe',
         accent: '#6366f1',
-        link: '#contact',
+        link: '/services/web-development',
     },
     {
         id: '04',
+        slug: 'ui-ux-design',
         title: 'UI/UX Design',
         badge: 'EXPERIENCE',
         description: 'Modern user-centered design systems, intuitive interfaces, and engaging user experiences that convert.',
         features: ['Design Systems', 'Interactive Prototypes', 'User Journeys'],
-        icon: Palette,
+        icon: 'Palette',
         accent: '#8b5cf6',
-        link: '#contact',
+        link: '/services/ui-ux-design',
     },
 ];

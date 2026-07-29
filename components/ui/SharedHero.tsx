@@ -3,14 +3,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { ChevronsRight } from 'lucide-react';
 import Container from '@/components/ui/Container';
-
-export interface SharedHeroProps {
-    id: string;
-    titlePrefix: string;
-    titleHighlight: string;
-    breadcrumbLabel: string;
-    backgroundImage?: string;
-}
+import type { SharedHeroProps } from './types';
 
 export default function SharedHero({
     id,
@@ -30,7 +23,7 @@ export default function SharedHero({
                     alt={`${breadcrumbLabel} Banner Background`}
                     fill
                     priority
-                    className="object-cover opacity-10 dark:opacity-40"
+                    className="object-cover opacity-40 "
                 />
                 <div className="absolute inset-0 bg-gradient-to-r from-slate-50/95 via-white/90 to-slate-50/95 dark:from-[#060913]/90 dark:via-[#060913]/70 dark:to-[#060913]/90" />
                 <div className="absolute inset-0 bg-gradient-to-t from-slate-100/90 via-transparent to-slate-50/80 dark:from-[#060913] dark:via-transparent dark:to-[#060913]/80" />

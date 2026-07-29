@@ -1,20 +1,10 @@
 import { useGSAP } from '@gsap/react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import type { UseVimeoHeroGSAPProps } from './types';
 
 // ✅ Register once at module level
 gsap.registerPlugin(ScrollTrigger);
-
-interface UseVimeoHeroGSAPProps {
-  heroRef: React.RefObject<HTMLDivElement | null>;
-  headRef: React.RefObject<HTMLHeadingElement | null>;
-  subRef: React.RefObject<HTMLParagraphElement | null>;
-  statsRef: React.RefObject<HTMLDivElement | null>;
-  ctaRef: React.RefObject<HTMLDivElement | null>;
-  badgeRef: React.RefObject<HTMLDivElement | null>;
-  glowRef: React.RefObject<HTMLDivElement | null>;
-  imageRef: React.RefObject<HTMLDivElement | null>;
-}
 
 export function useVimeoHeroGSAP({ heroRef, headRef, subRef, statsRef, ctaRef, badgeRef, glowRef, imageRef }: UseVimeoHeroGSAPProps) {
     useGSAP(() => {

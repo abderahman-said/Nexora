@@ -18,7 +18,8 @@ import {
   MessageCircle,
   X,
 } from "lucide-react";
-import { NAV_LINKS } from "./navData";
+import { getNavLinks } from "./navData";
+import { useTranslations, useLocale } from 'next-intl';
 import Button from "@/components/ui/Button";
 import { useSiteData } from "@/hooks/useSiteData";
 
@@ -45,6 +46,7 @@ function useCloseOnEscape(isOpen: boolean, onClose: () => void) {
 }
 
 export function MobileNav() {
+  const t = useTranslations();
   const [isOpen, setIsOpen] = useState(false);
   const mounted = useSyncExternalStore(
     emptySubscribe,
@@ -52,6 +54,8 @@ export function MobileNav() {
     getServerSnapshot,
   );
   const { contact, map } = useSiteData();
+  const locale = useLocale();
+  const navLinks = getNavLinks(t, locale);
 
   const topBarRef = useRef<HTMLSpanElement>(null);
   const midBarRef = useRef<HTMLSpanElement>(null);
@@ -230,7 +234,7 @@ export function MobileNav() {
                 ref={linksContainerRef}
                 className="space-y-3 list-none p-0 m-0"
               >
-                {NAV_LINKS.map(({ label, href }) => (
+                {navLinks.map(({ label, href }) => (
                   <li key={href}>
                     <Link
                       href={href}

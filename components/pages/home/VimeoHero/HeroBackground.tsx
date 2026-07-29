@@ -1,9 +1,5 @@
 import Image from "next/image";
-import Particles from "@/components/animations/Particles";
-
-interface HeroBackgroundProps {
-  glowRef: React.RefObject<HTMLDivElement | null>;
-}
+import type { HeroBackgroundProps } from './types';
 
 export default function HeroBackground({ glowRef }: HeroBackgroundProps) {
     const currentYear = new Date().getFullYear();
@@ -62,27 +58,6 @@ export default function HeroBackground({ glowRef }: HeroBackgroundProps) {
         <div className="hero-side-el flex items-center justify-center opacity-40 w-px h-20 bg-gradient-to-b from-transparent via-slate-300 dark:via-slate-700 to-transparent" />
         <div className="hero-side-el flex items-center justify-center opacity-40 w-1.5 h-1.5 bg-slate-400 dark:bg-slate-600" />
       </div>
-
-      {/* Particles */}
-      <div
-        aria-hidden="true"
-        className="absolute inset-0 opacity-25 pointer-events-none"
-      >
-        <Particles
-          particleColors={[
-            "#3b82f6",
-            "#38bdf8",
-            "#60a5fa",
-            "#818cf8",
-            "#93c5fd",
-          ]}
-          particleCount={130}
-          speed={0.3}
-          particleBaseSize={220}
-          alphaParticles
-        />
-      </div>
-
       {/* Mouse-follow glow */}
       <div
         ref={glowRef}

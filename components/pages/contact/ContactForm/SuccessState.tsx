@@ -3,10 +3,7 @@
 import React from 'react';
 import { CheckCircle2 } from 'lucide-react';
 import Button from '@/components/ui/Button';
-
-export interface SuccessStateProps {
-    onReset: () => void;
-}
+import type { SuccessStateProps } from './types';
 
 export default function SuccessState({ onReset }: SuccessStateProps) {
     return (

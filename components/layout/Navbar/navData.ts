@@ -1,12 +1,9 @@
-export interface NavLink {
-    label: string;
-    href: string;
-}
+import type { NavLink } from './types';
 
-export const NAV_LINKS: NavLink[] = [
-    { label: 'About', href: '/about' },
-    { label: 'Services', href: '/#services' },
-    { label: 'Our Work', href: '/#portfolio' },
-    { label: 'Process', href: '/#process' },
-    { label: 'Contact', href: '/contact' },
+export const getNavLinks = (t: (key: string) => string, locale: string): NavLink[] => [
+    { label: t('nav.about'), href: `/${locale}/about` },
+    { label: t('nav.services'), href: `/${locale}/services` },
+    { label: t('nav.ourWork'), href: `/${locale}/#portfolio` },
+    // { label: t('nav.process'), href: `/${locale}/#process` },
+    { label: t('nav.contact'), href: `/${locale}/contact` },
 ];

@@ -1,7 +1,10 @@
 import React from 'react';
 import { Target, Rocket, ArrowRight, CheckCircle2, ShieldCheck, Cpu } from 'lucide-react';
+import Link from 'next/link';
+import { useLocale } from 'next-intl';
 
 export default function AboutVisionMission() {
+    const locale = useLocale();
     return (
         <div className="w-full mt-6 space-y-4">
             {/* ── Vision & Mission Stacked/Grid Cards ── */}
@@ -89,8 +92,8 @@ export default function AboutVisionMission() {
 
             {/* ── Action & Stats Row ── */}
             <div className="pt-3 flex flex-wrap items-center justify-between gap-4">
-                <a
-                    href="#contact"
+                <Link
+                    href={`/${locale}/contact`}
                     className="
                         inline-flex items-center gap-2 px-6 py-3 rounded-full
                         bg-gradient-to-r from-blue-600 to-sky-600 text-white
@@ -101,7 +104,7 @@ export default function AboutVisionMission() {
                 >
                     <span>DISCOVER OUR STORY</span>
                     <ArrowRight className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" />
-                </a>
+                </Link>
 
                 <div className="flex items-center gap-3 text-xs font-semibold text-slate-500 dark:text-slate-400">
                     <span className="text-slate-900 dark:text-white font-extrabold text-sm">250+</span>

@@ -3,6 +3,7 @@ import React from 'react';
 import { ArrowUpRight } from 'lucide-react';
 import Container from '@/components/ui/Container';
 import { useContactInfo } from '../contactData';
+import Link from 'next/link';
 
 export default function ContactInfo() {
     const contactInfoArray = useContactInfo();
@@ -13,7 +14,7 @@ export default function ContactInfo() {
             className="scroll-section relative w-full py-12 sm:py-16 bg-white dark:bg-[#060913] border-b border-slate-200/90 dark:border-slate-800/80 transition-colors duration-300"
         >
             <Container className="relative z-10">
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
                     {contactInfoArray.map((item) => {
                         const Icon = item.icon;
                         return (
@@ -46,7 +47,7 @@ export default function ContactInfo() {
                                 </div>
 
                                 {item.action && (
-                                    <a
+                                    <Link
                                         href={item.action}
                                         target={item.action.startsWith('http') ? '_blank' : '_self'}
                                         rel="noopener noreferrer"
@@ -58,7 +59,7 @@ export default function ContactInfo() {
                                     >
                                         <span>{item.actionText}</span>
                                         <ArrowUpRight className="w-4 h-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
-                                    </a>
+                                    </Link>
                                 )}
                             </div>
                         );

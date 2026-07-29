@@ -1,18 +1,21 @@
 import React from "react";
 import Link from "next/link";
 import { ChevronRight } from "lucide-react";
+import { useTranslations } from 'next-intl';
 
 export function FooterNav() {
+    const t = useTranslations();
+    
     const navItems = [
-        { label: "About Us", href: "/about" },
-        { label: "Our Services", href: "#services" },
-        { label: "Get in Touch", href: "/contact" },
+        { label: t('footer.aboutUs'), href: "/about" },
+        { label: t('footer.ourServices'), href: "/services" },
+        { label: t('footer.getInTouch'), href: "/contact" },
     ];
 
     return (
         <div className="flex flex-col items-start space-y-4">
             <h3 className="text-base md:text-lg font-bold text-slate-900 dark:text-white tracking-wide border-b border-blue-500/40 pb-1.5 flex items-center gap-2">
-                Navigation
+                {t('footer.navigation')}
             </h3>
             <ul className="space-y-2.5 text-xs md:text-sm text-slate-600 dark:text-slate-300">
                 {navItems.map((item) => (

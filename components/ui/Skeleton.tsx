@@ -1,17 +1,5 @@
-import React, { HTMLAttributes } from 'react';
-
-export interface SkeletonProps extends HTMLAttributes<HTMLDivElement> {
-  className?: string;
-}
-
-export interface SkeletonCardProps {
-  className?: string;
-}
-
-export interface SkeletonTextProps {
-  lines?: number;
-  className?: string;
-}
+import React from 'react';
+import type { SkeletonProps, SkeletonCardProps, SkeletonTextProps } from './types';
 
 export default function Skeleton({ className = '', ...props }: SkeletonProps) {
   return (

@@ -5,30 +5,17 @@ import React, {
   useState,
   useEffect,
   useCallback,
-  ElementType,
-  ReactNode,
 } from "react";
 import { gsap } from "gsap";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import Button from "@/components/ui/Button";
+import type { GSAPSliderProps, NavButtonProps } from './types';
 
 const DRAG_THRESHOLD = 40;
 const SNAP_DURATION = 0.9;
 
-export interface GSAPSliderProps<T = any> {
-  items?: T[];
-  renderItem?: (item: T, index: number) => ReactNode;
-  ItemComponent?: ElementType;
-  autoplay?: boolean;
-  autoplayInterval?: number;
-  defaultVisibleCount?: number;
-  showControls?: boolean;
-  controlsPosition?: "center" | "sides";
-  showDots?: boolean;
-  pauseOnHover?: boolean;
-  enableDrag?: boolean; // ✅ جديد
-  className?: string;
-}
+// Helper to check if document is RTL
+const isRTL = () => document.documentElement.dir === 'rtl';
 
 export default function GSAPSlider<T extends { id?: string | number }>({
   items = [],
@@ -109,7 +96,10 @@ export default function GSAPSlider<T extends { id?: string | number }>({
   const trackWidthPercent = (totalItems / visibleCards) * 100;
 
   const indexToXPercent = useCallback(
-    (index: number) => -(index * (100 / totalItems)),
+    (index: number) => {
+      const rtlMultiplier = isRTL() ? 1 : -1;
+      return rtlMultiplier * (index * (100 / totalItems));
+    },
     [totalItems],
   );
   const animateToSlide = useCallback(
@@ -170,8 +160,9 @@ export default function GSAPSlider<T extends { id?: string | number }>({
 
     const containerWidth = trackRef.current.parentElement?.offsetWidth || 1;
     const trackOwnWidth = containerWidth * (totalItems / visibleCards);
+    const rtlMultiplier = isRTL() ? -1 : 1;
     const diffPercent =
-      ((dragCurrentXRef.current - dragStartXRef.current) / trackOwnWidth) * 100;
+      rtlMultiplier * ((dragCurrentXRef.current - dragStartXRef.current) / trackOwnWidth) * 100;
     const basePercent = indexToXPercent(currentIndexRef.current);
 
     xPercentSetterRef.current(basePercent + diffPercent);
@@ -199,9 +190,12 @@ export default function GSAPSlider<T extends { id?: string | number }>({
     }
 
     const diff = dragStartXRef.current - dragCurrentXRef.current;
-    if (diff > DRAG_THRESHOLD && currentIndexRef.current < maxIndex) {
+    const rtlMultiplier = isRTL() ? -1 : 1;
+    const adjustedDiff = rtlMultiplier * diff;
+
+    if (adjustedDiff > DRAG_THRESHOLD && currentIndexRef.current < maxIndex) {
       nextSlide();
-    } else if (diff < -DRAG_THRESHOLD && currentIndexRef.current > 0) {
+    } else if (adjustedDiff < -DRAG_THRESHOLD && currentIndexRef.current > 0) {
       prevSlide();
     } else {
       animateToSlide(currentIndexRef.current);
@@ -362,12 +356,6 @@ export default function GSAPSlider<T extends { id?: string | number }>({
       )}
     </div>
   );
-}
-
-interface NavButtonProps {
-  direction: "prev" | "next";
-  onClick: () => void;
-  position: "side" | "center";
 }
 
 function NavButton({ direction, onClick, position }: NavButtonProps) {

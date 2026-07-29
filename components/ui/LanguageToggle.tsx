@@ -1,19 +1,29 @@
 'use client';
 
 import React from 'react';
-import { useLanguage } from '@/context/LanguageContext';
+import { useLocale } from 'next-intl';
+import { useRouter, usePathname } from 'next/navigation';
 import Magnet from './Magnet';
 import Button from './Button';
 import { EarthIcon } from 'lucide-react';
-
-interface LanguageToggleProps {
-    className?: string;
-}
+import type { LanguageToggleProps } from './types';
 
 export default function LanguageToggle({ className = '' }: LanguageToggleProps) {
-    const { language, toggleLanguage, mounted } = useLanguage();
+    const locale = useLocale();
+    const pathname = usePathname();
+    const router = useRouter();
 
-    const isArabic = language === 'ar';
+    const isArabic = locale === 'ar';
+
+    const toggleLanguage = () => {
+        const newLocale = isArabic ? 'en' : 'ar';
+        
+        // Remove current locale from pathname if present
+        const pathWithoutLocale = pathname.replace(/^\/(ar|en)/, '');
+        const newPath = `/${newLocale}${pathWithoutLocale}`;
+        
+        router.push(newPath);
+    };
 
     return (
         <Magnet magnetStrength={8}>
@@ -35,9 +45,7 @@ export default function LanguageToggle({ className = '' }: LanguageToggleProps) 
                 {/* Text container */}
                 <div className="relative flex h-full w-full items-center justify-center gap-1.5 text-[0.8rem] font-bold text-slate-700 dark:text-slate-300">
                     <EarthIcon className="h-4 w-4" />
-                    {!mounted ? (
-                        <span className="font-sans leading-none opacity-0">EN</span>
-                    ) : isArabic ? (
+                    {isArabic ? (
                         <span className="font-sans leading-none">EN</span>
                     ) : (
                         <span className="font-sans leading-none uppercase pt-[2px]">AR</span>

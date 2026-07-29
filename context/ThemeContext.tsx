@@ -1,16 +1,7 @@
 'use client';
 
 import React, { createContext, useContext, useEffect, useState, ReactNode } from 'react';
-
-export type Theme = 'dark' | 'light';
-
-interface ThemeContextType {
-    theme: Theme;
-    setTheme: (theme: Theme) => void;
-    toggleTheme: () => void;
-    isDark: boolean;
-    mounted: boolean;
-}
+import type { Theme, ThemeContextType } from './types';
 
 const ThemeContext = createContext<ThemeContextType>({
     theme: 'dark',

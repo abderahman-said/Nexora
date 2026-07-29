@@ -1,15 +1,6 @@
 "use client";
-import React, { useState, useRef, useCallback, ReactNode, MouseEvent } from 'react';
-
-export interface MagnetProps extends React.HTMLAttributes<HTMLDivElement> {
-  children: ReactNode;
-  disabled?: boolean;
-  magnetStrength?: number;
-  activeTransition?: string;
-  inactiveTransition?: string;
-  wrapperClassName?: string;
-  innerClassName?: string;
-}
+import React, { useState, useRef, useCallback, MouseEvent } from 'react';
+import type { MagnetProps } from './types';
 
 const Magnet: React.FC<MagnetProps> = ({
   children,

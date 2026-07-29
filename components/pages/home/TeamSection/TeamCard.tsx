@@ -1,11 +1,7 @@
 import React from "react";
 import { Crown } from "lucide-react";
 import Image from "next/image";
-import { TeamMember } from "./teamData";
-
-export interface TeamCardProps {
-  member: TeamMember;
-}
+import type { TeamCardProps } from './types';
 
 export function TeamCard({ member }: TeamCardProps) {
   const isFounder = member.role === "Founder & CEO";

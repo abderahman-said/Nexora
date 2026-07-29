@@ -1,14 +1,9 @@
 import { useEffect } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import type { UseAboutGSAPProps } from './types';
 
 gsap.registerPlugin(ScrollTrigger);
-
-interface UseAboutGSAPProps {
-  sectionRef: React.RefObject<HTMLDivElement | null>;
-  visualRef: React.RefObject<HTMLDivElement | null>;
-  contentRef: React.RefObject<HTMLDivElement | null>;
-}
 
 export function useAboutGSAP({ sectionRef, visualRef, contentRef }: UseAboutGSAPProps) {
     useEffect(() => {

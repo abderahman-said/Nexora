@@ -4,25 +4,12 @@ import { useRef, useEffect, useCallback, MouseEvent } from "react";
 import Link from "next/link";
 import gsap from "gsap";
 import OptimizedImage from "@/components/ui/OptimizedImage";
+import type { ProjectCardProps } from './types';
 
 const MAX_TILT_DEG = 4;
 const LIFT_Y = -12;
 const HOVER_SCALE = 1.08;
 const DESKTOP_QUERY = "(min-width: 768px)";
-
-export interface Project {
-  id: string;
-  name: string;
-  category?: string;
-  image: string;
-  skills?: string[];
-  link?: string;
-  accent?: string;
-}
-
-export interface ProjectCardProps {
-  p: Project;
-}
 
 export default function ProjectCard({ p }: ProjectCardProps) {
   const cardRef = useRef<HTMLDivElement>(null);

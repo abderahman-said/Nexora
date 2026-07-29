@@ -1,10 +1,7 @@
 import React from 'react';
 import Image from 'next/image';
 import { Award, ShieldCheck, Sparkles } from 'lucide-react';
-
-interface AboutVisualProps {
-  visualRef: React.RefObject<HTMLDivElement | null>;
-}
+import type { AboutVisualProps } from './types';
 
 export default function AboutVisual({ visualRef }: AboutVisualProps) {
     return (

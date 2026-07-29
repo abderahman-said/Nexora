@@ -1,31 +1,7 @@
 'use client';
 
 import { useState, useCallback } from 'react';
-import type { PhoneInputChangeEvent } from './PhoneInputWithCountry';
-
-export interface FormData {
-    name: string;
-    email: string;
-    phone: string;
-    subject: string;
-    message: string;
-}
-
-export interface FormErrors {
-    name?: string;
-    email?: string;
-    phone?: string;
-    subject?: string;
-    message?: string;
-}
-
-interface ValidationRule {
-    required: boolean;
-    minLength?: number;
-    minDigits?: number;
-    pattern?: RegExp;
-    label: string;
-}
+import type { PhoneInputChangeEvent, FormData, FormErrors, ValidationRule } from './types';
 
 export const INITIAL_FORM_DATA: FormData = {
     name: '',
@@ -36,7 +12,7 @@ export const INITIAL_FORM_DATA: FormData = {
 };
 
 export const VALIDATION_RULES: Record<keyof FormData, ValidationRule> = {
-    name: { required: true, minLength: 3, label: 'Full Name' },
+    name: { required: true, minLength: 3, label: 'Name' },
     email: { required: true, pattern: /^[^\s@]+@[^\s@]+\.[^\s@]+$/, label: 'Email Address' },
     phone: { required: false, minDigits: 6, label: 'Phone number' },
     subject: { required: true, minLength: 3, label: 'Subject' },
@@ -53,14 +29,17 @@ export function validateForm(data: FormData, phoneLength?: number): FormErrors {
         const subscriberDigits = field === 'phone' ? rawVal.replace(/^\+\d+\s*/, '').trim() : '';
         const value = field === 'phone' ? (subscriberDigits ? rawVal.trim() : '') : rawVal.trim();
 
+        if (field === 'email' && rawVal !== rawVal.trim()) {
+            errors[field] = 'Email address cannot contain leading or trailing spaces';
+            continue;
+        }
+
         if (!value) {
             if (rules.required) errors[field] = `${rules.label} is required`;
             continue;
         }
 
         if (field === 'phone' && phoneLength) {
-            // Exact digit count validation based on selected country
-
             const subscriberOnlyDigits = subscriberDigits.replace(/\D/g, '');
             if (subscriberOnlyDigits.length !== phoneLength) {
                 errors[field] = `Phone number must be exactly ${phoneLength} digits for this country`;
@@ -86,8 +65,8 @@ export function useContactForm(onSubmitSuccess?: (data: FormData) => void) {
     const [currentPhoneLength, setCurrentPhoneLength] = useState<number>(10);
 
     const handleChange = useCallback((field: keyof FormData, value: string) => {
-        setFormData((prev) => ({ ...prev, [field]: value }));
-        setErrors((prev) => (prev[field] ? { ...prev, [field]: '' } : prev));
+        setFormData((prev: FormData) => ({ ...prev, [field]: value }));
+        setErrors((prev: FormErrors) => (prev[field] ? { ...prev, [field]: '' } : prev));
     }, []);
 
     const handlePhoneChange = useCallback(

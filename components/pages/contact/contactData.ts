@@ -1,15 +1,5 @@
-import { Mail, Phone, MapPin, Clock, LucideIcon } from 'lucide-react';
-
-export interface ContactInfoItem {
-    id: number;
-    title: string;
-    value: string;
-    subtext: string;
-    icon: LucideIcon;
-    action: string;
-    actionText: string;
-}
-
+import { Mail, Phone, MapPin } from 'lucide-react';
+import type { ContactInfoItem } from './types';
 import { useSiteData } from '@/hooks/useSiteData';
 
 export function useContactInfo() {
@@ -43,15 +33,15 @@ export function useContactInfo() {
             action: siteData.map.linkUrl,
             actionText: 'View Location',
         },
-        {
-            id: 4,
-            title: 'Global SLA Support',
-            value: '24/7 Monitoring',
-            subtext: 'Dedicated enterprise hotline',
-            icon: Clock,
-            action: '#consultation',
-            actionText: 'Enterprise SLA',
-        },
+        // {
+        //     id: 4,
+        //     title: 'Global SLA Support',
+        //     value: '24/7 Monitoring',
+        //     subtext: 'Dedicated enterprise hotline',
+        //     icon: Clock,
+        //     action: '#consultation',
+        //     actionText: 'Enterprise SLA',
+        // },
     ];
 
     return CONTACT_INFO;

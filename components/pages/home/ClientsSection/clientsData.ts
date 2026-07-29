@@ -1,11 +1,4 @@
-export interface Testimonial {
-    id: string;
-    clientName: string;
-    role: string;
-    comment: string;
-    rating: number;
-    avatar: string;
-}
+import type { Testimonial } from './types';
 
 export const TESTIMONIALS: Testimonial[] = [
     {

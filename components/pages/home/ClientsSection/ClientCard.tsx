@@ -1,11 +1,7 @@
 import React from 'react';
 import { Star, Quote } from 'lucide-react';
 import Image from 'next/image';
-import { Testimonial } from './clientsData';
-
-export interface ClientCardProps {
-    client: Testimonial;
-}
+import type { ClientCardProps } from './types';
 
 export function ClientCard({ client }: ClientCardProps) {
     return (

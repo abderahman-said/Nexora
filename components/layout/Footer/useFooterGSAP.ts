@@ -1,15 +1,9 @@
-import { useEffect, RefObject } from "react";
+import { useEffect } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import type { UseFooterGSAPProps } from './types';
 
 gsap.registerPlugin(ScrollTrigger);
-
-export interface UseFooterGSAPProps {
-  footerRef: RefObject<HTMLElement | null>;
-  columnsRef: RefObject<HTMLElement | null>;
-  sidePanelRef: RefObject<HTMLElement | null>;
-  bgRef: RefObject<HTMLElement | null>;
-}
 
 export function useFooterGSAP({ footerRef, columnsRef, sidePanelRef, bgRef }: UseFooterGSAPProps) {
   useEffect(() => {

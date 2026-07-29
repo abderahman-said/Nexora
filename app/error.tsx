@@ -4,11 +4,7 @@ import React, { useEffect } from 'react';
 import { RefreshCw, AlertTriangle } from 'lucide-react';
 import Link from 'next/link';
 import Button from '@/components/ui/Button';
-
-interface ErrorProps {
-    error: Error & { digest?: string };
-    reset: () => void;
-}
+import type { ErrorProps } from './types';
 
 export default function GlobalError({ error, reset }: ErrorProps) {
     useEffect(() => {

@@ -1,7 +1,5 @@
-import React, { forwardRef, ElementType, ReactNode } from 'react';
-
-export type ButtonVariant = 'primary' | 'secondary' | 'outline' | 'ghost' | 'gradient';
-export type ButtonSize = 'sm' | 'md' | 'lg';
+import React, { forwardRef } from 'react';
+import type { ButtonProps, ButtonVariant, ButtonSize } from './types';
 
 const VARIANTS: Record<ButtonVariant, string> = {
   primary: 'bg-blue-600 text-white hover:bg-blue-700 dark:bg-blue-600 dark:hover:bg-blue-500 shadow-sm border border-transparent',
@@ -16,17 +14,6 @@ const SIZES: Record<ButtonSize, string> = {
   md: 'px-5 py-2.5 text-sm font-semibold rounded-full gap-2',
   lg: 'px-6 py-3 text-base font-bold rounded-full gap-2.5',
 };
-
-export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
-  as?: ElementType;
-  variant?: ButtonVariant;
-  size?: ButtonSize;
-  className?: string;
-  children?: ReactNode;
-  disabled?: boolean;
-  href?: string;
-  [key: string]: any;
-}
 
 const Button = forwardRef<HTMLButtonElement | HTMLAnchorElement, ButtonProps>(function Button(
   {

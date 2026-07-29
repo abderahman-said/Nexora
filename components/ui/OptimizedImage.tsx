@@ -1,11 +1,8 @@
-import Image, { ImageProps } from 'next/image';
+import Image from 'next/image';
 import React from 'react';
+import type { OptimizedImageProps } from './types';
 
 const DEFAULT_BLUR_DATA_URL = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAIAAACQd1PeAAAADElEQVR4nGNQTX4NAAIkAXSaGkHUAAAAAElFTkSuQmCC';
-
-export interface OptimizedImageProps extends Omit<ImageProps, 'alt'> {
-  alt: string;
-}
 
 const OptimizedImage: React.FC<OptimizedImageProps> = ({
   src,

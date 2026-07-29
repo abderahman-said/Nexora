@@ -1,14 +1,10 @@
 "use client";
 
-import React, { useRef, ReactNode, MouseEvent } from "react";
+import React, { useRef, MouseEvent } from "react";
 import Link from "next/link";
 import { gsap } from "gsap";
 import { ArrowUpRight } from "lucide-react";
-
-export interface InteractiveCircleButtonProps {
-    href: string;
-    children: ReactNode;
-}
+import type { InteractiveCircleButtonProps } from './types';
 
 export function InteractiveCircleButton({ href, children }: InteractiveCircleButtonProps) {
     const buttonRef = useRef<HTMLAnchorElement>(null);
