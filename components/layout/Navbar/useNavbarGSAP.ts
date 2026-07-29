@@ -68,17 +68,21 @@ export function useNavbarGSAP({
 
         if (currentScrollY <= 100) {
           nav.classList.remove("is-floating");
-          if (isHidden) {
-            gsap.to(nav, { y: 0, duration: 0.3, ease: "power2.out", overwrite: "auto" });
+          // Always force show when near top — prevents stuck-hidden state
+          if (isHidden || gsap.getProperty(nav, "y") !== 0) {
+            gsap.killTweensOf(nav);
+            gsap.to(nav, { y: 0, duration: 0.3, ease: "power2.out", overwrite: true });
             isHidden = false;
           }
         } else {
           nav.classList.add("is-floating");
           if (diff > 0 && !isHidden) {
-            gsap.to(nav, { y: -140, duration: 0.35, ease: "power2.out", overwrite: "auto" });
+            gsap.killTweensOf(nav);
+            gsap.to(nav, { y: -140, duration: 0.35, ease: "power2.out", overwrite: true });
             isHidden = true;
           } else if (diff < 0 && isHidden) {
-            gsap.to(nav, { y: 0, duration: 0.3, ease: "power2.out", overwrite: "auto" });
+            gsap.killTweensOf(nav);
+            gsap.to(nav, { y: 0, duration: 0.3, ease: "power2.out", overwrite: true });
             isHidden = false;
           }
         }

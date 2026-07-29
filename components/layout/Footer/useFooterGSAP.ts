@@ -12,7 +12,24 @@ export function useFooterGSAP({ footerRef, columnsRef, sidePanelRef, bgRef }: Us
     const reduceMotion =
       typeof window !== "undefined" &&
       window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    if (reduceMotion) return;
+
+    // Ensure all elements are visible regardless of animation state
+    const forceVisible = () => {
+      if (columnsRef.current) {
+        gsap.set(Array.from(columnsRef.current.children), { opacity: 1, y: 0, clearProps: "all" });
+      }
+      if (sidePanelRef.current) {
+        gsap.set(sidePanelRef.current, { opacity: 1, x: 0, clearProps: "all" });
+      }
+    };
+
+    if (reduceMotion) {
+      forceVisible();
+      return;
+    }
+
+    // Safety fallback: if ScrollTrigger doesn't fire within 3s, force show everything
+    const safetyTimer = setTimeout(forceVisible, 3000);
 
     const ctx = gsap.context(() => {
       // 1. Staggered reveal for footer columns
@@ -29,8 +46,9 @@ export function useFooterGSAP({ footerRef, columnsRef, sidePanelRef, bgRef }: Us
             ease: "power2.out",
             scrollTrigger: {
               trigger: footerRef.current,
-              start: "top 85%",
+              start: "top 95%",
               once: true,
+              onEnter: () => clearTimeout(safetyTimer),
             },
           },
         );
@@ -49,7 +67,7 @@ export function useFooterGSAP({ footerRef, columnsRef, sidePanelRef, bgRef }: Us
             ease: "power2.out",
             scrollTrigger: {
               trigger: footerRef.current,
-              start: "top 85%",
+              start: "top 95%",
               once: true,
             },
           },
@@ -71,6 +89,9 @@ export function useFooterGSAP({ footerRef, columnsRef, sidePanelRef, bgRef }: Us
       }
     }, footerRef);
 
-    return () => ctx.revert();
+    return () => {
+      clearTimeout(safetyTimer);
+      ctx.revert();
+    };
   }, [footerRef, columnsRef, sidePanelRef, bgRef]);
 }
