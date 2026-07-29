@@ -26,7 +26,7 @@ export const colors: string[] = [
 // Footer social icon links
 export const SOCIAL_ICONS: SocialIconLink[] = [
     {
-        href: 'https://www.facebook.com/share/1LG3q28mVc/?mibextid=wwXIfr',
+        href: 'https://web.facebook.com/NexoraSolutionsEg',
         label: 'Facebook',
         icon: 'Facebook'
     },

@@ -14,7 +14,7 @@ export const SITE_DATA = {
         workingHours: "Sat - Thu, 9:00 AM - 5:00 PM"
     },
     social: {
-        facebook: "https://www.facebook.com/share/1LG3q28mVc/?mibextid=wwXIfr",
+        facebook: "https://web.facebook.com/NexoraSolutionsEg",
         instagram: "https://www.instagram.com/nexora.solutions.eg?igsh=OXp1eWRta3pveXhm&utm_source=qr",
         linkedin: "https://www.linkedin.com/company/nexora-solutions-co/"
     },
