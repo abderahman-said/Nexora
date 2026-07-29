@@ -268,8 +268,9 @@ export default function GSAPSlider<T extends { id?: string | number }>({
 
   if (totalItems === 0) return null;
 
-  const showSideControls = showControls && controlsPosition === "sides";
-  const showCenterControls = showControls && controlsPosition === "center";
+  const showSideControls = showControls && controlsPosition === "sides" && maxIndex > 0;
+  const showCenterControls = showControls && controlsPosition === "center" && maxIndex > 0;
+  const showPaginationDots = showDots && maxIndex > 0;
 
   return (
     <div
@@ -323,13 +324,13 @@ export default function GSAPSlider<T extends { id?: string | number }>({
         </div>
       </div>
 
-      {(showCenterControls || showDots) && (
+      {(showCenterControls || showPaginationDots) && (
         <div className="flex items-center justify-center gap-2 sm:gap-3 mt-3 sm:mt-4">
           {showCenterControls && (
             <NavButton direction="prev" onClick={prevSlide} position="center" />
           )}
 
-          {showDots && (
+          {showPaginationDots && (
             <div className="flex items-center gap-1 px-1">
               {Array.from({ length: maxIndex + 1 }).map((_, dotIdx) => (
                 <button
