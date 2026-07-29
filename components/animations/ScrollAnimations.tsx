@@ -12,21 +12,41 @@ export default function ScrollAnimations() {
       "(prefers-reduced-motion: reduce)",
     ).matches;
 
-    let ctx: ReturnType<typeof gsap.context> | null = null;
-    const timer = setTimeout(() => {
-      ctx = gsap.context(() => {
+    let ctx = gsap.context(() => {});
+
+    const initNewElements = () => {
+      ctx.add(() => {
         injectSideDecorators();
         animateSections(reduceMotion);
         animateProgressBar();
       });
-    }, 150);
+    };
+
+    // Initial run
+    const timer = setTimeout(initNewElements, 150);
+
+    // Watch for lazily loaded dynamic components (ssr: false)
+    const observer = new MutationObserver((mutations) => {
+      let hasNewSections = false;
+      mutations.forEach(m => {
+        if (m.addedNodes.length > 0) {
+          hasNewSections = true;
+        }
+      });
+      if (hasNewSections) {
+        initNewElements();
+      }
+    });
+
+    observer.observe(document.body, { childList: true, subtree: true });
 
     const onLoad = () => ScrollTrigger.refresh();
     window.addEventListener("load", onLoad, { once: true });
 
     return () => {
       clearTimeout(timer);
-      ctx?.revert();
+      observer.disconnect();
+      ctx.revert();
       window.removeEventListener("load", onLoad);
     };
   }, []);
@@ -102,9 +122,10 @@ function animateSections(reduceMotion: boolean) {
   const isMobile =
     typeof window !== "undefined" &&
     (window.innerWidth < 768 || window.matchMedia("(pointer: coarse)").matches);
-  const sections = document.querySelectorAll(".scroll-section");
+  const sections = document.querySelectorAll(".scroll-section:not(.gsap-initialized)");
 
   sections.forEach((sec) => {
+    sec.classList.add("gsap-initialized");
     const left = sec.querySelector(".sd-left");
     const right = sec.querySelector(".sd-right");
     const ring = sec.querySelector(".sd-ring");
@@ -276,9 +297,10 @@ function animateSections(reduceMotion: boolean) {
   });
 
   const cards = gsap.utils
-    .toArray(".bento-card, .process-step, .hw-feature, .about-feature")
+    .toArray(".bento-card:not(.gsap-card-init), .process-step:not(.gsap-card-init), .hw-feature:not(.gsap-card-init), .about-feature:not(.gsap-card-init)")
     .filter(Boolean);
   if (cards.length > 0) {
+    cards.forEach(c => (c as Element).classList.add("gsap-card-init"));
     ScrollTrigger.batch(cards as Element[], {
       start: "top 88%",
       once: true,
