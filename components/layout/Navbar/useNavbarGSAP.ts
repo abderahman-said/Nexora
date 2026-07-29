@@ -19,12 +19,12 @@ export function useNavbarGSAP({
     const navInner = navInnerRef.current;
     if (!nav || !navInner) return;
 
-    // Reset navbar state on mount
-    gsap.set(nav, { y: 0, clearProps: "y" });
+    // Reset navbar state on mount — clean state, no clearProps to avoid race conditions
+    gsap.set(nav, { y: 0 });
     nav.classList.remove("is-floating");
 
-    // Ensure navbar is visible immediately - no initial opacity animation
-    gsap.set(navInner, { opacity: 1, y: 0, clearProps: "all" });
+    // Set navInner to visible at y:0 immediately
+    gsap.set(navInner, { y: 0 });
 
     const ctx = gsap.context(() => {
       // 1. Entrance animation on initial load - simplified, no opacity animation
@@ -109,6 +109,22 @@ export function useNavbarGSAP({
         }
       };
 
+      // Sync initial scroll state — handles browser scroll restoration on fresh tab load
+      const syncInitialScrollState = () => {
+        const currentScrollY = Math.max(0, window.scrollY);
+        lastScrollY = currentScrollY;
+        if (currentScrollY > 100) {
+          nav.classList.add("is-floating");
+        } else {
+          nav.classList.remove("is-floating");
+          gsap.set(nav, { y: 0 });
+          isHidden = false;
+        }
+      };
+
+      // Run after a short delay to let browser complete scroll restoration
+      const initTimer = setTimeout(syncInitialScrollState, 50);
+
       // في الأول، خد اللي متاح (غالبًا native، لأن Lenis لسه بيتعمله init)
       attachScrollListener();
 
@@ -125,6 +141,7 @@ export function useNavbarGSAP({
       }
 
       return () => {
+        clearTimeout(initTimer);
         removeScrollListener?.();
         if (switchCheckInterval) clearInterval(switchCheckInterval);
       };
