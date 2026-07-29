@@ -57,6 +57,8 @@ export interface GSAPSliderProps<T = any> {
   showDots?: boolean;
   pauseOnHover?: boolean;
   enableDrag?: boolean;
+  mobileVisibleCount?: number;
+  tabletVisibleCount?: number;
   className?: string;
 }
 

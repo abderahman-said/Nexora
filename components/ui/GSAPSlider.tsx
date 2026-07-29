@@ -29,6 +29,8 @@ export default function GSAPSlider<T extends { id?: string | number }>({
   showDots = true,
   pauseOnHover = true,
   enableDrag = true, // ✅ جديد
+  mobileVisibleCount = 1, // عدد الكروت الظاهرة تحت 640px (ممكن كسري زي 1.25)
+  tabletVisibleCount = 2, // عدد الكروت الظاهرة بين 640 و 1024px
   className = "",
 }: GSAPSliderProps<T>) {
   const totalItems = items.length;
@@ -57,12 +59,12 @@ export default function GSAPSlider<T extends { id?: string | number }>({
     const updateVisibleCards = () => {
       const width = window.innerWidth;
       let count = defaultVisibleCount;
-      if (width < 640) count = 1;
-      else if (width < 1024) count = 2;
+      if (width < 640) count = mobileVisibleCount;
+      else if (width < 1024) count = tabletVisibleCount;
 
       setVisibleCards(count);
       setCurrentIndex((prev) => {
-        const max = Math.max(0, totalItems - count);
+        const max = Math.max(0, Math.floor(totalItems - count));
         if (prev > max) {
           if (trackRef.current && totalItems > 0) {
             gsap.to(trackRef.current, {
@@ -81,7 +83,7 @@ export default function GSAPSlider<T extends { id?: string | number }>({
     updateVisibleCards();
     window.addEventListener("resize", updateVisibleCards);
     return () => window.removeEventListener("resize", updateVisibleCards);
-  }, [defaultVisibleCount, totalItems]);
+  }, [defaultVisibleCount, mobileVisibleCount, tabletVisibleCount, totalItems]);
 
   useEffect(() => {
     if (trackRef.current) {
@@ -92,7 +94,7 @@ export default function GSAPSlider<T extends { id?: string | number }>({
     }
   }, []);
 
-  const maxIndex = Math.max(0, totalItems - visibleCards);
+  const maxIndex = Math.max(0, Math.floor(totalItems - visibleCards));
   const trackWidthPercent = (totalItems / visibleCards) * 100;
 
   const indexToXPercent = useCallback(

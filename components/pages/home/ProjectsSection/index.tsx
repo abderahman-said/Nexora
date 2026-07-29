@@ -45,6 +45,7 @@ export default function ProjectsSection() {
           <GSAPSlider
             items={allProjects}
             defaultVisibleCount={3}
+            mobileVisibleCount={1.25}
             showControls={true}
             controlsPosition="center"
             showDots={true}
