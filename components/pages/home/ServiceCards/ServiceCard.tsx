@@ -18,7 +18,6 @@ export function ServiceCard({ service }: ServiceCardProps) {
     return (
         <InteractiveCard
             serial={service.id}
-            badge={service.badge}
             icon={IconComponent}
             title={service.title}
             description={service.description}

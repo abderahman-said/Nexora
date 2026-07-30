@@ -7,8 +7,6 @@ import type { InteractiveCardProps } from './types';
 
 export default function InteractiveCard({
     stepNumber,
-    serial,
-    badge,
     icon: Icon,
     title,
     description,
@@ -51,23 +49,6 @@ export default function InteractiveCard({
                 </div>
             )}
 
-            {/* ── Top Header Row: Badge & Serial ID ── */}
-            <div className="relative z-10 flex items-center justify-between mb-6">
-                {badge && (
-                    <span className="text-[0.65rem] font-extrabold tracking-widest text-slate-400 dark:text-slate-500 uppercase flex items-center gap-1.5">
-                        <span className="w-1.5 h-1.5 rounded-full bg-sky-500 group-hover:animate-ping" />
-                        {badge}
-                    </span>
-                )}
-
-                {serial && (
-                    <span className="inline-flex items-center px-3 py-1 rounded-full bg-blue-50 dark:bg-blue-950/80 border border-blue-200/80 dark:border-blue-800/60 text-blue-600 dark:text-sky-400 font-extrabold text-[0.7rem] font-mono tracking-widest uppercase shadow-sm">
-                        <span>#{serial}</span>
-                    </span>
-                )}
-            </div>
-
-            {/* ── Center Animated Circular Icon Badge ── */}
             {Icon && (
                 <div className="relative z-10 flex justify-center mb-6">
                     <div className="

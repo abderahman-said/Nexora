@@ -15,7 +15,9 @@ import type { GSAPSliderProps, NavButtonProps } from './types';
 const DRAG_THRESHOLD = 40;
 const SNAP_DURATION = 0.9;
 
-const isRTL = () => document.documentElement.dir === 'rtl';
+// ✅ SSR-safe: document مش موجود وقت الـ server render
+const isRTL = () =>
+  typeof document !== "undefined" && document.documentElement.dir === "rtl";
 
 export default function GSAPSlider<T extends { id?: string | number }>({
   items = [],
@@ -47,8 +49,25 @@ export default function GSAPSlider<T extends { id?: string | number }>({
   const isPaused = isHoverPaused || isTabHidden || isOffscreen;
 
   const [isDragging, setIsDragging] = useState(false);
-  const [visibleCards, setVisibleCards] = useState(defaultVisibleCount);
-  const [isCenterActive, setIsCenterActive] = useState(false);
+
+  // ✅ Lazy init: نحسب القيمة الصح من أول رندر بدل ما نستنى الـ useEffect
+  // ده بيمنع "الفلاش" اللي بيحصل لما الكومبوننت يبدأ بـ defaultVisibleCount
+  // وبعدين يقفز فجأة للقيمة الصح بتاعة الموبايل بعد أول paint
+  const getInitialVisibleCards = () => {
+    if (typeof window === "undefined") return defaultVisibleCount;
+    const width = window.innerWidth;
+    if (width < 640) return mobileVisibleCount;
+    if (width < 1024) return tabletVisibleCount;
+    return defaultVisibleCount;
+  };
+
+  const getInitialCenterActive = () => {
+    if (typeof window === "undefined") return false;
+    return centerModeMobile && window.innerWidth < 640;
+  };
+
+  const [visibleCards, setVisibleCards] = useState<number>(getInitialVisibleCards);
+  const [isCenterActive, setIsCenterActive] = useState<boolean>(getInitialCenterActive);
 
   const trackRef = useRef<HTMLDivElement>(null);
   const xPercentSetterRef = useRef<Function | null>(null);
@@ -69,7 +88,7 @@ export default function GSAPSlider<T extends { id?: string | number }>({
   }, [isCenterActive]);
 
   useEffect(() => {
-    isRTLRef.current = document.documentElement.dir === 'rtl';
+    isRTLRef.current = isRTL();
   }, []);
 
   useEffect(() => {
@@ -112,9 +131,12 @@ export default function GSAPSlider<T extends { id?: string | number }>({
 
   const effectiveVisibleCards = isCenterActive ? 1 : visibleCards;
 
+  // ✅ cloneCount لازم يكون عدد صحيح دايمًا حتى لو visibleCards كسري (زي 1.25)
+  // لأنه بيتستخدم في items.slice() وأي كسر هيتقص لتحت ويسبب نقص كلونز
+  // وده اللي بيسبب القفزة/الإزاحة وقت اللوب اللانهائي
   const cloneCount =
     infinite && totalItems > effectiveVisibleCards
-      ? Math.min(effectiveVisibleCards, totalItems)
+      ? Math.min(Math.ceil(effectiveVisibleCards), totalItems)
       : 0;
   const infiniteEnabled = cloneCount > 0;
 
@@ -122,7 +144,11 @@ export default function GSAPSlider<T extends { id?: string | number }>({
     if (!infiniteEnabled) return items;
     const head = items.slice(totalItems - cloneCount);
     const tail = items.slice(0, cloneCount);
-    return [...head, ...items, ...tail];
+    // ✅ في RTL الاتجاه البصري بيتقلب، فترتيب الهيد/تيل لازم يتقلب معاه
+    // عشان الكارد الفعّال يفضل متطابق مع الـ index الحقيقي
+    return isRTL()
+      ? [...tail, ...items, ...head]
+      : [...head, ...items, ...tail];
   }, [items, cloneCount, infiniteEnabled, totalItems]);
 
   const trackItemsCount = renderItems.length;

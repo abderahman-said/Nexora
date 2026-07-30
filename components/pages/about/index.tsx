@@ -5,7 +5,6 @@ import AboutStory from './AboutStory';
 import AboutStats from './AboutStats';
 import AboutValues from './AboutValues';
 
-const TeamSection = dynamic(() => import('@/components/pages/home/TeamSection'));
 const ConsultationSection = dynamic(() => import('@/components/pages/home/ConsultationSection'));
 
 export default function AboutPage() {
@@ -15,7 +14,6 @@ export default function AboutPage() {
             <AboutStory />
             <AboutStats />
             <AboutValues />
-            <TeamSection />
             <ConsultationSection />
         </main>
     );
