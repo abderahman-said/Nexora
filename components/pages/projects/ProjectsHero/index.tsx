@@ -6,8 +6,8 @@ export default function ProjectsHero() {
         <SharedHero
             id="projects-hero"
             titlePrefix="Our"
-            titleHighlight="Projects"
-            breadcrumbLabel="Projects"
+            titleHighlight="Work"
+            breadcrumbLabel="Work"
             backgroundImage="/assets/about_banner.png"
         />
     );

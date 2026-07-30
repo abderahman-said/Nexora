@@ -25,16 +25,16 @@ export default function GSAPCardGrid() {
 
         {/* ── Cards Slider ── */}
         <div className="relative mt-8">
-          <GSAPSlider
-            items={STEPS}
-            renderItem={(item) => item ? <ProcessCard step={item} /> : null}
-             defaultVisibleCount={4}
-            mobileVisibleCount={1}
-            tabletVisibleCount={2}
-            showControls={true}
-            showDots={true}
-            enableDrag={true}
-          />
+<GSAPSlider
+  items={STEPS}
+  renderItem={(item) => item ? <ProcessCard step={item} /> : null}
+  defaultVisibleCount={4}
+  mobileVisibleCount={1.25}
+  tabletVisibleCount={2}
+  showControls={false}
+  showDots={true}
+  enableDrag={true}
+/>
         </div>
       </Container>
     </section>

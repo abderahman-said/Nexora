@@ -106,12 +106,15 @@ export default function ServiceCards() {
         {/* Overlapping Reusable GSAP Cards Slider Row */}
         <div className="relative z-20 -mt-[171px] md:-mt-[210px] px-2 sm:px-4">
           <GSAPSlider
-            items={SERVICES}
-            ItemComponent={ServiceCard}
-            autoplay={false}
-            showControls={true}
-            showDots={true}
-          />
+  items={SERVICES}
+  ItemComponent={ServiceCard}
+  autoplay={false}
+  defaultVisibleCount={3}
+  mobileVisibleCount={1.25}
+  tabletVisibleCount={2}
+  showControls={false}
+  showDots={true}
+/>
         </div>
       </Container>
     </section>

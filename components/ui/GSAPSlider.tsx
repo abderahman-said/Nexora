@@ -437,9 +437,9 @@ export default function GSAPSlider<T extends { id?: string | number }>({
 
       {(showCenterControls || showPaginationDots) && (
         <div className="flex items-center justify-center gap-2 sm:gap-3 mt-3 sm:mt-4">
-          {showCenterControls && (
+          {/* {showCenterControls && (
             <NavButton direction="prev" onClick={prevSlide} position="center" />
-          )}
+          )} */}
 
           {showPaginationDots && (
             <div className="flex items-center gap-1 px-1">
@@ -462,9 +462,9 @@ export default function GSAPSlider<T extends { id?: string | number }>({
             </div>
           )}
 
-          {showCenterControls && (
+          {/* {showCenterControls && (
             <NavButton direction="next" onClick={nextSlide} position="center" />
-          )}
+          )} */}
         </div>
       )}
     </div>

@@ -52,7 +52,7 @@ export default function ClientsSection() {
             ItemComponent={ClientCard}
             autoplay={false}
             defaultVisibleCount={3}
-            showControls={true}
+            showControls={false}
             controlsPosition="sides"
             showDots={true}
           />
