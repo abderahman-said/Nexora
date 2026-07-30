@@ -28,15 +28,10 @@ export function FooterSidePanel({ sidePanelRef }: FooterSidePanelProps) {
                     Contact us
                 </InteractiveCircleButton>
             </div>
-
-            <div className="space-y-1.5 text-xs text-slate-600 dark:text-slate-300 relative z-10">
                 <p className="font-mono font-semibold text-slate-800 dark:text-slate-200 text-sm tracking-wider flex items-center justify-center gap-2">
                     <span className="inline-block h-2 w-2 rounded-full bg-emerald-500 dark:bg-emerald-400 animate-pulse" />
                     <span>{contact.workingHours}</span>
                 </p>
-                <p className="text-slate-500 dark:text-slate-400 text-xs">{contact.address}</p>
-            </div>
-
         </div>
     );
 }

@@ -10,7 +10,7 @@ export const SITE_DATA = {
         whatsapp: "https://wa.me/201117180818",
         address: "1 Mustafa El-Nahas, intersection with Abbas El-Akkad, Nasr City",
         shortAddress: "1 Mustafa El-Nahas, intersection with Abbas El-Akkad, Nasr City",
-        responseTime: "Response Time: 15 mins",
+        responseTime: "15 mins",
         workingHours: "Sat - Thu, 9:00 AM - 5:00 PM"
     },
     social: {

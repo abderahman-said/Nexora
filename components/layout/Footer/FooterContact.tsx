@@ -38,7 +38,7 @@ export function FooterContact() {
 
             <div className="pt-1 flex items-center gap-1.5 text-[11px] text-slate-500 dark:text-slate-400 font-mono">
                 <Clock className="h-3.5 w-3.5 text-slate-400" />
-                <span>{t('footer.responseTime')}</span>
+                <span>{t('footer.responseTime')} : {contact.responseTime}</span>
             </div>
         </div>
     );
