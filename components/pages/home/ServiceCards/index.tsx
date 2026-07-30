@@ -3,7 +3,7 @@
 import React from "react";
 import { Layers, ArrowRight } from "lucide-react";
 import Link from "next/link";
-import { useLocale } from 'next-intl';
+import { useLocale } from "next-intl";
 import GSAPSlider from "@/components/ui/GSAPSlider";
 import { SERVICES } from "./servicesData";
 import { ServiceCard } from "./ServiceCard";
@@ -51,12 +51,24 @@ export default function ServiceCards() {
               strokeDasharray="6 6"
             />
             <defs>
-              <linearGradient id="serviceWave1" x1="0%" y1="0%" x2="100%" y2="0%">
+              <linearGradient
+                id="serviceWave1"
+                x1="0%"
+                y1="0%"
+                x2="100%"
+                y2="0%"
+              >
                 <stop offset="0%" stopColor="#2563eb" stopOpacity="0.1" />
                 <stop offset="50%" stopColor="#38bdf8" stopOpacity="0.8" />
                 <stop offset="100%" stopColor="#6366f1" stopOpacity="0.1" />
               </linearGradient>
-              <linearGradient id="serviceWave2" x1="0%" y1="0%" x2="100%" y2="0%">
+              <linearGradient
+                id="serviceWave2"
+                x1="0%"
+                y1="0%"
+                x2="100%"
+                y2="0%"
+              >
                 <stop offset="0%" stopColor="#0284c7" stopOpacity="0.1" />
                 <stop offset="50%" stopColor="#818cf8" stopOpacity="0.6" />
                 <stop offset="100%" stopColor="#3b82f6" stopOpacity="0.1" />
@@ -106,15 +118,15 @@ export default function ServiceCards() {
         {/* Overlapping Reusable GSAP Cards Slider Row */}
         <div className="relative z-20 -mt-[171px] md:-mt-[210px] px-2 sm:px-4">
           <GSAPSlider
-  items={SERVICES}
-  ItemComponent={ServiceCard}
-  autoplay={false}
-  defaultVisibleCount={3}
-  mobileVisibleCount={1.25}
-  tabletVisibleCount={2}
-  showControls={false}
-  showDots={true}
-/>
+            items={SERVICES}
+            ItemComponent={ServiceCard}
+            mobileVisibleCount={1.25}
+            tabletVisibleCount={2}
+            showControls={false}
+            showDots={true}
+            enableDrag={true}
+            infinite={true}
+          />
         </div>
       </Container>
     </section>
