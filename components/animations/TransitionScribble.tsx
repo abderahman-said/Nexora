@@ -1,11 +1,31 @@
 'use client';
 
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { gsap } from 'gsap';
 import { ANIMATION_CONFIG } from '@/lib/data';
 
 export default function TransitionScribble() {
+    const [isVisible, setIsVisible] = useState(false);
+
     useEffect(() => {
+        // Only load when logo is clicked
+        const logoTruusClickable = document.querySelector('.js-logo-truus');
+        if (!logoTruusClickable) return;
+
+        const handleClick = () => {
+            setIsVisible(true);
+        };
+
+        logoTruusClickable.addEventListener('click', handleClick);
+
+        return () => {
+            logoTruusClickable.removeEventListener('click', handleClick);
+        };
+    }, []);
+
+    useEffect(() => {
+        if (!isVisible) return;
+
         const logoTruusClickable = document.querySelector('.js-logo-truus');
         const transitionScribblePath = document.querySelector('.js-transition-scribble-path') as SVGPathElement | null;
         const transitionScribbleSvg = document.querySelector('.js-transition-scribble') as SVGSVGElement | null;
@@ -65,6 +85,7 @@ export default function TransitionScribble() {
                     document.body.classList.remove('is-transitioning');
                     gsap.set(transitionScribblePath, { strokeWidth: '0%' });
                     if (transitionLogo) gsap.set(transitionLogo, { opacity: 0 });
+                    setIsVisible(false);
                 }
             });
 
@@ -106,7 +127,9 @@ export default function TransitionScribble() {
         return () => {
             logoTruusClickable.removeEventListener('click', runScribbleAnimation);
         };
-    }, []);
+    }, [isVisible]);
+
+    if (!isVisible) return null;
 
     return (
         <svg

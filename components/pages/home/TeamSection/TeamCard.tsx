@@ -34,7 +34,7 @@ export function TeamCard({ member }: TeamCardProps) {
           loading="lazy"
           decoding="async"
           sizes="(max-width: 640px) 320px, (max-width: 1024px) 50vw, 360px"
-          quality={75}
+          quality={80}
           className="w-full h-full object-cover object-top group-hover/img:scale-105 transition-transform duration-500 ease-out"
         />
 

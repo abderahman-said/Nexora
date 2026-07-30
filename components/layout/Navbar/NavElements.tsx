@@ -15,7 +15,7 @@ export function NavLogo({ logoRef }: NavLogoProps) {
       <Magnet magnetStrength={4}>
         <Link
           href="/"
-          className="flex items-center no-underline"
+          className="flex items-center no-underline justify-center"
           aria-label="Nexora Solutions Home"
         >
           <Image
@@ -24,7 +24,7 @@ export function NavLogo({ logoRef }: NavLogoProps) {
             width={140}
             height={42}
             priority
-            className="h-auto max-h-[44px] md:max-h-[55px] w-auto object-contain dark:hidden transition-all duration-300"
+            className="h-auto max-h-[35px] md:max-h-[55px] w-auto object-contain dark:hidden transition-all duration-300"
           />
           <Image
             src="/assets/logo_dark.PNG"
@@ -32,7 +32,7 @@ export function NavLogo({ logoRef }: NavLogoProps) {
             width={140}
             height={42}
             priority
-            className="h-auto max-h-[44px] md:max-h-[55px] w-auto object-contain hidden dark:block transition-all duration-300"
+            className="h-auto max-h-[35px] md:max-h-[55px] w-auto object-contain hidden dark:block transition-all duration-300"
           />
         </Link>
       </Magnet>

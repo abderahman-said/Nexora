@@ -12,6 +12,7 @@ export default function HeroBackground({ glowRef }: HeroBackgroundProps) {
         fill
         priority
         sizes="100vw"
+        quality={85}
         aria-hidden="true"
         className="object-cover object-center opacity-90 dark:opacity-0 pointer-events-none transition-opacity duration-500"
       />
@@ -23,6 +24,7 @@ export default function HeroBackground({ glowRef }: HeroBackgroundProps) {
         fill
         priority
         sizes="100vw"
+        quality={85}
         aria-hidden="true"
         className="object-cover object-center opacity-0 dark:opacity-90 pointer-events-none transition-opacity duration-500"
       />

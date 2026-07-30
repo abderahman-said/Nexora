@@ -1,30 +1,22 @@
-"use client";
 
-import { useRef } from "react";
-import ProjectCard from "./ProjectCard";
+
+import ProjectCard from "@/components/pages/home/ProjectsSection/ProjectCard";
 import { projectService } from "@/lib/services/projectService";
 import SectionHeader from "@/components/ui/SectionHeader";
 import Container from "@/components/ui/Container";
-import GSAPSlider from "@/components/ui/GSAPSlider";
-import { useProjectsGSAP } from "./useProjectsGSAP";
 
 export default function ProjectsSection() {
   const allProjects = projectService.getAllProjects();
-  const sectionRef = useRef<HTMLElement>(null);
-  const sliderWrapperRef = useRef<HTMLDivElement>(null);
-
-  useProjectsGSAP(sectionRef, sliderWrapperRef);
 
   return (
     <section
       id="portfolio"
-      ref={sectionRef}
       className="scroll-section relative w-full py-8 md:py-10 transition-colors duration-300 overflow-hidden"
     >
       <Container>
         {/* Section Header */}
         <SectionHeader
-          className="!mb-0"
+          className="!mb-8 md:!mb-12"
           title={
             <span className="inline-flex items-center gap-3">
               <span className="relative flex h-3.5 w-3.5 shrink-0">
@@ -41,22 +33,11 @@ export default function ProjectsSection() {
           }
         />
 
-        <div ref={sliderWrapperRef} className="w-full mt-[-10px] md:!mt-[-35px]">
-          <GSAPSlider
-            items={allProjects}
-            defaultVisibleCount={3}
-            mobileVisibleCount={1}
-            centerModeMobile={true}
-            centerCardWidthPercent={76}
-            showControls={false}
-            controlsPosition="center"
-            showDots={true}
-            autoplay={false}
-            pauseOnHover={false}
-            enableDrag={true}
-            infinite={true}
-            renderItem={(p) => <ProjectCard key={p.id} p={p} />}
-          />
+        {/* Projects Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-10 mt-8">
+          {allProjects.map((project) => (
+            <ProjectCard key={project.id} p={project} />
+          ))}
         </div>
       </Container>
     </section>

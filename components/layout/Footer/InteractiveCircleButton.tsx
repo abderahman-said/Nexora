@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useRef, MouseEvent } from "react";
+import React, { useRef, useEffect, MouseEvent } from "react";
 import Link from "next/link";
 import { gsap } from "gsap";
 import { ArrowUpRight } from "lucide-react";
@@ -9,9 +9,41 @@ import type { InteractiveCircleButtonProps } from './types';
 export function InteractiveCircleButton({ href, children }: InteractiveCircleButtonProps) {
     const buttonRef = useRef<HTMLAnchorElement>(null);
     const circleRef = useRef<HTMLSpanElement>(null);
+    const isHoveredRef = useRef(false);
+
+    const resetButton = () => {
+        if (!buttonRef.current || !circleRef.current) return;
+        gsap.killTweensOf(buttonRef.current);
+        gsap.killTweensOf(circleRef.current);
+        gsap.set(buttonRef.current, { x: 0, y: 0 });
+        gsap.set(circleRef.current, { scale: 0, opacity: 0 });
+        isHoveredRef.current = false;
+    };
+
+    useEffect(() => {
+        const handleVisibilityChange = () => {
+            if (document.visibilityState === "visible" && isHoveredRef.current) {
+                resetButton();
+            }
+        };
+        const handleWindowFocus = () => {
+            if (isHoveredRef.current) {
+                resetButton();
+            }
+        };
+
+        document.addEventListener("visibilitychange", handleVisibilityChange);
+        window.addEventListener("focus", handleWindowFocus);
+
+        return () => {
+            document.removeEventListener("visibilitychange", handleVisibilityChange);
+            window.removeEventListener("focus", handleWindowFocus);
+        };
+    }, []);
 
     const handleMouseEnter = (e: MouseEvent<HTMLAnchorElement>) => {
         if (!buttonRef.current || !circleRef.current) return;
+        isHoveredRef.current = true;
         const rect = buttonRef.current.getBoundingClientRect();
         const x = e.clientX - rect.left;
         const y = e.clientY - rect.top;
@@ -48,6 +80,7 @@ export function InteractiveCircleButton({ href, children }: InteractiveCircleBut
 
     const handleMouseLeave = (e: MouseEvent<HTMLAnchorElement>) => {
         if (!buttonRef.current || !circleRef.current) return;
+        isHoveredRef.current = false;
         const rect = buttonRef.current.getBoundingClientRect();
         const x = e.clientX - rect.left;
         const y = e.clientY - rect.top;

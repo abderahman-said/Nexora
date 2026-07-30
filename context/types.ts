@@ -1,5 +1,3 @@
-import { ReactNode } from 'react';
-
 export type Language = 'en' | 'ar';
 
 export interface LanguageContextType {

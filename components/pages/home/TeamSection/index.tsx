@@ -24,15 +24,20 @@ export default function TeamSection() {
         </div>
 
         {/* GSAP Cards Slider Row */}
-        <div className="relative z-20 w-full px-2 sm:px-4">
+        <div className="relative z-20 w-full">
           <GSAPSlider
             items={TEAM_MEMBERS}
-            ItemComponent={TeamCard}
-            autoplay={false}
             defaultVisibleCount={3}
-            showControls={true}
-            controlsPosition="sides"
+            mobileVisibleCount={1}
+            centerModeMobile={true}
+            centerCardWidthPercent={76}
+            showControls={false}
+            controlsPosition="center"
             showDots={true}
+            autoplay={false}
+            enableDrag={true}
+            infinite={true}
+            ItemComponent={TeamCard}
           />
         </div>
       </Container>

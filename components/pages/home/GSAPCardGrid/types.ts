@@ -2,6 +2,7 @@ import { LucideIcon } from 'lucide-react';
 import { RefObject } from 'react';
 
 export interface Step {
+    id?: string | number;
     step: string;
     title: string;
     badge: string;
@@ -13,16 +14,14 @@ export interface Step {
 }
 
 export interface ProcessCardProps {
-  step: {
-    step: string;
-    badge: string;
-    icon: React.ComponentType<{ className?: string }>;
-    title: string;
-    description: string;
-    features: string[];
-    accent: string;
-    link: string;
-  };
+    step?: {
+        step: number | string;
+        badge?: string;
+        icon?: React.ComponentType<{ className?: string }>;
+        title: string;
+        description: string;
+        features?: string[];
+    };
 }
 
 export interface UseCardGridGSAPProps {

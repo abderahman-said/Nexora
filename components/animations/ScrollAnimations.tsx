@@ -20,21 +20,44 @@ export default function ScrollAnimations() {
         animateSections(reduceMotion);
         animateProgressBar();
       });
+
+      // Refresh after fonts load for accurate calculations
+      if (document.fonts?.ready) {
+        document.fonts.ready.then(() => ScrollTrigger.refresh());
+      }
+      requestAnimationFrame(() => ScrollTrigger.refresh());
     };
 
     // Initial run
     const timer = setTimeout(initNewElements, 150);
 
-    // Watch for lazily loaded dynamic components (ssr: false)
+    // Watch for lazily loaded dynamic components (ssr: false) - optimized with throttling
+    let debounceTimer: NodeJS.Timeout;
+    let lastRun = 0;
+    const THROTTLE_DELAY = 200;
+    
     const observer = new MutationObserver((mutations) => {
+      const now = Date.now();
+      if (now - lastRun < THROTTLE_DELAY) return;
+      
       let hasNewSections = false;
-      mutations.forEach(m => {
+      for (const m of mutations) {
         if (m.addedNodes.length > 0) {
-          hasNewSections = true;
+          for (const node of m.addedNodes) {
+            if (
+              node instanceof Element &&
+              (node.matches('.scroll-section') || node.querySelector('.scroll-section'))
+            ) {
+              hasNewSections = true;
+              break;
+            }
+          }
         }
-      });
+      }
       if (hasNewSections) {
-        initNewElements();
+        lastRun = now;
+        clearTimeout(debounceTimer);
+        debounceTimer = setTimeout(initNewElements, 150);
       }
     });
 
@@ -45,6 +68,7 @@ export default function ScrollAnimations() {
 
     return () => {
       clearTimeout(timer);
+      clearTimeout(debounceTimer);
       observer.disconnect();
       ctx.revert();
       window.removeEventListener("load", onLoad);
@@ -215,7 +239,7 @@ function animateSections(reduceMotion: boolean) {
       }
     }
 
-    if (ring && !reduceMotion) {
+    if (ring && !reduceMotion && !isMobile) {
       const ringTween = gsap.to(ring, {
         rotation: 360,
         duration: 8,
@@ -237,7 +261,7 @@ function animateSections(reduceMotion: boolean) {
       });
     }
 
-    if (shape && !reduceMotion) {
+    if (shape && !reduceMotion && !isMobile) {
       gsap.to(shape, {
         rotation: -360,
         duration: 12,
@@ -262,6 +286,21 @@ function animateSections(reduceMotion: boolean) {
     );
     headings.forEach((h) => {
       if (!h) return;
+      
+      // Check if element is already visible in viewport
+      const rect = h.getBoundingClientRect();
+      const alreadyVisible = rect.top < window.innerHeight * (isMobile ? 1 : 0.9);
+
+      if (alreadyVisible) {
+        // Animate immediately without ScrollTrigger
+        gsap.fromTo(
+          h,
+          { opacity: 0, y: reduceMotion ? 0 : 40 },
+          { opacity: 1, y: 0, duration: 0.9, ease: "power3.out", clearProps: "opacity,transform" }
+        );
+        return;
+      }
+
       gsap.from(h, {
         opacity: 0,
         y: reduceMotion ? 0 : 40,
@@ -270,7 +309,7 @@ function animateSections(reduceMotion: boolean) {
         clearProps: "opacity,transform,translate,rotate,scale",
         scrollTrigger: {
           trigger: h,
-          start: "top 85%",
+          start: isMobile ? "top 100%" : "top 90%",
           toggleActions: "play none none none",
           once: true,
         },
@@ -278,7 +317,7 @@ function animateSections(reduceMotion: boolean) {
     });
 
     const paras = Array.from(sec.querySelectorAll("p:not(.sd-label)"));
-    if (paras.length > 0) {
+    if (paras.length > 0 && !isMobile) {
       gsap.from(paras, {
         opacity: 0,
         y: reduceMotion ? 0 : 24,
@@ -299,7 +338,7 @@ function animateSections(reduceMotion: boolean) {
   const cards = gsap.utils
     .toArray(".bento-card:not(.gsap-card-init), .process-step:not(.gsap-card-init), .hw-feature:not(.gsap-card-init), .about-feature:not(.gsap-card-init)")
     .filter(Boolean);
-  if (cards.length > 0) {
+  if (cards.length > 0 && !isMobile) {
     cards.forEach(c => (c as Element).classList.add("gsap-card-init"));
     ScrollTrigger.batch(cards as Element[], {
       start: "top 88%",

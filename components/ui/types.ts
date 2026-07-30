@@ -45,10 +45,11 @@ export interface SectionHeaderProps {
     animClass?: string;
 }
 
-export interface GSAPSliderProps<T = any> {
-  items?: T[];
-  renderItem?: (item: T, index: number) => ReactNode;
-  ItemComponent?: ElementType;
+// في types.ts بتاع GSAPSlider
+export interface GSAPSliderProps<T> {
+  items: T[];
+  renderItem?: (item: T, index: number, isActive?: boolean) => React.ReactNode;
+  ItemComponent?: React.ComponentType<any>;
   autoplay?: boolean;
   autoplayInterval?: number;
   defaultVisibleCount?: number;
@@ -60,6 +61,9 @@ export interface GSAPSliderProps<T = any> {
   mobileVisibleCount?: number;
   tabletVisibleCount?: number;
   className?: string;
+  centerModeMobile?: boolean;
+  centerCardWidthPercent?: number;
+  infinite?: boolean; 
 }
 
 export interface NavButtonProps {

@@ -19,7 +19,7 @@ export default function ClientsSection() {
           className="
                     relative rounded-3xl sm:rounded-[2.5rem] 
                     border border-slate-800/90 shadow-2xl
-                    p-6 sm:p-12 lg:p-16 !pb-52 !md:pb-62
+                    p-6 sm:p-12 lg:p-16 !pb-42 !md:pb-62
                     overflow-hidden text-center
                 "
         >

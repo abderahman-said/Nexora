@@ -132,18 +132,6 @@ export default function ProjectCard({ p }: ProjectCardProps) {
           className="absolute inset-0 z-0 block h-full w-full overflow-hidden"
           aria-label={`View ${p.name}`}
         >
-          {p.id && (
-            <span className="absolute left-3.5 top-3.5 sm:left-4 sm:top-4 z-[3] rounded-full bg-white/95 dark:bg-slate-950/90 px-2.5 py-0.5 sm:px-3 sm:py-1 text-[10px] sm:text-[11px] font-bold tracking-[0.14em] text-slate-900 dark:text-white backdrop-blur-md border border-slate-200/90 dark:border-white/15 shadow-sm">
-              {p.id}
-            </span>
-          )}
-          {p.category && (
-            <span className="absolute right-3.5 top-3.5 sm:right-4 sm:top-4 z-[3] inline-flex items-center gap-1.5 sm:gap-2 rounded-full bg-white/95 dark:bg-slate-950/90 px-2.5 py-0.5 sm:px-3.5 sm:py-1 text-[10px] sm:text-[11px] font-bold uppercase tracking-[0.1em] text-slate-900 dark:text-white shadow-sm border border-slate-200/90 dark:border-white/15 backdrop-blur-md">
-              <span className="h-1.5 w-1.5 sm:h-2 sm:w-2 rounded-full shrink-0 animate-pulse" style={{ backgroundColor: p.accent || "#3b82f6" }} />
-              {p.category}
-            </span>
-          )}
-
           <OptimizedImage
             className="card-img absolute inset-0 h-full w-full object-cover object-top transition-transform duration-700 ease-[cubic-bezier(0.4,0,0.2,1)] group-hover:scale-[1.09]"
             src={p.image}
@@ -162,26 +150,13 @@ export default function ProjectCard({ p }: ProjectCardProps) {
         </Link>
 
         {/* Content overlaid at the bottom */}
-        <div className="relative z-[3] flex h-full flex-col justify-end gap-2 sm:gap-3 px-5 py-5 sm:px-6 sm:py-6 md:px-7 md:py-7">
-          <div suppressHydrationWarning>
-            <h3 className="m-0 mb-1.5 sm:mb-2 text-[clamp(19px,4vw,28px)] font-black leading-[1.18] tracking-[-0.03em] text-slate-900 dark:text-white transition-colors duration-300 group-hover/3d:text-blue-600 dark:group-hover/3d:text-blue-300">
-              {p.name}
-            </h3>
-            <p className="mb-2 sm:mb-3 text-[0.68rem] sm:text-[0.75rem] font-bold uppercase tracking-[0.1em] text-slate-600 dark:text-slate-300">
-              {p.category}
-            </p>
-            <div className="mb-2.5 sm:mb-3.5 h-px w-full bg-slate-200 dark:bg-white/20" />
-            <div className="flex flex-wrap gap-1.5 sm:gap-2">
-              {(p.skills || []).map((tag) => (
-                <span
-                  key={tag}
-                  className="rounded-full border border-slate-200 dark:border-white/20 bg-slate-100/90 dark:bg-white/10 px-2.5 py-0.5 sm:px-3 sm:py-1 text-[10px] sm:text-[11px] font-semibold tracking-[0.06em] text-slate-700 dark:text-slate-200 backdrop-blur-md transition-all duration-300 group-hover:border-slate-300 dark:group-hover:border-white/40 group-hover:bg-slate-200 dark:group-hover:bg-white/20 group-hover:text-slate-900 dark:group-hover:text-white"
-                >
-                  {tag}
-                </span>
-              ))}
-            </div>
-          </div>
+        <div className="relative z-[3] flex h-full flex-col justify-end gap-2 sm:gap-3 px-5 py-3 sm:px-6  md:px-7 md:py-4">
+          <h3 className="m-0 mb-1.5 sm:mb-2 text-[clamp(19px,4vw,28px)] font-black leading-[1.18] tracking-[-0.03em] text-slate-900 dark:text-white transition-colors duration-300 group-hover/3d:text-blue-600 dark:group-hover/3d:text-blue-300">
+            {p.name}
+          </h3>
+          <p className="mb-2 sm:mb-3 text-[0.68rem] sm:text-[0.75rem] font-bold uppercase tracking-[0.1em] text-slate-600 dark:text-slate-300">
+            {p.category}
+          </p>
         </div>
 
         {/* Cursor-tracking glare */}

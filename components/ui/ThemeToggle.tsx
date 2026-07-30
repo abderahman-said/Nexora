@@ -20,7 +20,7 @@ export default function ThemeToggle({ className = '' }: ThemeToggleProps) {
                 onClick={toggleTheme}
                 aria-label={isDark ? 'Switch to Light Mode' : 'Switch to Dark Mode'}
                 title={isDark ? 'Switch to Light Mode' : 'Switch to Dark Mode'}
-                className={`group relative flex h-10 w-10 !p-2 items-center justify-center rounded-full border border-slate-200/80 bg-white/80 shadow-sm transition-all duration-300 hover:scale-105 hover:border-blue-400 hover:shadow-md dark:border-slate-700/80 dark:bg-slate-800/80 dark:hover:border-blue-500 max-md:h-9 max-md:w-9 ${className}`}
+                className={`group relative flex h-8 w-8 md:h-10 md:w-10  !p-2 items-center justify-center rounded-full border border-slate-200/80 bg-white/80 shadow-sm transition-all duration-300 hover:scale-105 hover:border-blue-400 hover:shadow-md dark:border-slate-700/80 dark:bg-slate-800/80 dark:hover:border-blue-500 max-md:h-9 max-md:w-9 ${className}`}
                 suppressHydrationWarning
             >
                 {/* Ambient glow effect */}

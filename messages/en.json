@@ -24,5 +24,39 @@
     "rights": "All Rights Reserved",
     "tagline": "Code. Innovate. Elevate.",
     "responseTime": "Response Time"
+  },
+  "privacy": {
+    "title": "Privacy Policy",
+    "introduction": "At Nexora Solutions, we take your privacy seriously. This Privacy Policy explains how we collect, use, and protect your personal information when you use our services.",
+    "infoWeCollect": "Information We Collect",
+    "infoWeCollectDesc": "We collect the following types of information:",
+    "howWeUse": "How We Use Your Information",
+    "howWeUseDesc": "We use your information to:",
+    "dataSecurity": "Data Security",
+    "dataSecurityDesc": "We implement industry-standard security measures to protect your data, including encryption, secure servers, and access controls.",
+    "yourRights": "Your Rights",
+    "yourRightsDesc": "You have the right to:",
+    "contactUs": "Contact Us",
+    "contactUsDesc": "If you have questions about this Privacy Policy, please contact us at privacy@nexora.solutions"
+  },
+  "terms": {
+    "title": "Terms of Service",
+    "introduction": "Welcome to Nexora Solutions. By using our services, you agree to these Terms of Service. Please read them carefully.",
+    "services": "Services",
+    "servicesDesc": "Nexora Solutions provides software development, consulting, and technology services. We reserve the right to modify or discontinue services at any time.",
+    "userResponsibilities": "User Responsibilities",
+    "userResponsibilitiesDesc": "Users agree to:",
+    "paymentTerms": "Payment Terms",
+    "paymentTermsDesc": "Payment terms are specified in individual project agreements. Late payments may incur additional fees. All payments are non-refundable unless otherwise stated.",
+    "intellectualProperty": "Intellectual Property",
+    "intellectualPropertyDesc": "All content, code, and materials provided by Nexora Solutions remain our intellectual property unless explicitly transferred in writing. Clients receive usage rights as specified in their agreements.",
+    "liability": "Limitation of Liability",
+    "liabilityDesc": "Nexora Solutions is not liable for any indirect, incidental, or consequential damages arising from the use of our services. Our liability is limited to the amount paid for the specific service.",
+    "termination": "Termination",
+    "terminationDesc": "Either party may terminate the agreement with written notice. Upon termination, all outstanding payments become due immediately.",
+    "governingLaw": "Governing Law",
+    "governingLawDesc": "These terms are governed by the laws of Egypt. Any disputes will be resolved in Egyptian courts.",
+    "contactUs": "Contact Us",
+    "contactUsDesc": "For questions about these Terms of Service, please contact us at legal@nexora.solutions"
   }
 }

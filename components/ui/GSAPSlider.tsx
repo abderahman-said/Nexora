@@ -4,6 +4,7 @@ import React, {
   useRef,
   useState,
   useEffect,
+  useMemo,
   useCallback,
 } from "react";
 import { gsap } from "gsap";
@@ -14,7 +15,6 @@ import type { GSAPSliderProps, NavButtonProps } from './types';
 const DRAG_THRESHOLD = 40;
 const SNAP_DURATION = 0.9;
 
-// Helper to check if document is RTL
 const isRTL = () => document.documentElement.dir === 'rtl';
 
 export default function GSAPSlider<T extends { id?: string | number }>({
@@ -28,62 +28,78 @@ export default function GSAPSlider<T extends { id?: string | number }>({
   controlsPosition = "center",
   showDots = true,
   pauseOnHover = true,
-  enableDrag = true, // ✅ جديد
-  mobileVisibleCount = 1, // عدد الكروت الظاهرة تحت 640px (ممكن كسري زي 1.25)
-  tabletVisibleCount = 2, // عدد الكروت الظاهرة بين 640 و 1024px
+  enableDrag = true,
+  mobileVisibleCount = 1,
+  tabletVisibleCount = 2,
   className = "",
+  centerModeMobile = false,
+  centerCardWidthPercent = 76,
+  infinite = false,
 }: GSAPSliderProps<T>) {
   const totalItems = items.length;
 
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [isPaused, setIsPaused] = useState(false);
+
+  // ✅ مصادر pause منفصلة بدل state واحد "ملتصق" على true
+  const [isHoverPaused, setIsHoverPaused] = useState(false);
+  const [isTabHidden, setIsTabHidden] = useState(false);
+  const [isOffscreen, setIsOffscreen] = useState(false);
+  const isPaused = isHoverPaused || isTabHidden || isOffscreen;
+
   const [isDragging, setIsDragging] = useState(false);
   const [visibleCards, setVisibleCards] = useState(defaultVisibleCount);
+  const [isCenterActive, setIsCenterActive] = useState(false);
 
   const trackRef = useRef<HTMLDivElement>(null);
   const xPercentSetterRef = useRef<Function | null>(null);
   const currentIndexRef = useRef(0);
   const autoplayTimerRef = useRef<NodeJS.Timeout | null>(null);
+  const isCenterActiveRef = useRef(false);
 
   const isDraggingRef = useRef(false);
   const dragStartXRef = useRef(0);
   const dragCurrentXRef = useRef(0);
   const rafIdRef = useRef<number | null>(null);
+  const isRTLRef = useRef(false);
+  const containerWidthRef = useRef(1);
+  const rootRef = useRef<HTMLDivElement>(null); // ✅ wrapper خارجي مستقر لل Observer
 
   useEffect(() => {
-    currentIndexRef.current = currentIndex;
-  }, [currentIndex]);
+    isCenterActiveRef.current = isCenterActive;
+  }, [isCenterActive]);
 
-  // Responsive visible-card count
   useEffect(() => {
+    isRTLRef.current = document.documentElement.dir === 'rtl';
+  }, []);
+
+  useEffect(() => {
+    let raf: number;
     const updateVisibleCards = () => {
       const width = window.innerWidth;
       let count = defaultVisibleCount;
-      if (width < 640) count = mobileVisibleCount;
+      const isMobile = width < 640;
+
+      if (isMobile) count = mobileVisibleCount;
       else if (width < 1024) count = tabletVisibleCount;
 
+      const centerActive = centerModeMobile && isMobile;
+
       setVisibleCards(count);
-      setCurrentIndex((prev) => {
-        const max = Math.max(0, Math.floor(totalItems - count));
-        if (prev > max) {
-          if (trackRef.current && totalItems > 0) {
-            gsap.to(trackRef.current, {
-              xPercent: -(max * (100 / totalItems)),
-              duration: SNAP_DURATION,
-              ease: "power3.out",
-              overwrite: "auto",
-            });
-          }
-          return max;
-        }
-        return prev;
-      });
+      setIsCenterActive(centerActive);
+    };
+
+    const onResize = () => {
+      cancelAnimationFrame(raf);
+      raf = requestAnimationFrame(updateVisibleCards);
     };
 
     updateVisibleCards();
-    window.addEventListener("resize", updateVisibleCards);
-    return () => window.removeEventListener("resize", updateVisibleCards);
-  }, [defaultVisibleCount, mobileVisibleCount, tabletVisibleCount, totalItems]);
+    window.addEventListener("resize", onResize);
+    return () => {
+      window.removeEventListener("resize", onResize);
+      cancelAnimationFrame(raf);
+    };
+  }, [defaultVisibleCount, mobileVisibleCount, tabletVisibleCount, centerModeMobile]);
 
   useEffect(() => {
     if (trackRef.current) {
@@ -94,16 +110,59 @@ export default function GSAPSlider<T extends { id?: string | number }>({
     }
   }, []);
 
-  const maxIndex = Math.max(0, Math.floor(totalItems - visibleCards));
-  const trackWidthPercent = (totalItems / visibleCards) * 100;
+  const effectiveVisibleCards = isCenterActive ? 1 : visibleCards;
+
+  const cloneCount =
+    infinite && totalItems > effectiveVisibleCards
+      ? Math.min(effectiveVisibleCards, totalItems)
+      : 0;
+  const infiniteEnabled = cloneCount > 0;
+
+  const renderItems = useMemo(() => {
+    if (!infiniteEnabled) return items;
+    const head = items.slice(totalItems - cloneCount);
+    const tail = items.slice(0, cloneCount);
+    return [...head, ...items, ...tail];
+  }, [items, cloneCount, infiniteEnabled, totalItems]);
+
+  const trackItemsCount = renderItems.length;
+
+  const maxIndex = infiniteEnabled
+    ? Math.max(0, totalItems - 1)
+    : Math.max(0, Math.floor(totalItems - effectiveVisibleCards));
+
+  const activeIndex = Math.min(currentIndex, maxIndex);
+
+  useEffect(() => {
+    currentIndexRef.current = activeIndex;
+  }, [activeIndex]);
+
+  const trackWidthPercent = isCenterActive
+    ? trackItemsCount * centerCardWidthPercent
+    : (trackItemsCount / visibleCards) * 100;
 
   const indexToXPercent = useCallback(
-    (index: number) => {
-      const rtlMultiplier = isRTL() ? 1 : -1;
-      return rtlMultiplier * (index * (100 / totalItems));
-    },
-    [totalItems],
+    (index: number) =>
+      computeXPercent(
+        index + cloneCount,
+        trackItemsCount,
+        isCenterActiveRef.current,
+        centerCardWidthPercent,
+      ),
+    [trackItemsCount, cloneCount, centerCardWidthPercent],
   );
+
+  const positionToXPercent = useCallback(
+    (position: number) =>
+      computeXPercent(
+        position,
+        trackItemsCount,
+        isCenterActiveRef.current,
+        centerCardWidthPercent,
+      ),
+    [trackItemsCount, centerCardWidthPercent],
+  );
+
   const animateToSlide = useCallback(
     (targetIndex: number) => {
       if (!trackRef.current || totalItems === 0) return;
@@ -117,23 +176,65 @@ export default function GSAPSlider<T extends { id?: string | number }>({
     [totalItems, indexToXPercent],
   );
 
+  const animateToPosition = useCallback(
+    (position: number, onComplete?: () => void) => {
+      if (!trackRef.current) return;
+      gsap.to(trackRef.current, {
+        xPercent: positionToXPercent(position),
+        duration: SNAP_DURATION,
+        ease: "power2.inOut",
+        overwrite: "auto",
+        onComplete,
+      });
+    },
+    [positionToXPercent],
+  );
+
+  const jumpToPosition = useCallback(
+    (position: number) => {
+      if (!trackRef.current) return;
+      gsap.set(trackRef.current, { xPercent: positionToXPercent(position) });
+    },
+    [positionToXPercent],
+  );
+
   const nextSlide = useCallback(() => {
     setCurrentIndex((prev) => {
-      const next = prev >= maxIndex ? 0 : prev + 1;
-      animateToSlide(next);
+      const atEnd = prev >= maxIndex;
+      const next = atEnd ? 0 : prev + 1;
+
+      if (infiniteEnabled && atEnd) {
+        animateToPosition(cloneCount + totalItems, () => {
+          jumpToPosition(cloneCount);
+        });
+      } else {
+        animateToSlide(next);
+      }
       return next;
     });
-  }, [maxIndex, animateToSlide]);
+  }, [maxIndex, infiniteEnabled, cloneCount, totalItems, animateToPosition, jumpToPosition, animateToSlide]);
 
   const prevSlide = useCallback(() => {
     setCurrentIndex((prev) => {
-      const next = prev <= 0 ? maxIndex : prev - 1;
-      animateToSlide(next);
+      const atStart = prev <= 0;
+      const next = atStart ? maxIndex : prev - 1;
+
+      if (infiniteEnabled && atStart) {
+        animateToPosition(cloneCount - 1, () => {
+          jumpToPosition(cloneCount + maxIndex);
+        });
+      } else {
+        animateToSlide(next);
+      }
       return next;
     });
-  }, [maxIndex, animateToSlide]);
+  }, [maxIndex, infiniteEnabled, cloneCount, animateToPosition, jumpToPosition, animateToSlide]);
 
-  // Clean up GSAP tweens and RAF on unmount
+  useEffect(() => {
+    if (isDraggingRef.current || totalItems === 0) return;
+    jumpToPosition(cloneCount + currentIndexRef.current);
+  }, [cloneCount, isCenterActive, trackItemsCount, jumpToPosition, totalItems]);
+
   useEffect(() => {
     const trackEl = trackRef.current;
     return () => {
@@ -142,12 +243,15 @@ export default function GSAPSlider<T extends { id?: string | number }>({
     };
   }, []);
 
-  // Drag handling (mouse + touch)
-  const handleDragStart = (clientX: number) => {
+  const handlePointerDown = (e: React.PointerEvent) => {
+    if (!enableDrag || (e.pointerType === "mouse" && e.button !== 0)) return;
+    e.preventDefault();
+    (e.target as HTMLElement).setPointerCapture(e.pointerId);
     if (trackRef.current) gsap.killTweensOf(trackRef.current);
+    containerWidthRef.current = trackRef.current?.parentElement?.offsetWidth || 1;
     isDraggingRef.current = true;
-    dragStartXRef.current = clientX;
-    dragCurrentXRef.current = clientX;
+    dragStartXRef.current = e.clientX;
+    dragCurrentXRef.current = e.clientX;
     setIsDragging(true);
   };
 
@@ -160,28 +264,29 @@ export default function GSAPSlider<T extends { id?: string | number }>({
     )
       return;
 
-    const containerWidth = trackRef.current.parentElement?.offsetWidth || 1;
-    const trackOwnWidth = containerWidth * (totalItems / visibleCards);
-    const rtlMultiplier = isRTL() ? -1 : 1;
+    const containerWidth = containerWidthRef.current;
+    const currentTrackWidthPercent = isCenterActiveRef.current
+      ? trackItemsCount * centerCardWidthPercent
+      : (trackItemsCount / visibleCards) * 100;
+    const trackOwnWidth = containerWidth * (currentTrackWidthPercent / 100);
+    const rtlMultiplier = isRTLRef.current ? -1 : 1;
     const diffPercent =
       rtlMultiplier * ((dragCurrentXRef.current - dragStartXRef.current) / trackOwnWidth) * 100;
     const basePercent = indexToXPercent(currentIndexRef.current);
 
     xPercentSetterRef.current(basePercent + diffPercent);
-  }, [totalItems, visibleCards, indexToXPercent]);
+  }, [trackItemsCount, visibleCards, centerCardWidthPercent, indexToXPercent]);
 
-  const handleDragMove = useCallback(
-    (clientX: number) => {
-      if (!isDraggingRef.current) return;
-      dragCurrentXRef.current = clientX;
-      if (rafIdRef.current == null) {
-        rafIdRef.current = requestAnimationFrame(applyDragPosition);
-      }
-    },
-    [applyDragPosition],
-  );
+  const handlePointerMove = (e: React.PointerEvent) => {
+    if (!isDraggingRef.current) return;
+    dragCurrentXRef.current = e.clientX;
+    if (rafIdRef.current == null) {
+      rafIdRef.current = requestAnimationFrame(applyDragPosition);
+    }
+  };
 
-  const handleDragEnd = useCallback(() => {
+  const handlePointerUp = (e: React.PointerEvent) => {
+    (e.target as HTMLElement).releasePointerCapture?.(e.pointerId);
     if (!isDraggingRef.current) return;
     isDraggingRef.current = false;
     setIsDragging(false);
@@ -192,38 +297,17 @@ export default function GSAPSlider<T extends { id?: string | number }>({
     }
 
     const diff = dragStartXRef.current - dragCurrentXRef.current;
-    const rtlMultiplier = isRTL() ? -1 : 1;
+    const rtlMultiplier = isRTLRef.current ? -1 : 1;
     const adjustedDiff = rtlMultiplier * diff;
 
-    if (adjustedDiff > DRAG_THRESHOLD && currentIndexRef.current < maxIndex) {
+    if (adjustedDiff > DRAG_THRESHOLD && (infiniteEnabled || currentIndexRef.current < maxIndex)) {
       nextSlide();
-    } else if (adjustedDiff < -DRAG_THRESHOLD && currentIndexRef.current > 0) {
+    } else if (adjustedDiff < -DRAG_THRESHOLD && (infiniteEnabled || currentIndexRef.current > 0)) {
       prevSlide();
     } else {
       animateToSlide(currentIndexRef.current);
     }
-  }, [maxIndex, nextSlide, prevSlide, animateToSlide]);
-
-  useEffect(() => {
-    if (!isDragging) return;
-
-    const onMouseMove = (e: MouseEvent) => handleDragMove(e.clientX);
-    const onMouseUp = () => handleDragEnd();
-    const onTouchMove = (e: TouchEvent) => handleDragMove(e.touches[0].clientX);
-    const onTouchEnd = () => handleDragEnd();
-
-    window.addEventListener("mousemove", onMouseMove);
-    window.addEventListener("mouseup", onMouseUp);
-    window.addEventListener("touchmove", onTouchMove, { passive: true });
-    window.addEventListener("touchend", onTouchEnd);
-
-    return () => {
-      window.removeEventListener("mousemove", onMouseMove);
-      window.removeEventListener("mouseup", onMouseUp);
-      window.removeEventListener("touchmove", onTouchMove);
-      window.removeEventListener("touchend", onTouchEnd);
-    };
-  }, [isDragging, handleDragMove, handleDragEnd]);
+  };
 
   const handleClickCapture = (e: React.MouseEvent) => {
     const dragDistance = Math.abs(
@@ -235,8 +319,28 @@ export default function GSAPSlider<T extends { id?: string | number }>({
     }
   };
 
+  // ✅ pause لما التاب يبقى مخفي — وترجع تشتغل لما يرجع ظاهر
   useEffect(() => {
-    if (!autoplay || isPaused || totalItems <= visibleCards) return;
+    const onVisibility = () => setIsTabHidden(document.hidden);
+    document.addEventListener("visibilitychange", onVisibility);
+    return () => document.removeEventListener("visibilitychange", onVisibility);
+  }, []);
+
+  // ✅ pause لما السلايدر يخرج بره الشاشة — وترجع تشتغل لما يظهر تاني
+  useEffect(() => {
+    if (!autoplay) return;
+    const el = rootRef.current;
+    if (!el) return;
+    const observer = new IntersectionObserver(
+      ([entry]) => setIsOffscreen(!entry.isIntersecting),
+      { threshold: 0.2 }
+    );
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, [autoplay]);
+
+  useEffect(() => {
+    if (!autoplay || isPaused || totalItems <= effectiveVisibleCards) return;
 
     const timer = setInterval(nextSlide, autoplayInterval);
     autoplayTimerRef.current = timer;
@@ -247,12 +351,11 @@ export default function GSAPSlider<T extends { id?: string | number }>({
     autoplay,
     isPaused,
     totalItems,
-    visibleCards,
+    effectiveVisibleCards,
     autoplayInterval,
     nextSlide,
-    currentIndex,
   ]);
-  // Reset autoplay timer on manual navigation so progress bar syncs
+
   const goToSlideWithReset = useCallback(
     (index: number) => {
       if (autoplayTimerRef.current) {
@@ -274,9 +377,10 @@ export default function GSAPSlider<T extends { id?: string | number }>({
 
   return (
     <div
+      ref={rootRef}
       className={`relative w-full ${className}`}
-      onMouseEnter={() => pauseOnHover && setIsPaused(true)}
-      onMouseLeave={() => pauseOnHover && setIsPaused(false)}
+      onMouseEnter={() => pauseOnHover && setIsHoverPaused(true)}
+      onMouseLeave={() => pauseOnHover && setIsHoverPaused(false)}
     >
       {showSideControls && (
         <>
@@ -286,41 +390,48 @@ export default function GSAPSlider<T extends { id?: string | number }>({
       )}
 
       <div
-        className={`w-full overflow-hidden pt-8 pb-12 px-2 sm:px-3 touch-pan-y select-none ${
-          enableDrag ? (isDragging ? "cursor-grabbing" : "cursor-grab") : ""
-        }`}
-        onMouseDown={(e) =>
-          enableDrag && e.button === 0 && handleDragStart(e.clientX)
-        }
-        onTouchStart={(e) =>
-          enableDrag && handleDragStart(e.touches[0].clientX)
-        }
+        className={`w-full overflow-hidden pt-8 md:pb-3 md:pb-6 px-2 md:px-3 select-none ${enableDrag ? (isDragging ? "cursor-grabbing" : "cursor-grab") : ""
+          }`}
+        onPointerDown={handlePointerDown}
+        onPointerMove={handlePointerMove}
+        onPointerUp={handlePointerUp}
+        onPointerCancel={handlePointerUp}
+        onDragStart={(e) => e.preventDefault()}
         onClickCapture={handleClickCapture}
+        style={{ touchAction: "pan-y" }}
       >
         <div
           ref={trackRef}
           className="flex will-change-transform"
           style={{ width: `${trackWidthPercent}%` }}
         >
-          {items.map((item, index) => (
-            <div
-              key={item.id ?? index}
-              className="px-2 sm:px-3.5 shrink-0 flex flex-col"
-              style={{ width: `${100 / totalItems}%` }}
-            >
-              {ItemComponent ? (
-                <ItemComponent
-                  service={item}
-                  member={item}
-                  client={item}
-                  item={item}
-                  index={index}
-                />
-              ) : (
-                (renderItem?.(item, index) ?? null)
-              )}
-            </div>
-          ))}
+          {renderItems.map((item, index) => {
+            const realIndex = index - cloneCount;
+            const isActive = isCenterActive && realIndex === activeIndex;
+
+            return (
+              <div
+                key={`slide-${index}`}
+                className="px-2 sm:px-3.5 shrink-0 flex flex-col"
+                style={{ width: `${100 / trackItemsCount}%` }}
+                aria-hidden={infiniteEnabled && (index < cloneCount || index >= cloneCount + totalItems)}
+                suppressHydrationWarning
+              >
+                {ItemComponent ? (
+                  <ItemComponent
+                    service={item}
+                    member={item}
+                    client={item}
+                    item={item}
+                    index={index}
+                    isActive={isActive}
+                  />
+                ) : (
+                  renderItem?.(item, index, isActive) ?? null
+                )}
+              </div>
+            );
+          })}
         </div>
       </div>
 
@@ -341,11 +452,10 @@ export default function GSAPSlider<T extends { id?: string | number }>({
                   className="group relative p-1 flex items-center justify-center cursor-pointer"
                 >
                   <span
-                    className={`h-2.5 rounded-full transition-all duration-500 ${
-                      currentIndex === dotIdx
+                    className={`h-2.5 rounded-full transition-all duration-500 ${activeIndex === dotIdx
                         ? "w-7 bg-sky-500 dark:bg-sky-400 shadow-sm shadow-sky-400/50"
                         : "w-2.5 bg-slate-300 dark:bg-slate-700 group-hover:bg-slate-400"
-                    }`}
+                      }`}
                   />
                 </button>
               ))}
@@ -361,17 +471,38 @@ export default function GSAPSlider<T extends { id?: string | number }>({
   );
 }
 
+function computeXPercent(
+  index: number,
+  totalItems: number,
+  centerActive: boolean,
+  centerCardWidthPercent: number,
+): number {
+  if (totalItems === 0) return 0;
+  const perItem = 100 / totalItems;
+
+  if (!centerActive) {
+    const rtlMultiplier = isRTL() ? 1 : -1;
+    return rtlMultiplier * (index * perItem);
+  }
+
+  const C = centerCardWidthPercent;
+  if (isRTL()) {
+    return perItem * (index + 0.5 + 50 / C) - 100;
+  }
+  return perItem * (50 / C - 0.5 - index);
+}
+
 function NavButton({ direction, onClick, position }: NavButtonProps) {
   const isPrev = direction === "prev";
   const Icon = isPrev ? ChevronLeft : ChevronRight;
   const label = isPrev ? "Previous Slide" : "Next Slide";
 
-  const sideClasses = isPrev ? "left-0 sm:-left-6" : "right-0 sm:-right-6";
+  const sideClasses = isPrev ? "left-0 sm:-left-8" : "right-0 sm:-right-8";
 
   const className =
     position === "side"
       ? `absolute ${sideClasses} top-1/2 -translate-y-1/2 z-30 w-10 h-10 sm:w-12 sm:h-12 !p-0 rounded-full flex items-center justify-center shadow-lg shadow-blue-500/30 hover:scale-110 active:scale-95 transition-all duration-300 max-sm:hidden`
-      : `w-10 h-10 sm:w-11 sm:h-11 !p-0 rounded-full flex items-center justify-center bg-white dark:bg-slate-900 text-slate-600 dark:text-slate-300 border border-slate-200/90 dark:border-slate-800 shadow-md hover:shadow-lg hover:border-sky-500 dark:hover:border-sky-400 hover:text-sky-500 dark:hover:text-sky-400 hover:scale-105 active:scale-95 transition-all duration-300`;
+      : `w-10 h-10 sm:w-11 sm:h-11 !p-0 rounded-full flex items-center justify-center bg-white dark:bg-slate-900 text-slate-600 dark:text-slate-300 border border-slate-200/90 dark:border-slate-800 shadow-md hover:shadow-lg hover:border-sky-500 dark:hover:border-sky-400 hover:scale-105 active:scale-95 transition-all duration-300`;
 
   return (
     <Button

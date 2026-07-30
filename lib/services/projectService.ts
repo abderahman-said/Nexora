@@ -33,7 +33,7 @@ export const projectService = {
   getProjectsByCategory(category?: string): Project[] {
     if (!category) return projects;
     return projects.filter((p) =>
-      p.category.toLowerCase().includes(category.toLowerCase())
+      p.name.toLowerCase().includes(category.toLowerCase())
     );
   }
 };
