@@ -19,9 +19,9 @@ export default function InteractiveCard({
         <div
             className={`
                 group relative flex flex-col justify-between
-                bg-white dark:bg-[#0c101d]
+                bg-white dark:bg-[#0c101d] h-full
                 border border-slate-200/90 dark:border-slate-800/90
-                rounded-3xl p-6 ${stepNumber ? 'pt-12' : 'pt-10'}
+                rounded-3xl  md:p-6 p-3 ${stepNumber ? 'pt-12' : ''}
                 shadow-xl shadow-slate-200/40 dark:shadow-none
                 hover:border-blue-500/60 dark:hover:border-sky-400/60
                 hover:shadow-2xl hover:shadow-blue-500/20 dark:hover:shadow-blue-500/20
@@ -50,9 +50,9 @@ export default function InteractiveCard({
             )}
 
             {Icon && (
-                <div className="relative z-10 flex justify-center mb-6">
+                <div className="relative z-10 flex justify-center mb-2 md:mb-6">
                     <div className="
-                        relative w-16 h-16 rounded-2xl
+                        relative w-12 h-12  md:w-16 md:h-16 rounded-2xl
                         bg-gradient-to-br from-blue-600 via-sky-500 to-indigo-600 text-white
                         flex items-center justify-center
                         shadow-xl shadow-blue-500/30
@@ -64,7 +64,7 @@ export default function InteractiveCard({
                         <span className="absolute -inset-1 rounded-2xl bg-gradient-to-r from-blue-500 to-sky-400 opacity-0 group-hover:opacity-50 blur-sm transition-opacity duration-500 pointer-events-none" />
 
                         {/* Icon */}
-                        <Icon className="w-7 h-7 stroke-[2.2] relative z-10 transform transition-transform duration-500 ease-out group-hover:rotate-12 group-hover:scale-110" />
+                        <Icon className="w-5 h-5 md:w-7 md:h-7 stroke-[2.2] relative z-10 transform transition-transform duration-500 ease-out group-hover:rotate-12 group-hover:scale-110" />
                     </div>
                 </div>
             )}
@@ -72,8 +72,8 @@ export default function InteractiveCard({
             {/* ── Content Body ── */}
             <div className="flex-1 flex flex-col justify-between">
                 {/* ── Title & Description ── */}
-                <div className="relative z-10 text-center space-y-2 mb-6">
-                    <h3 className="text-xl font-extrabold text-slate-900 dark:text-white tracking-tight gsap-managed group-hover:text-blue-600 dark:group-hover:text-sky-400 transition-colors duration-300">
+                <div className="relative z-10 text-center space-y-2 md:mb-6 mb-3">
+                    <h3 className="text-base md:text-xl font-extrabold text-slate-900 dark:text-white tracking-tight gsap-managed group-hover:text-blue-600 dark:group-hover:text-sky-400 transition-colors duration-300">
                         {title}
                     </h3>
                     <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-300 leading-relaxed font-normal">
@@ -88,15 +88,15 @@ export default function InteractiveCard({
                             <div
                                 key={fIdx}
                                 className="
-                                    flex items-center w-fit gap-2 px-2 py-1.5 rounded-xl
+                                    flex items-center w-fit gap-2 px-1.5 py-1 md:px-2 md:py-1.5 rounded-xl
                                     bg-slate-50 dark:bg-slate-900/80
                                     border border-slate-200/60 dark:border-slate-800/60
                                     group-hover:border-blue-500/30 dark:group-hover:border-sky-500/30
                                     transition-colors duration-300
                                 "
                             >
-                                <CheckCircle2 className="w-3.5 h-3.5 text-blue-600 dark:text-sky-400 shrink-0" />
-                                <span className="text-xs font-semibold text-slate-700 dark:text-slate-300">
+                                <CheckCircle2 className="w-3 h-3 md:w-3.5 md:h-3.5 text-blue-600 dark:text-sky-400 shrink-0" />
+                                <span className="text-[10px] md:text-xs font-semibold text-slate-700 dark:text-slate-300">
                                     {feature}
                                 </span>
                             </div>

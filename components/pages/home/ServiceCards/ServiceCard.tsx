@@ -22,7 +22,6 @@ export function ServiceCard({ service }: ServiceCardProps) {
             title={service.title}
             description={service.description}
             features={service.features}
-            buttonText="READ MORE"
             buttonLink={service.link || '#contact'}
         />
     );
