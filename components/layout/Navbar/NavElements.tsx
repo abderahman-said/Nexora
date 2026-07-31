@@ -11,8 +11,8 @@ import type { NavLogoProps, NavLinksProps, NavCTAProps } from './types';
 
 export function NavLogo({ logoRef }: NavLogoProps) {
   return (
-    <div ref={logoRef}>
-      <Magnet magnetStrength={4}>
+    <div ref={logoRef} className="flex items-center h-full">
+      <Magnet magnetStrength={4} wrapperClassName="flex items-center justify-center" innerClassName="flex items-center justify-center">
         <Link
           href="/"
           className="flex items-center no-underline justify-center"
