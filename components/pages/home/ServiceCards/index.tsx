@@ -22,7 +22,7 @@ export default function ServiceCards() {
           className="
                     relative rounded-3xl sm:rounded-[2.5rem]
                     border border-slate-800/90 shadow-2xl
-                    p-6 sm:p-12 lg:p-16  pb-44 lg:pb-[240px]
+                    p-6 sm:p-12 lg:p-16  !pb-44 md:!pb-[240px]
                     overflow-hidden
                 "
         >
