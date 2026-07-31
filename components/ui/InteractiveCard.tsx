@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import { ArrowRight, CheckCircle2  } from 'lucide-react';
+import {   CheckCircle2  } from 'lucide-react';
 import Link from 'next/link';
 import type { InteractiveCardProps } from './types';
 
@@ -12,16 +12,20 @@ export default function InteractiveCard({
     description,
     features = [],
     buttonText,
-    buttonLink = '#contact',
+    buttonLink,
     className = '',
 }: InteractiveCardProps) {
+    const Wrapper = (buttonLink ? Link : "div") as any;
+    const props = buttonLink ? { href: buttonLink } : {};
+
     return (
-        <div
+        <Wrapper
+            {...props}
             className={`
                 group relative flex flex-col justify-between
                 bg-white dark:bg-[#0c101d] h-full
                 border border-slate-200/90 dark:border-slate-800/90
-                rounded-3xl  md:p-6 p-3 ${stepNumber ? 'pt-12' : ''}
+                rounded-3xl  md:p-6 p-3 ${stepNumber ? '!pt-12' : ''}
                 shadow-xl shadow-slate-200/40 dark:shadow-none
                 hover:border-blue-500/60 dark:hover:border-sky-400/60
                 hover:shadow-2xl hover:shadow-blue-500/20 dark:hover:shadow-blue-500/20
@@ -104,28 +108,6 @@ export default function InteractiveCard({
                     </div>
                 )}
             </div>
-
-            {/* ── Bottom Read More Action Button (Optional) ── */}
-            {buttonText && (
-                <div className="relative z-10 pt-2">
-                    <Link
-                        href={buttonLink}
-                        className="
-                            w-full inline-flex items-center justify-center gap-2.5 py-3 px-5 rounded-xl
-                            bg-gradient-to-r from-blue-600 to-sky-600 text-white
-                            font-bold text-xs tracking-wider uppercase
-                            shadow-md shadow-blue-500/20
-                            group-hover:shadow-xl group-hover:shadow-blue-500/40
-                            group-hover:from-blue-500 group-hover:to-sky-500
-                            hover:scale-[1.02] active:scale-95
-                            transition-all duration-300 group/btn
-                        "
-                    >
-                        <span>{buttonText}</span>
-                        <ArrowRight className="w-4 h-4 transition-transform duration-300 ease-out group-hover/btn:translate-x-1.5" />
-                    </Link>
-                </div>
-            )}
-        </div>
+        </Wrapper>
     );
 }
