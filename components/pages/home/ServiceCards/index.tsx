@@ -120,10 +120,15 @@ export default function ServiceCards() {
           <GSAPSlider
             items={SERVICES}
             ItemComponent={ServiceCard}
-            mobileVisibleCount={1.25}
-            tabletVisibleCount={2}
+            defaultVisibleCount={3}
+            mobileVisibleCount={1}
+            centerModeMobile={true}
+            centerCardWidthPercent={76}
             showControls={false}
+            controlsPosition="center"
             showDots={true}
+            autoplay={false}
+            pauseOnHover={false}
             enableDrag={true}
             infinite={true}
           />

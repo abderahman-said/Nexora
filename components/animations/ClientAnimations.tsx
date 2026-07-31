@@ -21,8 +21,6 @@ const TransitionScribble = dynamic(() => import('@/components/animations/Transit
 });
 
 export default function ClientAnimations() {
-    if (typeof window === 'undefined') return null;
-
     return (
         <>
             <SmoothScroll />

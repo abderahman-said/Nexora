@@ -13,7 +13,9 @@ import Button from "@/components/ui/Button";
 import type { GSAPSliderProps, NavButtonProps } from './types';
 
 const DRAG_THRESHOLD = 40;
-const SNAP_DURATION = 0.9;
+const SNAP_DURATION = 0.6; // ✅ كان 0.9 — أسرع = إحساس أخف وأسلس
+const SNAP_EASE = "sine.inOut"; // ✅ كان power2.inOut — منحنى جيبي ناعم بدون تسارع/تباطؤ حاد
+const RELEASE_EASE = "power1.out"; // ✅ يُستخدم بعد إفلات الـ drag عشان يكمل بنفس الـ momentum
 
 // ✅ SSR-safe: document مش موجود وقت الـ server render
 const isRTL = () =>
@@ -190,12 +192,12 @@ export default function GSAPSlider<T extends { id?: string | number }>({
   );
 
   const animateToSlide = useCallback(
-    (targetIndex: number) => {
+    (targetIndex: number, ease: string = SNAP_EASE) => {
       if (!trackRef.current || totalItems === 0) return;
       gsap.to(trackRef.current, {
         xPercent: indexToXPercent(targetIndex),
         duration: SNAP_DURATION,
-        ease: "power2.inOut",
+        ease,
         overwrite: "auto",
       });
     },
@@ -203,12 +205,12 @@ export default function GSAPSlider<T extends { id?: string | number }>({
   );
 
   const animateToPosition = useCallback(
-    (position: number, onComplete?: () => void) => {
+    (position: number, onComplete?: () => void, ease: string = SNAP_EASE) => {
       if (!trackRef.current) return;
       gsap.to(trackRef.current, {
         xPercent: positionToXPercent(position),
         duration: SNAP_DURATION,
-        ease: "power2.inOut",
+        ease,
         overwrite: "auto",
         onComplete,
       });
@@ -326,12 +328,36 @@ export default function GSAPSlider<T extends { id?: string | number }>({
     const rtlMultiplier = isRTLRef.current ? -1 : 1;
     const adjustedDiff = rtlMultiplier * diff;
 
+    // ✅ بعد الإفلات مباشرة، استخدم power1.out بدل sine.inOut
+    // عشان الحركة تكمل بنفس زخم إصبع المستخدم من غير "وقفة" محسوسة في البداية
     if (adjustedDiff > DRAG_THRESHOLD && (infiniteEnabled || currentIndexRef.current < maxIndex)) {
-      nextSlide();
+      setCurrentIndex((prev) => {
+        const atEnd = prev >= maxIndex;
+        const next = atEnd ? 0 : prev + 1;
+        if (infiniteEnabled && atEnd) {
+          animateToPosition(cloneCount + totalItems, () => {
+            jumpToPosition(cloneCount);
+          }, RELEASE_EASE);
+        } else {
+          animateToSlide(next, RELEASE_EASE);
+        }
+        return next;
+      });
     } else if (adjustedDiff < -DRAG_THRESHOLD && (infiniteEnabled || currentIndexRef.current > 0)) {
-      prevSlide();
+      setCurrentIndex((prev) => {
+        const atStart = prev <= 0;
+        const next = atStart ? maxIndex : prev - 1;
+        if (infiniteEnabled && atStart) {
+          animateToPosition(cloneCount - 1, () => {
+            jumpToPosition(cloneCount + maxIndex);
+          }, RELEASE_EASE);
+        } else {
+          animateToSlide(next, RELEASE_EASE);
+        }
+        return next;
+      });
     } else {
-      animateToSlide(currentIndexRef.current);
+      animateToSlide(currentIndexRef.current, RELEASE_EASE);
     }
   };
 
