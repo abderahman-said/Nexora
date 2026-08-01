@@ -14,7 +14,7 @@ export default function TeamSection() {
     >
       <Container className="relative z-10">
         {/* Section Header */}
-        <div className="relative text-center mb-4 md:mb-6">
+        <div className="relative text-start md:text-center mb-4 md:mb-6">
           <h2 className="relative z-10 text-3xl sm:text-4xl lg:text-5xl font-extrabold text-slate-900 dark:text-white tracking-tight">
             See Our Skilled Expert{" "}
             <span className="bg-gradient-to-r from-blue-600 via-sky-400 to-indigo-500 bg-clip-text text-transparent">

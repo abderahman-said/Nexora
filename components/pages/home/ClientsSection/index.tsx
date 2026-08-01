@@ -20,7 +20,7 @@ export default function ClientsSection() {
                     relative rounded-3xl sm:rounded-[2.5rem] 
                     border border-slate-800/90 shadow-2xl
                     p-6 sm:p-12 lg:p-16 !pb-42 !md:pb-62
-                    overflow-hidden text-center
+                    overflow-hidden text-start md:text-center
                 "
         >
           {/* Background Image */}
@@ -31,12 +31,12 @@ export default function ClientsSection() {
 
           {/* Section Header Content */}
           <div className="relative z-10 max-w-3xl mx-auto space-y-4">
-            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-blue-950/80 border border-blue-800/80 text-blue-400 font-bold text-xs tracking-wider uppercase shadow-inner">
+            <div className="me-auto md:mx-auto inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-blue-950/80 border border-blue-800/80 text-blue-400 font-bold text-xs tracking-wider uppercase shadow-inner">
               <MessageSquareQuote className="w-3.5 h-3.5" />
               <span>CUSTOMER FEEDBACK</span>
             </div>
 
-            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-white tracking-tight leading-[1.15]">
+            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-white tracking-tight leading-[1.15] ">
               What Happy Clients Says{" "}
               <span className="block mt-1 bg-gradient-to-r from-blue-400 via-sky-300 to-indigo-400 bg-clip-text text-transparent">
                 About Us?
