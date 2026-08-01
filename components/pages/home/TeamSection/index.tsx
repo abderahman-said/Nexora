@@ -5,6 +5,7 @@ import GSAPSlider from "@/components/ui/GSAPSlider";
 import { TEAM_MEMBERS } from "./teamData";
 import { TeamCard } from "./TeamCard";
 import Container from "@/components/ui/Container";
+import SectionHeader from "@/components/ui/SectionHeader";
 
 export default function TeamSection() {
   return (
@@ -14,14 +15,23 @@ export default function TeamSection() {
     >
       <Container className="relative z-10">
         {/* Section Header */}
-        <div className="relative text-start md:text-center mb-4 md:mb-6">
-          <h2 className="relative z-10 text-3xl sm:text-4xl lg:text-5xl font-extrabold text-slate-900 dark:text-white tracking-tight">
-            See Our Skilled Expert{" "}
-            <span className="bg-gradient-to-r from-blue-600 via-sky-400 to-indigo-500 bg-clip-text text-transparent">
-              Team
+        <SectionHeader
+          className="mb-4 md:mb-6"
+          title={
+            <span className="inline-flex items-center gap-3">
+              <span className="relative flex h-3.5 w-3.5 shrink-0">
+                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-blue-500 opacity-75 shadow-[0_0_12px_#2563eb]" />
+                <span className="relative inline-flex h-3.5 w-3.5 rounded-full bg-blue-500 shadow-[0_0_12px_#2563eb]" />
+              </span>
+              <span>
+                See Our Skilled Expert{" "}
+                <span className="bg-gradient-to-r from-blue-600 via-sky-400 to-indigo-500 dark:from-blue-400 dark:via-sky-300 dark:to-indigo-400 bg-clip-text text-transparent">
+                  Team
+                </span>
+              </span>
             </span>
-          </h2>
-        </div>
+          }
+        />
 
         {/* GSAP Cards Slider Row */}
         <div className="relative z-20 w-full">
