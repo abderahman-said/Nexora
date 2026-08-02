@@ -19,7 +19,7 @@ export default function HeroContent({
   headRef,
   subRef,
   ctaRef,
-  badgeRef,
+  // badgeRef,
   // imageRef,
 }: HeroContentProps) {
   return (

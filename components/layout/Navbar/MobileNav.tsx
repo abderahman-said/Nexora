@@ -4,6 +4,7 @@ import React, {
   useState,
   useRef,
   useEffect,
+  useCallback,
   useSyncExternalStore,
 } from "react";
 import { createPortal } from "react-dom";
@@ -75,9 +76,19 @@ export function MobileNav() {
   const blobBRef = useRef<HTMLDivElement>(null);
   const ambientTweenRef = useRef<gsap.core.Timeline | null>(null);
 
+  // Stable ref-setter for divider spans — avoids a fresh inline closure
+  // identity on every render (was forcing React to null-then-set refs).
+  const setDividerRef = useCallback((el: HTMLSpanElement | null, i: number) => {
+    dividerRefs.current[i] = el;
+  }, []);
+
   // Hamburger <-> X morph, overlay reveal, and staggered content animation.
   useEffect(() => {
     if (!topBarRef.current || !midBarRef.current || !botBarRef.current) return;
+
+    const prefersReducedMotion =
+      typeof window !== "undefined" &&
+      window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
     const ctx = gsap.context(() => {
       const tl = gsap.timeline();
@@ -198,8 +209,15 @@ export function MobileNav() {
           );
         }
 
-        // Ambient background glow — slow continuous drift while open
-        if (blobARef.current && blobBRef.current) {
+        // Ambient background glow — slow continuous drift while open.
+        // Skipped entirely when the user prefers reduced motion, and
+        // uses will-change so the compositor doesn't repaint the
+        // blurred layer from scratch on every tick.
+        if (blobARef.current && blobBRef.current && !prefersReducedMotion) {
+          gsap.set([blobARef.current, blobBRef.current], {
+            willChange: "transform",
+          });
+
           const ambient = gsap.timeline({ repeat: -1, yoyo: true });
           ambient
             .to(
@@ -219,6 +237,11 @@ export function MobileNav() {
 
         ambientTweenRef.current?.kill();
         ambientTweenRef.current = null;
+        if (blobARef.current && blobBRef.current) {
+          gsap.set([blobARef.current, blobBRef.current], {
+            willChange: "auto",
+          });
+        }
 
         tl.to(
           topBarRef.current,
@@ -309,14 +332,15 @@ export function MobileNav() {
             style={{ clipPath: "circle(0% at 90% 0%)", display: "none" }}
             className="fixed inset-0 w-screen h-screen z-[99999] flex flex-col bg-white/98 dark:bg-[#0a0a0e]/98 text-slate-900 dark:text-white backdrop-blur-3xl overflow-y-auto transition-colors duration-300"
           >
-            {/* Ambient background glow */}
+            {/* Ambient background glow — lighter blur radius keeps the
+                compositor cost down while the drift animation runs */}
             <div
               ref={blobARef}
-              className="absolute top-1/4 end-[-10%] h-80 w-80 rounded-full bg-blue-500/10 dark:bg-blue-600/20 blur-3xl pointer-events-none"
+              className="absolute top-1/4 end-[-10%] h-80 w-80 rounded-full bg-blue-500/10 dark:bg-blue-600/20 blur-2xl pointer-events-none"
             />
             <div
               ref={blobBRef}
-              className="absolute bottom-0 start-[-5%] h-64 w-64 rounded-full bg-sky-500/5 dark:bg-sky-500/10 blur-3xl pointer-events-none"
+              className="absolute bottom-0 start-[-5%] h-64 w-64 rounded-full bg-sky-500/5 dark:bg-sky-500/10 blur-2xl pointer-events-none"
             />
 
             <div className="w-full max-w-3xl mx-auto flex flex-col min-h-full px-5 sm:px-10 pt-5 pb-8 gap-6 relative z-10">
@@ -332,6 +356,7 @@ export function MobileNav() {
                     alt="Nexora Solutions"
                     width={110}
                     height={34}
+                    loading="lazy"
                     className="h-8 w-auto object-contain dark:hidden"
                   />
                   <Image
@@ -339,6 +364,7 @@ export function MobileNav() {
                     alt="Nexora Solutions Dark"
                     width={110}
                     height={34}
+                    loading="lazy"
                     className="h-8 w-auto object-contain hidden dark:block"
                   />
                 </Link>
@@ -394,9 +420,7 @@ export function MobileNav() {
                         </span>
                       </Link>
                       <span
-                        ref={(el) => {
-                          dividerRefs.current[i] = el;
-                        }}
+                        ref={(el) => setDividerRef(el, i)}
                         className="block h-px w-full bg-gradient-to-r from-blue-600/40 via-slate-300 dark:via-white/10 to-transparent origin-left"
                       />
                     </li>
