@@ -1,18 +1,22 @@
 import React from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { useTranslations, useLocale } from 'next-intl';
+import { useTranslations, useLocale } from "next-intl";
 import Magnet from "../../ui/Magnet";
 import ThemeToggle from "../../ui/ThemeToggle";
 // import LanguageToggle from "../../ui/LanguageToggle";
 import { getNavLinks } from "./navData";
 import { MobileNav } from "./MobileNav";
-import type { NavLogoProps, NavLinksProps, NavCTAProps } from './types';
+import type { NavLogoProps, NavLinksProps, NavCTAProps } from "./types";
 
 export function NavLogo({ logoRef }: NavLogoProps) {
   return (
     <div ref={logoRef} className="flex items-center h-full">
-      <Magnet magnetStrength={4} wrapperClassName="flex items-center justify-center" innerClassName="flex items-center justify-center">
+      <Magnet
+        magnetStrength={4}
+        wrapperClassName="flex items-center justify-center"
+        innerClassName="flex items-center justify-center"
+      >
         <Link
           href="/"
           className="flex items-center no-underline justify-center"
@@ -74,4 +78,3 @@ export function NavCTA({ ctaRef }: NavCTAProps) {
     </div>
   );
 }
-
