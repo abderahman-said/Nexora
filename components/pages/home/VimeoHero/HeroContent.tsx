@@ -1,8 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import Image from "next/image";
-import { ArrowRight, Sparkles, ShieldCheck } from "lucide-react";
+import { ArrowRight  } from "lucide-react";
 import Magnet from "@/components/ui/Magnet";
 import type { HeroContentProps } from "./types";
 
@@ -21,7 +20,7 @@ export default function HeroContent({
   subRef,
   ctaRef,
   badgeRef,
-  imageRef,
+  // imageRef,
 }: HeroContentProps) {
   return (
     <div className="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-14 items-center py-2 lg:py-8">
@@ -119,21 +118,17 @@ export default function HeroContent({
       </div>
 
       {/* ── LEFT COLUMN: hero.webp Showcase Image ── */}
-      <div
+      {/* <div
         ref={imageRef}
         className="lg:col-span-6 order-2 lg:order-2 relative w-full flex items-center justify-center mt-4 lg:mt-0"
       >
-        {/* Ambient Brand Blue Glow Backdrop */}
         <div
           aria-hidden="true"
           className="absolute -inset-4 bg-gradient-to-tr from-blue-600/20 via-sky-500/15 to-blue-400/20 rounded-[36px] blur-2xl opacity-75 dark:opacity-40 pointer-events-none transition-all duration-700"
         />
 
-        {/* Main Card Container */}
         <div className="relative w-full max-w-[580px] group">
-          {/* Outer Glass Card Frame */}
           <div className="relative rounded-[28px] border border-slate-200/90 dark:border-slate-800/90 bg-white/80 dark:bg-slate-900/80 backdrop-blur-xl p-3 sm:p-5 shadow-2xl shadow-blue-500/10 dark:shadow-black/60 transition-all duration-500 hover:border-blue-500/40">
-            {/* Image Container - object-contain & spacious padding ensures NO image cropping */}
             <div className="relative w-full overflow-hidden rounded-[20px] bg-slate-50 dark:bg-slate-950/50 p-2 sm:p-4 flex items-center justify-center">
               <Image
                 src="/assets/hero.webp"
@@ -146,7 +141,6 @@ export default function HeroContent({
               />
             </div>
 
-            {/* Top-Right Floating Badge */}
             <div className="absolute top-6 -right-2 sm:-right-4 hidden sm:flex items-center gap-3 px-4 py-2.5 rounded-2xl bg-white/95 dark:bg-slate-900/95 border border-slate-200/90 dark:border-slate-800/90 shadow-xl shadow-black/10 backdrop-blur-xl animate-float-y">
               <div className="w-9 h-9 rounded-xl bg-gradient-to-tr from-blue-600 to-sky-500 text-white flex items-center justify-center font-bold text-base shadow-md shadow-blue-500/30">
                 <Sparkles className="w-4 h-4 text-white" />
@@ -161,7 +155,6 @@ export default function HeroContent({
               </div>
             </div>
 
-            {/* Bottom-Left Floating Badge */}
             <div className="absolute -bottom-2 -left-2 sm:-left-4 flex items-center gap-2.5 sm:gap-3.5 px-3 py-2 sm:px-4 sm:py-2.5 rounded-2xl bg-white/95 dark:bg-slate-950/95 border border-slate-200/90 dark:border-slate-800/90 shadow-2xl shadow-blue-500/10 dark:shadow-black/60 backdrop-blur-xl">
               <div className="w-8 sm:w-9 h-8 sm:h-9 rounded-xl bg-gradient-to-tr from-blue-600 to-indigo-600 text-white flex items-center justify-center font-black text-xs shadow-md shadow-blue-500/30 shrink-0">
                 <ShieldCheck className="w-4 sm:w-5 h-4 sm:h-5 text-white" />
@@ -177,7 +170,7 @@ export default function HeroContent({
             </div>
           </div>
         </div>
-      </div>
+      </div> */}
     </div>
   );
 }

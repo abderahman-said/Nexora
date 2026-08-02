@@ -12,14 +12,14 @@ export default function HeroBackground({ glowRef }: HeroBackgroundProps) {
           muted
           playsInline
           preload="metadata"
-          className="w-full h-full object-cover opacity-25 dark:opacity-45 transition-opacity duration-500 scale-105"
+          className="w-full h-full object-cover opacity-40 transition-opacity duration-500 scale-105"
         >
           <source src="/assets/hero.mp4" type="video/mp4" />
         </video>
 
         {/* Light Mode Contrast Wash & Tint */}
         <div className="absolute inset-0 bg-slate-900/10 dark:hidden mix-blend-overlay pointer-events-none" />
-        <div className="absolute inset-0 bg-gradient-to-tr from-blue-100/70 via-slate-100/50 to-indigo-100/60 dark:hidden pointer-events-none" />
+        <div className="absolute inset-0 bg-gradient-to-tr from-blue-100/60 via-slate-100/40 to-indigo-100/50 dark:hidden pointer-events-none" />
 
         {/* Dark Mode Global Blue Tint */}
         <div className="hidden dark:block absolute inset-0 bg-blue-950/40 mix-blend-multiply pointer-events-none" />
@@ -29,14 +29,14 @@ export default function HeroBackground({ glowRef }: HeroBackgroundProps) {
       <div
         className="
           absolute 
-          left-0 
-          right-0 
-          bottom-[-2px] 
-          h-[55%]
+          left-[-1px] 
+          right-[-1px] 
+          bottom-[-1px] 
+          h-[65%]
           pointer-events-none
-          z-[1]
-          bg-[linear-gradient(180deg,rgba(248,250,252,0)_0%,rgba(224,231,255,0.6)_50%,rgba(248,250,252,1)_100%)]
-          dark:bg-[linear-gradient(180deg,rgba(6,9,19,0)_0%,rgba(15,23,42,0.75)_65%,rgba(6,9,19,1)_100%)]
+          z-[2]
+          bg-[linear-gradient(180deg,rgba(248,250,252,0)_0%,rgba(248,250,252,0.7)_50%,rgba(248,250,252,1)_85%,rgba(248,250,252,1)_100%)]
+          dark:bg-[linear-gradient(180deg,rgba(6,9,19,0)_0%,rgba(6,9,19,0.85)_55%,rgba(6,9,19,1)_85%,rgba(6,9,19,1)_100%)]
         "
       />
       {/* RIGHT SIDE DECORATORS */}

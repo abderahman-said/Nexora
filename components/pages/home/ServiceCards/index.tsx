@@ -17,11 +17,12 @@ export default function ServiceCards() {
       className="scroll-section relative w-full py-8 md:py-12 site-grid-bg overflow-hidden"
     >
       <Container className="relative z-10">
-        {/* Dark Banner Container */}
+        {/* Banner Container */}
         <div
           className="
                     relative rounded-3xl sm:rounded-[2.5rem]
-                    border border-slate-800/90 shadow-2xl
+                    bg-slate-900 dark:bg-slate-950
+                    border border-slate-200/80 dark:border-slate-800/90 shadow-2xl
                     p-6 sm:p-12 lg:p-16  !pb-44 md:!pb-[240px]
                     overflow-hidden
                 "
@@ -29,12 +30,12 @@ export default function ServiceCards() {
           {/* Background Texture Image */}
           <div
             aria-hidden="true"
-            className="absolute inset-0 bg-[url('/service_bg.webp')] bg-cover bg-center bg-no-repeat pointer-events-none"
+            className="absolute inset-0 bg-[url('/service_bg.webp')] bg-cover bg-center bg-no-repeat pointer-events-none [filter:invert(100%)_sepia(3%)_saturate(0%)_hue-rotate(121deg)_brightness(104%)_contrast(100%)] dark:[filter:none]"
           />
 
           {/* Ambient Tech Wave Background Lines */}
           <svg
-            className="absolute inset-0 w-full h-full pointer-events-none opacity-40"
+            className="absolute inset-0 w-full h-full pointer-events-none opacity-40 dark:opacity-40"
             viewBox="0 0 1200 400"
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
@@ -83,14 +84,14 @@ export default function ServiceCards() {
           <div className="relative z-10 flex flex-col md:flex-row md:items-end justify-between gap-8">
             {/* Left Title & Tag */}
             <div className="max-w-2xl space-y-4">
-              <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-blue-950/80 border border-blue-800/80 text-blue-400 font-bold text-xs tracking-wider uppercase shadow-inner">
+              <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-blue-50 dark:bg-blue-950/80 border border-blue-200/80 dark:border-blue-800/80 text-blue-600 dark:text-blue-400 font-bold text-xs tracking-wider uppercase shadow-sm">
                 <Layers className="w-3.5 h-3.5" />
                 <span>LATEST SERVICES</span>
               </div>
 
-              <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-white tracking-tight leading-[1.15]">
+              <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-slate-900 dark:text-white tracking-tight leading-[1.15]">
                 We Provide Exclusive Service For{" "}
-                <span className="bg-gradient-to-r from-blue-400 via-sky-300 to-indigo-400 bg-clip-text text-transparent">
+                <span className="bg-gradient-to-r from-blue-600 via-sky-500 to-indigo-500 dark:from-blue-400 dark:via-sky-300 dark:to-indigo-400 bg-clip-text text-transparent">
                   Your Business
                 </span>
               </h2>

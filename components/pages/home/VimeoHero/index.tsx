@@ -26,8 +26,8 @@ export default function VimeoHero() {
             className="
                 scroll-section relative min-h-[90vh]  md:min-h-[100vh] flex flex-col items-center justify-center
                 overflow-hidden bg-[#f8fafc] dark:bg-[#060913] transition-colors duration-300
-                px-4 pt-[96px] pb-10 md:pb-14
-                md:px-8 md:pt-24 md:pb-16
+                px-4 pt-[96px] pb-14 md:pb-20
+                md:px-8 md:pt-24
             "
         >
             <HeroBackground glowRef={glowRef} />
@@ -43,20 +43,6 @@ export default function VimeoHero() {
             </Container>
 
             <HeroCircularBadge />
-
-            {/* Scroll hint */}
-            <div
-                aria-hidden="true"
-                className="
-                    absolute bottom-4 left-1/2 -translate-x-1/2
-                    hidden sm:flex flex-col items-center gap-1.5
-                    text-slate-400 text-[0.68rem] tracking-[0.18em] uppercase font-semibold
-                    [animation:fade-in-up_1s_ease_1.5s_both]
-                "
-            >
-                <div className="w-px h-7 bg-gradient-to-b from-slate-400/40 to-transparent [animation:scroll-line_2s_ease_infinite]" />
-                <span>Scroll</span>
-            </div>
         </section>
     );
 }

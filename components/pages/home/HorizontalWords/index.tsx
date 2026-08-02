@@ -19,7 +19,7 @@ const HorizontalWords = () => {
       <section
         ref={sectionRef}
         id="about"
-        className="scroll-section relative mt-8 md:mt-16 w-full py-8 md:py-12 site-grid-bg overflow-hidden"
+        className="scroll-section relative w-full  pb-8 pt-8 md:pt-12 bg-[#f8fafc] dark:bg-[#090d16] site-grid-bg overflow-hidden"
       >
         {/* Background Ambient Glows */}
         <div
