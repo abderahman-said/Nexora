@@ -24,7 +24,7 @@ export default function TeamSection() {
                 <span className="relative inline-flex h-3.5 w-3.5 rounded-full bg-blue-500 shadow-[0_0_12px_#2563eb]" />
               </span>
               <span>
-               Our{" "}
+                Our{" "}
                 <span className="bg-gradient-to-r from-blue-600 via-sky-400 to-indigo-500 dark:from-blue-400 dark:via-sky-300 dark:to-indigo-400 bg-clip-text text-transparent">
                   Team
                 </span>
@@ -36,22 +36,22 @@ export default function TeamSection() {
         {/* GSAP Cards Slider Row */}
         <div className="relative z-20 w-full">
           <GSAPSlider
-              items={TEAM_MEMBERS}
+            items={TEAM_MEMBERS}
             ItemComponent={TeamCard}
-                        defaultVisibleCount={3}
-                        mobileVisibleCount={1}
-                        centerModeMobile={true}
-                        centerCardWidthPercent={76}
-                        showControls={false}
-                        controlsPosition="center"
-                        showDots={true}
-                        autoplay={false}
-                        pauseOnHover={false}
-                        enableDrag={true}
-                        infinite={true}
-                        
-            />
-           
+            defaultVisibleCount={3}
+            mobileVisibleCount={1}
+            centerModeMobile={true}
+            centerCardWidthPercent={76}
+            showControls={false}
+            controlsPosition="center"
+            showDots={true}
+            autoplay={false}
+            pauseOnHover={false}
+            enableDrag={true}
+            infinite={true}
+
+          />
+
         </div>
       </Container>
     </section>

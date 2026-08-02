@@ -132,7 +132,7 @@ export default function ServiceCards() {
             pauseOnHover={false}
             enableDrag={true}
             infinite={true}
-            
+
           />
         </div>
       </Container>

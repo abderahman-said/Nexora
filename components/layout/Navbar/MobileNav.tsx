@@ -43,26 +43,13 @@ function useCloseOnEscape(isOpen: boolean, onClose: () => void) {
   }, [isOpen, onClose]);
 }
 
-/** Locks body scroll without shifting the page (direction-aware scrollbar compensation). */
+/** Locks body scroll. */
 function lockBodyScroll() {
-  const scrollbarWidth = window.innerWidth - document.documentElement.clientWidth;
-  if (scrollbarWidth <= 0) {
-    document.body.style.overflow = "hidden";
-    return;
-  }
-  const dir = getComputedStyle(document.documentElement).direction;
-  if (dir === "rtl") {
-    document.body.style.paddingLeft = `${scrollbarWidth}px`;
-  } else {
-    document.body.style.paddingRight = `${scrollbarWidth}px`;
-  }
   document.body.style.overflow = "hidden";
 }
 
 function unlockBodyScroll() {
   document.body.style.overflow = "";
-  document.body.style.paddingLeft = "";
-  document.body.style.paddingRight = "";
 }
 
 export function MobileNav() {
@@ -268,7 +255,7 @@ export function MobileNav() {
               ref={backdropRef}
               onClick={closeMenu}
               style={{ display: "none" }}
-              className="fixed inset-0 z-[99998] bg-transparent"
+              className="fixed inset-0 z-[99998] bg-black/20 backdrop-blur-sm "
               aria-hidden="true"
             />
 

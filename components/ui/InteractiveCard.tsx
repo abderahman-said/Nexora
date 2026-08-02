@@ -25,7 +25,7 @@ export default function InteractiveCard({
                 group relative flex flex-col justify-between
                 bg-white dark:bg-[#0c101d] h-full
                 border border-slate-200/90 dark:border-slate-800/90
-                rounded-3xl  md:p-8 p-3 ${stepNumber ? "!pt-16" : ""}
+                rounded-3xl  md:p-8 p-3 ${stepNumber ? "!pt-16 mt-3" : ""}
                 shadow-xl shadow-slate-200/40 dark:shadow-none
                 hover:border-blue-500/60 dark:hover:border-sky-400/60
                 hover:shadow-2xl hover:shadow-blue-500/20 dark:hover:shadow-blue-500/20
