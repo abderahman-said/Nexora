@@ -17,7 +17,7 @@ export default function ServiceDetails() {
                     align="center"
                 />
                 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-12">
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-12">
                     {SERVICES.map((service) => (
                         <ServiceCard key={service.id} service={service} />
                     ))}
