@@ -36,7 +36,7 @@ export default function HeroBackground({ glowRef }: HeroBackgroundProps) {
           pointer-events-none
           z-[2]
           bg-[linear-gradient(180deg,rgba(248,250,252,0)_0%,rgba(248,250,252,0.7)_50%,rgba(248,250,252,1)_85%,rgba(248,250,252,1)_100%)]
-          dark:bg-[linear-gradient(180deg,rgba(6,9,19,0)_0%,rgba(6,9,19,0.85)_55%,rgba(6,9,19,1)_85%,rgba(6,9,19,1)_100%)]
+          dark:bg-[linear-gradient(180deg,rgba(9,13,22,0)_0%,rgba(9,13,22,0.85)_55%,rgba(9,13,22,1)_85%,rgba(9,13,22,1)_100%)]
         "
       />
       {/* RIGHT SIDE DECORATORS */}
