@@ -6,13 +6,20 @@ export default function HeroBackground({ glowRef }: HeroBackgroundProps) {
     <>
       {/* Video Background Layer */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none z-0">
+        {/* Hide iOS video overlay icons (especially on Low Power Mode) */}
+        <style dangerouslySetInnerHTML={{__html: `
+          video::-webkit-media-controls-start-playback-button { display: none !important; }
+          video::-webkit-media-controls { display: none !important; }
+        `}} />
         <video
           autoPlay
           loop
           muted
           playsInline
+          controls={false}
+          disablePictureInPicture
           preload="metadata"
-          className="w-full h-full object-cover opacity-80 transition-opacity duration-500 scale-105"
+          className="w-full h-full object-cover opacity-80 transition-opacity duration-500 scale-105 pointer-events-none"
         >
           <source src="/assets/hero.mp4" type="video/mp4" />
         </video>

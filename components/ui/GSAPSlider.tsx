@@ -46,7 +46,7 @@ export default function GSAPSlider<T extends { id?: string | number }>({
   infinite = false,
   // ✅ جديد: تحكم في حجم/شفافية الكارت النشط مقابل الكروت الجانبية
   activeScale = 1,
-  inactiveScale = 0.85,
+  inactiveScale = 1,
   // inactiveOpacity = 0.72,
 }: GSAPSliderProps<T> & {
   activeScale?: number;

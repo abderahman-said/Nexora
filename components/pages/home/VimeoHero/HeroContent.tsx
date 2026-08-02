@@ -31,7 +31,7 @@ export default function HeroContent({
         {/* Main Headline */}
         <h1
           ref={headRef}
-          className="text-3xl sm:text-5xl lg:text-5xl xl:text-6xl font-extrabold tracking-tight text-slate-900 dark:text-white leading-[1.12] mb-4 sm:mb-5"
+          className="text-3xl sm:text-5xl lg:text-5xl xl:text-6xl font-extrabold tracking-tight text-white dark:text-white leading-[1.12] mb-4 sm:mb-5"
         >
           <span className="split-word">Make</span>{" "}
           <span className="split-word">The</span>{" "}
@@ -44,7 +44,7 @@ export default function HeroContent({
         {/* Paragraph Description */}
         <p
           ref={subRef}
-          className="text-sm sm:text-lg text-slate-600 dark:text-slate-300 font-medium leading-relaxed max-w-xl mb-6 sm:mb-8"
+          className="text-sm sm:text-lg text-white dark:text-slate-300 font-medium leading-relaxed max-w-xl mb-6 sm:mb-8"
         >
           We transform your ideas into integrated digital solutions that make a
           real difference and support your business growth. Delivering smart,
