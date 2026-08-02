@@ -23,7 +23,6 @@ import {
 } from "lucide-react";
 import { getNavLinks } from "./navData";
 import { useTranslations, useLocale } from "next-intl";
-import Button from "@/components/ui/Button";
 import { useSiteData } from "@/hooks/useSiteData";
 import ThemeToggle from "@/components/ui/ThemeToggle";
 import LanguageToggle from "@/components/ui/LanguageToggle";
@@ -44,16 +43,39 @@ function useCloseOnEscape(isOpen: boolean, onClose: () => void) {
   }, [isOpen, onClose]);
 }
 
+/** Locks body scroll without shifting the page (direction-aware scrollbar compensation). */
+function lockBodyScroll() {
+  const scrollbarWidth = window.innerWidth - document.documentElement.clientWidth;
+  if (scrollbarWidth <= 0) {
+    document.body.style.overflow = "hidden";
+    return;
+  }
+  const dir = getComputedStyle(document.documentElement).direction;
+  if (dir === "rtl") {
+    document.body.style.paddingLeft = `${scrollbarWidth}px`;
+  } else {
+    document.body.style.paddingRight = `${scrollbarWidth}px`;
+  }
+  document.body.style.overflow = "hidden";
+}
+
+function unlockBodyScroll() {
+  document.body.style.overflow = "";
+  document.body.style.paddingLeft = "";
+  document.body.style.paddingRight = "";
+}
+
 export function MobileNav() {
   const t = useTranslations();
+  const locale = useLocale();
+  const { contact, map } = useSiteData();
+  const navLinks = getNavLinks(t, locale);
+
   const [isOpen, setIsOpen] = useState(false);
-  // Controls whether the expensive backdrop-blur is applied.
-  // Kept OFF while the drawer is actually translating, ON only once it's settled.
+  // Kept OFF while the drawer is translating, ON only once it's settled,
+  // so the expensive backdrop-blur never competes with the slide animation.
   const [drawerReady, setDrawerReady] = useState(false);
   const mounted = useSyncExternalStore(emptySubscribe, getSnapshot, getServerSnapshot);
-  const { contact, map } = useSiteData();
-  const locale = useLocale();
-  const navLinks = getNavLinks(t, locale);
 
   // Menu button icon refs (Menu <-> X crossfade)
   const menuIconRef = useRef<HTMLSpanElement>(null);
@@ -68,37 +90,15 @@ export function MobileNav() {
   const footerInfoRef = useRef<HTMLDivElement>(null);
   const dividerRefs = useRef<Array<HTMLSpanElement | null>>([]);
 
-  // The single persistent, reversible timeline (built once, like the
-  // TimelineMax example: paused + reversed by default, toggled via play/reverse).
+  // Single persistent, reversible timeline: built once, paused + reversed,
+  // then toggled via play()/reverse().
   const tlRef = useRef<gsap.core.Timeline | null>(null);
 
   const setDividerRef = useCallback((el: HTMLSpanElement | null, i: number) => {
     dividerRefs.current[i] = el;
   }, []);
 
-  /** Lock body scroll without shifting the page — direction-aware scrollbar compensation. */
-  const lockBodyScroll = () => {
-    const scrollbarWidth = window.innerWidth - document.documentElement.clientWidth;
-    if (scrollbarWidth <= 0) {
-      document.body.style.overflow = "hidden";
-      return;
-    }
-    const dir = getComputedStyle(document.documentElement).direction;
-    if (dir === "rtl") {
-      document.body.style.paddingLeft = `${scrollbarWidth}px`;
-    } else {
-      document.body.style.paddingRight = `${scrollbarWidth}px`;
-    }
-    document.body.style.overflow = "hidden";
-  };
-
-  const unlockBodyScroll = () => {
-    document.body.style.overflow = "";
-    document.body.style.paddingLeft = "";
-    document.body.style.paddingRight = "";
-  };
-
-  // ── Build the timeline ONCE, paused + reversed, like the TimelineMax example ──
+  // ── Build the timeline once the refs exist ──
   useLayoutEffect(() => {
     if (
       !menuIconRef.current ||
@@ -117,10 +117,8 @@ export function MobileNav() {
         reversed: true,
         defaults: { ease: "power2.inOut", force3D: true },
         onStart: () => {
-          // Fires when playing FORWARD (opening).
-          // Scroll lock now happens BEFORE tl.play() is called (see the
-          // isOpen effect below), so this stays purely visual — no layout
-          // work competes with the first animation frame anymore.
+          // Fires when playing forward (opening). Scroll lock happens
+          // before tl.play() is called, so this stays purely visual.
           gsap.set([backdropRef.current, drawerRef.current], {
             display: "block",
             willChange: "transform, opacity",
@@ -128,35 +126,32 @@ export function MobileNav() {
           gsap.set(drawerRef.current, { display: "flex" });
         },
         onComplete: () => {
-          // Forward animation finished -> drawer fully open & settled
           setDrawerReady(true);
           gsap.set([backdropRef.current, drawerRef.current], { willChange: "auto" });
         },
         onReverseComplete: () => {
-          // Reverse animation finished -> drawer fully closed
           gsap.set([backdropRef.current, drawerRef.current], { display: "none" });
           unlockBodyScroll();
         },
       });
 
-      // ── Menu icon <-> Close icon crossfade ──
-      tl.to(menuIconRef.current, { rotate: 90, opacity: 0, scale: 0.6, duration: 0.22 }, 0)
-        .fromTo(
-          closeIconRef.current,
-          { rotate: -90, opacity: 0, scale: 0.6 },
-          { rotate: 0, opacity: 1, scale: 1, duration: 0.3 },
-          0.08,
-        );
+      // Menu icon <-> Close icon crossfade
+      tl.to(menuIconRef.current, { rotate: 90, opacity: 0, scale: 0.6, duration: 0.22 }, 0).fromTo(
+        closeIconRef.current,
+        { rotate: -90, opacity: 0, scale: 0.6 },
+        { rotate: 0, opacity: 1, scale: 1, duration: 0.3 },
+        0.08,
+      );
 
-      // ── Backdrop fade ──
+      // Backdrop fade
       tl.fromTo(backdropRef.current, { opacity: 0 }, { opacity: 1, duration: 0.35 }, 0);
 
-      // ── Drawer slide (pinned right-0, so enters/exits from the RIGHT) ──
-      // Drop blur the instant we start reversing (closing), before the
-      // panel starts moving, so it's "cheap" for the whole exit motion.
+      // Drawer slide — always pinned to the left, regardless of locale
+      // direction. Drop the blur the instant reversing (closing) starts,
+      // so the whole exit motion stays cheap.
       tl.fromTo(
         drawerRef.current,
-        { xPercent: 100 },
+        { xPercent: -100 },
         {
           xPercent: 0,
           duration: 0.5,
@@ -165,7 +160,7 @@ export function MobileNav() {
         0,
       );
 
-      // ── Header row drops in ──
+      // Header row drops in
       if (drawerHeaderRef.current) {
         tl.fromTo(
           drawerHeaderRef.current,
@@ -175,7 +170,7 @@ export function MobileNav() {
         );
       }
 
-      // ── Nav links stagger up ──
+      // Nav links stagger up
       if (linksContainerRef.current) {
         tl.fromTo(
           Array.from(linksContainerRef.current.children),
@@ -185,7 +180,7 @@ export function MobileNav() {
         );
       }
 
-      // ── Dividers draw in ──
+      // Dividers draw in
       if (dividers.length) {
         tl.fromTo(
           dividers,
@@ -195,7 +190,7 @@ export function MobileNav() {
         );
       }
 
-      // ── Footer CTA ──
+      // Footer CTA
       if (footerCtaRef.current) {
         tl.fromTo(
           footerCtaRef.current,
@@ -205,7 +200,7 @@ export function MobileNav() {
         );
       }
 
-      // ── Footer info cards ──
+      // Footer info cards
       if (footerInfoRef.current) {
         tl.fromTo(
           Array.from(footerInfoRef.current.children),
@@ -222,17 +217,13 @@ export function MobileNav() {
       ctx.revert();
       tlRef.current = null;
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [mounted]); // Re-run once mounted becomes true and refs are populated
+  }, [mounted]); // re-run once mounted becomes true and refs are populated
 
   // ── Toggle: play forward when opening, reverse when closing ──
-  // (mirrors: tl.reversed(!tl.reversed()); if (tl.reversed()) tl.reverse(); else tl.play();)
-  //
-  // Scroll lock is applied synchronously BEFORE the timeline starts playing,
-  // so the layout thrash from body padding/overflow changes doesn't compete
-  // with the drawer's very first animation frame (this was previously
-  // deferred into a requestAnimationFrame inside onStart, which caused a
-  // small stutter right as the slide-in began).
+  // Scroll lock is applied synchronously before the timeline starts, so
+  // the layout thrash doesn't compete with the drawer's first frame.
+  // Unlocking happens in onReverseComplete once the drawer has actually
+  // finished sliding out, to avoid the page jumping underneath it.
   useEffect(() => {
     const tl = tlRef.current;
     if (!tl) return;
@@ -242,18 +233,11 @@ export function MobileNav() {
       tl.play();
     } else {
       tl.reverse();
-      // NOTE: unlockBodyScroll() now runs in onReverseComplete above,
-      // once the drawer has actually finished sliding out — not here.
-      // Unlocking scroll immediately on click (while the drawer is still
-      // visually sliding away) let the page jump/reflow underneath the
-      // still-animating drawer.
     }
   }, [isOpen]);
 
   // Safety: always release the scroll lock on unmount
-  useEffect(() => {
-    return () => unlockBodyScroll();
-  }, []);
+  useEffect(() => unlockBodyScroll, []);
 
   useCloseOnEscape(isOpen, () => setIsOpen(false));
   const closeMenu = () => setIsOpen(false);
@@ -279,7 +263,7 @@ export function MobileNav() {
       {mounted &&
         createPortal(
           <>
-            {/* Backdrop — subtle dim, NO blur on the whole screen, closes on click */}
+            {/* Backdrop — subtle dim, no blur on the whole screen, closes on click */}
             <div
               ref={backdropRef}
               onClick={closeMenu}
@@ -288,31 +272,23 @@ export function MobileNav() {
               aria-hidden="true"
             />
 
-            {/* Drawer — half-screen panel.
-                Background is SOLID while translating (drawerReady = false)
-                and only switches to the glassy blurred version once the
+            {/* Drawer — half-screen panel, always slides in from the left.
+                Background is solid while translating (drawerReady = false)
+                and switches to the glassy blurred version only once the
                 slide-in animation has fully completed. */}
             <div
               ref={drawerRef}
               style={{ display: "none" }}
-              className={`
-                fixed top-0 bottom-0 z-[99999]
-                w-[92vw] max-w-[520px]
-                right-0
-                flex flex-col
-                ${
-                  drawerReady
-                    ? "bg-white/70 dark:bg-[#09090f]/60 backdrop-blur-2xl backdrop-saturate-150"
-                    : "bg-white/95 dark:bg-[#0b0b12]/95"
+              className={`fixed top-0 bottom-0 z-[99999] h-[100dvh] w-[75vw] max-w-[520px] left-0 flex flex-col overscroll-none
+                ${drawerReady
+                  ? "bg-white/70 dark:bg-[#09090f]/60 backdrop-blur-2xl backdrop-saturate-150"
+                  : "bg-white/95 dark:bg-[#0b0b12]/95"
                 }
-                border-s border-slate-200/70 dark:border-white/10
-                shadow-2xl shadow-black/30
-                overflow-hidden
-                transition-colors duration-150
-              `}
+                border-e border-slate-200/70 dark:border-white/10
+                shadow-2xl shadow-black/30 overflow-hidden transition-colors duration-150`}
             >
-              {/* Subtle top accent line */}
-              <div className="absolute top-0 inset-x-0 h-[3px] bg-gradient-to-r from-blue-600 via-sky-400 to-indigo-600 rounded-t-none" />
+              {/* Top accent line */}
+              <div className="absolute top-0 inset-x-0 h-[3px] bg-gradient-to-r from-blue-600 via-sky-400 to-indigo-600" />
 
               {/* Ambient glow blobs — only rendered once the drawer has settled */}
               {drawerReady && (
@@ -323,12 +299,11 @@ export function MobileNav() {
               )}
 
               {/* Inner content wrapper */}
-              <div className="flex flex-col flex-1 px-6 sm:px-8 pt-5 pb-8 gap-5 relative z-10 overflow-y-auto overflow-x-hidden">
-
+              <div className="flex flex-col flex-1 px-5 sm:px-8 pt-3 sm:pt-5 pb-4 sm:pb-8 gap-2 sm:gap-5 relative z-10 overflow-y-auto overflow-x-hidden overscroll-contain">
                 {/* ── Header: Logo + Controls ── */}
                 <div
                   ref={drawerHeaderRef}
-                  className="flex items-center justify-between shrink-0 pb-4 border-b border-slate-100 dark:border-white/[0.07]"
+                  className="flex items-center justify-between shrink-0 pb-2 sm:pb-4 border-b border-slate-100 dark:border-white/[0.07]"
                 >
                   <Link href="/" onClick={closeMenu} className="inline-block">
                     <Image
@@ -337,7 +312,7 @@ export function MobileNav() {
                       width={100}
                       height={30}
                       loading="lazy"
-                      className="h-7 w-auto object-contain dark:hidden"
+                      className="h-10 w-auto object-contain dark:hidden"
                     />
                     <Image
                       src="/assets/logo_dark.PNG"
@@ -345,7 +320,7 @@ export function MobileNav() {
                       width={100}
                       height={30}
                       loading="lazy"
-                      className="h-7 w-auto object-contain hidden dark:block"
+                      className="h-10 w-auto object-contain hidden dark:block"
                     />
                   </Link>
                   <div className="flex items-center gap-2">
@@ -354,48 +329,26 @@ export function MobileNav() {
                     <button
                       onClick={closeMenu}
                       aria-label="Close menu"
-                      className="p-2 rounded-full bg-slate-100 dark:bg-white/10 text-slate-600 dark:text-slate-300 hover:bg-red-50 hover:text-red-500 dark:hover:bg-red-500/10 dark:hover:text-red-400 transition-all duration-200"
+                      className="p-2 -me-2 rounded-full bg-slate-100 dark:bg-white/10 text-slate-600 dark:text-slate-300 hover:bg-red-50 hover:text-red-500 dark:hover:bg-red-500/10 dark:hover:text-red-400 transition-all duration-200"
                     >
                       <X className="h-5 w-5" />
                     </button>
                   </div>
                 </div>
 
-                {/* ── Eyebrow ── */}
-                <div className="flex items-center justify-between shrink-0">
-                  <span className="font-mono text-[10px] tracking-[0.22em] uppercase text-slate-400 dark:text-slate-500">
-                    Menu · {String(navLinks.length).padStart(2, "0")}
-                  </span>
-                  <span className="flex items-center gap-1.5 font-mono text-[10px] tracking-wide text-slate-400 dark:text-slate-500">
-                    <span className="relative flex h-1.5 w-1.5">
-                      <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-500 opacity-75" />
-                      <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-emerald-500" />
-                    </span>
-                    Available now
-                  </span>
-                </div>
-
                 {/* ── Nav Links ── */}
                 <nav className="flex-1 flex flex-col justify-center" aria-label="Main navigation">
-                  <ul
-                    ref={linksContainerRef}
-                    className="list-none p-0 m-0 space-y-1"
-                  >
+                  <ul ref={linksContainerRef} className="list-none p-0 m-0">
                     {navLinks.map(({ label, href }, i) => (
                       <li key={href} className="relative overflow-hidden">
                         <Link
                           href={href}
                           onClick={closeMenu}
-                          className="group flex items-center justify-between gap-4 py-4"
+                          className="group flex items-center justify-between gap-4 py-2 sm:py-4"
                         >
-                          <div className="flex items-center gap-3">
-                            <span className="font-mono text-[11px] text-blue-600/60 dark:text-blue-400/60 tabular-nums">
-                              {String(i + 1).padStart(2, "0")}
-                            </span>
-                            <span className="text-2xl sm:text-3xl font-extrabold tracking-tight text-slate-800 dark:text-slate-100 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors duration-300">
-                              {label}
-                            </span>
-                          </div>
+                          <span className="text-[22px] sm:text-3xl font-extrabold tracking-tight text-slate-800 dark:text-slate-100 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors duration-300">
+                            {label}
+                          </span>
                           <ArrowRight className="h-5 w-5 text-slate-300 dark:text-slate-700 group-hover:text-blue-500 dark:group-hover:text-blue-400 group-hover:translate-x-1 transition-all duration-300 shrink-0" />
                         </Link>
                         {/* Animated underline divider */}
@@ -409,48 +362,41 @@ export function MobileNav() {
                 </nav>
 
                 {/* ── Footer ── */}
-                <div className="mt-auto space-y-3 shrink-0">
+                <div className="mt-auto space-y-2 sm:space-y-3 shrink-0">
                   {/* WhatsApp CTA */}
                   <div ref={footerCtaRef}>
-                    <Button
-                      as={Link}
+                    <Link
                       href={contact.whatsapp}
-                      target="_blank"
                       rel="noopener noreferrer"
-                      onClick={closeMenu}
-                      variant="gradient"
-                      size="md"
-                      className="w-full font-bold text-sm tracking-wide text-white shadow-lg shadow-blue-600/25"
+                      target="_blank"
+                      className="inline-flex w-full items-center justify-center gap-2 px-6 py-2.5 sm:py-4 rounded-full bg-gradient-to-r from-blue-600 to-sky-600 text-white font-bold text-xs md:text-md tracking-wider uppercase shadow-md shadow-blue-500/20 hover:shadow-lg hover:shadow-blue-500/35 hover:-translate-y-0.5 transition-all duration-300 group"
                     >
                       <MessageCircle className="h-4 w-4" />
                       <span>Let&apos;s Talk on WhatsApp</span>
-                    </Button>
+                    </Link>
                   </div>
 
-                  {/* Contact Info */}
-                  <div
-                    ref={footerInfoRef}
-                    className="grid grid-cols-1 gap-2 font-mono text-xs"
-                  >
+                  {/* Contact info */}
+                  <div ref={footerInfoRef} className="grid grid-cols-1 gap-1.5 sm:gap-2 font-mono text-[10px] md:text-xs">
                     <Link
                       href={map.linkUrl}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="flex items-center gap-2.5 rounded-xl bg-slate-50 dark:bg-white/[0.04] px-3 py-2.5 text-slate-500 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-white/[0.08] hover:text-slate-800 dark:hover:text-white transition-all border border-slate-100 dark:border-white/[0.06]"
+                      className="flex items-center gap-2.5 rounded-xl bg-slate-50 dark:bg-white/[0.04] px-3 py-2 sm:py-2.5 text-slate-500 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-white/[0.08] hover:text-slate-800 dark:hover:text-white transition-all border border-slate-100 dark:border-white/[0.06]"
                     >
                       <MapPin className="h-3.5 w-3.5 text-blue-500 shrink-0" />
                       <span className="text-start leading-snug">{contact.shortAddress}</span>
                     </Link>
                     <Link
                       href={`tel:${contact.phone.replace(/\s/g, "")}`}
-                      className="flex items-center gap-2.5 rounded-xl bg-slate-50 dark:bg-white/[0.04] px-3 py-2.5 text-slate-500 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-white/[0.08] hover:text-slate-800 dark:hover:text-white transition-all border border-slate-100 dark:border-white/[0.06]"
+                      className="flex items-center gap-2.5 rounded-xl bg-slate-50 dark:bg-white/[0.04] px-3 py-2 sm:py-2.5 text-slate-500 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-white/[0.08] hover:text-slate-800 dark:hover:text-white transition-all border border-slate-100 dark:border-white/[0.06]"
                     >
                       <Phone className="h-3.5 w-3.5 text-emerald-500 shrink-0" />
                       <span dir="ltr">{contact.phone}</span>
                     </Link>
                     <Link
                       href={`mailto:${contact.email}`}
-                      className="flex items-center gap-2.5 rounded-xl bg-slate-50 dark:bg-white/[0.04] px-3 py-2.5 text-slate-500 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-white/[0.08] hover:text-slate-800 dark:hover:text-white transition-all border border-slate-100 dark:border-white/[0.06]"
+                      className="flex items-center gap-2.5 rounded-xl bg-slate-50 dark:bg-white/[0.04] px-3 py-2 sm:py-2.5 text-slate-500 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-white/[0.08] hover:text-slate-800 dark:hover:text-white transition-all border border-slate-100 dark:border-white/[0.06]"
                     >
                       <Mail className="h-3.5 w-3.5 text-sky-500 shrink-0" />
                       <span dir="ltr">{contact.email}</span>

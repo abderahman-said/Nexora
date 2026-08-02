@@ -68,17 +68,13 @@ export default function GSAPSlider<T extends { id?: string | number }>({
   // ✅ Lazy init: نحسب القيمة الصح من أول رندر بدل ما نستنى الـ useEffect
   // ده بيمنع "الفلاش" اللي بيحصل لما الكومبوننت يبدأ بـ defaultVisibleCount
   // وبعدين يقفز فجأة للقيمة الصح بتاعة الموبايل بعد أول paint
+  // ولكن عشان نحل مشكلة Hydration mismatch، لازم الرندر الأولي يكون مطابق للسيرفر
   const getInitialVisibleCards = () => {
-    if (typeof window === "undefined") return defaultVisibleCount;
-    const width = window.innerWidth;
-    if (width < 640) return mobileVisibleCount;
-    if (width < 1024) return tabletVisibleCount;
     return defaultVisibleCount;
   };
 
   const getInitialCenterActive = () => {
-    if (typeof window === "undefined") return false;
-    return centerModeMobile && window.innerWidth < 640;
+    return false;
   };
 
   const [visibleCards, setVisibleCards] = useState<number>(getInitialVisibleCards);
@@ -540,7 +536,7 @@ export default function GSAPSlider<T extends { id?: string | number }>({
                 ref={(el) => {
                   cardRefs.current[index] = el;
                 }}
-                className="px-2 sm:px-3.5 shrink-0 flex flex-col origin-center"
+                className={`shrink-0 flex flex-col origin-center ${(activeScale !== 1 || inactiveScale !== 1) ? "px-0.5 md:px-1" : "px-2 sm:px-3.5"}`}
                 style={{
                   width: `${100 / trackItemsCount}%`,
                 }}

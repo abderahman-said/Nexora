@@ -10,20 +10,20 @@ export function FooterBrand() {
 
     return (
         <div className="flex flex-col items-start space-y-4">
-            <Link href="/" className="inline-block mb-1 group">
+            <Link href="/" className="inline-block mb-5 group">
                 <Image
                     src="/assets/logo.png"
                     alt="Nexora Solutions"
                     width={160}
                     height={60}
-                    className="h-12 w-auto object-contain dark:hidden transition-transform duration-300 group-hover:scale-105"
+                    className="h-16 w-auto object-contain dark:hidden transition-transform duration-300 group-hover:scale-105"
                 />
                 <Image
                     src="/assets/logo_dark.PNG"
                     alt="Nexora Solutions Dark"
                     width={160}
                     height={60}
-                    className="h-12 w-auto object-contain hidden dark:block transition-transform duration-300 group-hover:scale-105"
+                    className="h-16 w-auto object-contain hidden dark:block transition-transform duration-300 group-hover:scale-105"
                 />
             </Link>
             <p className="text-xs md:text-sm font-normal leading-relaxed text-slate-600 dark:text-slate-300 text-left max-w-[340px]">

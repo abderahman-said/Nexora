@@ -24,17 +24,17 @@ export function ClientCard({ client }: ClientCardProps) {
 
             {/* Card Header: Avatar Protruding */}
             <div className="relative z-10 flex items-end justify-between -mt-14 mb-4">
-                
+
                 {/* Avatar Photo with Quote Badge */}
                 <div className="relative">
                     <div className="
                         w-20 h-20 sm:w-24 sm:h-24 rounded-2xl overflow-hidden
-                        border-[6px] border-slate-950 dark:border-slate-900
-                        bg-slate-950 shadow-xl shadow-slate-950/20
+                        border-[6px] border-white dark:border-[#0c101d]
+                        bg-slate-100 dark:bg-slate-900 shadow-xl shadow-slate-200/50 dark:shadow-slate-950/20
                         group-hover:border-blue-600 dark:group-hover:border-sky-400
                         transition-colors duration-300
                     ">
-                        <Image 
+                        <Image
                             src={client.avatar}
                             alt={client.clientName}
                             width={88}

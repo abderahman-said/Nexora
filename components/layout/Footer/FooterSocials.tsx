@@ -33,33 +33,33 @@ export function FooterSocials() {
     const { social } = useSiteData();
 
     return (
-        <div className="flex items-center gap-2.5 pt-2 text-slate-600 dark:text-slate-300">
+        <div className="flex items-center gap-2.5 pt-2">
             <Link 
                 href={social.facebook} 
                 target="_blank" 
                 rel="noopener noreferrer"
                 aria-label="Facebook"
-                className="p-2 rounded-lg bg-slate-200/80 dark:bg-white/5 border border-slate-300 dark:border-white/10 hover:border-blue-500/50 hover:bg-blue-600/10 dark:hover:bg-blue-600/20 hover:text-blue-600 dark:hover:text-blue-400 transition-all duration-300 hover:scale-110"
+                className="p-2 rounded-lg bg-[#1877F2]/10 dark:bg-[#1877F2]/10 border border-[#1877F2]/20 text-[#1877F2] hover:bg-[#1877F2]/20 dark:hover:bg-[#1877F2]/25 hover:border-[#1877F2]/50 hover:scale-110 transition-all duration-300"
             >
-                <FacebookIcon className="h-4 w-4" />
+                <FacebookIcon className="h-5 w-5" />
             </Link>
             <Link 
                 href={social.instagram} 
                 target="_blank" 
                 rel="noopener noreferrer"
                 aria-label="Instagram"
-                className="p-2 rounded-lg bg-slate-200/80 dark:bg-white/5 border border-slate-300 dark:border-white/10 hover:border-blue-500/50 hover:bg-blue-600/10 dark:hover:bg-blue-600/20 hover:text-blue-600 dark:hover:text-blue-400 transition-all duration-300 hover:scale-110"
+                className="p-2 rounded-lg bg-[#E1306C]/10 dark:bg-[#E1306C]/10 border border-[#E1306C]/20 text-[#E1306C] hover:bg-[#E1306C]/20 dark:hover:bg-[#E1306C]/25 hover:border-[#E1306C]/50 hover:scale-110 transition-all duration-300"
             >
-                <InstagramIcon className="h-4 w-4" />
+                <InstagramIcon className="h-5 w-5" />
             </Link>
             <Link 
                 href={social.linkedin} 
                 target="_blank" 
                 rel="noopener noreferrer"
                 aria-label="LinkedIn"
-                className="p-2 rounded-lg bg-slate-200/80 dark:bg-white/5 border border-slate-300 dark:border-white/10 hover:border-blue-500/50 hover:bg-blue-600/10 dark:hover:bg-blue-600/20 hover:text-blue-600 dark:hover:text-blue-400 transition-all duration-300 hover:scale-110"
+                className="p-2 rounded-lg bg-[#0A66C2]/10 dark:bg-[#0A66C2]/10 border border-[#0A66C2]/20 text-[#0A66C2] hover:bg-[#0A66C2]/20 dark:hover:bg-[#0A66C2]/25 hover:border-[#0A66C2]/50 hover:scale-110 transition-all duration-300"
             >
-                <LinkedInIcon className="h-4 w-4" />
+                <LinkedInIcon className="h-5 w-5" />
             </Link>
         </div>
     );

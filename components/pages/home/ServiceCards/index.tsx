@@ -30,7 +30,7 @@ export default function ServiceCards() {
           {/* Background Texture Image */}
           <div
             aria-hidden="true"
-            className="absolute inset-0 bg-[url('/service_bg.webp')] bg-cover bg-center bg-no-repeat pointer-events-none [filter:invert(100%)_sepia(3%)_saturate(0%)_hue-rotate(121deg)_brightness(104%)_contrast(100%)] dark:[filter:none]"
+            className="absolute rounded-3xl inset-0 bg-[url('/service_bg.webp')] bg-cover bg-center bg-no-repeat pointer-events-none [filter:invert(100%)_sepia(3%)_saturate(0%)_hue-rotate(121deg)_brightness(104%)_contrast(100%)] dark:[filter:none]"
           />
 
           {/* Ambient Tech Wave Background Lines */}

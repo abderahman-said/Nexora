@@ -5,7 +5,7 @@ import { MobileNav } from "./MobileNav";
 export default function Navbar() {
   return (
     <NavbarAnimatedShell>
-      <div className="flex items-center justify-end w-full pe-6">
+      <div className="flex items-center w-full">
         <MobileNav />
       </div>
     </NavbarAnimatedShell>
