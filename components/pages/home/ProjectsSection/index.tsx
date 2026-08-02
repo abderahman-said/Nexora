@@ -59,7 +59,7 @@ export default function ProjectsSection() {
             enableDrag={true}
             infinite={true}
             activeScale={1}
-            inactiveScale={0.90}
+            inactiveScale={0.9}
             inactiveOpacity={0.6}
             renderItem={(p) => <ProjectCard key={p.id} p={p} />}
           />

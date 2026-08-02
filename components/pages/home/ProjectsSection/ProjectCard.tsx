@@ -4,7 +4,7 @@ import { useRef, useEffect, useCallback, MouseEvent } from "react";
 import Link from "next/link";
 import gsap from "gsap";
 import OptimizedImage from "@/components/ui/OptimizedImage";
-import type { ProjectCardProps } from './types';
+import type { ProjectCardProps } from "./types";
 
 const MAX_TILT_DEG = 4;
 const LIFT_Y = -12;
@@ -71,7 +71,8 @@ export default function ProjectCard({ p }: ProjectCardProps) {
     const py = e.clientY - rect.top;
 
     const rotateY = ((px - rect.width / 2) / (rect.width / 2)) * MAX_TILT_DEG;
-    const rotateX = ((py - rect.height / 2) / (rect.height / 2)) * -MAX_TILT_DEG;
+    const rotateX =
+      ((py - rect.height / 2) / (rect.height / 2)) * -MAX_TILT_DEG;
 
     gsap.to(cardRef.current, {
       rotateX,
@@ -82,8 +83,14 @@ export default function ProjectCard({ p }: ProjectCardProps) {
     });
 
     if (glareRef.current) {
-      glareRef.current.style.setProperty("--glare-x", `${(px / rect.width) * 100}%`);
-      glareRef.current.style.setProperty("--glare-y", `${(py / rect.height) * 100}%`);
+      glareRef.current.style.setProperty(
+        "--glare-x",
+        `${(px / rect.width) * 100}%`,
+      );
+      glareRef.current.style.setProperty(
+        "--glare-y",
+        `${(py / rect.height) * 100}%`,
+      );
     }
   }, []);
 

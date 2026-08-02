@@ -16,7 +16,7 @@ export default function GSAPCardGrid() {
       <Container className="relative z-10">
         {/* ── Section Header ── */}
         <SectionHeader
-          className="mb-10 md:mb-16"
+          className="mb-8 md:mb-12"
           title={
             <span className="inline-flex items-center gap-3">
               <span className="relative flex h-3.5 w-3.5 shrink-0">
