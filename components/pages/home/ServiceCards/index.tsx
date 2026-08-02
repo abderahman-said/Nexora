@@ -100,7 +100,7 @@ export default function ServiceCards() {
             {/* Right Action Button */}
             <div className="shrink-0">
               <Link
-                href={`/${locale}/contact`}
+                href={`/${locale}/services`}
                 className="
                                     inline-flex items-center gap-2.5 px-7 py-3.5 rounded-full
                                     bg-gradient-to-r from-blue-600 to-sky-600 text-white

@@ -2,6 +2,7 @@
 import React, { SVGProps } from "react";
 import Link from "next/link";
 import { useSiteData } from "@/hooks/useSiteData";
+import Image from "next/image";
 
 function LinkedInIcon(props: SVGProps<SVGSVGElement>) {
     return (
@@ -19,15 +20,6 @@ function FacebookIcon(props: SVGProps<SVGSVGElement>) {
     );
 }
 
-function InstagramIcon(props: SVGProps<SVGSVGElement>) {
-    return (
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true" {...props}>
-            <rect width="20" height="20" x="2" y="2" rx="5" ry="5" />
-            <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" />
-            <line x1="17.5" x2="17.51" y1="6.5" y2="6.5" />
-        </svg>
-    );
-}
 
 export function FooterSocials() {
     const { social } = useSiteData();
@@ -50,7 +42,7 @@ export function FooterSocials() {
                 aria-label="Instagram"
                 className="p-2 rounded-lg bg-[#E1306C]/10 dark:bg-[#E1306C]/10 border border-[#E1306C]/20 text-[#E1306C] hover:bg-[#E1306C]/20 dark:hover:bg-[#E1306C]/25 hover:border-[#E1306C]/50 hover:scale-110 transition-all duration-300"
             >
-                <InstagramIcon className="h-5 w-5" />
+                <Image src="/instegram.jpeg" alt="Instagram" width={20} height={20} className ="h-[20px] w-[20px] object-contain rounded-md" />
             </Link>
             <Link 
                 href={social.linkedin} 

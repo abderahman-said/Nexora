@@ -13,7 +13,7 @@ export default function AboutValues() {
             className="scroll-section relative w-full py-16 sm:py-24 bg-slate-100/90 dark:bg-[#090d16] border-b border-slate-200/90 dark:border-slate-800/80 site-grid-bg overflow-hidden transition-colors duration-300"
         >
             <Container className="relative z-10">
-                <div className="text-center max-w-3xl mx-auto mb-14 space-y-4">
+                <div className="  mb-14 space-y-6">
                     <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-blue-50 dark:bg-blue-950/80 border border-blue-200/80 dark:border-blue-800/80 text-blue-600 dark:text-sky-400 font-bold text-xs uppercase tracking-wider shadow-sm">
                         <Award className="w-3.5 h-3.5" />
                         <span>OUR CORE VALUES</span>

@@ -17,7 +17,7 @@ export default function AboutStory() {
                         <div className="relative rounded-3xl overflow-hidden border border-slate-200 dark:border-slate-800 shadow-2xl bg-white dark:bg-[#0c101d] p-3 sm:p-4">
                             <div className="relative h-[320px] sm:h-[420px] rounded-2xl overflow-hidden">
                                 <Image
-                                    src="/assets/hero.webp"
+                                    src="/assets/about-team.png"
                                     alt="Nexora Engineering Team"
                                     fill
                                     className="object-cover hover:scale-105 transition-transform duration-700"
