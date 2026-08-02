@@ -12,17 +12,17 @@ export default function HeroBackground({ glowRef }: HeroBackgroundProps) {
           muted
           playsInline
           preload="metadata"
-          className="w-full h-full object-cover opacity-40 transition-opacity duration-500 scale-105"
+          className="w-full h-full object-cover opacity-65 transition-opacity duration-500 scale-105"
         >
           <source src="/assets/hero.mp4" type="video/mp4" />
         </video>
 
         {/* Light Mode Contrast Wash & Tint */}
-        <div className="absolute inset-0 bg-slate-900/10 dark:hidden mix-blend-overlay pointer-events-none" />
-        <div className="absolute inset-0 bg-gradient-to-tr from-blue-100/60 via-slate-100/40 to-indigo-100/50 dark:hidden pointer-events-none" />
+        <div className="absolute inset-0 bg-slate-900/5 dark:hidden mix-blend-overlay pointer-events-none" />
+        <div className="absolute inset-0 bg-gradient-to-tr from-blue-100/30 via-slate-100/20 to-indigo-100/25 dark:hidden pointer-events-none" />
 
         {/* Dark Mode Global Blue Tint */}
-        <div className="hidden dark:block absolute inset-0 bg-blue-950/40 mix-blend-multiply pointer-events-none" />
+        <div className="hidden dark:block absolute inset-0 bg-blue-950/20 mix-blend-multiply pointer-events-none" />
       </div>
 
       {/* Bottom Gradient Fade */}
