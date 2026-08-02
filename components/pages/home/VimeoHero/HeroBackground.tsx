@@ -1,51 +1,44 @@
-import Image from "next/image";
-import type { HeroBackgroundProps } from './types';
+import type { HeroBackgroundProps } from "./types";
 
 export default function HeroBackground({ glowRef }: HeroBackgroundProps) {
-    const currentYear = new Date().getFullYear();
+  const currentYear = new Date().getFullYear();
   return (
     <>
-      {/* Light Image Background (LCP Optimized) */}
-      <Image
-        src="/hero-bg-light.svg"
-        alt=""
-        fill
-        priority
-        sizes="100vw"
-        quality={85}
-        aria-hidden="true"
-        className="object-cover object-center opacity-90 dark:opacity-0 pointer-events-none transition-opacity duration-500"
-      />
+      {/* Video Background Layer */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none z-0">
+        <video
+          autoPlay
+          loop
+          muted
+          playsInline
+          preload="metadata"
+          className="w-full h-full object-cover opacity-25 dark:opacity-45 transition-opacity duration-500 scale-105"
+        >
+          <source src="/assets/hero.mp4" type="video/mp4" />
+        </video>
 
-      {/* Dark Image Background */}
-      <Image
-        src="/hero-bg-dark.svg"
-        alt=""
-        fill
-        priority
-        sizes="100vw"
-        quality={85}
-        aria-hidden="true"
-        className="object-cover object-center opacity-0 dark:opacity-90 pointer-events-none transition-opacity duration-500"
-      />
+        {/* Light Mode Contrast Wash & Tint */}
+        <div className="absolute inset-0 bg-slate-900/10 dark:hidden mix-blend-overlay pointer-events-none" />
+        <div className="absolute inset-0 bg-gradient-to-tr from-blue-100/70 via-slate-100/50 to-indigo-100/60 dark:hidden pointer-events-none" />
 
-      {/* Subtle Central Contrast Radial Vignette */}
+        {/* Dark Mode Global Blue Tint */}
+        <div className="hidden dark:block absolute inset-0 bg-blue-950/40 mix-blend-multiply pointer-events-none" />
+      </div>
+
+      {/* Bottom Gradient Fade */}
       <div
-        aria-hidden="true"
-        className="absolute inset-0 bg-[radial-gradient(circle_at_50%_35%,rgba(248,250,252,0.45)_0%,rgba(248,250,252,0.1)_60%,transparent_100%)] dark:bg-[radial-gradient(circle_at_50%_35%,rgba(3,7,18,0.45)_0%,rgba(3,7,18,0.1)_60%,transparent_100%)] pointer-events-none transition-colors duration-300"
+        className="
+          absolute 
+          left-0 
+          right-0 
+          bottom-[-2b px] 
+          h-[55%]
+          pointer-events-none
+          z-[1]
+          bg-[linear-gradient(180deg,rgba(248,250,252,0)_0%,rgba(224,231,255,0.6)_50%,rgba(248,250,252,1)_100%)]
+          dark:bg-[linear-gradient(180deg,rgba(6,9,19,0)_0%,rgba(15,23,42,0.75)_65%,rgba(6,9,19,1)_100%)]
+        "
       />
-
-      {/* <div
-                aria-hidden="true"
-                className="
-                    absolute inset-0
-                    [background-image:linear-gradient(rgba(0,0,0,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(0,0,0,0.03)_1px,transparent_1px)]
-                    [background-size:80px_80px]
-                    [mask-image:radial-gradient(ellipse_at_center,black_40%,transparent_85%)]
-                    pointer-events-none
-                "
-            /> */}
-
       {/* RIGHT SIDE DECORATORS */}
       <div
         aria-hidden="true"
@@ -54,8 +47,7 @@ export default function HeroBackground({ glowRef }: HeroBackgroundProps) {
         <div className="hero-side-el flex items-center justify-center opacity-50 w-1.5 h-1.5 bg-transparent border border-slate-400 dark:border-slate-600 rotate-45" />
         <div className="hero-side-el flex items-center justify-center opacity-50 w-px h-20 bg-gradient-to-b from-transparent via-slate-300 dark:via-slate-700 to-transparent" />
         <div className="hero-side-el flex items-center justify-center opacity-50 text-[0.65rem] tracking-[0.3em] font-semibold text-slate-600 dark:text-slate-400">
-                    {currentYear}
-
+          {currentYear}
         </div>
         <div className="hero-side-el flex items-center justify-center opacity-40 w-px h-20 bg-gradient-to-b from-transparent via-slate-300 dark:via-slate-700 to-transparent" />
         <div className="hero-side-el flex items-center justify-center opacity-40 w-1.5 h-1.5 bg-slate-400 dark:bg-slate-600" />

@@ -4,7 +4,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { ArrowRight, Sparkles, ShieldCheck } from "lucide-react";
 import Magnet from "@/components/ui/Magnet";
-import type { HeroContentProps } from './types';
+import type { HeroContentProps } from "./types";
 
 // Authentic WhatsApp SVG Logo Icon
 function WhatsappIcon({ className }: { className?: string }) {
