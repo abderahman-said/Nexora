@@ -29,7 +29,7 @@ export default function InteractiveCard({
                 shadow-xl shadow-slate-200/40 dark:shadow-none
                 hover:border-blue-500/60 dark:hover:border-sky-400/60
                 hover:shadow-2xl hover:shadow-blue-500/20 dark:hover:shadow-blue-500/20
-                hover:-translate-y-3 hover:scale-[1.02]
+                hover:-translate-y-3
                 transition-all duration-500 ease-out
                 ${className}
             `}
@@ -47,7 +47,7 @@ export default function InteractiveCard({
                     font-black text-lg flex items-center justify-center
                     border-4 border-slate-100 dark:border-[#060913]
                     shadow-xl shadow-blue-500/30
-                    group-hover:scale-110 group-hover:shadow-blue-500/60
+                     group-hover:shadow-blue-500/60
                     transition-all duration-300 z-20
                 "
         >
@@ -63,7 +63,7 @@ export default function InteractiveCard({
                         bg-gradient-to-br from-blue-600 via-sky-500 to-indigo-600 text-white
                         flex items-center justify-center
                         shadow-xl shadow-blue-500/30
-                        group-hover:shadow-2xl group-hover:shadow-blue-500/60 group-hover:scale-110 group-hover:rotate-3
+                        group-hover:shadow-2xl group-hover:shadow-blue-500/60   group-hover:rotate-3
                         transition-all duration-500 ease-out
                     "
           >
@@ -72,7 +72,7 @@ export default function InteractiveCard({
             <span className="absolute -inset-1 rounded-2xl bg-gradient-to-r from-blue-500 to-sky-400 opacity-0 group-hover:opacity-50 blur-sm transition-opacity duration-500 pointer-events-none" />
 
             {/* Icon */}
-            <Icon className="w-5 h-5 md:w-7 md:h-7 stroke-[2.2] relative z-10 transform transition-transform duration-500 ease-out group-hover:rotate-12 group-hover:scale-110" />
+            <Icon className="w-5 h-5 md:w-7 md:h-7 stroke-[2.2] relative z-10 transform transition-transform duration-500 ease-out group-hover:rotate-12" />
           </div>
         </div>
       )}

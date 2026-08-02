@@ -8,7 +8,6 @@ import type { ProjectCardProps } from './types';
 
 const MAX_TILT_DEG = 4;
 const LIFT_Y = -12;
-const HOVER_SCALE = 1.08;
 const DESKTOP_QUERY = "(min-width: 768px)";
 
 export default function ProjectCard({ p }: ProjectCardProps) {
@@ -51,7 +50,6 @@ export default function ProjectCard({ p }: ProjectCardProps) {
     rectRef.current = cardRef.current.getBoundingClientRect();
     gsap.to(cardRef.current, {
       y: LIFT_Y,
-      scale: HOVER_SCALE,
       duration: 0.35,
       ease: "power3.out",
       overwrite: "auto",
@@ -93,7 +91,6 @@ export default function ProjectCard({ p }: ProjectCardProps) {
     if (!canAnimate() || !cardRef.current) return;
     gsap.to(cardRef.current, {
       y: 0,
-      scale: 1,
       rotateX: 0,
       rotateY: 0,
       duration: 0.4,

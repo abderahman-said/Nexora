@@ -26,17 +26,7 @@ export default function HeroContent({
     <div className="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-14 items-center py-2 lg:py-8">
       {/* ── RIGHT COLUMN: Content (Text & CTAs on Right Side) ── */}
       <div className="lg:col-span-6 order-1 lg:order-1 flex flex-col items-start text-left">
-        {/* Eyebrow Pill Tag */}
-        <div
-          ref={badgeRef}
-          className="mb-4 sm:mb-5 inline-flex items-center gap-2.5 px-3.5 sm:px-4 py-1.5 rounded-full bg-blue-500/10 dark:bg-blue-400/15 border border-blue-300/50 dark:border-blue-700/50 text-blue-600 dark:text-blue-400 text-[0.7rem] sm:text-[0.75rem] font-bold uppercase tracking-wider shadow-sm"
-        >
-          <span className="relative flex h-2.5 w-2.5">
-            <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-blue-500 opacity-75" />
-            <span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-blue-600 dark:bg-blue-400" />
-          </span>
-          <span>BEST MARKETING & SOFTWARE SERVICE</span>
-        </div>
+         
 
         {/* Main Headline */}
         <h1

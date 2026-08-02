@@ -22,12 +22,16 @@ import { getNavLinks } from "./navData";
 import { useTranslations, useLocale } from 'next-intl';
 import Button from "@/components/ui/Button";
 import { useSiteData } from "@/hooks/useSiteData";
+import ThemeToggle from "@/components/ui/ThemeToggle";
+import LanguageToggle from "@/components/ui/LanguageToggle";
 
 const emptySubscribe = () => () => {};
 const getSnapshot = () => true;
 const getServerSnapshot = () => false;
 
 const EASE = {
+  reveal: "expo.out",
+  hide: "power3.in",
   out: "power3.out",
   inOut: "power2.inOut",
   in: "power3.in",
@@ -61,8 +65,15 @@ export function MobileNav() {
   const midBarRef = useRef<HTMLSpanElement>(null);
   const botBarRef = useRef<HTMLSpanElement>(null);
   const menuOverlayRef = useRef<HTMLDivElement>(null);
+  const headerRowRef = useRef<HTMLDivElement>(null);
+  const eyebrowRef = useRef<HTMLDivElement>(null);
   const linksContainerRef = useRef<HTMLUListElement>(null);
+  const dividerRefs = useRef<Array<HTMLSpanElement | null>>([]);
+  const footerCtaRef = useRef<HTMLDivElement>(null);
   const footerInfoRef = useRef<HTMLDivElement>(null);
+  const blobARef = useRef<HTMLDivElement>(null);
+  const blobBRef = useRef<HTMLDivElement>(null);
+  const ambientTweenRef = useRef<gsap.core.Timeline | null>(null);
 
   // Hamburger <-> X morph, overlay reveal, and staggered content animation.
   useEffect(() => {
@@ -70,26 +81,29 @@ export function MobileNav() {
 
     const ctx = gsap.context(() => {
       const tl = gsap.timeline();
+      const dividers = dividerRefs.current.filter(Boolean);
 
       if (isOpen) {
         document.body.style.overflow = "hidden";
 
+        // Hamburger -> X morph
         tl.to(
           topBarRef.current,
-          { y: 6, rotate: 45, duration: 0.35, ease: EASE.out },
+          { y: 6, rotate: 45, duration: 0.4, ease: EASE.out },
           0,
         )
           .to(
             midBarRef.current,
-            { opacity: 0, scaleX: 0, duration: 0.2, ease: EASE.out },
+            { opacity: 0, scaleX: 0, duration: 0.25, ease: EASE.out },
             0,
           )
           .to(
             botBarRef.current,
-            { y: -6, rotate: -45, duration: 0.35, ease: EASE.out },
+            { y: -6, rotate: -45, duration: 0.4, ease: EASE.out },
             0,
           );
 
+        // Full-bleed reveal — slower, more deliberate
         if (menuOverlayRef.current) {
           tl.to(
             menuOverlayRef.current,
@@ -97,32 +111,114 @@ export function MobileNav() {
               display: "flex",
               opacity: 1,
               clipPath: "circle(150% at 90% 0%)",
-              duration: 0.55,
-              ease: EASE.out,
+              duration: 0.75,
+              ease: EASE.reveal,
             },
             0,
           );
         }
 
-        if (linksContainerRef.current) {
+        // Header row (logo + controls) drops in first
+        if (headerRowRef.current) {
           tl.fromTo(
-            Array.from(linksContainerRef.current.children),
-            { opacity: 0, y: 35 },
-            { opacity: 1, y: 0, duration: 0.45, stagger: 0.08, ease: EASE.out },
+            headerRowRef.current,
+            { opacity: 0, y: -16 },
+            { opacity: 1, y: 0, duration: 0.5, ease: EASE.out },
             0.15,
           );
         }
 
+        // Eyebrow (MENU label / count / status)
+        if (eyebrowRef.current) {
+          tl.fromTo(
+            eyebrowRef.current,
+            { opacity: 0, y: -10 },
+            { opacity: 1, y: 0, duration: 0.45, ease: EASE.out },
+            0.3,
+          );
+        }
+
+        // Nav links — wider stagger, slight "flip up" for weight
+        if (linksContainerRef.current) {
+          tl.fromTo(
+            Array.from(linksContainerRef.current.children),
+            { opacity: 0, y: 55, rotateX: -12 },
+            {
+              opacity: 1,
+              y: 0,
+              rotateX: 0,
+              duration: 0.7,
+              stagger: 0.11,
+              ease: EASE.out,
+              transformOrigin: "0% 100%",
+            },
+            0.42,
+          );
+        }
+
+        // Underline dividers draw in right after each link lands
+        if (dividers.length) {
+          tl.fromTo(
+            dividers,
+            { scaleX: 0 },
+            {
+              scaleX: 1,
+              duration: 0.55,
+              stagger: 0.11,
+              ease: EASE.inOut,
+              transformOrigin: "0% 50%",
+            },
+            0.62,
+          );
+        }
+
+        // Footer CTA
+        if (footerCtaRef.current) {
+          tl.fromTo(
+            footerCtaRef.current,
+            { opacity: 0, y: 30, scale: 0.97 },
+            { opacity: 1, y: 0, scale: 1, duration: 0.55, ease: EASE.out },
+            1.05,
+          );
+        }
+
+        // Footer contact cards
         if (footerInfoRef.current) {
           tl.fromTo(
-            footerInfoRef.current,
-            { opacity: 0, y: 25 },
-            { opacity: 1, y: 0, duration: 0.5, ease: "power2.out" },
-            0.35,
+            Array.from(footerInfoRef.current.children),
+            { opacity: 0, y: 24 },
+            {
+              opacity: 1,
+              y: 0,
+              duration: 0.5,
+              stagger: 0.08,
+              ease: EASE.out,
+            },
+            1.18,
           );
+        }
+
+        // Ambient background glow — slow continuous drift while open
+        if (blobARef.current && blobBRef.current) {
+          const ambient = gsap.timeline({ repeat: -1, yoyo: true });
+          ambient
+            .to(
+              blobARef.current,
+              { x: 20, y: -15, scale: 1.1, duration: 6, ease: "sine.inOut" },
+              0,
+            )
+            .to(
+              blobBRef.current,
+              { x: -15, y: 10, scale: 1.08, duration: 7, ease: "sine.inOut" },
+              0,
+            );
+          ambientTweenRef.current = ambient;
         }
       } else {
         document.body.style.overflow = "";
+
+        ambientTweenRef.current?.kill();
+        ambientTweenRef.current = null;
 
         tl.to(
           topBarRef.current,
@@ -140,19 +236,35 @@ export function MobileNav() {
             0,
           );
 
+        // Content exits quickly before the overlay collapses
+        if (linksContainerRef.current) {
+          tl.to(
+            Array.from(linksContainerRef.current.children),
+            { opacity: 0, y: -16, duration: 0.25, stagger: 0.03, ease: EASE.in },
+            0,
+          );
+        }
+        if (footerCtaRef.current || footerInfoRef.current) {
+          tl.to(
+            [footerCtaRef.current, footerInfoRef.current].filter(Boolean),
+            { opacity: 0, y: 16, duration: 0.22, ease: EASE.in },
+            0,
+          );
+        }
+
         if (menuOverlayRef.current) {
           tl.to(
             menuOverlayRef.current,
             {
               opacity: 0,
               clipPath: "circle(0% at 90% 0%)",
-              duration: 0.4,
-              ease: EASE.in,
+              duration: 0.45,
+              ease: EASE.hide,
               onComplete: () => {
                 gsap.set(menuOverlayRef.current, { display: "none" });
               },
             },
-            0,
+            0.05,
           );
         }
       }
@@ -166,7 +278,7 @@ export function MobileNav() {
   const closeMenu = () => setIsOpen(false);
 
   return (
-    <div className="md:hidden">
+    <div>
       {/* Theme-aware toggle button */}
       <button
         onClick={() => setIsOpen((prev) => !prev)}
@@ -195,102 +307,155 @@ export function MobileNav() {
           <div
             ref={menuOverlayRef}
             style={{ clipPath: "circle(0% at 90% 0%)", display: "none" }}
-            className="fixed inset-0 w-screen h-screen z-[99999] flex flex-col gap-[25px] bg-white/98 dark:bg-[#0a0a0e]/98 text-slate-900 dark:text-white backdrop-blur-3xl p-6 sm:p-10 pt-6 pb-8 overflow-y-auto transition-colors duration-300"
+            className="fixed inset-0 w-screen h-screen z-[99999] flex flex-col bg-white/98 dark:bg-[#0a0a0e]/98 text-slate-900 dark:text-white backdrop-blur-3xl overflow-y-auto transition-colors duration-300"
           >
             {/* Ambient background glow */}
-            <div className="absolute top-1/3 right-1/4 h-72 w-72 rounded-full bg-blue-500/10 dark:bg-blue-600/20 blur-3xl pointer-events-none" />
-            <div className="absolute bottom-10 left-10 h-56 w-56 rounded-full bg-sky-500/5 dark:bg-sky-500/10 blur-3xl pointer-events-none" />
+            <div
+              ref={blobARef}
+              className="absolute top-1/4 end-[-10%] h-80 w-80 rounded-full bg-blue-500/10 dark:bg-blue-600/20 blur-3xl pointer-events-none"
+            />
+            <div
+              ref={blobBRef}
+              className="absolute bottom-0 start-[-5%] h-64 w-64 rounded-full bg-sky-500/5 dark:bg-sky-500/10 blur-3xl pointer-events-none"
+            />
 
-            {/* Top bar: logo + close */}
-            <div className="flex items-center justify-between relative z-10 pb-6 border-b border-slate-200 dark:border-white/10">
-              <Link href="/" onClick={closeMenu} className="inline-block">
-                <Image
-                  src="/assets/logo.png"
-                  alt="Nexora Solutions"
-                  width={120}
-                  height={38}
-                  className="h-9 w-auto object-contain dark:hidden"
-                />
-                <Image
-                  src="/assets/logo_dark.PNG"
-                  alt="Nexora Solutions Dark"
-                  width={120}
-                  height={38}
-                  className="h-9 w-auto object-contain hidden dark:block"
-                />
-              </Link>
-              <button
-                onClick={closeMenu}
-                aria-label="Close menu"
-                className="p-2 rounded-full bg-slate-100 dark:bg-white/10 text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white hover:bg-slate-200 dark:hover:bg-white/20 transition-colors"
+            <div className="w-full max-w-3xl mx-auto flex flex-col min-h-full px-5 sm:px-10 pt-5 pb-8 gap-6 relative z-10">
+
+              {/* Top bar: logo + controls */}
+              <div
+                ref={headerRowRef}
+                className="flex items-center justify-between shrink-0"
               >
-                <X className="h-6 w-6" />
-              </button>
-            </div>
-
-            {/* Staggered nav links */}
-            <div className=" py-5 relative z-10">
-              <ul
-                ref={linksContainerRef}
-                className="space-y-3 list-none p-0 m-0"
-              >
-                {navLinks.map(({ label, href }) => (
-                  <li key={href}>
-                    <Link
-                      href={href}
-                      onClick={closeMenu}
-                      className="group flex items-center justify-between text-2xl font-extrabold tracking-tight text-slate-800 dark:text-slate-100 hover:text-blue-600 dark:hover:text-blue-400 transition-colors py-2 border-b border-slate-200 dark:border-white/5"
-                    >
-                      <div>{label}</div>
-                      <ArrowUpRight className="h-6 w-6 text-slate-400 dark:text-slate-600 group-hover:text-blue-600 dark:group-hover:text-blue-400 group-hover:translate-x-1 group-hover:-translate-y-1 transition-all duration-300" />
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-            </div>
-
-            {/* Bottom info + WhatsApp CTA */}
-            <div ref={footerInfoRef} className="space-y-5 relative z-10">
-              <Button
-                as={Link}
-                href={contact.whatsapp}
-                target="_blank"
-                rel="noopener noreferrer"
-                onClick={closeMenu}
-                variant="gradient"
-                size="md"
-                className="w-full font-bold text-sm tracking-wide text-white shadow-lg shadow-blue-600/30"
-              >
-                <MessageCircle className="h-4 w-4" />
-                <span>Let&apos;s Talk on WhatsApp</span>
-              </Button>
-
-              <div className="grid grid-cols-1 gap-2 text-xs text-slate-500 dark:text-slate-400 font-mono pt-1">
-                <Link
-                  href={map.linkUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center gap-2 hover:text-slate-900 dark:hover:text-white transition-colors"
-                >
-                  <MapPin className="h-3.5 w-3.5 text-blue-600 dark:text-blue-400 shrink-0" />
-                  <span>{contact.shortAddress}</span>
+                <Link href="/" onClick={closeMenu} className="inline-block">
+                  <Image
+                    src="/assets/logo.png"
+                    alt="Nexora Solutions"
+                    width={110}
+                    height={34}
+                    className="h-8 w-auto object-contain dark:hidden"
+                  />
+                  <Image
+                    src="/assets/logo_dark.PNG"
+                    alt="Nexora Solutions Dark"
+                    width={110}
+                    height={34}
+                    className="h-8 w-auto object-contain hidden dark:block"
+                  />
                 </Link>
-                <div className="flex items-center gap-2">
-                  <Phone className="h-3.5 w-3.5 text-emerald-600 dark:text-emerald-400 shrink-0" />
+                <div className="flex items-center gap-2.5">
+                  <LanguageToggle />
+                  <ThemeToggle />
+                  <button
+                    onClick={closeMenu}
+                    aria-label="Close menu"
+                    className="p-2 rounded-full bg-slate-100 dark:bg-white/10 text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white hover:bg-slate-200 dark:hover:bg-white/20 transition-colors"
+                  >
+                    <X className="h-5 w-5" />
+                  </button>
+                </div>
+              </div>
+
+              {/* Eyebrow: fills the dead space, sets an editorial tone */}
+              <div
+                ref={eyebrowRef}
+                className="flex items-center justify-between border-y border-slate-200 dark:border-white/10 py-3 shrink-0"
+              >
+                <span className="font-mono text-[11px] tracking-[0.25em] text-slate-500 dark:text-slate-400">
+                  MENU · {String(navLinks.length).padStart(2, "0")}
+                </span>
+                <span className="flex items-center gap-1.5 font-mono text-[11px] tracking-wide text-slate-500 dark:text-slate-400">
+                  <span className="relative flex h-1.5 w-1.5">
+                    <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-500 opacity-75" />
+                    <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-emerald-500" />
+                  </span>
+                  Available now
+                </span>
+              </div>
+
+              {/* Nav links */}
+              <div className="flex-1 flex flex-col justify-center py-2">
+                <ul
+                  ref={linksContainerRef}
+                  className="list-none p-0 m-0"
+                  style={{ perspective: "800px" }}
+                >
+                  {navLinks.map(({ label, href }, i) => (
+                    <li key={href} className="relative">
+                      <Link
+                        href={href}
+                        onClick={closeMenu}
+                        className="group flex items-center gap-4 py-4 md:py-5"
+                      >
+                        <span className="flex-1 flex items-center justify-between">
+                          <span className="text-3xl md:text-5xl font-extrabold tracking-tight text-slate-800 dark:text-slate-100 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
+                            {label}
+                          </span>
+                          <ArrowUpRight className="h-5 w-5 md:h-7 md:w-7 text-slate-400 dark:text-slate-600 group-hover:text-blue-600 dark:group-hover:text-blue-400 group-hover:translate-x-1 group-hover:-translate-y-1 transition-all duration-300 shrink-0" />
+                        </span>
+                      </Link>
+                      <span
+                        ref={(el) => {
+                          dividerRefs.current[i] = el;
+                        }}
+                        className="block h-px w-full bg-gradient-to-r from-blue-600/40 via-slate-300 dark:via-white/10 to-transparent origin-left"
+                      />
+                    </li>
+                  ))}
+                </ul>
+              </div>
+
+              {/* Bottom: WhatsApp CTA + contact cards */}
+              <div className="space-y-4 shrink-0 mt-auto">
+                <div ref={footerCtaRef}>
+                  <Button
+                    as={Link}
+                    href={contact.whatsapp}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    onClick={closeMenu}
+                    variant="gradient"
+                    size="md"
+                    className="w-full font-bold text-sm tracking-wide text-white shadow-lg shadow-blue-600/30"
+                  >
+                    <MessageCircle className="h-4 w-4" />
+                    <span>Let&apos;s Talk on WhatsApp</span>
+                  </Button>
+                </div>
+
+                <div
+                  ref={footerInfoRef}
+                  className="grid grid-cols-1 gap-2 font-mono text-xs"
+                >
+                  <Link
+                    href={map.linkUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center gap-3 rounded-xl bg-slate-100/70 dark:bg-white/5 px-3.5 py-3 text-slate-600 dark:text-slate-300 hover:bg-slate-200/70 dark:hover:bg-white/10 hover:text-slate-900 dark:hover:text-white transition-colors"
+                  >
+                    <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-blue-600/10 dark:bg-blue-400/10">
+                      <MapPin className="h-4 w-4 text-blue-600 dark:text-blue-400" />
+                    </span>
+                    <span className="text-start">{contact.shortAddress}</span>
+                  </Link>
+
                   <Link
                     href={`tel:${contact.phone.replace(/\s/g, "")}`}
-                    className="hover:text-slate-900 dark:hover:text-white transition-colors"
+                    className="flex items-center gap-3 rounded-xl bg-slate-100/70 dark:bg-white/5 px-3.5 py-3 text-slate-600 dark:text-slate-300 hover:bg-slate-200/70 dark:hover:bg-white/10 hover:text-slate-900 dark:hover:text-white transition-colors"
                   >
-                    {contact.phone}
+                    <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-emerald-600/10 dark:bg-emerald-400/10">
+                      <Phone className="h-4 w-4 text-emerald-600 dark:text-emerald-400" />
+                    </span>
+                    <span className="text-start" dir="ltr">{contact.phone}</span>
                   </Link>
-                </div>
-                <div className="flex items-center gap-2">
-                  <Mail className="h-3.5 w-3.5 text-sky-600 dark:text-sky-400 shrink-0" />
+
                   <Link
                     href={`mailto:${contact.email}`}
-                    className="hover:text-slate-900 dark:hover:text-white transition-colors"
+                    className="flex items-center gap-3 rounded-xl bg-slate-100/70 dark:bg-white/5 px-3.5 py-3 text-slate-600 dark:text-slate-300 hover:bg-slate-200/70 dark:hover:bg-white/10 hover:text-slate-900 dark:hover:text-white transition-colors"
                   >
-                    {contact.email}
+                    <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-sky-600/10 dark:bg-sky-400/10">
+                      <Mail className="h-4 w-4 text-sky-600 dark:text-sky-400" />
+                    </span>
+                    <span className="text-start" dir="ltr">{contact.email}</span>
                   </Link>
                 </div>
               </div>

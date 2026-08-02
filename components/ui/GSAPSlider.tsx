@@ -17,6 +17,11 @@ const SNAP_DURATION = 0.6; // ✅ كان 0.9 — أسرع = إحساس أخف و
 const SNAP_EASE = "sine.inOut"; // ✅ كان power2.inOut — منحنى جيبي ناعم بدون تسارع/تباطؤ حاد
 const RELEASE_EASE = "power1.out"; // ✅ يُستخدم بعد إفلات الـ drag عشان يكمل بنفس الـ momentum
 
+// ✅ بدل ما نستخدم CSS transition منفصل عن GSAP (اللي كان بيسبب تضارب بين
+// محركين مختلفين للحركة ويعمل "تهنيج" وقت الدراج)، دلوقتي الـ scale/opacity
+// بيتحركوا جوه GSAP بنفس الـ ticker بتاع حركة الترانك، فكله متزامن في نفس
+// حلقة الـ requestAnimationFrame الواحدة.
+
 // ✅ SSR-safe: document مش موجود وقت الـ server render
 const isRTL = () =>
   typeof document !== "undefined" && document.documentElement.dir === "rtl";
@@ -39,7 +44,15 @@ export default function GSAPSlider<T extends { id?: string | number }>({
   centerModeMobile = false,
   centerCardWidthPercent = 76,
   infinite = false,
-}: GSAPSliderProps<T>) {
+  // ✅ جديد: تحكم في حجم/شفافية الكارت النشط مقابل الكروت الجانبية
+  activeScale = 1,
+  inactiveScale = 0.85,
+  inactiveOpacity = 0.72,
+}: GSAPSliderProps<T> & {
+  activeScale?: number;
+  inactiveScale?: number;
+  inactiveOpacity?: number;
+}) {
   const totalItems = items.length;
 
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -84,6 +97,12 @@ export default function GSAPSlider<T extends { id?: string | number }>({
   const isRTLRef = useRef(false);
   const containerWidthRef = useRef(1);
   const rootRef = useRef<HTMLDivElement>(null); // ✅ wrapper خارجي مستقر لل Observer
+
+  // ✅ refs لكل كارت عشان نحرك الـ scale/opacity بتاعه عن طريق GSAP مباشرة
+  // بدل CSS transition، فيبقى كله (موضع الترانك + سكيل الكروت) شغال جوه
+  // نفس ticker وميحصلش تضارب/تهنيج وقت الدراج
+  const cardRefs = useRef<Array<HTMLDivElement | null>>([]);
+  const hasMountedScaleRef = useRef(false);
 
   useEffect(() => {
     isCenterActiveRef.current = isCenterActive;
@@ -168,6 +187,17 @@ export default function GSAPSlider<T extends { id?: string | number }>({
   const trackWidthPercent = isCenterActive
     ? trackItemsCount * centerCardWidthPercent
     : (trackItemsCount / visibleCards) * 100;
+
+  // ✅ في وضع center mode، currentIndex أصلاً هو الكارت اللي بيتحط في نص الشاشة
+  // (بحساب computeXPercent)، فمفيش إزاحة مطلوبة.
+  // لكن في الوضع العادي (لما بيبان أكتر من كارت مرة واحدة، زي 3 في الديسكتوب)،
+  // currentIndex بيمثل أول كارت في الصف الظاهر مش النص، فلو استخدمناه direct
+  // هيكبّر الكارت الشمال بدل الكارت النص فعلًا. عشان كده بنضيف offset
+  // بيوديك لمنتصف مجموعة الكروت الظاهرة فعليًا.
+  const highlightMiddleOffset = isCenterActive
+    ? 0
+    : Math.floor((effectiveVisibleCards - 1) / 2);
+  const highlightIndex = activeIndex + highlightMiddleOffset;
 
   const indexToXPercent = useCallback(
     (index: number) =>
@@ -262,6 +292,45 @@ export default function GSAPSlider<T extends { id?: string | number }>({
     if (isDraggingRef.current || totalItems === 0) return;
     jumpToPosition(cloneCount + currentIndexRef.current);
   }, [cloneCount, isCenterActive, trackItemsCount, jumpToPosition, totalItems]);
+
+  // ✅ تحريك الـ scale/opacity بتاعة كل كارت عن طريق GSAP (مش CSS transition)
+  // عشان يبقى متزامن 100% مع حركة الترانك ومفيش تهنيج وقت الدراج.
+  // أول مرة (mount) بيتحط الوضع الصح فورًا من غير أنيميشن عشان مفيش "فلاش".
+  useEffect(() => {
+    const isFirstRun = !hasMountedScaleRef.current;
+    hasMountedScaleRef.current = true;
+
+    cardRefs.current.forEach((el, index) => {
+      if (!el) return;
+      const realIndex = index - cloneCount;
+      const isActive = realIndex === highlightIndex;
+      const targetScale = isActive ? activeScale : inactiveScale;
+      const targetOpacity = 1; // ✅ الشفافية موحّدة 1 لكل الكروت (الفرق بقى بس في الحجم)
+
+      if (isFirstRun) {
+        gsap.set(el, {
+          scale: targetScale,
+          opacity: targetOpacity,
+          zIndex: isActive ? 10 : 1,
+        });
+      } else {
+        gsap.to(el, {
+          scale: targetScale,
+          opacity: targetOpacity,
+          zIndex: isActive ? 10 : 1,
+          duration: SNAP_DURATION,
+          ease: SNAP_EASE,
+          overwrite: "auto",
+        });
+      }
+    });
+  }, [
+    highlightIndex,
+    cloneCount,
+    trackItemsCount,
+    activeScale,
+    inactiveScale,
+  ]);
 
   useEffect(() => {
     const trackEl = trackRef.current;
@@ -459,13 +528,22 @@ export default function GSAPSlider<T extends { id?: string | number }>({
         >
           {renderItems.map((item, index) => {
             const realIndex = index - cloneCount;
-            const isActive = isCenterActive && realIndex === activeIndex;
+            // ✅ الكارت النشط بيتحسب دايمًا (مش بس في centerModeMobile)
+            // عشان تأثير التكبير/التصغير يشتغل في كل الأوضاع.
+            // وبيتقارن بـ highlightIndex (الكارت اللي فعليًا في نص الصف الظاهر)
+            // مش activeIndex الخام، عشان الكارت المكبّر يبان في المنتصف صح.
+            const isActive = realIndex === highlightIndex;
 
             return (
               <div
                 key={`slide-${index}`}
-                className="px-2 sm:px-3.5 shrink-0 flex flex-col"
-                style={{ width: `${100 / trackItemsCount}%` }}
+                ref={(el) => {
+                  cardRefs.current[index] = el;
+                }}
+                className="px-2 sm:px-3.5 shrink-0 flex flex-col origin-center"
+                style={{
+                  width: `${100 / trackItemsCount}%`,
+                }}
                 aria-hidden={infiniteEnabled && (index < cloneCount || index >= cloneCount + totalItems)}
                 suppressHydrationWarning
               >
