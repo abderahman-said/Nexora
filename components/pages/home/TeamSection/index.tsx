@@ -49,9 +49,7 @@ export default function TeamSection() {
                         pauseOnHover={false}
                         enableDrag={true}
                         infinite={true}
-                          activeScale={1.1}     
-  inactiveScale={0.8}
-  inactiveOpacity={0.6}
+                        
             />
            
         </div>

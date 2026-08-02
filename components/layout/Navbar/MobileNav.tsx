@@ -95,6 +95,8 @@ export function MobileNav() {
       const dividers = dividerRefs.current.filter(Boolean);
 
       if (isOpen) {
+        const scrollbarWidth = window.innerWidth - document.documentElement.clientWidth;
+        document.body.style.paddingRight = `${scrollbarWidth}px`;
         document.body.style.overflow = "hidden";
 
         // Hamburger -> X morph
@@ -233,6 +235,7 @@ export function MobileNav() {
           ambientTweenRef.current = ambient;
         }
       } else {
+        document.body.style.paddingRight = "";
         document.body.style.overflow = "";
 
         ambientTweenRef.current?.kill();

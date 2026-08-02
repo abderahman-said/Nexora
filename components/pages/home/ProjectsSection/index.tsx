@@ -41,7 +41,10 @@ export default function ProjectsSection() {
           }
         />
 
-        <div ref={sliderWrapperRef} className="w-full mt-[-10px] md:!mt-[-35px]">
+        <div
+          ref={sliderWrapperRef}
+          className="w-full mt-[-10px] md:!mt-[-35px]"
+        >
           <GSAPSlider
             items={allProjects}
             defaultVisibleCount={3}
@@ -55,9 +58,9 @@ export default function ProjectsSection() {
             pauseOnHover={false}
             enableDrag={true}
             infinite={true}
-              activeScale={1.1}     
-  inactiveScale={0.8}
-  inactiveOpacity={0.6}
+            activeScale={1.1}
+            inactiveScale={0.8}
+            inactiveOpacity={0.6}
             renderItem={(p) => <ProjectCard key={p.id} p={p} />}
           />
         </div>
