@@ -31,7 +31,7 @@ export default function HeroBackground({ glowRef }: HeroBackgroundProps) {
           absolute 
           left-0 
           right-0 
-          bottom-[-2b px] 
+          bottom-[-2px] 
           h-[55%]
           pointer-events-none
           z-[1]

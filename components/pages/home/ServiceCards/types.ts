@@ -1,5 +1,6 @@
 export interface ServiceCardProps {
     service: Service;
+    className?: string;
 }
 
 export interface Service {

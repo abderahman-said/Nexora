@@ -12,7 +12,7 @@ const ICON_MAP: Record<string, React.ComponentType<{ className?: string }>> = {
     Palette,
 };
 
-export function ServiceCard({ service }: ServiceCardProps) {
+export function ServiceCard({ service , className }: ServiceCardProps) {
     const IconComponent = ICON_MAP[service.icon] || BarChart3;
     
     return (
@@ -23,6 +23,7 @@ export function ServiceCard({ service }: ServiceCardProps) {
             description={service.description}
             features={service.features}
             buttonLink={service.link}
+            className={className}
         />
     );
 }
