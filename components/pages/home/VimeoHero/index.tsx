@@ -3,7 +3,7 @@
 import { useRef } from 'react';
 import HeroBackground from './HeroBackground';
 import HeroContent from './HeroContent';
-import HeroCircularBadge from './HeroCircularBadge';
+// import HeroCircularBadge from './HeroCircularBadge';
 import { useVimeoHeroGSAP } from './useVimeoHeroGSAP';
 import Container from '@/components/ui/Container';
 
@@ -42,7 +42,7 @@ export default function VimeoHero() {
                 />
             </Container>
 
-            <HeroCircularBadge />
+            {/* <HeroCircularBadge /> */}
         </section>
     );
 }

@@ -87,8 +87,6 @@ function injectSideDecorators() {
     "sd-ring sd-ring-left w-9 h-9 rounded-full border border-blue-400/40 flex-shrink-0 will-change-transform after:content-[''] after:block after:mx-auto after:h-1.5 after:w-1.5 after:rounded-full after:bg-[#2563eb] after:[margin-top:calc(50%-3px)]";
   const tickClasses =
     "sd-tick-line w-px h-[60px] flex-shrink-0 bg-[linear-gradient(to_bottom,transparent,rgba(15,23,42,0.12),transparent)]";
-  const indexClasses =
-    "sd-index text-[0.65rem] font-extrabold tracking-[0.15em] text-blue-600/80";
   const labelClasses =
     "sd-label text-[0.6rem] font-bold uppercase tracking-[0.2em] text-slate-400 [writing-mode:vertical-rl] [text-orientation:mixed]";
   const labelRClasses =
@@ -103,7 +101,6 @@ function injectSideDecorators() {
   sections.forEach((sec, i) => {
     if (sec.querySelector(".sd-left")) return;
 
-    const idx = String(i + 1).padStart(2, "0");
     const labels = [
       "Welcome",
       "About",
@@ -124,7 +121,6 @@ function injectSideDecorators() {
     left.innerHTML = `
             <div class="${ringClasses}"></div>
             <div class="${tickClasses}"></div>
-            <span class="${indexClasses}">${idx}</span>
             <span class="${labelClasses}">${label}</span>
         `;
 
