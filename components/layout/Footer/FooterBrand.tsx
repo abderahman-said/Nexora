@@ -16,14 +16,14 @@ export function FooterBrand() {
                     alt="Nexora Solutions"
                     width={160}
                     height={60}
-                    className="h-[70px] w-auto object-contain dark:hidden transition-transform duration-300 group-hover:scale-105"
+                    className="h-12 w-auto object-contain dark:hidden transition-transform duration-300 group-hover:scale-105"
                 />
                 <Image
                     src="/assets/logo_dark.PNG"
                     alt="Nexora Solutions Dark"
                     width={160}
                     height={60}
-                    className="h-[70px] w-auto object-contain hidden dark:block transition-transform duration-300 group-hover:scale-105"
+                    className="h-12 w-auto object-contain hidden dark:block transition-transform duration-300 group-hover:scale-105"
                 />
             </Link>
             <p className="text-xs md:text-sm font-normal leading-relaxed text-slate-600 dark:text-slate-300 text-left max-w-[340px]">

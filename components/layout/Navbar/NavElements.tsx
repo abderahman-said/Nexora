@@ -24,7 +24,7 @@ export function NavLogo({ logoRef }: NavLogoProps) {
             width={140}
             height={42}
             priority
-            className="h-auto max-h-[35px] md:max-h-[55px] w-auto object-contain dark:hidden transition-all duration-300"
+            className="h-8 md:h-12 w-auto object-contain dark:hidden transition-all duration-300"
           />
           <Image
             src="/assets/logo_dark.PNG"
@@ -32,7 +32,7 @@ export function NavLogo({ logoRef }: NavLogoProps) {
             width={140}
             height={42}
             priority
-            className="h-auto max-h-[35px] md:max-h-[55px] w-auto object-contain hidden dark:block transition-all duration-300"
+            className="h-8 md:h-12 w-auto object-contain hidden dark:block transition-all duration-300"
           />
         </Link>
       </Magnet>

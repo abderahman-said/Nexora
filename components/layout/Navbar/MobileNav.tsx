@@ -209,14 +209,14 @@ export function MobileNav() {
                   alt="Nexora Solutions"
                   width={120}
                   height={38}
-                  className="h-16 w-auto object-contain dark:hidden"
+                  className="h-9 w-auto object-contain dark:hidden"
                 />
                 <Image
                   src="/assets/logo_dark.PNG"
                   alt="Nexora Solutions Dark"
                   width={120}
                   height={38}
-                  className="h-16 w-auto object-contain hidden dark:block"
+                  className="h-9 w-auto object-contain hidden dark:block"
                 />
               </Link>
               <button
