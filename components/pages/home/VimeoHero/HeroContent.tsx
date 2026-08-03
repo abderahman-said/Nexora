@@ -46,10 +46,7 @@ export default function HeroContent({
           ref={subRef}
           className="text-sm sm:text-lg text-white dark:text-slate-300 font-medium leading-relaxed max-w-xl mb-6 sm:mb-8"
         >
-          We transform your ideas into integrated digital solutions that make a
-          real difference and support your business growth. Delivering smart,
-          high-performance applications designed to innovate, evolve, and scale
-          efficiently.
+          We transform your ideas into powerful web, mobile, and software solutions that drive business growth. Every solution is built for performance, scalability, and long-term success.
         </p>
 
         {/* Action Buttons (Primary CTA + WhatsApp Button with Equal Heights) */}

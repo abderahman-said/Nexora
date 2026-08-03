@@ -54,18 +54,15 @@ const HorizontalWords = () => {
 
               {/* Main Section Headline */}
               <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-slate-900 dark:text-white tracking-tight leading-[1.15]">
-                We Are Increasing Business Success With{" "}
+               Building Technology That Powers Business {" "}
                 <span className="bg-gradient-to-r from-blue-600 via-sky-500 to-indigo-600 bg-clip-text text-transparent">
-                  Technology
+                  Growth
                 </span>
               </h2>
 
               {/* Section Lead Description */}
               <p className="text-base sm:text-lg text-slate-600 dark:text-slate-300 leading-relaxed font-normal">
-                Synergistically incentivize effective imperatives through fully
-                researched intellectual capital. Appropriately fashion
-                client-based enterprise software solutions and scalable
-                architectures.
+               At Nexora Solutions, we transform ideas into powerful digital products that help businesses grow. We specialize in custom software, web development, mobile applications, and scalable digital solutions designed to deliver performance, innovation, and long-term value.
               </p>
 
               {/* ── Vision & Mission (Replacing Tabs) ── */}

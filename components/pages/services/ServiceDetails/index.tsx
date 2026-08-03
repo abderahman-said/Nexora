@@ -13,7 +13,7 @@ export default function ServiceDetails() {
                 <SectionHeader
                     badge="WHAT WE DO"
                     title="Comprehensive Digital Solutions"
-                    subtitle="We transform your ideas into integrated digital solutions that make a real difference and support your business growth."
+                    subtitle="We transform your ideas into powerful web, mobile, and software solutions that drive business growth. Every solution is built for performance, scalability, and long-term success."
                     align="center"
                 />
                 
