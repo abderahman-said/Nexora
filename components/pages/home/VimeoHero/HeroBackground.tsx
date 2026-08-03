@@ -10,10 +10,12 @@ export default function HeroBackground({ glowRef }: HeroBackgroundProps) {
 
   return (
     <>
-      {/* Preload the actual video bytes early (as="video" isn't supported by
-          Safari, but it's free elsewhere and doesn't hurt). fetchPriority
-          on the <video> tag below covers the rest. */}
-      <link rel="preload" as="video" href="/assets/hero.mp4" type="video/mp4" />
+      <link
+        rel="preload"
+        as="video"
+        href="/assets/hero.webm"
+        type="video/webm"
+      />
 
       <div className="absolute inset-0 overflow-hidden pointer-events-none z-0">
         <style
@@ -25,7 +27,6 @@ export default function HeroBackground({ glowRef }: HeroBackgroundProps) {
           }}
         />
 
-     
         <div
           className={`absolute inset-0 scale-105 transition-opacity duration-700 ${
             isVideoReady ? "opacity-0" : "opacity-100"
@@ -50,11 +51,12 @@ export default function HeroBackground({ glowRef }: HeroBackgroundProps) {
           controls={false}
           disablePictureInPicture
           preload="auto"
-          onCanPlay={() => setIsVideoReady(true)}
+          onPlaying={() => setIsVideoReady(true)}
           className={`w-full h-full object-cover scale-105 pointer-events-none transition-opacity duration-700 ${
             isVideoReady ? "opacity-80" : "opacity-0"
           }`}
         >
+          <source src="/assets/hero.webm" type="video/webm" />
           <source src="/assets/hero.mp4" type="video/mp4" />
         </video>
 
