@@ -4,6 +4,11 @@ import { useState, useRef, useEffect } from "react";
 import Image from "next/image";
 import type { HeroBackgroundProps } from "./types";
 
+const VIDEO_MP4 =
+  "https://res.cloudinary.com/yqfotvgz/video/upload/v1785768124/hero_ws07h0.mp4";
+const VIDEO_WEBM =
+  "https://res.cloudinary.com/yqfotvgz/video/upload/v1785791193/hero_yizsuj.webm";
+
 export default function HeroBackground({ glowRef }: HeroBackgroundProps) {
   const currentYear = new Date().getFullYear();
   const [isVideoReady, setIsVideoReady] = useState(false);
@@ -19,13 +24,8 @@ export default function HeroBackground({ glowRef }: HeroBackgroundProps) {
 
   return (
     <>
-      {/* Preload الفيديو الأساسي (mp4) بدل webm عشان يشتغل مع كل المتصفحات */}
-      <link
-        rel="preload"
-        as="video"
-        href="/assets/hero.mp4"
-        type="video/mp4"
-      />
+      {/* Preload الفيديو الأساسي (mp4) عشان يشتغل مع كل المتصفحات */}
+      <link rel="preload" as="video" href={VIDEO_MP4} type="video/mp4" />
 
       <div className="absolute inset-0 overflow-hidden pointer-events-none z-0">
         <style
@@ -68,16 +68,17 @@ export default function HeroBackground({ glowRef }: HeroBackgroundProps) {
           className={`w-full h-full object-cover scale-105 pointer-events-none transition-opacity duration-700 ${isVideoReady ? "opacity-80" : "opacity-0"
             }`}
         >
-          {/* MP4 الأول عشان Safari بيفشل أحيانًا في الـ fallback لو أول source متجاهل */}
+          {/* MP4 (H.264) الأول: بيشتغل على كل المتصفحات بما فيها Safari */}
           <source
-            src="/assets/hero.mp4"
+            src={VIDEO_MP4}
             type="video/mp4"
-            onError={() => console.error("hero.mp4 source failed to load")}
+            onError={() => console.error("mp4 source failed to load")}
           />
+          {/* WebM (VP9): بديل أخف حجمًا للمتصفحات اللي بتدعمه (مش Safari) */}
           <source
-            src="/assets/hero.webm"
+            src={VIDEO_WEBM}
             type="video/webm"
-            onError={() => console.error("hero.webm source failed to load")}
+            onError={() => console.error("webm source failed to load")}
           />
         </video>
 
