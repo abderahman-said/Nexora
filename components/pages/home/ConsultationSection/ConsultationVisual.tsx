@@ -28,18 +28,6 @@ export default function ConsultationVisual() {
                 {/* Dark Gradient Overlay at bottom */}
                 <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-transparent to-transparent pointer-events-none" />
 
-                {/* Floating Top-Right Badge: Specialist Status */}
-                <div className="
-                    absolute top-4 right-4 z-10
-                    inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full
-                    bg-white/90 dark:bg-slate-900/80 backdrop-blur-md border border-slate-200 dark:border-slate-700/80
-                    text-blue-600 dark:text-sky-400 font-bold text-xs shadow-lg
-                ">
-                    <Sparkles className="w-3.5 h-3.5 text-blue-500 dark:text-sky-400 animate-pulse" />
-                    <span>Senior Tech Advisor</span>
-                </div>
-
-                {/* Floating Bottom Badge: 24/7 Available Indicator */}
                 <div className="
                     absolute bottom-4 left-4 right-4 z-10 p-3.5 rounded-xl
                     bg-white/95 dark:bg-slate-900/85 backdrop-blur-md border border-slate-200/80 dark:border-slate-700/80
