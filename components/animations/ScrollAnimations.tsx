@@ -18,7 +18,6 @@ export default function ScrollAnimations() {
       ctx.add(() => {
         injectSideDecorators();
         animateSections(reduceMotion);
-        animateProgressBar();
       });
 
       // Refresh after fonts load for accurate calculations
@@ -360,22 +359,3 @@ function animateSections(reduceMotion: boolean) {
   }
 }
 
-function animateProgressBar() {
-  if (document.getElementById("scroll-progress-bar")) return;
-  const bar = document.createElement("div");
-  bar.id = "scroll-progress-bar";
-  bar.className =
-    "fixed left-0 top-0 h-0.5 w-0 origin-left bg-[linear-gradient(90deg,#2563eb,#0284c7,#4f46e5)] pointer-events-none shadow-[0_0_8px_rgba(37,99,235,0.4)] z-[9999]";
-  document.body.appendChild(bar);
-
-  gsap.to(bar, {
-    width: "100%",
-    ease: "none",
-    scrollTrigger: {
-      trigger: document.documentElement,
-      start: "top top",
-      end: "bottom bottom",
-      scrub: true,
-    },
-  });
-}

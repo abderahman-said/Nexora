@@ -60,17 +60,6 @@ export function useVimeoHeroGSAP({ heroRef, headRef, subRef, statsRef, ctaRef, b
 
         // Scroll parallax — hero moves up slightly (Desktop only for 60fps mobile scrolling)
         if (heroRef.current && typeof window !== 'undefined' && window.innerWidth >= 768) {
-            gsap.to(heroRef.current, {
-                yPercent: 8,
-                ease: 'none',
-                scrollTrigger: {
-                    trigger: heroRef.current,
-                    start: 'top top',
-                    end: 'bottom top',
-                    scrub: true,
-                },
-            });
-
             // Side decorators parallax at different speeds
             const sideEls = heroRef.current.querySelectorAll('.hero-side-el');
             sideEls.forEach((el, i) => {
