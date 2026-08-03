@@ -341,7 +341,7 @@ export function MobileNav() {
                         {/* Animated underline divider */}
                         <span
                           ref={(el) => setDividerRef(el, i)}
-                          className="block h-px w-full bg-gradient-to-r from-blue-600/30 via-slate-200 dark:via-white/10 to-transparent origin-left"
+                          className="block h-px w-full bg-gradient-to-r from-blue-600/50 via-slate-300 dark:from-blue-600/30 dark:via-white/10 to-transparent origin-left"
                         />
                       </li>
                     ))}
@@ -349,7 +349,7 @@ export function MobileNav() {
                 </nav>
 
                 {/* ── Footer ── */}
-                <div className="mt-auto space-y-2 sm:space-y-3 shrink-0">
+                <div className="space-y-2 sm:space-y-3 shrink-0">
                   {/* WhatsApp CTA */}
                   <div ref={footerCtaRef}>
                     <Link
