@@ -2,7 +2,7 @@
 
 import React from 'react';
 import Image from 'next/image';
-import { Headphones, Sparkles } from 'lucide-react';
+import { Headphones } from 'lucide-react';
 import { useSiteData } from '@/hooks/useSiteData';
 
 export default function ConsultationVisual() {
