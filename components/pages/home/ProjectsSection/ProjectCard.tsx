@@ -124,18 +124,15 @@ export default function ProjectCard({ p }: ProjectCardProps) {
       className="proj-3d-card group/3d relative h-full w-full cursor-pointer py-2 sm:py-3 md:py-4 will-change-transform hover:z-50"
       style={{ transformStyle: "preserve-3d" }}
     >
-      <article
+      <Link
+        href={p.link || "#"}
+        target="_blank"
+        rel="noopener noreferrer"
         suppressHydrationWarning
-        className="group relative h-[410px] sm:h-[480px] md:h-[540px] lg:h-[600px] flex-shrink-0 overflow-hidden rounded-[20px] sm:rounded-[24px] md:rounded-[26px] border border-slate-200/90 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-lg dark:shadow-black/30 transition-[border-color,box-shadow,background-color,transform] duration-500 ease-out max-lg:w-full lg:even:mt-6 group-hover/3d:border-blue-500/70 dark:group-hover/3d:border-blue-400/70 group-hover/3d:shadow-[0_32px_65px_-15px_rgba(37,99,235,0.32)] dark:group-hover/3d:shadow-[0_32px_65px_-15px_rgba(0,0,0,0.85)]"
+        className="group relative block h-[410px] sm:h-[480px] md:h-[540px] lg:h-[600px] flex-shrink-0 overflow-hidden rounded-[20px] sm:rounded-[24px] md:rounded-[26px] border border-slate-200/90 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-lg dark:shadow-black/30 transition-[border-color,box-shadow,background-color,transform] duration-500 ease-out max-lg:w-full lg:even:mt-6 group-hover/3d:border-blue-500/70 dark:group-hover/3d:border-blue-400/70 group-hover/3d:shadow-[0_32px_65px_-15px_rgba(37,99,235,0.32)] dark:group-hover/3d:shadow-[0_32px_65px_-15px_rgba(0,0,0,0.85)]"
       >
         {/* Full-bleed project image */}
-        <Link
-          href={p.link || "#"}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="absolute inset-0 z-0 block h-full w-full overflow-hidden"
-          aria-label={`View ${p.name}`}
-        >
+        <div className="absolute inset-0 z-0 block h-full w-full overflow-hidden">
           <OptimizedImage
             className="card-img absolute inset-0 h-full w-full object-cover object-top transition-transform duration-700 ease-[cubic-bezier(0.4,0,0.2,1)] group-hover:scale-[1.09]"
             src={p.image}
@@ -151,10 +148,10 @@ export default function ProjectCard({ p }: ProjectCardProps) {
             aria-hidden="true"
             className="pointer-events-none absolute inset-x-0 bottom-0 h-[180px] sm:h-[200px] md:h-[230px] z-[2] bg-gradient-to-t from-white via-white/75 via-45% to-transparent dark:from-slate-950 dark:via-slate-950/85 dark:via-45% dark:to-transparent"
           />
-        </Link>
+        </div>
 
         {/* Content overlaid at the bottom */}
-        <div className="relative z-[3] flex h-full flex-col justify-end gap-2 sm:gap-3 px-5 py-3 sm:px-6  md:px-7 md:py-4">
+        <div className="relative z-[3] flex h-full flex-col justify-end gap-2 sm:gap-3 px-5 py-3 sm:px-6  md:px-7 md:py-4 pointer-events-none">
           <h3 className="m-0 mb-1.5 sm:mb-2 text-[clamp(19px,4vw,28px)] font-black leading-[1.18] tracking-[-0.03em] text-slate-900 dark:text-white transition-colors duration-300 group-hover/3d:text-blue-600 dark:group-hover/3d:text-blue-300">
             {p.name}
           </h3>
@@ -174,7 +171,7 @@ export default function ProjectCard({ p }: ProjectCardProps) {
             mixBlendMode: "overlay",
           }}
         />
-      </article>
+      </Link>
     </div>
   );
 }

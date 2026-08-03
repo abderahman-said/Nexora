@@ -1,6 +1,9 @@
 "use client";
 
 import { useRef } from "react";
+import Link from "next/link";
+import { ArrowRight } from "lucide-react";
+import { useLocale } from "next-intl";
 import ProjectCard from "./ProjectCard";
 import { projectService } from "@/lib/services/projectService";
 import SectionHeader from "@/components/ui/SectionHeader";
@@ -9,6 +12,7 @@ import GSAPSlider from "@/components/ui/GSAPSlider";
 import { useProjectsGSAP } from "./useProjectsGSAP";
 
 export default function ProjectsSection() {
+  const locale = useLocale();
   const allProjects = projectService.getAllProjects();
   const sectionRef = useRef<HTMLElement>(null);
   const sliderWrapperRef = useRef<HTMLDivElement>(null);
@@ -24,6 +28,7 @@ export default function ProjectsSection() {
       <Container>
         {/* Section Header */}
         <SectionHeader
+          align="between"
           className="!mb-0"
           title={
             <span className="inline-flex items-center gap-3">
@@ -38,6 +43,15 @@ export default function ProjectsSection() {
                 </span>
               </span>
             </span>
+          }
+          rightElement={
+            <Link
+              href={`/${locale}/projects`}
+              className="inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-blue-600 to-sky-600 px-6 py-2.5 text-xs font-bold uppercase tracking-wider text-white shadow-md shadow-blue-500/20 transition-all hover:-translate-y-0.5 hover:shadow-lg hover:shadow-blue-500/35 group"
+            >
+              <span>See More</span>
+              <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1 rtl:group-hover:-translate-x-1" />
+            </Link>
           }
         />
 

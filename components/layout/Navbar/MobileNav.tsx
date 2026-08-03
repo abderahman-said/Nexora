@@ -266,7 +266,7 @@ export function MobileNav() {
             <div
               ref={drawerRef}
               style={{ display: "none" }}
-              className={`fixed top-0 z-[99999] h-[100vh] w-[75vw] max-w-[520px] left-0 flex flex-col overscroll-none
+              className={`fixed top-0 z-[99999] h-[100vh] w-[70vw] max-w-[400px] left-0 flex flex-col overscroll-none
                 ${drawerReady
                   ? "bg-white/70 dark:bg-[#09090f]/60 backdrop-blur-2xl backdrop-saturate-150"
                   : "bg-white/95 dark:bg-[#0b0b12]/95"
@@ -286,7 +286,7 @@ export function MobileNav() {
               )}
 
               {/* Inner content wrapper */}
-              <div className="flex flex-col flex-1 px-5 sm:px-8 pt-3 sm:pt-5 pb-24 sm:pb-8 gap-2 sm:gap-5 relative z-10 overflow-y-auto overflow-x-hidden overscroll-contain">
+              <div className="flex flex-col flex-1 px-5 sm:px-8 pt-3 sm:pt-5 pb-24 sm:pb-8 gap-4 md:gap-10 relative z-10 overflow-y-auto overflow-x-hidden overscroll-contain">
                 {/* ── Header: Logo + Controls ── */}
                 <div
                   ref={drawerHeaderRef}
@@ -324,16 +324,16 @@ export function MobileNav() {
                 </div>
 
                 {/* ── Nav Links ── */}
-                <nav className="flex-1 flex flex-col justify-center" aria-label="Main navigation">
+                <nav className="flex flex-col justify-center" aria-label="Main navigation">
                   <ul ref={linksContainerRef} className="list-none p-0 m-0">
                     {navLinks.map(({ label, href }, i) => (
                       <li key={href} className="relative overflow-hidden">
                         <Link
                           href={href}
                           onClick={closeMenu}
-                          className="group flex items-center justify-between gap-4 py-2 sm:py-4"
+                          className="group flex items-center justify-between gap-4 py-1.5 sm:py-2.5"
                         >
-                          <span className="text-[22px] sm:text-3xl font-extrabold tracking-tight text-slate-800 dark:text-slate-100 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors duration-300">
+                          <span className="text-[20px] sm:text-2xl font-extrabold tracking-tight text-slate-800 dark:text-slate-100 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors duration-300">
                             {label}
                           </span>
                           <ArrowRight className="h-5 w-5 text-blue-500/80 dark:text-sky-400/80 group-hover:text-blue-600 dark:group-hover:text-blue-400 rtl:-scale-x-100 group-hover:translate-x-1 rtl:group-hover:-translate-x-1 transition-all duration-300 shrink-0" />
