@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Image from "next/image";
 import type { HeroBackgroundProps } from "./types";
 
 export default function HeroBackground({ glowRef }: HeroBackgroundProps) {
@@ -25,10 +26,17 @@ export default function HeroBackground({ glowRef }: HeroBackgroundProps) {
         />
 
      
-        <div
-          className="absolute inset-0 bg-cover bg-center scale-105"
-          style={{ backgroundImage: "url(/assets/hero_poster.webp)" }}
-        />
+        <div className="absolute inset-0 scale-105">
+          <Image
+            src="/assets/hero_poster.webp"
+            alt="Nexora Solutions Hero"
+            fill
+            priority
+            fetchPriority="high"
+            className="object-cover object-center"
+            sizes="100vw"
+          />
+        </div>
 
         <video
           autoPlay
@@ -38,7 +46,6 @@ export default function HeroBackground({ glowRef }: HeroBackgroundProps) {
           controls={false}
           disablePictureInPicture
           preload="auto"
-          poster="/assets/hero_poster.webp"
           onCanPlay={() => setIsVideoReady(true)}
           className={`w-full h-full object-cover scale-105 pointer-events-none transition-opacity duration-700 ${
             isVideoReady ? "opacity-80" : "opacity-0"
