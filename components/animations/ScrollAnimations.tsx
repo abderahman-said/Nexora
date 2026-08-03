@@ -282,9 +282,12 @@ function animateSections(reduceMotion: boolean) {
     headings.forEach((h) => {
       if (!h) return;
       
-      // Check if element is already visible in viewport
-      const rect = h.getBoundingClientRect();
-      const alreadyVisible = rect.top < window.innerHeight * (isMobile ? 1 : 0.9);
+      // We skip getBoundingClientRect on mobile to avoid layout thrashing (Forced Reflow)
+      let alreadyVisible = false;
+      if (!isMobile) {
+         const rect = h.getBoundingClientRect();
+         alreadyVisible = rect.top < window.innerHeight * 0.9;
+      }
 
       if (alreadyVisible) {
         // Animate immediately without ScrollTrigger

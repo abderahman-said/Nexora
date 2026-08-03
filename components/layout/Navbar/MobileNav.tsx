@@ -5,7 +5,6 @@ import React, {
   useRef,
   useEffect,
   useCallback,
-  useLayoutEffect,
   useSyncExternalStore,
 } from "react";
 import { createPortal } from "react-dom";
@@ -86,7 +85,7 @@ export function MobileNav() {
   }, []);
 
   // ── Build the timeline once the refs exist ──
-  useLayoutEffect(() => {
+  useEffect(() => {
     if (
       !menuIconRef.current ||
       !closeIconRef.current ||
