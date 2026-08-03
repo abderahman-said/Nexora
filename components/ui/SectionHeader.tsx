@@ -120,7 +120,7 @@ export default function SectionHeader({
                     )}
                 </div>
                 {(subtitle || rightElement) && (
-                    <div className={`flex max-w-[420px] flex-col gap-4 max-[900px]:w-full ${animClass}`}>
+                    <div className={`flex gap-4   ${animClass}`}>
                         {subtitle && (
                             <p className="text-base font-medium leading-[1.75] text-slate-600 dark:text-slate-300">
                                 {subtitle}
