@@ -1,12 +1,21 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import Image from "next/image";
 import type { HeroBackgroundProps } from "./types";
 
 export default function HeroBackground({ glowRef }: HeroBackgroundProps) {
   const currentYear = new Date().getFullYear();
   const [isVideoReady, setIsVideoReady] = useState(false);
+  const videoRef = useRef<HTMLVideoElement>(null);
+
+  useEffect(() => {
+    if (videoRef.current) {
+      videoRef.current.play().catch((err) => {
+        console.warn("Video autoplay prevented:", err);
+      });
+    }
+  }, []);
 
   return (
     <>
@@ -44,6 +53,7 @@ export default function HeroBackground({ glowRef }: HeroBackgroundProps) {
         </div>
 
         <video
+          ref={videoRef}
           autoPlay
           loop
           muted
@@ -95,7 +105,7 @@ export default function HeroBackground({ glowRef }: HeroBackgroundProps) {
         ref={glowRef}
         aria-hidden="true"
         className="
-                    absolute top-0 left-0 w-[600px] h-[600px] rounded-full
+                    hidden md:block absolute top-0 left-0 w-[600px] h-[600px] rounded-full
                     pointer-events-none
                     [will-change:transform]
                     bg-[radial-gradient(circle,rgba(37,99,235,0.12)_0%,rgba(2,132,199,0.06)_40%,transparent_70%)]

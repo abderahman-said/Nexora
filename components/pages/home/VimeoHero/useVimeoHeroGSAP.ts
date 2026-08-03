@@ -82,7 +82,7 @@ export function useVimeoHeroGSAP({ heroRef, headRef, subRef, statsRef, ctaRef, b
         // Glow circle follows mouse — center on cursor
         const hero = heroRef.current;
         const glow = glowRef.current;
-        if (hero && glow) {
+        if (hero && glow && typeof window !== 'undefined' && window.innerWidth >= 768) {
             const HALF = 300; // half of 600px glow size
             gsap.set(glow, { x: -HALF, y: -HALF });
 
