@@ -1,16 +1,35 @@
+"use client";
+
+import { useState } from "react";
 import type { HeroBackgroundProps } from "./types";
 
 export default function HeroBackground({ glowRef }: HeroBackgroundProps) {
   const currentYear = new Date().getFullYear();
+  const [isVideoReady, setIsVideoReady] = useState(false);
+
   return (
     <>
-      {/* Video Background Layer */}
+      {/* Preload the actual video bytes early (as="video" isn't supported by
+          Safari, but it's free elsewhere and doesn't hurt). fetchPriority
+          on the <video> tag below covers the rest. */}
+      <link rel="preload" as="video" href="/assets/hero.webm" type="video/webm" />
+
       <div className="absolute inset-0 overflow-hidden pointer-events-none z-0">
-        {/* Hide iOS video overlay icons (especially on Low Power Mode) */}
-        <style dangerouslySetInnerHTML={{__html: `
+        <style
+          dangerouslySetInnerHTML={{
+            __html: `
           video::-webkit-media-controls-start-playback-button { display: none !important; }
           video::-webkit-media-controls { display: none !important; }
-        `}} />
+        `,
+          }}
+        />
+
+     
+        <div
+          className="absolute inset-0 bg-cover bg-center scale-105"
+          style={{ backgroundImage: "url(/assets/hero_poster.webp)" }}
+        />
+
         <video
           autoPlay
           loop
@@ -18,27 +37,29 @@ export default function HeroBackground({ glowRef }: HeroBackgroundProps) {
           playsInline
           controls={false}
           disablePictureInPicture
-          preload="metadata"
-          className="w-full h-full object-cover opacity-80 transition-opacity duration-500 scale-105 pointer-events-none"
+          preload="auto"
+          poster="/assets/hero_poster.webp"
+          onCanPlay={() => setIsVideoReady(true)}
+          className={`w-full h-full object-cover scale-105 pointer-events-none transition-opacity duration-700 ${
+            isVideoReady ? "opacity-80" : "opacity-0"
+          }`}
         >
+          {/* webm first — much smaller, browsers that support it will use it
+              and never even request the mp4 */}
+          <source src="/assets/hero.webm" type="video/webm" />
           <source src="/assets/hero.mp4" type="video/mp4" />
         </video>
 
-        {/* Light Mode Contrast Wash & Tint */}
         <div className="absolute inset-0 bg-slate-900/5 dark:hidden mix-blend-overlay pointer-events-none" />
-        {/* <div className="absolute inset-0 bg-gradient-to-tr from-blue-100/40 via-slate-100/20 to-indigo-100/30 dark:hidden pointer-events-none" /> */}
-
-        {/* Dark Mode Global Blue Tint */}
         <div className="hidden dark:block absolute inset-0 bg-blue-950/20 mix-blend-multiply pointer-events-none" />
       </div>
 
-      {/* Bottom Gradient Fade */}
       <div
         className="
-          absolute 
-          left-[-1px] 
-          right-[-1px] 
-          bottom-[-1px] 
+          absolute
+          left-[-1px]
+          right-[-1px]
+          bottom-[-1px]
           h-[55%]
           pointer-events-none
           z-[2]
@@ -46,7 +67,7 @@ export default function HeroBackground({ glowRef }: HeroBackgroundProps) {
           dark:bg-[linear-gradient(180deg,rgba(9,13,22,0)_0%,rgba(9,13,22,0.7)_50%,rgba(9,13,22,1)_85%,rgba(9,13,22,1)_100%)]
         "
       />
-      {/* RIGHT SIDE DECORATORS */}
+
       <div
         aria-hidden="true"
         className="hidden lg:flex absolute top-0 bottom-0 right-0 w-20 flex-col items-center justify-center gap-8 z-[5] pointer-events-none border-l border-slate-200/80 dark:border-slate-800/80"
@@ -59,7 +80,7 @@ export default function HeroBackground({ glowRef }: HeroBackgroundProps) {
         <div className="hero-side-el flex items-center justify-center opacity-40 w-px h-20 bg-gradient-to-b from-transparent via-slate-300 dark:via-slate-700 to-transparent" />
         <div className="hero-side-el flex items-center justify-center opacity-40 w-1.5 h-1.5 bg-slate-400 dark:bg-slate-600" />
       </div>
-      {/* Mouse-follow glow */}
+
       <div
         ref={glowRef}
         aria-hidden="true"
