@@ -19,11 +19,12 @@ export default function HeroBackground({ glowRef }: HeroBackgroundProps) {
 
   return (
     <>
+      {/* Preload الفيديو الأساسي (mp4) بدل webm عشان يشتغل مع كل المتصفحات */}
       <link
         rel="preload"
         as="video"
-        href="/assets/hero.webm"
-        type="video/webm"
+        href="/assets/hero.mp4"
+        type="video/mp4"
       />
 
       <div className="absolute inset-0 overflow-hidden pointer-events-none z-0">
@@ -61,11 +62,23 @@ export default function HeroBackground({ glowRef }: HeroBackgroundProps) {
           disablePictureInPicture
           preload="auto"
           onPlaying={() => setIsVideoReady(true)}
+          onError={(e) =>
+            console.error("Video element error:", e.currentTarget.error)
+          }
           className={`w-full h-full object-cover scale-105 pointer-events-none transition-opacity duration-700 ${isVideoReady ? "opacity-80" : "opacity-0"
             }`}
         >
-          <source src="/assets/hero.webm" type="video/webm" />
-          <source src="/assets/hero.mp4" type="video/mp4" />
+          {/* MP4 الأول عشان Safari بيفشل أحيانًا في الـ fallback لو أول source متجاهل */}
+          <source
+            src="/assets/hero.mp4"
+            type="video/mp4"
+            onError={() => console.error("hero.mp4 source failed to load")}
+          />
+          <source
+            src="/assets/hero.webm"
+            type="video/webm"
+            onError={() => console.error("hero.webm source failed to load")}
+          />
         </video>
 
         <div className="absolute inset-0 bg-slate-900/5 dark:hidden mix-blend-overlay pointer-events-none" />
