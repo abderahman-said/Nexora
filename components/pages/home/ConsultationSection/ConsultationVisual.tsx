@@ -15,7 +15,7 @@ export default function ConsultationVisual() {
             {/* Image Container */}
             <div className="relative rounded-2xl sm:rounded-3xl overflow-hidden aspect-[4/3] lg:aspect-[5/6] border border-slate-200 dark:border-slate-800 bg-slate-950 shadow-xl">
                 <Image
-                    src="/assets/contact_consultation.png"
+                    src="/assets/contact_consultation.webp"
                     alt="Expert Business & Tech Solutions Consultant"
                     width={700}
                     height={840}

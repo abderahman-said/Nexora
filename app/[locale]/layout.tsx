@@ -4,6 +4,7 @@ import { ThemeProvider } from '@/context/ThemeContext';
 import SvgSymbols from '@/components/icons/SvgSymbols';
 import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
+import FloatingWhatsApp from '@/components/layout/FloatingWhatsApp';
 import ClientAnimations from '@/components/animations/ClientAnimations';
 import { NextIntlClientProvider } from 'next-intl';
 import { getMessages } from 'next-intl/server';
@@ -211,6 +212,7 @@ export default async function LocaleLayout({
             <Navbar />
             {children}
             <Footer />
+            <FloatingWhatsApp />
           </NextIntlClientProvider>
         </ThemeProvider>
       </body>
