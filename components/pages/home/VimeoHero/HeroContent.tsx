@@ -33,11 +33,11 @@ export default function HeroContent({
           ref={headRef}
           className="text-3xl sm:text-5xl lg:text-5xl xl:text-6xl font-extrabold tracking-tight text-white dark:text-white leading-[1.12] mb-4 sm:mb-5"
         >
-          <span className="split-word">Make</span>{" "}
-          <span className="split-word">The</span>{" "}
-          <span className="split-word">Easiest</span>{" "}
+          <span className="split-word">We </span>{" "}
+          <span className="split-word">Build </span>{" "}
+          <span className="split-word">Digital Products</span>{" "}
           <span className="split-word bg-gradient-to-r from-blue-600 via-sky-500 to-indigo-600 bg-clip-text text-transparent">
-            Solution For You
+           That Grow Your Business
           </span>
         </h1>
 

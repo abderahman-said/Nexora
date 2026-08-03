@@ -19,7 +19,6 @@ export default function HeroBackground({ glowRef }: HeroBackgroundProps) {
           controls={false}
           disablePictureInPicture
           preload="metadata"
-          poster="/assets/hero.webp"
           className="w-full h-full object-cover opacity-80 transition-opacity duration-500 scale-105 pointer-events-none"
         >
           <source src="/assets/hero.mp4" type="video/mp4" />

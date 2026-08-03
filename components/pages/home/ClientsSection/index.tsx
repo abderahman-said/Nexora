@@ -38,9 +38,9 @@ export default function ClientsSection() {
             </div>
 
             <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-slate-900 dark:text-white tracking-tight leading-[1.15] ">
-              What Happy Clients Says{" "}
+             What Happy Clients Say {" "}
               <span className="block mt-1 bg-gradient-to-r from-blue-600 via-sky-500 to-indigo-500 dark:from-blue-400 dark:via-sky-300 dark:to-indigo-400 bg-clip-text text-transparent">
-                About Us?
+               About Us 
               </span>
             </h2>
           </div>
