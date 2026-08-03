@@ -1,4 +1,4 @@
-import { Epilogue } from 'next/font/google';
+import { Epilogue, Cairo } from 'next/font/google';
 import '../globals.css';
 import { ThemeProvider } from '@/context/ThemeContext';
 import SvgSymbols from '@/components/icons/SvgSymbols';
@@ -13,6 +13,13 @@ import React from 'react';
 const epilogue = Epilogue({
   subsets: ['latin'],
   variable: '--font-epilogue',
+  display: 'swap',
+  preload: true,
+});
+
+const cairo = Cairo({
+  subsets: ['arabic'],
+  variable: '--font-cairo',
   display: 'swap',
   preload: true,
 });
@@ -196,7 +203,7 @@ export default async function LocaleLayout({
           }}
         />
       </head>
-      <body className={`${epilogue.variable} font-sans bg-[#f8fafc] site-grid-bg text-slate-900 dark:bg-[#090d16] dark:text-slate-100 antialiased overflow-x-hidden transition-colors duration-300`} suppressHydrationWarning>
+      <body className={`${epilogue.variable} ${cairo.variable} font-sans bg-[#f8fafc] site-grid-bg text-slate-900 dark:bg-[#090d16] dark:text-slate-100 antialiased overflow-x-hidden transition-colors duration-300`} suppressHydrationWarning>
         <ThemeProvider>
           <NextIntlClientProvider messages={messages}>
             <SvgSymbols />

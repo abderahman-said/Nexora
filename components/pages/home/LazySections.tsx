@@ -3,11 +3,11 @@
 import { Suspense } from 'react';
 import dynamic from 'next/dynamic';
 
-const ProjectsSection = dynamic(() => import('@/components/pages/home/ProjectsSection'), { ssr: false });
-const GSAPCardGrid = dynamic(() => import('@/components/pages/home/GSAPCardGrid'), { ssr: false });
-const TeamSection = dynamic(() => import('@/components/pages/home/TeamSection'), { ssr: false });
-const ConsultationSection = dynamic(() => import('@/components/pages/home/ConsultationSection'), { ssr: false });
-const ClientsSection = dynamic(() => import('@/components/pages/home/ClientsSection'), { ssr: false });
+const ProjectsSection = dynamic(() => import('@/components/pages/home/ProjectsSection'));
+const GSAPCardGrid = dynamic(() => import('@/components/pages/home/GSAPCardGrid'));
+const TeamSection = dynamic(() => import('@/components/pages/home/TeamSection'));
+const ConsultationSection = dynamic(() => import('@/components/pages/home/ConsultationSection'));
+const ClientsSection = dynamic(() => import('@/components/pages/home/ClientsSection'));
 
 export default function LazySections() {
     return (

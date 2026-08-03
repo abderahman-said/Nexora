@@ -13,7 +13,7 @@ export default function AboutVisual({ visualRef }: AboutVisualProps) {
             <div className="relative z-10 w-full aspect-[4/3.2] sm:aspect-[4/3] rounded-3xl overflow-hidden border border-slate-200/80 dark:border-slate-800 shadow-2xl shadow-slate-900/10 dark:shadow-blue-950/40 group">
                 {/* Team Image */}
                 <Image
-                    src="/about-team.png"
+                    src="/about-team.webp"
                     alt="Nexora Engineering Team"
                     fill
                     className="object-cover object-center transform transition-transform duration-700 group-hover:scale-105"
