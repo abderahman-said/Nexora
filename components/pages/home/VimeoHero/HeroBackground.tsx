@@ -37,9 +37,8 @@ export default function HeroBackground({ glowRef }: HeroBackgroundProps) {
         />
 
         <div
-          className={`absolute inset-0 scale-105 transition-opacity duration-700 ${
-            isVideoReady ? "opacity-0" : "opacity-100"
-          }`}
+          className={`absolute inset-0 scale-105 transition-opacity duration-700 ${isVideoReady ? "opacity-0" : "opacity-100"
+            }`}
         >
           <Image
             src="/assets/hero_poster.webp"
@@ -62,9 +61,8 @@ export default function HeroBackground({ glowRef }: HeroBackgroundProps) {
           disablePictureInPicture
           preload="auto"
           onPlaying={() => setIsVideoReady(true)}
-          className={`w-full h-full object-cover scale-105 pointer-events-none transition-opacity duration-700 ${
-            isVideoReady ? "opacity-80" : "opacity-0"
-          }`}
+          className={`w-full h-full object-cover scale-105 pointer-events-none transition-opacity duration-700 ${isVideoReady ? "opacity-80" : "opacity-0"
+            }`}
         >
           <source src="/assets/hero.webm" type="video/webm" />
           <source src="/assets/hero.mp4" type="video/mp4" />

@@ -23,9 +23,9 @@ export default function HeroContent({
   // imageRef,
 }: HeroContentProps) {
   return (
-    <div className="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-14 items-center py-2 lg:py-8">
+    <div className="relative z-10  py-2 lg:py-8">
       {/* ── RIGHT COLUMN: Content (Text & CTAs on Right Side) ── */}
-      <div className="lg:col-span-6 order-1 lg:order-1 flex flex-col items-start text-left">
+      <div className="flex flex-col items-start text-left max-w-[800px]">
          
 
         {/* Main Headline */}

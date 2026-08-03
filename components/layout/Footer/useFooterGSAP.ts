@@ -75,7 +75,11 @@ export function useFooterGSAP({ footerRef, columnsRef, sidePanelRef, bgRef }: Us
       }
 
       // 3. Subtle GPU-accelerated background parallax
-      if (bgRef.current) {
+      const isMobile =
+        typeof window !== "undefined" &&
+        (window.innerWidth < 768 || window.matchMedia("(pointer: coarse)").matches);
+
+      if (bgRef.current && !isMobile) {
         gsap.to(bgRef.current, {
           yPercent: 15,
           ease: "none",
