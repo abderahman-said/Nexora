@@ -26,7 +26,11 @@ export default function HeroBackground({ glowRef }: HeroBackgroundProps) {
         />
 
      
-        <div className="absolute inset-0 scale-105">
+        <div
+          className={`absolute inset-0 scale-105 transition-opacity duration-700 ${
+            isVideoReady ? "opacity-0" : "opacity-100"
+          }`}
+        >
           <Image
             src="/assets/hero_poster.webp"
             alt="Nexora Solutions Hero"
