@@ -18,7 +18,7 @@ export default function AboutVisionMission() {
                     border border-slate-200/90 dark:border-slate-800
                     border-s-4 border-s-blue-600 dark:border-s-blue-500
                     shadow-lg shadow-slate-200/50 dark:shadow-none
-                    transition-all duration-300 hover:shadow-xl hover:-translate-y-0.5
+                    transition-all duration-300 hover:shadow-xl hover:-translate-y-0.5 dark:hover:shadow-none
                 ">
                     <div className="flex items-center gap-3 mb-3">
                         <div className="w-10 h-10 rounded-xl bg-blue-50 dark:bg-blue-950/80 border border-blue-200/80 dark:border-blue-800/60 flex items-center justify-center text-blue-600 dark:text-sky-400 group-hover:scale-105 transition-transform duration-300">
@@ -57,7 +57,7 @@ export default function AboutVisionMission() {
                     border border-slate-200/90 dark:border-slate-800
                     border-s-4 border-s-sky-500 dark:border-s-sky-400
                     shadow-lg shadow-slate-200/50 dark:shadow-none
-                    transition-all duration-300 hover:shadow-xl hover:-translate-y-0.5
+                    transition-all duration-300 hover:shadow-xl hover:-translate-y-0.5 dark:hover:shadow-none
                 ">
                     <div className="flex items-center gap-3 mb-3">
                         <div className="w-10 h-10 rounded-xl bg-sky-50 dark:bg-sky-950/80 border border-sky-200/80 dark:border-sky-800/60 flex items-center justify-center text-sky-600 dark:text-sky-400 group-hover:scale-105 transition-transform duration-300">
