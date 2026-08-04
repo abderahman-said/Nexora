@@ -131,8 +131,7 @@ export default function ServiceCards() {
             autoplay={false}
             pauseOnHover={false}
             enableDrag={true}
-            infinite={true}
-
+            infinite={false}
           />
         </div>
       </Container>

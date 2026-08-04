@@ -48,7 +48,7 @@ export default function GSAPCardGrid() {
             autoplay={false}
             pauseOnHover={false}
             enableDrag={true}
-            infinite={true}
+            infinite={false}
           />
         </div>
       </Container>

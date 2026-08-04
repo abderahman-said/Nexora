@@ -71,7 +71,7 @@ export default function ProjectsSection() {
             autoplay={false}
             pauseOnHover={false}
             enableDrag={true}
-            infinite={true}
+            infinite={false}
             activeScale={1}
             inactiveScale={0.9}
             inactiveOpacity={0.6}

@@ -48,10 +48,8 @@ export default function TeamSection() {
             autoplay={false}
             pauseOnHover={false}
             enableDrag={true}
-            infinite={true}
-
+            infinite={false}
           />
-
         </div>
       </Container>
     </section>

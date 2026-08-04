@@ -14,7 +14,7 @@ export function NavbarAnimatedShell({ children }: NavbarAnimatedShellProps) {
   return (
     <header
       ref={navRef}
-      className="group fixed left-0 top-0 z-[1000] w-full py-6 pointer-events-none transition-[padding] duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] [&.is-floating]:py-4  max-md:py-4 max-md:[&.is-floating]:py-3"
+      className="group fixed left-0 top-0 z-[1000] w-full pointer-events-none transition-[padding] duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] "
     >
       <Container
         ref={navInnerRef}

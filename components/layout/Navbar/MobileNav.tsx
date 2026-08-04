@@ -16,7 +16,6 @@ import {
   Phone,
   Mail,
   MapPin,
-  MessageCircle,
   Menu,
   X,
 } from "lucide-react";
@@ -51,10 +50,34 @@ function unlockBodyScroll() {
   document.body.style.overflow = "";
 }
 
+function LinkedInIcon(props: React.SVGProps<SVGSVGElement>) {
+  return (
+    <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" {...props}>
+      <path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.28 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.75M6.88 8.56a1.68 1.68 0 0 0 1.68-1.68c0-.93-.75-1.69-1.68-1.69a1.69 1.69 0 0 0-1.69 1.69c0 .93.76 1.68 1.69 1.68m1.39 9.94v-8.37H5.5v8.37h2.77z" />
+    </svg>
+  );
+}
+
+function FacebookIcon(props: React.SVGProps<SVGSVGElement>) {
+  return (
+    <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" {...props}>
+      <path d="M22 12c0-5.52-4.48-10-10-10S2 6.48 2 12c0 4.99 3.66 9.12 8.44 9.88v-6.99H7.9v-2.89h2.54V9.8c0-2.51 1.49-3.89 3.78-3.89 1.09 0 2.23.19 2.23.19v2.47h-1.26c-1.24 0-1.63.77-1.63 1.56v1.88h2.78l-.45 2.89h-2.33v6.99C18.34 21.12 22 16.99 22 12z" />
+    </svg>
+  );
+}
+
+function WhatsappIcon(props: React.SVGProps<SVGSVGElement>) {
+  return (
+    <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" {...props}>
+      <path d="M17.47 6.46A7.63 7.63 0 0 0 12 4.25a7.71 7.71 0 0 0-7.7 7.71c0 1.54.4 3.03 1.16 4.35L4.25 20l3.8-1a7.7 7.7 0 0 0 3.95 1.08h.01a7.7 7.7 0 0 0 7.7-7.71 7.65 7.65 0 0 0-2.24-5.41zm-5.47 11.23h-.01a6.4 6.4 0 0 1-3.26-.9l-.23-.14-2.42.63.64-2.36-.15-.24a6.4 6.4 0 0 1-.98-3.41c0-3.53 2.87-6.4 6.41-6.4 1.71 0 3.32.67 4.53 1.88a6.38 6.38 0 0 1 1.88 4.54c-.01 3.53-2.88 6.4-6.41 6.4zm3.53-4.81c-.19-.1-1.14-.56-1.32-.62-.18-.06-.31-.1-.44.1-.13.19-.5.62-.61.75-.11.13-.23.15-.42.05-.19-.1-.81-.3-1.55-.96-.58-.51-.97-1.14-1.08-1.33-.11-.19-.01-.3.08-.39.1-.09.2-.2.3-.31s.13-.19.19-.31.03-.23-.01-.33c-.05-.1-.44-1.06-.6-1.45-.16-.39-.32-.34-.44-.34h-.38c-.13 0-.34.05-.51.24-.18.19-.68.66-.68 1.62s.7 1.88.8 2.02c.09.13 1.38 2.1 3.34 2.95.47.2.83.33 1.12.42.47.15.9.13 1.24.08.38-.06 1.14-.47 1.3-9.2.16-.46.16-.85.11-.93-.05-.1-.19-.15-.38-.25z" />
+    </svg>
+  );
+}
+
 export function MobileNav() {
   const t = useTranslations();
   const locale = useLocale();
-  const { contact, map } = useSiteData();
+  const { contact, map, social } = useSiteData();
   const navLinks = getNavLinks(t, locale);
 
   const [isOpen, setIsOpen] = useState(false);
@@ -205,11 +228,7 @@ export function MobileNav() {
     };
   }, [mounted]); // re-run once mounted becomes true and refs are populated
 
-  // ── Toggle: play forward when opening, reverse when closing ──
-  // Scroll lock is applied synchronously before the timeline starts, so
-  // the layout thrash doesn't compete with the drawer's first frame.
-  // Unlocking happens in onReverseComplete once the drawer has actually
-  // finished sliding out, to avoid the page jumping underneath it.
+
   useEffect(() => {
     const tl = tlRef.current;
     if (!tl) return;
@@ -229,7 +248,7 @@ export function MobileNav() {
   const closeMenu = () => setIsOpen(false);
 
   return (
-    <div>
+    <>
       {/* ── Menu / Close button ── */}
       <button
         onClick={() => setIsOpen((prev) => !prev)}
@@ -285,7 +304,7 @@ export function MobileNav() {
               )}
 
               {/* Inner content wrapper */}
-              <div className="flex flex-col flex-1 px-5 sm:px-8 pt-3 sm:pt-5 pb-24 sm:pb-8 gap-4 md:gap-10 relative z-10 overflow-y-auto overflow-x-hidden overscroll-contain">
+              <div className="flex flex-col flex-1 px-5 sm:px-8 pt-3 sm:pt-5 pb-8 gap-4 md:gap-10 relative z-10 overflow-y-auto overflow-x-hidden overscroll-contain">
                 {/* ── Header: Logo + Controls ── */}
                 <div
                   ref={drawerHeaderRef}
@@ -348,20 +367,7 @@ export function MobileNav() {
                 </nav>
 
                 {/* ── Footer ── */}
-                <div className="space-y-2 sm:space-y-3 shrink-0">
-                  {/* WhatsApp CTA */}
-                  <div ref={footerCtaRef}>
-                    <Link
-                      href={contact.whatsapp}
-                      rel="noopener noreferrer"
-                      target="_blank"
-                      className="inline-flex w-full items-center justify-center gap-2 px-6 py-2.5 sm:py-4 rounded-full bg-gradient-to-r from-blue-600 to-sky-600 text-white font-bold text-xs md:text-md tracking-wider uppercase shadow-md shadow-blue-500/20 hover:shadow-lg hover:shadow-blue-500/35 hover:-translate-y-0.5 transition-all duration-300 group"
-                    >
-                      <MessageCircle className="h-4 w-4" />
-                      <span>Let&apos;s Talk on WhatsApp</span>
-                    </Link>
-                  </div>
-
+                <div className="mt-auto space-y-4 shrink-0 pb-6 sm:pb-0">
                   {/* Contact info */}
                   <div ref={footerInfoRef} className="grid grid-cols-1 gap-1.5 sm:gap-2 font-mono text-[10px] md:text-xs">
                     <Link
@@ -388,12 +394,58 @@ export function MobileNav() {
                       <span dir="ltr">{contact.email}</span>
                     </Link>
                   </div>
+
+                  {/* Social Icons */}
+                  <div className="flex items-center justify-center gap-2.5 pt-2">
+                    <Link
+                      href={social.facebook}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      aria-label="Facebook"
+                      className="p-2 rounded-lg bg-[#1877F2]/10 dark:bg-[#1877F2]/10 border border-[#1877F2]/20 text-[#1877F2] hover:bg-[#1877F2]/20 dark:hover:bg-[#1877F2]/25 hover:border-[#1877F2]/50 hover:scale-110 transition-all duration-300"
+                    >
+                      <FacebookIcon className="h-5 w-5" />
+                    </Link>
+                    <Link
+                      href={contact.whatsapp}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      aria-label="WhatsApp"
+                      className="p-2 rounded-lg bg-[#25D366]/10 dark:bg-[#25D366]/10 border border-[#25D366]/20 text-[#25D366] hover:bg-[#25D366]/20 dark:hover:bg-[#25D366]/25 hover:border-[#25D366]/50 hover:scale-110 transition-all duration-300"
+                    >
+                      <WhatsappIcon className="h-5 w-5" />
+                    </Link>
+                    <Link
+                      href={social.instagram}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      aria-label="Instagram"
+                      className="p-2 rounded-lg bg-pink-500/10 dark:bg-pink-500/10 border border-pink-500/20 text-pink-500 hover:bg-pink-500/20 dark:hover:bg-pink-500/25 hover:border-pink-500/50 hover:scale-110 transition-all duration-300"
+                    >
+                      <Image
+                        src="/instegram.jpeg"
+                        alt="Instagram"
+                        width={20}
+                        height={20}
+                        className="h-[20px] w-[20px] object-contain rounded-md"
+                      />
+                    </Link>
+                    <Link
+                      href={social.linkedin}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      aria-label="LinkedIn"
+                      className="p-2 rounded-lg bg-[#1877F2]/10 dark:bg-[#1877F2]/10 border border-[#1877F2]/20 text-[#1877F2] hover:bg-[#1877F2]/20 dark:hover:bg-[#1877F2]/25 hover:border-[#1877F2]/50 hover:scale-110 transition-all duration-300"
+                    >
+                      <LinkedInIcon className="h-5 w-5" />
+                    </Link>
+                  </div>
                 </div>
               </div>
             </div>
           </>,
           document.body,
         )}
-    </div>
+    </>
   );
 }
