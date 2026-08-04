@@ -94,13 +94,6 @@
   --glass-bg: rgba(15, 23, 42, 0.8);
 }
 
-:root {
-  --font-primary: var(--font-epilogue);
-}
-
-:root[lang="ar"] {
-  --font-primary: var(--font-alexandria);
-}
 html , body {
   overflow-x: hidden;
 }
@@ -134,11 +127,15 @@ html , body {
 
   body {
     background-color: var(--bg);
-    font-family: var(--font-primary), "Epilogue", sans-serif;
+    font-family: var(--next-font-epilogue), "Epilogue", sans-serif;
     color: #0f172a;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     overflow-x: hidden;
+  }
+
+  :root[lang="ar"] body {
+    font-family: var(--next-font-alexandria), sans-serif;
   }
 
   ::selection {
@@ -164,7 +161,7 @@ html , body {
   h4,
   h5,
   h6 {
-    font-family: var(--font-primary), "Epilogue", sans-serif;
+    font-family: inherit;
     font-weight: 800;
     line-height: 1.1;
     letter-spacing: -0.03em;
@@ -220,7 +217,7 @@ html , body {
 }
 
 .heading-primary {
-  font-family: var(--font-primary), "Epilogue", sans-serif;
+  font-family: inherit;
   font-weight: 900;
   letter-spacing: -0.038em;
   line-height: 1.05;

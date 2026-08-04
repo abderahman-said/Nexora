@@ -13,14 +13,14 @@ import React from 'react';
 
 const epilogue = Epilogue({
   subsets: ['latin'],
-  variable: '--font-epilogue',
+  variable: '--next-font-epilogue',
   display: 'swap',
   preload: true,
 });
 
 const alexandria = Alexandria({
   subsets: ['arabic'],
-  variable: '--font-alexandria',
+  variable: '--next-font-alexandria',
   display: 'swap',
   preload: true,
 });
@@ -204,7 +204,7 @@ export default async function LocaleLayout({
           }}
         />
       </head>
-      <body className={`${epilogue.variable} ${alexandria.variable} font-sans bg-[#f8fafc] site-grid-bg text-slate-900 dark:bg-[#090d16] dark:text-slate-100 antialiased overflow-x-hidden transition-colors duration-300`} suppressHydrationWarning>
+      <body className={`${locale === 'ar' ? alexandria.variable : epilogue.variable} font-sans bg-[#f8fafc] site-grid-bg text-slate-900 dark:bg-[#090d16] dark:text-slate-100 antialiased overflow-x-hidden transition-colors duration-300`} suppressHydrationWarning>
         <ThemeProvider>
           <NextIntlClientProvider messages={messages}>
             <SvgSymbols />
