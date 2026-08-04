@@ -38,7 +38,6 @@ export function GSAPSliderTrack<T>({
       className="flex will-change-transform"
       style={{
         width: `${trackWidthPercent}%`,
-        direction: "ltr",
       }}
     >
       {renderItems.map((item, index) => {

@@ -135,9 +135,9 @@ export function useGSAPSlider<T>({
     if (!infiniteEnabled) return items;
     const head = items.slice(totalItems - cloneCount);
     const tail = items.slice(0, cloneCount);
-    return isRTL()
-      ? [...tail, ...items, ...head]
-      : [...head, ...items, ...tail];
+    // Regardless of RTL or LTR, clones of the end of the array (head) go first
+    // because in RTL they will be rendered on the right side.
+    return [...head, ...items, ...tail];
   }, [items, cloneCount, infiniteEnabled, totalItems]);
 
   const trackItemsCount = renderItems.length;
