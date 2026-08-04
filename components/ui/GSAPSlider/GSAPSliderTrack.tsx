@@ -36,7 +36,10 @@ export function GSAPSliderTrack<T>({
     <div
       ref={trackRef}
       className="flex will-change-transform"
-      style={{ width: `${trackWidthPercent}%` }}
+      style={{
+        width: `${trackWidthPercent}%`,
+        direction: "ltr",
+      }}
     >
       {renderItems.map((item, index) => {
         const realIndex = index - cloneCount;

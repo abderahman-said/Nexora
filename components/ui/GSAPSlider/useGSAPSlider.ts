@@ -81,7 +81,6 @@ export function useGSAPSlider<T>({
   const dragStartXRef = useRef(0);
   const dragCurrentXRef = useRef(0);
   const rafIdRef = useRef<number | null>(null);
-  const isRTLRef = useRef(false);
   const containerWidthRef = useRef(1);
   const rootRef = useRef<HTMLDivElement>(null);
   const cardRefs = useRef<Array<HTMLDivElement | null>>([]);
@@ -90,10 +89,6 @@ export function useGSAPSlider<T>({
   useEffect(() => {
     isCenterActiveRef.current = isCenterActive;
   }, [isCenterActive]);
-
-  useEffect(() => {
-    isRTLRef.current = isRTL();
-  }, []);
 
   useEffect(() => {
     let raf: number;
@@ -153,9 +148,7 @@ export function useGSAPSlider<T>({
     : Math.max(0, Math.floor(totalItems - effectiveVisibleCards));
 
   // Dots should always reflect real slides, not include clone pages
-  const dotsCount = infiniteEnabled
-    ? Math.ceil(totalItems / effectiveVisibleCards)
-    : maxIndex + 1;
+  const dotsCount = maxIndex + 1;
 
   const activeIndex = Math.min(currentIndex, maxIndex);
 
@@ -223,17 +216,9 @@ export function useGSAPSlider<T>({
       const next = atEnd ? 0 : prev + 1;
 
       if (infiniteEnabled && atEnd) {
-        if (isRTLRef.current) {
-          // RTL: clones at END of array are the "before" clones (head)
-          // going next = going left visually = moving to clone at start
-          animateToPosition(-(cloneCount), () => {
-            jumpToPosition(maxIndex);
-          });
-        } else {
-          animateToPosition(cloneCount + totalItems, () => {
-            jumpToPosition(cloneCount);
-          });
-        }
+        animateToPosition(cloneCount + totalItems, () => {
+          jumpToPosition(cloneCount);
+        });
       } else {
         animateToSlide(next);
       }
@@ -247,16 +232,9 @@ export function useGSAPSlider<T>({
       const next = atStart ? maxIndex : prev - 1;
 
       if (infiniteEnabled && atStart) {
-        if (isRTLRef.current) {
-          // RTL: clones at start of array are "after" clones (tail)
-          animateToPosition(totalItems + cloneCount, () => {
-            jumpToPosition(cloneCount);
-          });
-        } else {
-          animateToPosition(cloneCount - 1, () => {
-            jumpToPosition(cloneCount + maxIndex);
-          });
-        }
+        animateToPosition(cloneCount - 1, () => {
+          jumpToPosition(cloneCount + maxIndex);
+        });
       } else {
         animateToSlide(next);
       }
@@ -334,8 +312,7 @@ export function useGSAPSlider<T>({
       ? trackItemsCount * centerCardWidthPercent
       : (trackItemsCount / visibleCards) * 100;
     const trackOwnWidth = containerWidth * (currentTrackWidthPercent / 100);
-    const rtlMultiplier = isRTLRef.current ? -1 : 1;
-    const diffPercent = rtlMultiplier * ((dragCurrentXRef.current - dragStartXRef.current) / trackOwnWidth) * 100;
+    const diffPercent = ((dragCurrentXRef.current - dragStartXRef.current) / trackOwnWidth) * 100;
     const basePercent = indexToXPercent(currentIndexRef.current);
 
     xPercentSetterRef.current(basePercent + diffPercent);
@@ -361,7 +338,7 @@ export function useGSAPSlider<T>({
     }
 
     const diff = dragStartXRef.current - dragCurrentXRef.current;
-    const rtlMultiplier = isRTLRef.current ? -1 : 1;
+    const rtlMultiplier = isRTL() ? -1 : 1;
     const adjustedDiff = rtlMultiplier * diff;
 
     if (adjustedDiff > DRAG_THRESHOLD && (infiniteEnabled || currentIndexRef.current < maxIndex)) {
@@ -369,11 +346,7 @@ export function useGSAPSlider<T>({
         const atEnd = prev >= maxIndex;
         const next = atEnd ? 0 : prev + 1;
         if (infiniteEnabled && atEnd) {
-          if (isRTLRef.current) {
-            animateToPosition(-(cloneCount), () => jumpToPosition(maxIndex), RELEASE_EASE);
-          } else {
-            animateToPosition(cloneCount + totalItems, () => jumpToPosition(cloneCount), RELEASE_EASE);
-          }
+          animateToPosition(cloneCount + totalItems, () => jumpToPosition(cloneCount), RELEASE_EASE);
         } else {
           animateToSlide(next, RELEASE_EASE);
         }
@@ -384,11 +357,7 @@ export function useGSAPSlider<T>({
         const atStart = prev <= 0;
         const next = atStart ? maxIndex : prev - 1;
         if (infiniteEnabled && atStart) {
-          if (isRTLRef.current) {
-            animateToPosition(totalItems + cloneCount, () => jumpToPosition(cloneCount), RELEASE_EASE);
-          } else {
-            animateToPosition(cloneCount - 1, () => jumpToPosition(cloneCount + maxIndex), RELEASE_EASE);
-          }
+          animateToPosition(cloneCount - 1, () => jumpToPosition(cloneCount + maxIndex), RELEASE_EASE);
         } else {
           animateToSlide(next, RELEASE_EASE);
         }
@@ -451,29 +420,17 @@ export function useGSAPSlider<T>({
 
       if (infiniteEnabled && current === maxIndex && target === 0) {
         // wrap للأمام: من آخر سلايد للأول
-        if (isRTLRef.current) {
-          animateToPosition(-(cloneCount), () => {
-            jumpToPosition(maxIndex);
-          });
-        } else {
-          animateToPosition(cloneCount + totalItems, () => {
-            jumpToPosition(cloneCount);
-          });
-        }
+        animateToPosition(cloneCount + totalItems, () => {
+          jumpToPosition(cloneCount);
+        });
         return;
       }
 
       if (infiniteEnabled && current === 0 && target === maxIndex) {
         // wrap للخلف: من أول سلايد للآخر
-        if (isRTLRef.current) {
-          animateToPosition(totalItems + cloneCount, () => {
-            jumpToPosition(cloneCount);
-          });
-        } else {
-          animateToPosition(cloneCount - 1, () => {
-            jumpToPosition(cloneCount + maxIndex);
-          });
-        }
+        animateToPosition(cloneCount - 1, () => {
+          jumpToPosition(cloneCount + maxIndex);
+        });
         return;
       }
 
