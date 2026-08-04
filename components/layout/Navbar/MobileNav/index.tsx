@@ -8,16 +8,16 @@ import React, {
   useSyncExternalStore,
 } from "react";
 import { createPortal } from "react-dom";
-import Link from "next/link";
-import Image from "next/image";
 import { gsap } from "gsap";
-import { ArrowRight, Phone, Mail, MapPin, Menu, X } from "lucide-react";
 import { getNavLinks } from "../navData";
 import { useTranslations, useLocale } from "next-intl";
 import { useSiteData } from "@/hooks/useSiteData";
-import ThemeToggle from "@/components/ui/ThemeToggle";
-import LanguageToggle from "@/components/ui/LanguageToggle";
-import { FacebookIcon, LinkedInIcon, WhatsappIcon } from "@/components/icons/SocialIcons";
+
+// Extracted Presentational Components
+import { MobileNavTrigger } from "./MobileNavTrigger";
+import { MobileNavHeader } from "./MobileNavHeader";
+import { MobileNavLinks } from "./MobileNavLinks";
+import { MobileNavFooter } from "./MobileNavFooter";
 
 const emptySubscribe = () => () => {};
 const getSnapshot = () => true;
@@ -43,7 +43,6 @@ function lockBodyScroll() {
 function unlockBodyScroll() {
   document.body.style.overflow = "";
 }
- 
 
 export function MobileNav() {
   const t = useTranslations();
@@ -102,8 +101,6 @@ export function MobileNav() {
         reversed: true,
         defaults: { ease: "power2.inOut", force3D: true },
         onStart: () => {
-          // Fires when playing forward (opening). Scroll lock happens
-          // before tl.play() is called, so this stays purely visual.
           gsap.set([backdropRef.current, drawerRef.current], {
             display: "block",
             willChange: "transform, opacity",
@@ -218,7 +215,7 @@ export function MobileNav() {
       ctx.revert();
       tlRef.current = null;
     };
-  }, [mounted]); // re-run once mounted becomes true and refs are populated
+  }, [mounted]); 
 
   useEffect(() => {
     const tl = tlRef.current;
@@ -232,7 +229,6 @@ export function MobileNav() {
     }
   }, [isOpen]);
 
-  // Safety: always release the scroll lock on unmount
   useEffect(() => unlockBodyScroll, []);
 
   useCloseOnEscape(isOpen, () => setIsOpen(false));
@@ -240,44 +236,24 @@ export function MobileNav() {
 
   return (
     <>
-      {/* ── Menu / Close button ── */}
-      <button
-        onClick={() => setIsOpen((prev) => !prev)}
-        aria-label={isOpen ? "Close Menu" : "Open Menu"}
-        aria-expanded={isOpen}
-        className="relative z-[1050] flex h-9 w-9 md:h-10 md:w-10 items-center justify-center rounded-full bg-slate-100 dark:bg-slate-800/90 border border-slate-200 dark:border-slate-700/80 text-slate-800 dark:text-white transition-all duration-300 hover:scale-105 active:scale-95 shadow-sm cursor-pointer overflow-hidden"
-      >
-        <span
-          ref={menuIconRef}
-          className="absolute inset-0 flex items-center justify-center"
-        >
-          <Menu className="h-[18px] w-[18px]" strokeWidth={2.25} />
-        </span>
-        <span
-          ref={closeIconRef}
-          className="absolute inset-0 flex items-center justify-center opacity-0"
-        >
-          <X className="h-[18px] w-[18px]" strokeWidth={2.25} />
-        </span>
-      </button>
+      <MobileNavTrigger 
+        isOpen={isOpen} 
+        toggleMenu={() => setIsOpen((prev) => !prev)} 
+        menuIconRef={menuIconRef} 
+        closeIconRef={closeIconRef} 
+      />
 
-      {/* ── Portal: Backdrop + Drawer ── */}
       {mounted &&
         createPortal(
           <>
-            {/* Backdrop — subtle dim, no blur on the whole screen, closes on click */}
             <div
               ref={backdropRef}
               onClick={closeMenu}
               style={{ display: "none" }}
-              className="fixed inset-0 z-[990] bg-black/20 backdrop-blur-sm "
+              className="fixed inset-0 z-[990] bg-black/20 backdrop-blur-sm"
               aria-hidden="true"
             />
 
-            {/* Drawer — half-screen panel, always slides in from the left.
-                Background is solid while translating (drawerReady = false)
-                and switches to the glassy blurred version only once the
-                slide-in animation has fully completed. */}
             <div
               ref={drawerRef}
               style={{ display: "none" }}
@@ -290,10 +266,8 @@ export function MobileNav() {
                 border-e border-slate-200/70 dark:border-white/10
                 shadow-2xl shadow-black/30 overflow-hidden transition-colors duration-150`}
             >
-              {/* Top accent line */}
               <div className="absolute top-0 inset-x-0 h-[3px] bg-gradient-to-r from-blue-600 via-sky-400 to-indigo-600" />
 
-              {/* Ambient glow blobs — only rendered once the drawer has settled */}
               {drawerReady && (
                 <>
                   <div className="absolute top-[-60px] end-[-60px] h-56 w-56 rounded-full bg-blue-500/10 dark:bg-blue-600/15 blur-3xl pointer-events-none animate-in fade-in duration-300" />
@@ -301,145 +275,22 @@ export function MobileNav() {
                 </>
               )}
 
-              {/* Inner content wrapper */}
               <div className="flex flex-col flex-1 px-5 sm:px-8 pt-3 sm:pt-5 pb-8 gap-4 md:gap-10 relative z-10 overflow-y-auto overflow-x-hidden overscroll-contain">
-                {/* ── Header: Logo + Controls ── */}
-                <div
-                  ref={drawerHeaderRef}
-                  className="flex items-center justify-between shrink-0 pb-2 sm:pb-4 border-b border-slate-100 dark:border-white/[0.07]"
-                >
-                  <Link href="/" onClick={closeMenu} className="inline-block">
-                    <Image
-                      src="/assets/logo.png"
-                      alt="Nexora Solutions"
-                      width={100}
-                      height={30}
-                      loading="lazy"
-                      className="h-10 w-auto object-contain dark:hidden"
-                    />
-                    <Image
-                      src="/assets/logo_dark.PNG"
-                      alt="Nexora Solutions Dark"
-                      width={100}
-                      height={30}
-                      loading="lazy"
-                      className="h-10 w-auto object-contain hidden dark:block"
-                    />
-                  </Link>
-                  <div className="flex items-center gap-2">
-                    <LanguageToggle />
-                    <ThemeToggle />
-                  </div>
-                </div>
+                <MobileNavHeader drawerHeaderRef={drawerHeaderRef} closeMenu={closeMenu} />
+                
+                <MobileNavLinks 
+                  linksContainerRef={linksContainerRef} 
+                  setDividerRef={setDividerRef} 
+                  navLinks={navLinks} 
+                  closeMenu={closeMenu} 
+                />
 
-                {/* ── Nav Links ── */}
-                <nav
-                  className="flex flex-col justify-center"
-                  aria-label="Main navigation"
-                >
-                  <ul ref={linksContainerRef} className="list-none p-0 m-0">
-                    {navLinks.map(({ label, href }, i) => (
-                      <li key={href} className="relative overflow-hidden">
-                        <Link
-                          href={href}
-                          onClick={closeMenu}
-                          className="group flex items-center justify-between gap-4 py-1.5 sm:py-2.5"
-                        >
-                          <span className="text-[20px] sm:text-2xl font-extrabold tracking-tight text-slate-800 dark:text-slate-100 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors duration-300">
-                            {label}
-                          </span>
-                          <ArrowRight className="h-5 w-5 text-blue-500/80 dark:text-sky-400/80 group-hover:text-blue-600 dark:group-hover:text-blue-400 rtl:-scale-x-100 group-hover:translate-x-1 rtl:group-hover:-translate-x-1 transition-all duration-300 shrink-0" />
-                        </Link>
-                        {/* Animated underline divider */}
-                        <span
-                          ref={(el) => setDividerRef(el, i)}
-                          className="block h-px w-full bg-gradient-to-r from-blue-600/50 via-slate-300 dark:from-blue-600/30 dark:via-white/10 to-transparent origin-left"
-                        />
-                      </li>
-                    ))}
-                  </ul>
-                </nav>
-
-                {/* ── Footer ── */}
-                <div className="mt-auto space-y-4 shrink-0 pb-6 sm:pb-0">
-                  {/* Contact info */}
-                  <div
-                    ref={footerInfoRef}
-                    className="grid grid-cols-1 gap-1.5 sm:gap-2 font-mono text-[10px] md:text-xs"
-                  >
-                    <Link
-                      href={map.linkUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="flex items-center gap-2.5 rounded-xl bg-slate-50 dark:bg-white/[0.04] px-3 py-2 sm:py-2.5 text-slate-500 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-white/[0.08] hover:text-slate-800 dark:hover:text-white transition-all border border-slate-100 dark:border-white/[0.06]"
-                    >
-                      <MapPin className="h-3.5 w-3.5 text-blue-500 shrink-0" />
-                      <span className="text-start leading-snug">
-                        {contact.shortAddress}
-                      </span>
-                    </Link>
-                    <Link
-                      href={`tel:${contact.phone.replace(/\s/g, "")}`}
-                      className="flex items-center gap-2.5 rounded-xl bg-slate-50 dark:bg-white/[0.04] px-3 py-2 sm:py-2.5 text-slate-500 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-white/[0.08] hover:text-slate-800 dark:hover:text-white transition-all border border-slate-100 dark:border-white/[0.06]"
-                    >
-                      <Phone className="h-3.5 w-3.5 text-emerald-500 shrink-0" />
-                      <span dir="ltr">{contact.phone}</span>
-                    </Link>
-                    <Link
-                      href={`mailto:${contact.email}`}
-                      className="flex items-center gap-2.5 rounded-xl bg-slate-50 dark:bg-white/[0.04] px-3 py-2 sm:py-2.5 text-slate-500 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-white/[0.08] hover:text-slate-800 dark:hover:text-white transition-all border border-slate-100 dark:border-white/[0.06]"
-                    >
-                      <Mail className="h-3.5 w-3.5 text-sky-500 shrink-0" />
-                      <span dir="ltr">{contact.email}</span>
-                    </Link>
-                  </div>
-
-                  {/* Social Icons */}
-                  <div className="flex items-center justify-center gap-2.5 pt-2">
-                    <Link
-                      href={social.facebook}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      aria-label="Facebook"
-                      className="p-2 rounded-lg bg-[#1877F2]/10 dark:bg-[#1877F2]/10 border border-[#1877F2]/20 text-[#1877F2] hover:bg-[#1877F2]/20 dark:hover:bg-[#1877F2]/25 hover:border-[#1877F2]/50 hover:scale-110 transition-all duration-300"
-                    >
-                      <FacebookIcon className="h-5 w-5" />
-                    </Link>
-                    <Link
-                      href={contact.whatsapp}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      aria-label="WhatsApp"
-                      className="p-2 rounded-lg bg-[#25D366]/10 dark:bg-[#25D366]/10 border border-[#25D366]/20 text-[#25D366] hover:bg-[#25D366]/20 dark:hover:bg-[#25D366]/25 hover:border-[#25D366]/50 hover:scale-110 transition-all duration-300"
-                    >
-                      <WhatsappIcon className="h-5 w-5" />
-                    </Link>
-                    <Link
-                      href={social.instagram}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      aria-label="Instagram"
-                      className="p-2 rounded-lg bg-pink-500/10 dark:bg-pink-500/10 border border-pink-500/20 text-pink-500 hover:bg-pink-500/20 dark:hover:bg-pink-500/25 hover:border-pink-500/50 hover:scale-110 transition-all duration-300"
-                    >
-                      <Image
-                        src="/instegram.jpeg"
-                        alt="Instagram"
-                        width={20}
-                        height={20}
-                        className="h-[20px] w-[20px] object-contain rounded-md"
-                      />
-                    </Link>
-                    <Link
-                      href={social.linkedin}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      aria-label="LinkedIn"
-                      className="p-2 rounded-lg bg-[#1877F2]/10 dark:bg-[#1877F2]/10 border border-[#1877F2]/20 text-[#1877F2] hover:bg-[#1877F2]/20 dark:hover:bg-[#1877F2]/25 hover:border-[#1877F2]/50 hover:scale-110 transition-all duration-300"
-                    >
-                      <LinkedInIcon className="h-5 w-5" />
-                    </Link>
-                  </div>
-                </div>
+                <MobileNavFooter 
+                  footerInfoRef={footerInfoRef} 
+                  contact={contact} 
+                  map={map} 
+                  social={social} 
+                />
               </div>
             </div>
           </>,
