@@ -9,8 +9,8 @@ import { EarthIcon } from 'lucide-react';
 import type { LanguageToggleProps } from './types';
 
 const OVERLAY_ID = 'lang-switch-overlay';
-const ROUTE_DELAY_MS = 100; // time before navigating, lets the overlay fade in first
-const FADE_OUT_MS = 200; // time to fade the overlay out once the new locale is ready
+const ROUTE_DELAY_MS = 10; // start routing almost immediately
+const FADE_OUT_MS = 300; // time to fade the overlay out (matches CSS duration)
 
 const DOT_POSITIONS = [
     { top: '8%', left: '50%', delay: '0s' },
@@ -92,7 +92,7 @@ export default function LanguageToggle({ className = '' }: LanguageToggleProps) 
         overlay.setAttribute('dir', newLocale === 'ar' ? 'rtl' : 'ltr');
         overlay.setAttribute('role', 'status');
         overlay.setAttribute('aria-live', 'polite');
-        overlay.className = `fixed inset-0 z-[999999] flex items-center justify-center pointer-events-none opacity-0 backdrop-blur-lg transition-opacity duration-500 ease-in-out ${
+        overlay.className = `fixed inset-0 z-[999999] flex items-center justify-center pointer-events-none opacity-0 backdrop-blur-lg transition-opacity duration-300 ease-in-out ${
             isDark ? 'bg-[#090d16]/80' : 'bg-[#f8fafc]/80'
         }`;
 
