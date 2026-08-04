@@ -95,7 +95,7 @@ export default function HeroContent({
                 <span className="block text-xs sm:text-sm font-bold text-slate-900 dark:text-white group-hover:text-emerald-600 dark:group-hover:text-emerald-400 transition-colors leading-tight">
                   {t('whatsapp_us')}
                 </span>
-                <span className="block text-[0.65rem] sm:text-[0.7rem] font-semibold text-slate-500 dark:text-slate-400">
+                <span className="block text-[0.65rem] sm:text-[0.7rem] font-semibold text-slate-500 dark:text-slate-400 pt-1">
                   {t('chat_instantly')}
                 </span>
               </div>
