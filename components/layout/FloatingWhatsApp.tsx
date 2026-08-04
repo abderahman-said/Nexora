@@ -10,49 +10,61 @@ export default function FloatingWhatsApp() {
 
   useEffect(() => {
     const handleScroll = () => {
-      // Show when user scrolls past 70% of the viewport height (approx bottom of hero)
       const shouldBeVisible = window.scrollY > window.innerHeight * 0.7;
       setIsVisible(shouldBeVisible);
     };
 
-    // Run once on mount
     handleScroll();
 
-    // Use passive listener for best performance
     window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
   return (
     <div
-      className={`fixed bottom-6 right-6 sm:bottom-8 sm:right-8 z-50 transition-all duration-500 ease-out transform ${
+      className={`fixed bottom-6 right-[-10px] sm:bottom-8 sm:right-[-10px] z-50 flex flex-col gap-3 transition-all duration-500 ease-out transform ${
         isVisible
           ? "translate-y-0 opacity-100 scale-100"
           : "translate-y-12 opacity-0 scale-50 pointer-events-none"
       }`}
     >
       <Link
+        href={`tel:${contact.phone.replace(/\s/g, "")}`}
+        className="group relative flex items-center justify-start pl-6 w-[80px] h-[52px] backdrop-blur-[25px] bg-transparent border border-slate-300/50 dark:border-white/20 text-slate-800 dark:text-white rounded-l-full shadow-lg dark:shadow-2xl hover:bg-slate-200/50 dark:hover:bg-[#252836]/80 transition-all duration-300 hover:-translate-x-2"
+        aria-label="Call us"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="25"
+          height="25"
+          viewBox="0 0 24 24"
+        >
+          <path
+            fill="currentColor"
+            d="M19.44 13c-.22 0-.45-.07-.67-.12a9.44 9.44 0 0 1-1.31-.39a2 2 0 0 0-2.48 1l-.22.45a12.18 12.18 0 0 1-2.66-2a12.18 12.18 0 0 1-2-2.66l.42-.28a2 2 0 0 0 1-2.48a10.33 10.33 0 0 1-.39-1.31c-.05-.22-.09-.45-.12-.68a3 3 0 0 0-3-2.49h-3a3 3 0 0 0-3 3.41a19 19 0 0 0 16.52 16.46h.38a3 3 0 0 0 2-.76a3 3 0 0 0 1-2.25v-3a3 3 0 0 0-2.47-2.9Zm.5 6a1 1 0 0 1-.34.75a1.05 1.05 0 0 1-.82.25A17 17 0 0 1 4.07 5.22a1.09 1.09 0 0 1 .25-.82a1 1 0 0 1 .75-.34h3a1 1 0 0 1 1 .79q.06.41.15.81a11.12 11.12 0 0 0 .46 1.55l-1.4.65a1 1 0 0 0-.49 1.33a14.49 14.49 0 0 0 7 7a1 1 0 0 0 .76 0a1 1 0 0 0 .57-.52l.62-1.4a13.69 13.69 0 0 0 1.58.46q.4.09.81.15a1 1 0 0 1 .79 1Z"
+          />
+        </svg>
+      </Link>
+
+      <Link
         href={contact.whatsapp}
         target="_blank"
         rel="noopener noreferrer"
-        className="group relative flex items-center justify-center w-14 h-14 bg-[#25D366] text-white rounded-full shadow-[0_8px_30px_rgba(37,211,102,0.4)] hover:bg-[#20bd5a] transition-colors duration-300"
+        className="group relative flex items-center justify-start pl-6 w-[80px] h-[52px] backdrop-blur-[25px] bg-transparent border border-slate-300/50 dark:border-white/20 text-slate-800 dark:text-white rounded-l-full shadow-lg dark:shadow-2xl hover:bg-slate-200/50 dark:hover:bg-[#252836]/80 transition-all duration-300 hover:-translate-x-2"
         aria-label="Chat on WhatsApp"
       >
-        {/* Subtle Pulse effect */}
-        <div 
-          className="absolute inset-0 rounded-full bg-[#25D366]/40 animate-ping" 
-          style={{ animationDuration: '3s' }} 
-        />
-        
-        {/* WhatsApp Icon */}
         <svg
           xmlns="http://www.w3.org/2000/svg"
-          viewBox="0 0 24 24"
-          width="28"
-          height="28"
-          className="relative z-10 fill-current"
+          width="25"
+          height="25"
+          viewBox="0 0 32 32"
+          fill="currentColor"
         >
-          <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 0 0-.57-.015c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/>
+          <path
+            fill="currentColor"
+            fill-rule="evenodd"
+            d="M24.504 7.504A11.875 11.875 0 0 0 16.05 4C9.465 4 4.1 9.36 4.1 15.945a11.882 11.882 0 0 0 1.594 5.973L4 28.109l6.336-1.664a11.958 11.958 0 0 0 5.71 1.457h.005c6.586 0 11.945-5.359 11.949-11.949c0-3.191-1.242-6.191-3.496-8.45zM16.05 25.883h-.004a9.93 9.93 0 0 1-5.055-1.383l-.363-.215l-3.762.985l1.004-3.665l-.234-.375a9.904 9.904 0 0 1-1.52-5.285c0-5.472 4.457-9.925 9.938-9.925a9.863 9.863 0 0 1 7.02 2.91a9.875 9.875 0 0 1 2.905 7.023c0 5.477-4.457 9.93-9.93 9.93zm5.445-7.438c-.297-.148-1.766-.87-2.039-.968c-.273-.102-.473-.149-.672.148c-.2.3-.77.973-.945 1.172c-.172.195-.348.223-.645.074c-.3-.148-1.261-.465-2.402-1.484c-.887-.79-1.488-1.77-1.66-2.067c-.176-.3-.02-.46.129-.61c.136-.132.3-.347.449-.523c.148-.171.2-.296.3-.496c.098-.199.048-.375-.027-.523c-.074-.148-.671-1.621-.921-2.219c-.243-.582-.489-.5-.672-.511c-.172-.008-.371-.008-.57-.008c-.2 0-.524.074-.798.375c-.273.297-1.043 1.02-1.043 2.488c0 1.469 1.07 2.89 1.22 3.09c.148.195 2.105 3.21 5.1 4.504a16.85 16.85 0 0 0 1.7.629c.715.226 1.367.195 1.883.12c.574-.085 1.765-.722 2.015-1.421c.247-.695.247-1.293.172-1.418c-.074-.125-.273-.2-.574-.352z"
+          />
         </svg>
       </Link>
     </div>
