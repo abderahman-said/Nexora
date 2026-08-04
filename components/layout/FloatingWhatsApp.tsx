@@ -22,7 +22,7 @@ export default function FloatingWhatsApp() {
 
   return (
     <div
-      className={`fixed bottom-6 right-[-10px] sm:bottom-8 sm:right-[-10px] z-50 flex flex-col gap-3 transition-all duration-500 ease-out transform ${
+      className={`fixed bottom-6 end-[-10px] sm:bottom-8 sm:end-[-10px] z-50 flex flex-col gap-3 transition-all duration-500 ease-out transform ${
         isVisible
           ? "translate-y-0 opacity-100 scale-100"
           : "translate-y-12 opacity-0 scale-50 pointer-events-none"
@@ -30,7 +30,7 @@ export default function FloatingWhatsApp() {
     >
       <Link
         href={`tel:${contact.phone.replace(/\s/g, "")}`}
-        className="group relative flex items-center justify-start ps-6 w-[80px] h-[52px] backdrop-blur-[25px] bg-transparent border border-slate-300/50 dark:border-white/20 text-slate-800 dark:text-white rounded-l-full shadow-lg dark:shadow-2xl hover:bg-slate-200/50 dark:hover:bg-[#252836]/80 transition-all duration-300 hover:-translate-x-2"
+        className="group relative flex items-center justify-start ps-6 w-[80px] h-[52px] backdrop-blur-[25px] bg-transparent border border-slate-300/50 dark:border-white/20 text-slate-800 dark:text-white rounded-s-full shadow-lg dark:shadow-2xl hover:bg-slate-200/50 dark:hover:bg-[#252836]/80 transition-all duration-300 hover:-translate-x-2"
         aria-label="Call us"
       >
         <svg
@@ -50,7 +50,7 @@ export default function FloatingWhatsApp() {
         href={contact.whatsapp}
         target="_blank"
         rel="noopener noreferrer"
-        className="group relative flex items-center justify-start ps-6 w-[80px] h-[52px] backdrop-blur-[25px] bg-transparent border border-slate-300/50 dark:border-white/20 text-slate-800 dark:text-white rounded-l-full shadow-lg dark:shadow-2xl hover:bg-slate-200/50 dark:hover:bg-[#252836]/80 transition-all duration-300 hover:-translate-x-2"
+        className="group relative flex items-center justify-start ps-6 w-[80px] h-[52px] backdrop-blur-[25px] bg-transparent border border-slate-300/50 dark:border-white/20 text-slate-800 dark:text-white rounded-s-full shadow-lg dark:shadow-2xl hover:bg-slate-200/50 dark:hover:bg-[#252836]/80 transition-all duration-300 hover:-translate-x-2"
         aria-label="Chat on WhatsApp"
       >
         <svg
