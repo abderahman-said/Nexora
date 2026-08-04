@@ -15,14 +15,50 @@ export default function LanguageToggle({ className = '' }: LanguageToggleProps) 
 
     const isArabic = locale === 'ar';
 
+    // Fade out and remove the overlay when the new locale has loaded
+    React.useEffect(() => {
+        const overlay = document.getElementById('lang-switch-overlay');
+        if (overlay) {
+            // Fade out
+            overlay.style.opacity = '0';
+            setTimeout(() => {
+                overlay.remove();
+            }, 500);
+        }
+    }, [locale]);
+
     const toggleLanguage = () => {
         const newLocale = isArabic ? 'en' : 'ar';
-        
-        // Remove current locale from pathname if present
         const pathWithoutLocale = pathname.replace(/^\/(ar|en)/, '');
         const newPath = `/${newLocale}${pathWithoutLocale}`;
         
-        router.push(newPath);
+        // 1. Create a full-screen overlay
+        const overlay = document.createElement('div');
+        overlay.id = 'lang-switch-overlay';
+        // Using Tailwind classes for the overlay
+        overlay.className = 'fixed inset-0 z-[999999] flex items-center justify-center bg-[#f8fafc] dark:bg-[#090d16] pointer-events-none transition-opacity duration-500 ease-in-out';
+        overlay.style.opacity = '0';
+        
+        // 2. Create a premium spinner
+        const spinnerContainer = document.createElement('div');
+        spinnerContainer.className = 'flex flex-col items-center gap-4';
+        
+        const spinner = document.createElement('div');
+        spinner.className = 'w-12 h-12 border-[3px] border-blue-500/20 border-t-blue-600 dark:border-sky-400/20 dark:border-t-sky-400 rounded-full animate-spin';
+        
+        spinnerContainer.appendChild(spinner);
+        overlay.appendChild(spinnerContainer);
+        document.body.appendChild(overlay);
+        
+        // 3. Fade it in
+        requestAnimationFrame(() => {
+            overlay.style.opacity = '1';
+        });
+        
+        // 4. Wait for the fade-in to complete before routing
+        setTimeout(() => {
+            router.push(newPath);
+        }, 400);
     };
 
     return (

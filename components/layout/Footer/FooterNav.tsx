@@ -8,9 +8,9 @@ export function FooterNav() {
     const locale = useLocale();
 
     const navItems = [
-        { label: t('footer.aboutUs'), href: "/about" },
-        { label: t('footer.ourServices'), href: "/services" },
-        { label: t('footer.getInTouch'), href: "/contact" },
+        { label: t('footer.aboutUs'), href: "about" },
+        { label: t('footer.ourServices'), href: "services" },
+        { label: t('footer.getInTouch'), href: "contact" },
     ];
 
     return (

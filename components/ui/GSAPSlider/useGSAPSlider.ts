@@ -240,7 +240,7 @@ export function useGSAPSlider<T>({
       }
       return next;
     });
-  }, [maxIndex, infiniteEnabled, cloneCount, totalItems, animateToPosition, jumpToPosition, animateToSlide]);
+  }, [maxIndex, infiniteEnabled, cloneCount, animateToPosition, jumpToPosition, animateToSlide]);
 
   useEffect(() => {
     if (isDraggingRef.current || totalItems === 0) return;
