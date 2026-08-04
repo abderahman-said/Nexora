@@ -33,7 +33,7 @@ const HorizontalWords = () => {
         </div>
 
         <Container className="relative z-10">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-16 items-center">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-16 items-center pt-10">
             {/* ── LEFT COLUMN: Structured Team Visual & Glass Chips ── */}
             <div className="lg:col-span-5 flex justify-center">
               <AboutVisual visualRef={visualRef} />
@@ -55,7 +55,7 @@ const HorizontalWords = () => {
               </div>
 
               {/* Main Section Headline */}
-              <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-slate-900 dark:text-white tracking-tight leading-[1.15]">
+              <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-slate-900 dark:text-white tracking-tight leading-[1.6]!">
                {t('title_main')} {" "}
                 <span className="bg-gradient-to-r from-blue-600 via-sky-500 to-indigo-600 bg-clip-text text-transparent">
                   {t('title_highlight')}
