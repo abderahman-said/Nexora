@@ -215,7 +215,7 @@ export function MobileNav() {
       ctx.revert();
       tlRef.current = null;
     };
-  }, [mounted]); 
+  }, [mounted, isRtl]); 
 
   useEffect(() => {
     const tl = tlRef.current;

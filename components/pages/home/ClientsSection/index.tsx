@@ -3,7 +3,7 @@
 import React from "react";
 import { MessageSquareQuote } from "lucide-react";
 import GSAPSlider from "@/components/ui/GSAPSlider";
-import { TESTIMONIALS } from "./clientsData";
+import { getClients } from "./clientsData";
 import { ClientCard } from "./ClientCard";
 import Container from "@/components/ui/Container";
 
@@ -11,6 +11,7 @@ import { useTranslations } from "next-intl";
 
 export default function ClientsSection() {
   const t = useTranslations("homeClients");
+  const TESTIMONIALS = getClients(t);
   return (
     <section
       id="testimonials"

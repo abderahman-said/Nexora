@@ -46,7 +46,7 @@ const FormInput = forwardRef<HTMLInputElement | HTMLTextAreaElement, FormInputPr
             border ${error ? 'border-red-500 focus:border-red-500' : 'border-slate-200 dark:border-slate-800 focus:border-blue-500 dark:focus:border-sky-400'}
             focus:outline-none transition-colors
             ${isTextarea ? 'p-4 rounded-2xl resize-none' : 'py-3 rounded-2xl'}
-            ${Icon && !isTextarea ? 'pl-11 pr-4' : !isTextarea ? 'px-4' : ''}
+            ${Icon && !isTextarea ? 'ps-11 pe-4' : !isTextarea ? 'px-4' : ''}
             ${inputClassName}
             ${className}
           `}

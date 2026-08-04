@@ -57,5 +57,5 @@ export default function CursorBubble() {
         };
     }, []);
 
-    return <div className="js-cursor-bubble fixed top-0 left-0 pointer-events-none bg-[#efbbd8] text-brand-black pt-[5px] pr-[7px] pb-[3px] pl-[7px] rounded-[50px] rounded-br-none text-[18px] font-epilogue opacity-0 scale-0 origin-left z-[10000] whitespace-nowrap transition-none will-change-transform">click</div>;
+    return <div className="js-cursor-bubble fixed top-0 left-0 pointer-events-none bg-[#efbbd8] text-brand-black pt-[5px] pe-[7px] pb-[3px] ps-[7px] rounded-[50px] rounded-br-none text-[18px] font-epilogue opacity-0 scale-0 origin-left z-[10000] whitespace-nowrap transition-none will-change-transform">click</div>;
 }

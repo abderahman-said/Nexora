@@ -1,17 +1,20 @@
 import { notFound } from 'next/navigation';
 import SingleServicePage from '@/components/pages/services/SingleServicePage';
-import { SERVICES } from '@/components/pages/home/ServiceCards/servicesData';
+import { getServices, SERVICE_SLUGS } from '@/components/pages/home/ServiceCards/servicesData';
 import type { Metadata } from 'next';
+import { getTranslations } from 'next-intl/server';
 
 export async function generateStaticParams() {
-    return SERVICES.map((service) => ({
-        slug: service.slug,
+    return SERVICE_SLUGS.map((slug) => ({
+        slug: slug,
     }));
 }
 
-export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
-    const { slug } = await params;
-    const service = SERVICES.find((s) => s.slug === slug);
+export async function generateMetadata({ params }: { params: Promise<{ slug: string, locale: string }> }): Promise<Metadata> {
+    const { slug, locale } = await params;
+    const t = await getTranslations({ locale, namespace: 'homeServices' });
+    const services = getServices(t);
+    const service = services.find((s) => s.slug === slug);
     
     if (!service) {
         return {
@@ -25,9 +28,11 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
     };
 }
 
-export default async function ServicePage({ params }: { params: Promise<{ slug: string }> }) {
-    const { slug } = await params;
-    const service = SERVICES.find((s) => s.slug === slug);
+export default async function ServicePage({ params }: { params: Promise<{ slug: string, locale: string }> }) {
+    const { slug, locale } = await params;
+    const t = await getTranslations({ locale, namespace: 'homeServices' });
+    const services = getServices(t);
+    const service = services.find((s) => s.slug === slug);
 
     if (!service) {
         notFound();

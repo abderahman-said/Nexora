@@ -1,5 +1,12 @@
 import type { Service } from './types';
 
+export const SERVICE_SLUGS = [
+    'business-analysis',
+    'software-services',
+    'web-development',
+    'ui-ux-design',
+] as const;
+
 export const getServices = (t: any): Service[] => [
     {
         id: '01',

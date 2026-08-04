@@ -19,7 +19,7 @@ export default function TermsContent() {
 
                         <h2 className="text-2xl font-bold text-slate-900 dark:text-white mb-4">User Responsibilities</h2>
                         <p className="mb-4">Users agree to:</p>
-                        <ul className="list-disc pl-6 mb-6 space-y-2">
+                        <ul className="list-disc ps-6 mb-6 space-y-2">
                             <li>Provide accurate information</li>
                             <li>Use services for lawful purposes only</li>
                             <li>Respect intellectual property rights</li>

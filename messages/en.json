@@ -194,7 +194,14 @@
   "homeClients": {
     "badge": "CUSTOMER FEEDBACK",
     "title_main": "What Happy Clients Say ",
-    "title_highlight": "About Us"
+    "title_highlight": "About Us",
+    "items": {
+      "c1": {
+        "name": "Abdelrahman Mokhtar",
+        "role": "Client",
+        "comment": "A highly professional company with an exceptional and respectful development team. I've worked with them on more than three software projects, and every one of them was a complete success. I highly recommend working with them and choosing them for your next project."
+      }
+    }
   },
   "homeConsultation": {
     "visual_live": "Live Consultation Active",

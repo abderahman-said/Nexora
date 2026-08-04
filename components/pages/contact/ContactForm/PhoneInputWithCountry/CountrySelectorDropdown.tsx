@@ -32,7 +32,7 @@ export default function CountrySelectorDropdown({
                     value={searchQuery}
                     onChange={onSearchChange}
                     className="
-                        w-full py-2 pl-9 pr-3 text-xs font-medium
+                        w-full py-2 ps-9 pe-3 text-xs font-medium
                         bg-slate-100 dark:bg-slate-900 text-slate-900 dark:text-white
                         border border-slate-200 dark:border-slate-800 rounded-xl
                         focus:outline-none focus:border-blue-500 dark:focus:border-sky-400

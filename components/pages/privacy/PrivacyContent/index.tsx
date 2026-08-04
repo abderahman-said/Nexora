@@ -14,7 +14,7 @@ export default function PrivacyContent() {
 
                         <h2 className="text-2xl font-bold text-slate-900 dark:text-white mb-4">Information We Collect</h2>
                         <p className="mb-4">We collect the following types of information:</p>
-                        <ul className="list-disc pl-6 mb-6 space-y-2">
+                        <ul className="list-disc ps-6 mb-6 space-y-2">
                             <li>Personal information (name, email, phone number)</li>
                             <li>Business information (company name, job title)</li>
                             <li>Usage data (website visits, interactions)</li>
@@ -23,7 +23,7 @@ export default function PrivacyContent() {
 
                         <h2 className="text-2xl font-bold text-slate-900 dark:text-white mb-4">How We Use Your Information</h2>
                         <p className="mb-4">We use your information to:</p>
-                        <ul className="list-disc pl-6 mb-6 space-y-2">
+                        <ul className="list-disc ps-6 mb-6 space-y-2">
                             <li>Provide and improve our services</li>
                             <li>Communicate with you about our offerings</li>
                             <li>Analyze usage patterns</li>
@@ -37,7 +37,7 @@ export default function PrivacyContent() {
 
                         <h2 className="text-2xl font-bold text-slate-900 dark:text-white mb-4">Your Rights</h2>
                         <p className="mb-4">You have the right to:</p>
-                        <ul className="list-disc pl-6 mb-6 space-y-2">
+                        <ul className="list-disc ps-6 mb-6 space-y-2">
                             <li>Access your personal data</li>
                             <li>Request deletion of your data</li>
                             <li>Opt-out of marketing communications</li>
