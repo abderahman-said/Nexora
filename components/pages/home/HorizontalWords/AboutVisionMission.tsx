@@ -94,7 +94,7 @@ export default function AboutVisionMission() {
             {/* ── Action & Stats Row ── */}
             <div className="pt-3 flex flex-wrap items-center justify-between gap-4">
                 <Link
-                    href={`/${locale}/contact`}
+                    href={`/${locale}/about`}
                     className="
                         inline-flex items-center gap-2 px-6 py-3 rounded-full
                         bg-gradient-to-r from-blue-600 to-sky-600 text-white

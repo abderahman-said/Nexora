@@ -20,7 +20,7 @@ export default function GSAPSlider<T extends { id?: string | number }>(props: GS
 
   const sliderState = useGSAPSlider(props);
   const {
-    totalItems, maxIndex, rootRef, setIsHoverPaused,
+    totalItems, maxIndex, dotsCount, rootRef, setIsHoverPaused,
     isDragging, handlePointerDown,
     handlePointerMove, handlePointerUp, handleClickCapture,
     activeIndex, goToSlideWithReset
@@ -51,6 +51,7 @@ export default function GSAPSlider<T extends { id?: string | number }>(props: GS
       <GSAPSliderControls
         showDots={showDots}
         maxIndex={maxIndex}
+        dotsCount={dotsCount}
         activeIndex={activeIndex}
         goToSlideWithReset={goToSlideWithReset}
       />

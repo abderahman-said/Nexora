@@ -5,6 +5,7 @@ import React from "react";
 interface GSAPSliderControlsProps {
   showDots: boolean;
   maxIndex: number;
+  dotsCount: number;
   activeIndex: number;
   goToSlideWithReset: (index: number) => void;
 }
@@ -12,6 +13,7 @@ interface GSAPSliderControlsProps {
 export function GSAPSliderControls({
   showDots,
   maxIndex,
+  dotsCount,
   activeIndex,
   goToSlideWithReset,
 }: GSAPSliderControlsProps) {
@@ -23,7 +25,7 @@ export function GSAPSliderControls({
     <div className="flex items-center justify-center gap-2 sm:gap-3 mt-3 sm:mt-4">
       {showPaginationDots && (
         <div className="flex items-center gap-1 px-1">
-          {Array.from({ length: maxIndex + 1 }).map((_, dotIdx) => (
+          {Array.from({ length: dotsCount }).map((_, dotIdx) => (
             <button
               key={dotIdx}
               type="button"

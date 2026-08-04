@@ -391,6 +391,15 @@
         }
     }
   },
+  "single_service_page": {
+    "key_features_badge": "الميزات الرئيسية",
+    "what_we_offer_title": "ماذا نقدم",
+    "what_we_offer_subtitle": "حلول {serviceTitle} شاملة مصممة لتلبية احتياجات عملك.",
+    "feature_description": "تنفيذ احترافي لـ {featureName} مع أفضل الممارسات في الصناعة.",
+    "cta_title": "هل أنت مستعد للبدء؟",
+    "cta_subtitle": "تواصل معنا اليوم لمناقشة كيف يمكن لخدمات {serviceTitle} أن تساعد في نمو أعمالك.",
+    "cta_button": "تواصل معنا الآن"
+  },
   "services_page": {
     "hero": {
         "prefix": "خدماتنا",

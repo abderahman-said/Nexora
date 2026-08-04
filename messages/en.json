@@ -389,6 +389,15 @@
         }
     }
   },
+  "single_service_page": {
+    "key_features_badge": "KEY FEATURES",
+    "what_we_offer_title": "What We Offer",
+    "what_we_offer_subtitle": "Comprehensive {serviceTitle} solutions tailored to your business needs.",
+    "feature_description": "Expert implementation of {featureName} with industry best practices.",
+    "cta_title": "Ready to Get Started?",
+    "cta_subtitle": "Contact us today to discuss how our {serviceTitle} services can help your business grow.",
+    "cta_button": "Contact Us Now"
+  },
   "services_page": {
     "hero": {
         "prefix": "Our",

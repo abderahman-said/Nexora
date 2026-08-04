@@ -146,9 +146,16 @@ export function useGSAPSlider<T>({
   }, [items, cloneCount, infiniteEnabled, totalItems]);
 
   const trackItemsCount = renderItems.length;
+  // For infinite: dots = one per real item (no clones counted)
+  // For finite:   dots = number of pages
   const maxIndex = infiniteEnabled
     ? Math.max(0, totalItems - 1)
     : Math.max(0, Math.floor(totalItems - effectiveVisibleCards));
+
+  // Dots should always reflect real slides, not include clone pages
+  const dotsCount = infiniteEnabled
+    ? Math.ceil(totalItems / effectiveVisibleCards)
+    : maxIndex + 1;
 
   const activeIndex = Math.min(currentIndex, maxIndex);
 
@@ -216,9 +223,17 @@ export function useGSAPSlider<T>({
       const next = atEnd ? 0 : prev + 1;
 
       if (infiniteEnabled && atEnd) {
-        animateToPosition(cloneCount + totalItems, () => {
-          jumpToPosition(cloneCount);
-        });
+        if (isRTLRef.current) {
+          // RTL: clones at END of array are the "before" clones (head)
+          // going next = going left visually = moving to clone at start
+          animateToPosition(-(cloneCount), () => {
+            jumpToPosition(maxIndex);
+          });
+        } else {
+          animateToPosition(cloneCount + totalItems, () => {
+            jumpToPosition(cloneCount);
+          });
+        }
       } else {
         animateToSlide(next);
       }
@@ -232,15 +247,22 @@ export function useGSAPSlider<T>({
       const next = atStart ? maxIndex : prev - 1;
 
       if (infiniteEnabled && atStart) {
-        animateToPosition(cloneCount - 1, () => {
-          jumpToPosition(cloneCount + maxIndex);
-        });
+        if (isRTLRef.current) {
+          // RTL: clones at start of array are "after" clones (tail)
+          animateToPosition(totalItems + cloneCount, () => {
+            jumpToPosition(cloneCount);
+          });
+        } else {
+          animateToPosition(cloneCount - 1, () => {
+            jumpToPosition(cloneCount + maxIndex);
+          });
+        }
       } else {
         animateToSlide(next);
       }
       return next;
     });
-  }, [maxIndex, infiniteEnabled, cloneCount, animateToPosition, jumpToPosition, animateToSlide]);
+  }, [maxIndex, infiniteEnabled, cloneCount, totalItems, animateToPosition, jumpToPosition, animateToSlide]);
 
   useEffect(() => {
     if (isDraggingRef.current || totalItems === 0) return;
@@ -347,7 +369,11 @@ export function useGSAPSlider<T>({
         const atEnd = prev >= maxIndex;
         const next = atEnd ? 0 : prev + 1;
         if (infiniteEnabled && atEnd) {
-          animateToPosition(cloneCount + totalItems, () => jumpToPosition(cloneCount), RELEASE_EASE);
+          if (isRTLRef.current) {
+            animateToPosition(-(cloneCount), () => jumpToPosition(maxIndex), RELEASE_EASE);
+          } else {
+            animateToPosition(cloneCount + totalItems, () => jumpToPosition(cloneCount), RELEASE_EASE);
+          }
         } else {
           animateToSlide(next, RELEASE_EASE);
         }
@@ -358,7 +384,11 @@ export function useGSAPSlider<T>({
         const atStart = prev <= 0;
         const next = atStart ? maxIndex : prev - 1;
         if (infiniteEnabled && atStart) {
-          animateToPosition(cloneCount - 1, () => jumpToPosition(cloneCount + maxIndex), RELEASE_EASE);
+          if (isRTLRef.current) {
+            animateToPosition(totalItems + cloneCount, () => jumpToPosition(cloneCount), RELEASE_EASE);
+          } else {
+            animateToPosition(cloneCount - 1, () => jumpToPosition(cloneCount + maxIndex), RELEASE_EASE);
+          }
         } else {
           animateToSlide(next, RELEASE_EASE);
         }
@@ -421,17 +451,29 @@ export function useGSAPSlider<T>({
 
       if (infiniteEnabled && current === maxIndex && target === 0) {
         // wrap للأمام: من آخر سلايد للأول
-        animateToPosition(cloneCount + totalItems, () => {
-          jumpToPosition(cloneCount);
-        });
+        if (isRTLRef.current) {
+          animateToPosition(-(cloneCount), () => {
+            jumpToPosition(maxIndex);
+          });
+        } else {
+          animateToPosition(cloneCount + totalItems, () => {
+            jumpToPosition(cloneCount);
+          });
+        }
         return;
       }
 
       if (infiniteEnabled && current === 0 && target === maxIndex) {
         // wrap للخلف: من أول سلايد للآخر
-        animateToPosition(cloneCount - 1, () => {
-          jumpToPosition(cloneCount + maxIndex);
-        });
+        if (isRTLRef.current) {
+          animateToPosition(totalItems + cloneCount, () => {
+            jumpToPosition(cloneCount);
+          });
+        } else {
+          animateToPosition(cloneCount - 1, () => {
+            jumpToPosition(cloneCount + maxIndex);
+          });
+        }
         return;
       }
 
@@ -457,6 +499,7 @@ export function useGSAPSlider<T>({
     cloneCount,
     infiniteEnabled,
     maxIndex,
+    dotsCount,
     activeIndex,
     goToSlideWithReset,
     prevSlide,

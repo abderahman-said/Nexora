@@ -2,7 +2,7 @@
 
 import React from 'react';
 import Link from 'next/link';
-import { useLocale } from 'next-intl';
+import { useLocale, useTranslations } from 'next-intl';
 import Container from '@/components/ui/Container';
 import SectionHeader from '@/components/ui/SectionHeader';
 import type { Service } from '@/components/pages/home/ServiceCards/types';
@@ -21,6 +21,7 @@ interface SingleServicePageProps {
 
 export default function SingleServicePage({ service }: SingleServicePageProps) {
     const locale = useLocale();
+    const t = useTranslations('single_service_page');
     const IconComponent = ICON_MAP[service.icon] || BarChart3;
     return (
         <main className="w-full">
@@ -48,9 +49,9 @@ export default function SingleServicePage({ service }: SingleServicePageProps) {
             <section className="scroll-section relative w-full py-16 sm:py-24 bg-white dark:bg-[#060913] border-b border-slate-200/90 dark:border-slate-800/80 transition-colors duration-300">
                 <Container className="relative z-10">
                     <SectionHeader
-                        badge="KEY FEATURES"
-                        title="What We Offer"
-                        subtitle={`Comprehensive ${service.title} solutions tailored to your business needs.`}
+                        badge={t('key_features_badge')}
+                        title={t('what_we_offer_title')}
+                        subtitle={t('what_we_offer_subtitle', { serviceTitle: service.title })}
                         align="center"
                     />
                     
@@ -67,7 +68,7 @@ export default function SingleServicePage({ service }: SingleServicePageProps) {
                                     {feature}
                                 </h3>
                                 <p className="text-sm text-slate-600 dark:text-slate-300">
-                                    Expert implementation of {feature} with industry best practices.
+                                    {t('feature_description', { featureName: feature })}
                                 </p>
                             </div>
                         ))}
@@ -80,16 +81,16 @@ export default function SingleServicePage({ service }: SingleServicePageProps) {
                 <Container className="relative z-10">
                     <div className="max-w-3xl mx-auto text-center">
                         <h2 className="text-3xl sm:text-4xl font-extrabold text-slate-900 dark:text-white mb-4">
-                            Ready to Get Started?
+                            {t('cta_title')}
                         </h2>
                         <p className="text-lg text-slate-600 dark:text-slate-300 mb-8">
-                            Contact us today to discuss how our {service.title} services can help your business grow.
+                            {t('cta_subtitle', { serviceTitle: service.title })}
                         </p>
                         <Link
                             href={`/${locale}/contact`}
                             className="inline-flex items-center justify-center gap-3 px-8 py-4 rounded-xl bg-gradient-to-r from-blue-600 via-sky-500 to-indigo-600 text-white font-bold text-sm tracking-wider uppercase shadow-lg shadow-blue-500/30 hover:shadow-xl hover:shadow-blue-500/50 hover:scale-[1.02] active:scale-95 transition-all duration-300"
                         >
-                            Contact Us Now
+                            {t('cta_button')}
                         </Link>
                     </div>
                 </Container>

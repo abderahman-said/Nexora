@@ -3,6 +3,7 @@
 import React from "react";
 import { CheckCircle2 } from "lucide-react";
 import Link from "next/link";
+import { useLocale } from "next-intl";
 import type { InteractiveCardProps } from "./types";
 
 export default function InteractiveCard({
@@ -15,8 +16,17 @@ export default function InteractiveCard({
   buttonLink,
   className = "",
 }: InteractiveCardProps) {
+  const locale = useLocale();
   const Wrapper = (buttonLink ? Link : "div") as any;
-  const props = buttonLink ? { href: buttonLink } : {};
+
+  let formattedLink = buttonLink;
+  if (buttonLink && buttonLink.startsWith('/')) {
+    if (!buttonLink.startsWith(`/${locale}/`) && buttonLink !== `/${locale}`) {
+      formattedLink = `/${locale}${buttonLink}`;
+    }
+  }
+
+  const props = buttonLink ? { href: formattedLink } : {};
 
   return (
     <Wrapper
