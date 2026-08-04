@@ -1,7 +1,6 @@
 'use client';
 import React from "react";
-import Image from "next/image";
-import Link from "next/link";
+import Logo from "@/components/ui/Logo";
 import { useTranslations } from 'next-intl';
 import { FooterSocials } from "./FooterSocials";
 
@@ -10,22 +9,12 @@ export function FooterBrand() {
 
     return (
         <div className="flex flex-col items-start space-y-4">
-            <Link href="/" className="inline-block group">
-                <Image
-                    src="/assets/logo.png"
-                    alt="Nexora Solutions"
-                    width={160}
-                    height={60}
-                    className="h-16 w-auto object-contain dark:hidden transition-transform duration-300 group-hover:scale-105"
-                />
-                <Image
-                    src="/assets/logo_dark.PNG"
-                    alt="Nexora Solutions Dark"
-                    width={160}
-                    height={60}
-                    className="h-16 w-auto object-contain hidden dark:block transition-transform duration-300 group-hover:scale-105"
-                />
-            </Link>
+            <Logo 
+                className="inline-block group" 
+                imageClassName="h-16 w-auto object-contain transition-transform duration-300 group-hover:scale-105" 
+                width={160} 
+                height={60} 
+            />
             <p className="text-xs md:text-sm font-normal leading-relaxed text-slate-600 dark:text-slate-300  max-w-[340px] mt-5 ">
                 {t('footer.brandDescription')}
             </p>
