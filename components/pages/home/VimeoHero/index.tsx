@@ -26,8 +26,8 @@ export default function VimeoHero() {
             className="
                 scroll-section relative min-h-[90vh]  md:min-h-[100vh] flex flex-col items-center justify-center
                 overflow-hidden bg-[#f8fafc] dark:bg-[#090d16] transition-colors duration-300
-                px-4 pt-[96px] pb-14 md:pb-20
-                md:px-8 md:pt-24
+                 pt-[96px] pb-14 md:pb-20
+                 md:pt-24
             "
         >
             <HeroBackground glowRef={glowRef} />

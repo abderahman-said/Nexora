@@ -251,10 +251,20 @@ export function useGSAPSlider<T>({
     const isFirstRun = !hasMountedScaleRef.current;
     hasMountedScaleRef.current = true;
 
+    // بنطابق الـ index الحقيقي (modulo totalItems) عشان أي نسخة clone لنفس
+    // العنصر (اللي بتكون هي الظاهرة فعليًا على الشاشة أثناء حركة الـ wrap)
+    // تتحرك بالـ scale صح، مش بس النسخة "الحقيقية" وهي مختفية خارج الشاشة.
+    const normalizedHighlight = totalItems > 0
+      ? ((highlightIndex % totalItems) + totalItems) % totalItems
+      : highlightIndex;
+
     cardRefs.current.forEach((el, index) => {
       if (!el) return;
       const realIndex = index - cloneCount;
-      const isActive = realIndex === highlightIndex;
+      const normalizedRealIndex = totalItems > 0
+        ? ((realIndex % totalItems) + totalItems) % totalItems
+        : realIndex;
+      const isActive = normalizedRealIndex === normalizedHighlight;
       const targetScale = isActive ? activeScale : inactiveScale;
       const targetOpacity = 1;
 
@@ -271,7 +281,7 @@ export function useGSAPSlider<T>({
         });
       }
     });
-  }, [highlightIndex, cloneCount, trackItemsCount, activeScale, inactiveScale]);
+  }, [highlightIndex, cloneCount, trackItemsCount, totalItems, activeScale, inactiveScale]);
 
   useEffect(() => {
     const trackEl = trackRef.current;

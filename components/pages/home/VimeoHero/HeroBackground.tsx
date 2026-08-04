@@ -51,7 +51,7 @@ export default function HeroBackground({ glowRef }: HeroBackgroundProps) {
             sizes="100vw"
           />
         </div>
-
+{/* https://cdn.pixabay.com/video/2022/10/31/137263-766326223_large.mp4 */}
         <video
           ref={videoRef}
           autoPlay
@@ -60,7 +60,7 @@ export default function HeroBackground({ glowRef }: HeroBackgroundProps) {
           playsInline
           controls={false}
           disablePictureInPicture
-          preload="auto"
+          preload="metadata"
           onPlaying={() => setIsVideoReady(true)}
           onError={(e) =>
             console.error("Video element error:", e.currentTarget.error)

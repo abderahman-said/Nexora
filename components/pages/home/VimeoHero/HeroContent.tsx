@@ -22,7 +22,7 @@ export default function HeroContent({
   // imageRef,
 }: HeroContentProps) {
   return (
-      <div className="relative z-10  md:mt-[-80px]  mt-0   flex flex-col items-start text-left max-w-[800px]">
+      <div className="relative z-10  md:mt-[-50px]  mt-0   flex flex-col items-start text-left max-w-[800px]">
          
 
         {/* Main Headline */}
