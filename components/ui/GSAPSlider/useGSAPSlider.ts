@@ -393,6 +393,11 @@ export function useGSAPSlider<T>({
     return () => clearInterval(timer);
   }, [autoplay, isPaused, totalItems, effectiveVisibleCards, autoplayInterval, nextSlide]);
 
+  // إصلاح الـ bug: النقل عبر نقاط الـ pagination من آخر سلايد لأول واحد (أو العكس)
+  // كان بيستخدم animateToSlide العادية، اللي بتخلي GSAP يعدي بصريًا على كل
+  // الكروت في النص لأنه مسافة الـ index كبيرة (0 <-> maxIndex)، فده اللي كان
+  // بيظهر كفلاشة مشاريع بتظهر وتختفي. الحل إننا نستخدم نفس تريك الـ
+  // clone-jump المستخدم في nextSlide/prevSlide لما تكون الحركة "wrap" فعلي.
   const goToSlideWithReset = useCallback(
     (index: number) => {
       if (autoplayTimerRef.current) {
@@ -400,10 +405,29 @@ export function useGSAPSlider<T>({
         autoplayTimerRef.current = null;
       }
       const target = Math.min(index, maxIndex);
+      const current = currentIndexRef.current;
+
       setCurrentIndex(target);
+
+      if (infiniteEnabled && current === maxIndex && target === 0) {
+        // wrap للأمام: من آخر سلايد للأول
+        animateToPosition(cloneCount + totalItems, () => {
+          jumpToPosition(cloneCount);
+        });
+        return;
+      }
+
+      if (infiniteEnabled && current === 0 && target === maxIndex) {
+        // wrap للخلف: من أول سلايد للآخر
+        animateToPosition(cloneCount - 1, () => {
+          jumpToPosition(cloneCount + maxIndex);
+        });
+        return;
+      }
+
       animateToSlide(target);
     },
-    [maxIndex, animateToSlide]
+    [maxIndex, animateToSlide, infiniteEnabled, cloneCount, totalItems, animateToPosition, jumpToPosition]
   );
 
   return {
