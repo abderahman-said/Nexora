@@ -9,8 +9,8 @@ import { EarthIcon } from 'lucide-react';
 import type { LanguageToggleProps } from './types';
 
 const OVERLAY_ID = 'lang-switch-overlay';
-const ROUTE_DELAY_MS = 400; // time before navigating, lets the overlay fade in first
-const FADE_OUT_MS = 500; // time to fade the overlay out once the new locale is ready
+const ROUTE_DELAY_MS = 100; // time before navigating, lets the overlay fade in first
+const FADE_OUT_MS = 200; // time to fade the overlay out once the new locale is ready
 
 const DOT_POSITIONS = [
     { top: '8%', left: '50%', delay: '0s' },
