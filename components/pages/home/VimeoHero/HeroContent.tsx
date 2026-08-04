@@ -67,7 +67,7 @@ export default function HeroContent({
               "
             >
               <span className="relative z-10 uppercase">{t('about_us')}</span>
-              <ArrowRight className="relative z-10 h-4 w-4 transition-transform duration-300 group-hover:translate-x-1 rtl:rotate-180 rtl:group-hover:-translate-x-1" />
+              <ArrowRight className="relative z-10 h-4 w-4  rtl:scale-x-[-1] transition-transform duration-300 group-hover:translate-x-1 rtl:rotate-180 rtl:group-hover:-translate-x-1" />
             </Link>
           </Magnet>
 

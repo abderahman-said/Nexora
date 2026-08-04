@@ -128,7 +128,7 @@ export function InteractiveCircleButton({ href, children }: InteractiveCircleBut
                 <span className="text-base md:text-lg font-bold tracking-wide text-slate-800 dark:text-slate-100 group-hover:text-white transition-colors duration-300">
                     {children}
                 </span>
-                <ArrowUpRight className="h-5 w-5 text-blue-600 dark:text-blue-400 group-hover:text-white group-hover:translate-x-1 group-hover:-translate-y-1 transition-all duration-300" />
+                <ArrowUpRight className="h-5 w-5 text-blue-600 rtl:scale-x-[-1]  dark:text-blue-400 group-hover:text-white group-hover:translate-x-1 group-hover:-translate-y-1 transition-all duration-300" />
             </span>
         </Link>
     );

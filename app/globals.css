@@ -99,7 +99,7 @@
 }
 
 :root[lang="ar"] {
-  --font-primary: var(--font-cairo);
+  --font-primary: var(--font-alexandria);
 }
 html , body {
   overflow-x: hidden;

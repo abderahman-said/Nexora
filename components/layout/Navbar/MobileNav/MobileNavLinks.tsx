@@ -23,7 +23,7 @@ export function MobileNavLinks({ linksContainerRef, setDividerRef, navLinks, clo
               <span className="text-[20px] sm:text-2xl font-extrabold tracking-tight text-slate-800 dark:text-slate-100 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors duration-300">
                 {label}
               </span>
-              <ArrowRight className="h-5 w-5 text-blue-500/80 dark:text-sky-400/80 group-hover:text-blue-600 dark:group-hover:text-blue-400 rtl:-scale-x-100 group-hover:translate-x-1 rtl:group-hover:-translate-x-1 transition-all duration-300 shrink-0" />
+              <ArrowRight className="h-5 w-5  rtl:scale-x-[-1]  text-blue-500/80 dark:text-sky-400/80 group-hover:text-blue-600 dark:group-hover:text-blue-400 rtl:-scale-x-100 group-hover:translate-x-1 rtl:group-hover:-translate-x-1 transition-all duration-300 shrink-0" />
             </Link>
             <span
               ref={(el) => setDividerRef(el, i)}

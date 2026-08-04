@@ -23,7 +23,7 @@ export default function CountryCodeButton({ selectedCountry, isOpen, onClick }: 
             <CountryFlagIcon country={selectedCountry} className="w-5 h-3.5" />
             <span className="font-mono font-bold text-xs sm:text-sm">{selectedCountry.code}</span>
             <ChevronDown
-                className={`w-3.5 h-3.5 text-slate-400 transition-transform duration-200 ${
+                className={`w-3.5  rtl:scale-x-[-1] h-3.5 text-slate-400 transition-transform duration-200 ${
                     isOpen ? 'rotate-180 text-blue-500 dark:text-sky-400' : ''
                 }`}
             />

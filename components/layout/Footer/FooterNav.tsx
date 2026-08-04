@@ -25,7 +25,7 @@ export function FooterNav() {
                             className="group flex items-center gap-1.5 hover:text-blue-600 dark:hover:text-blue-400 transition-colors duration-200"
                         >
                             <span>{item.label}</span>
-                            <ChevronRight className="h-3.5 w-3.5 text-slate-400 dark:text-slate-500 group-hover:text-blue-600 dark:group-hover:text-blue-400 group-hover:translate-x-1 transition-all duration-200" />
+                            <ChevronRight className="h-3.5 w-3.5 rtl:scale-x-[-1] text-slate-400 dark:text-slate-500 group-hover:text-blue-600 dark:group-hover:text-blue-400 group-hover:translate-x-1 transition-all duration-200" />
                         </Link>
                     </li>
                 ))}

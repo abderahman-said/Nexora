@@ -104,7 +104,7 @@ export default function AboutVisionMission() {
                     "
                 >
                     <span>{t('button_story')}</span>
-                    <ArrowRight className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1 rtl:rotate-180 rtl:group-hover:-translate-x-1" />
+                    <ArrowRight className="w-4 h-4  rtl:scale-x-[-1] transition-transform duration-300 group-hover:translate-x-1 rtl:rotate-180 rtl:group-hover:-translate-x-1" />
                 </Link>
 
                 <div className="flex items-center gap-3 text-xs font-semibold text-slate-500 dark:text-slate-400">

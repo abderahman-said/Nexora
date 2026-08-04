@@ -56,7 +56,7 @@ export default function SharedHero({
                 </Link>
               </li>
               <li className="flex items-center text-blue-600 dark:text-sky-400">
-                <ChevronsRight className="w-4 h-4 stroke-[2.5]" />
+                <ChevronsRight className="w-4 h-4 stroke-[2.5]  rtl:scale-x-[-1]" />
               </li>
               <li className="text-blue-600 dark:text-sky-400 font-bold">
                 {breadcrumbLabel}
