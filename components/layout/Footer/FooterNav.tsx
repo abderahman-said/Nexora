@@ -1,11 +1,12 @@
 import React from "react";
 import Link from "next/link";
 import { ChevronRight } from "lucide-react";
-import { useTranslations } from 'next-intl';
+import { useLocale, useTranslations } from 'next-intl';
 
 export function FooterNav() {
     const t = useTranslations();
-    
+    const locale = useLocale();
+
     const navItems = [
         { label: t('footer.aboutUs'), href: "/about" },
         { label: t('footer.ourServices'), href: "/services" },
@@ -21,7 +22,7 @@ export function FooterNav() {
                 {navItems.map((item) => (
                     <li key={item.label}>
                         <Link
-                            href={item.href}
+                            href={`/${locale}/${item.href}`}
                             className="group flex items-center gap-1.5 hover:text-blue-600 dark:hover:text-blue-400 transition-colors duration-200"
                         >
                             <span>{item.label}</span>

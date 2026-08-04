@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useCallback } from 'react';
+import { useTranslations } from 'next-intl';
 import type { PhoneInputChangeEvent, FormData, FormErrors, ValidationRule } from './types';
 
 export const INITIAL_FORM_DATA: FormData = {
@@ -21,35 +22,41 @@ export const VALIDATION_RULES: Record<keyof FormData, ValidationRule> = {
 
 const SUBMIT_DELAY_MS = 1200;
 
-export function validateForm(data: FormData, phoneLength?: number): FormErrors {
+export function validateForm(
+    data: FormData,
+    t: (key: string, values?: any) => string,
+    tFields: (key: string) => string,
+    phoneLength?: number
+): FormErrors {
     const errors: FormErrors = {};
 
     for (const [field, rules] of Object.entries(VALIDATION_RULES) as [keyof FormData, ValidationRule][]) {
         const rawVal = data[field] || '';
         const subscriberDigits = field === 'phone' ? rawVal.replace(/^\+\d+\s*/, '').trim() : '';
         const value = field === 'phone' ? (subscriberDigits ? rawVal.trim() : '') : rawVal.trim();
+        const getLabel = (f: string) => tFields(`${f}_label`);
 
         if (field === 'email' && rawVal !== rawVal.trim()) {
-            errors[field] = 'Email address cannot contain leading or trailing spaces';
+            errors[field] = t('email_spaces');
             continue;
         }
 
         if (!value) {
-            if (rules.required) errors[field] = `${rules.label} is required`;
+            if (rules.required) errors[field] = t('required', { field: getLabel(field) });
             continue;
         }
 
         if (field === 'phone' && phoneLength) {
             const subscriberOnlyDigits = subscriberDigits.replace(/\D/g, '');
             if (subscriberOnlyDigits.length !== phoneLength) {
-                errors[field] = `Phone number must be exactly ${phoneLength} digits for this country`;
+                errors[field] = t('phone_length', { length: phoneLength });
             }
         } else if (rules.minLength && value.length < rules.minLength) {
-            errors[field] = `${rules.label} must be at least ${rules.minLength} characters`;
+            errors[field] = t('min_length', { field: getLabel(field), length: rules.minLength });
         } else if (rules.pattern && !rules.pattern.test(value)) {
-            errors[field] = 'Please enter a valid email address';
+            errors[field] = t('invalid_email');
         } else if (rules.minDigits && value.replace(/\D/g, '').length < rules.minDigits) {
-            errors[field] = `${rules.label} must be at least ${rules.minDigits} digits`;
+            errors[field] = t('min_digits', { field: getLabel(field), length: rules.minDigits });
         }
     }
 
@@ -57,6 +64,9 @@ export function validateForm(data: FormData, phoneLength?: number): FormErrors {
 }
 
 export function useContactForm(onSubmitSuccess?: (data: FormData) => void) {
+    const t = useTranslations('contact.form.validation');
+    const tFields = useTranslations('contact.form');
+    
     const [formData, setFormData] = useState<FormData>(INITIAL_FORM_DATA);
     const [errors, setErrors] = useState<FormErrors>({});
     const [isSubmitting, setIsSubmitting] = useState(false);
@@ -89,7 +99,7 @@ export function useContactForm(onSubmitSuccess?: (data: FormData) => void) {
         (e: React.FormEvent<HTMLFormElement>) => {
             e.preventDefault();
 
-            const validationErrors = validateForm(formData, currentPhoneLength);
+            const validationErrors = validateForm(formData, t, tFields, currentPhoneLength);
             if (Object.keys(validationErrors).length > 0) {
                 setErrors(validationErrors);
                 return;
@@ -104,7 +114,7 @@ export function useContactForm(onSubmitSuccess?: (data: FormData) => void) {
                 if (onSubmitSuccess) onSubmitSuccess(formData);
             }, SUBMIT_DELAY_MS);
         },
-        [formData, currentPhoneLength, onSubmitSuccess]
+        [formData, currentPhoneLength, onSubmitSuccess, t, tFields]
     );
 
     return {

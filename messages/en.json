@@ -26,26 +26,60 @@
     "responseTime": "Response Time"
   },
   "privacy": {
+    "hero": {
+      "prefix": "Privacy",
+      "highlight": "Policy",
+      "breadcrumb": "Privacy Policy"
+    },
     "title": "Privacy Policy",
     "introduction": "At Nexora Solutions, we take your privacy seriously. This Privacy Policy explains how we collect, use, and protect your personal information when you use our services.",
     "infoWeCollect": "Information We Collect",
     "infoWeCollectDesc": "We collect the following types of information:",
+    "infoWeCollectList": {
+        "1": "Personal information (name, email, phone number)",
+        "2": "Business information (company name, job title)",
+        "3": "Usage data (website visits, interactions)",
+        "4": "Cookies and tracking technologies"
+    },
     "howWeUse": "How We Use Your Information",
     "howWeUseDesc": "We use your information to:",
+    "howWeUseList": {
+        "1": "Provide and improve our services",
+        "2": "Communicate with you about our offerings",
+        "3": "Analyze usage patterns",
+        "4": "Ensure security and prevent fraud"
+    },
     "dataSecurity": "Data Security",
     "dataSecurityDesc": "We implement industry-standard security measures to protect your data, including encryption, secure servers, and access controls.",
     "yourRights": "Your Rights",
     "yourRightsDesc": "You have the right to:",
+    "yourRightsList": {
+        "1": "Access your personal data",
+        "2": "Request deletion of your data",
+        "3": "Opt-out of marketing communications",
+        "4": "Update your information"
+    },
     "contactUs": "Contact Us",
     "contactUsDesc": "If you have questions about this Privacy Policy, please contact us at privacy@nexora.solutions"
   },
   "terms": {
+    "hero": {
+      "prefix": "Terms of",
+      "highlight": "Service",
+      "breadcrumb": "Terms of Service"
+    },
     "title": "Terms of Service",
     "introduction": "Welcome to Nexora Solutions. By using our services, you agree to these Terms of Service. Please read them carefully.",
     "services": "Services",
     "servicesDesc": "Nexora Solutions provides software development, consulting, and technology services. We reserve the right to modify or discontinue services at any time.",
     "userResponsibilities": "User Responsibilities",
     "userResponsibilitiesDesc": "Users agree to:",
+    "userResponsibilitiesList": {
+        "1": "Provide accurate information",
+        "2": "Use services for lawful purposes only",
+        "3": "Respect intellectual property rights",
+        "4": "Not interfere with service operations"
+    },
     "paymentTerms": "Payment Terms",
     "paymentTermsDesc": "Payment terms are specified in individual project agreements. Late payments may incur additional fees. All payments are non-refundable unless otherwise stated.",
     "intellectualProperty": "Intellectual Property",
@@ -344,7 +378,15 @@
         "message_label": "Message",
         "message_placeholder": "Write your message here...",
         "btn_sending": "Sending Message...",
-        "btn_send": "SEND MESSAGE"
+        "btn_send": "SEND MESSAGE",
+        "validation": {
+            "required": "{field} is required",
+            "min_length": "{field} must be at least {length} characters",
+            "min_digits": "{field} must be at least {length} digits",
+            "invalid_email": "Please enter a valid email address",
+            "phone_length": "Phone number must be exactly {length} digits for this country",
+            "email_spaces": "Email address cannot contain leading or trailing spaces"
+        }
     }
   },
   "services_page": {

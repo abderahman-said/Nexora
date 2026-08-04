@@ -4,7 +4,7 @@ import Link from "next/link";
 import { ArrowRight  } from "lucide-react";
 import Magnet from "@/components/ui/Magnet";
 import type { HeroContentProps } from "./types";
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 
 function WhatsappIcon({ className }: { className?: string }) {
   const finalClassName = className || "w-5 h-5";
@@ -23,7 +23,7 @@ export default function HeroContent({
   // imageRef,
 }: HeroContentProps) {
   const t = useTranslations("homeHero");
-
+  const locale = useLocale();
   return (
       <div className="relative z-10  md:mt-[-50px]  mt-0   flex flex-col items-start text-start max-w-[800px]">
          
@@ -57,7 +57,7 @@ export default function HeroContent({
           {/* Primary Button */}
           <Magnet magnetStrength={25}>
             <Link
-              href="/services"
+              href={`/${locale}/about`}
               className="
                 group relative inline-flex items-center justify-center gap-1 md:gap-3  overflow-hidden
                 h-[50px] sm:h-[60px] px-4 md:px-8 rounded-full bg-gradient-to-r from-blue-600 to-sky-600 text-white
