@@ -26,7 +26,7 @@ export function computeXPercent(
 
   const C = centerCardWidthPercent;
   if (isRTL()) {
-    return perItem * (index + 0.5 + 50 / C) - 100;
+    return perItem * (index + 0.5 - 50 / C);
   }
   return perItem * (50 / C - 0.5 - index);
 }

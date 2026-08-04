@@ -1,17 +1,24 @@
-// ============================================================
-// useSiteData — Single source of truth for all site-wide data.
-// To update contact info, social links, or map URL, edit here.
-// ============================================================
+import { useLocale } from 'next-intl';
 
-export const SITE_DATA = {
+const CONTACT_EN = {
+    address: "1 Mustafa El-Nahas, intersection with Abbas El-Akkad, Nasr City",
+    shortAddress: "1 Mustafa El-Nahas, intersection with Abbas El-Akkad, Nasr City",
+    responseTime: "15 mins",
+    workingHours: "Sat - Thu, 9:00 AM - 5:00 PM"
+};
+
+const CONTACT_AR = {
+    address: "١ مصطفى النحاس، تقاطع عباس العقاد، مدينة نصر",
+    shortAddress: "١ مصطفى النحاس، تقاطع عباس العقاد، مدينة نصر",
+    responseTime: "١٥ دقيقة",
+    workingHours: "السبت - الخميس، ٩:٠٠ صباحاً - ٥:٠٠ مساءً"
+};
+
+export const SITE_DATA_BASE = {
     contact: {
         email: "info@nexora-solutions.co",
         phone: "+20 111 718 0818",
         whatsapp: "https://wa.me/201117180818",
-        address: "1 Mustafa El-Nahas, intersection with Abbas El-Akkad, Nasr City",
-        shortAddress: "1 Mustafa El-Nahas, intersection with Abbas El-Akkad, Nasr City",
-        responseTime: "15 mins",
-        workingHours: "Sat - Thu, 9:00 AM - 5:00 PM"
     },
     social: {
         facebook: "https://web.facebook.com/NexoraSolutionsEg",
@@ -26,5 +33,14 @@ export const SITE_DATA = {
 
 /** Hook wrapper — works in both Server and Client components */
 export function useSiteData() {
-    return SITE_DATA;
+    const locale = useLocale();
+    const isAr = locale === 'ar';
+    
+    return {
+        ...SITE_DATA_BASE,
+        contact: {
+            ...SITE_DATA_BASE.contact,
+            ...(isAr ? CONTACT_AR : CONTACT_EN)
+        }
+    };
 }

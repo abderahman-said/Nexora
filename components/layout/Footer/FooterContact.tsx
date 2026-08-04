@@ -28,7 +28,7 @@ export function FooterContact() {
                 </Link>
                 <div className="flex items-center gap-2.5 font-mono text-slate-700 dark:text-slate-200 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
                     <Phone className="h-4 w-4 text-slate-400 shrink-0" />
-                    <Link href={`tel:${contact.phone.replace(/\s/g, '')}`}>{contact.phone}</Link>
+                    <Link href={`tel:${contact.phone.replace(/\s/g, '')}`} dir="ltr">{contact.phone}</Link>
                 </div>
                 <div className="flex items-center gap-2.5 font-mono text-slate-700 dark:text-slate-200 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
                     <Mail className="h-4 w-4 text-slate-400 shrink-0" />
@@ -36,7 +36,7 @@ export function FooterContact() {
                 </div>
             </div>
 
-            <div className="pt-1 flex items-center gap-1.5 text-[11px] text-slate-500 dark:text-slate-400 font-mono">
+            <div className="pt-1 flex items-center gap-1.5 text-[11px] text-slate-500 dark:text-slate-400">
                 <Clock className="h-3.5 w-3.5 text-slate-400" />
                 <span>{t('footer.responseTime')} : {contact.responseTime}</span>
             </div>

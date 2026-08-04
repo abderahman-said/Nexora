@@ -35,7 +35,7 @@ export default function ConsultationContent() {
       {/* Main Section Title */}
       <h2
         suppressHydrationWarning
-        className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-slate-900 dark:text-white tracking-tight leading-[1.18]"
+        className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-slate-900 dark:text-white tracking-tight leading-[1.6]!"
       >
         {t('title_main')}{" "}
         <span className="bg-gradient-to-r from-blue-600 via-sky-400 to-indigo-500 bg-clip-text text-transparent">
