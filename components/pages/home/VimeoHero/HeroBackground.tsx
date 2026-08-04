@@ -102,7 +102,7 @@ export default function HeroBackground({ glowRef }: HeroBackgroundProps) {
 
       <div
         aria-hidden="true"
-        className="hidden lg:flex absolute top-0 bottom-0 right-0 w-20 flex-col items-center justify-center gap-8 z-[5] pointer-events-none border-l border-slate-200/80 dark:border-slate-800/80"
+        className="hidden lg:flex absolute top-0 bottom-0 end-0 w-20 flex-col items-center justify-center gap-8 z-[5] pointer-events-none border-l border-slate-200/80 dark:border-slate-800/80"
       >
         <div className="hero-side-el flex items-center justify-center opacity-50 w-1.5 h-1.5 bg-transparent border border-slate-400 dark:border-slate-600 rotate-45" />
         <div className="hero-side-el flex items-center justify-center opacity-50 w-px h-20 bg-gradient-to-b from-transparent via-slate-300 dark:via-slate-700 to-transparent" />

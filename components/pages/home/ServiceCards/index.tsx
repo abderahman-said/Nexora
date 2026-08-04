@@ -113,7 +113,7 @@ export default function ServiceCards() {
                                 "
               >
                 <span>{t("button_view_all")}</span>
-                <ArrowRight className="w-4 h-4  rtl:scale-x-[-1] transition-transform duration-300 group-hover:translate-x-1 rtl:rotate-180 rtl:group-hover:-translate-x-1" />
+                <ArrowRight className="w-4 h-4   transition-transform duration-300 group-hover:translate-x-1 rtl:rotate-180 rtl:group-hover:-translate-x-1" />
               </Link>
             </div>
           </div>

@@ -370,5 +370,15 @@
         "highlight": "Work",
         "breadcrumb": "Work"
     }
+  },
+  "homeHero": {
+    "title_we": "We ",
+    "title_build": "Build ",
+    "title_digital_products": "Digital Products ",
+    "title_grow_business": "That Grow Your Business",
+    "description": "We transform your ideas into powerful web, mobile, and software solutions that drive business growth. Every solution is built for performance, scalability, and long-term success.",
+    "about_us": "About Us",
+    "whatsapp_us": "WhatsApp Us",
+    "chat_instantly": "Chat Instantly"
   }
 }

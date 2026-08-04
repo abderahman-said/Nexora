@@ -22,7 +22,7 @@ export default {
         'brand-black-deep': '#0d1b2a',
       },
       fontFamily: {
-        sans: ['var(--next-font-epilogue)', 'var(--next-font-alexandria)', 'sans-serif'],
+        sans: ['var(--font-sans)', 'sans-serif'],
         epilogue: ['var(--next-font-epilogue)', 'sans-serif'],
         alexandria: ['var(--next-font-alexandria)', 'sans-serif'],
         dmsans: ['DM Sans', 'sans-serif'],

@@ -26,6 +26,9 @@
 }
 
 :root {
+  /* Active font — changed per locale via html[lang] selector */
+  --font-sans: var(--next-font-epilogue);
+
   /* Core palette */
   --cyan: #0284c7;
   --blue: #2563eb;
@@ -125,17 +128,18 @@ html , body {
     border-radius: 2px;
   }
 
+/* Arabic locale: swap font to Alexandria */
+html[lang="ar"] {
+  --font-sans: var(--next-font-alexandria);
+}
+
   body {
     background-color: var(--bg);
-    font-family: var(--next-font-epilogue), "Epilogue", sans-serif;
+    /* font-sans class on <body> picks up --font-sans, which changes per locale */
     color: #0f172a;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     overflow-x: hidden;
-  }
-
-  :root[lang="ar"] body {
-    font-family: var(--next-font-alexandria), sans-serif;
   }
 
   ::selection {
