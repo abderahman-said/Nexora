@@ -31,7 +31,7 @@ export default function HeroContent({
         {/* Main Headline */}
         <h1
           ref={headRef}
-          className="text-3xl sm:text-5xl lg:text-5xl xl:text-6xl font-extrabold tracking-tight text-white dark:text-white leading-[1.12] mb-4 sm:mb-5"
+          className="text-3xl sm:text-5xl lg:text-5xl xl:text-6xl font-extrabold tracking-tight text-white dark:text-white !leading-[1.6] mb-4 sm:mb-5"
         >
           <span className="split-word">{t('title_we')}</span>{" "}
           <span className="split-word">{t('title_build')}</span>{" "}

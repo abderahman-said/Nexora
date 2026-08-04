@@ -1,4 +1,4 @@
-import { Epilogue, Alexandria } from 'next/font/google';
+import { Epilogue, Noto_Kufi_Arabic } from 'next/font/google';
 import '../globals.css';
 import { ThemeProvider } from '@/context/ThemeContext';
 import SvgSymbols from '@/components/icons/SvgSymbols';
@@ -18,9 +18,9 @@ const epilogue = Epilogue({
   preload: true,
 });
 
-const alexandria = Alexandria({
+const notoKufiArabic = Noto_Kufi_Arabic({
   subsets: ['arabic'],
-  variable: '--next-font-alexandria',
+  variable: '--next-font-noto-kufi',
   display: 'swap',
   preload: true,
 });
@@ -204,7 +204,7 @@ export default async function LocaleLayout({
           }}
         />
       </head>
-      <body className={`${epilogue.variable} ${alexandria.variable} font-sans bg-[#f8fafc] site-grid-bg text-slate-900 dark:bg-[#090d16] dark:text-slate-100 antialiased overflow-x-hidden transition-colors duration-300`} suppressHydrationWarning>
+      <body className={`${epilogue.variable} ${notoKufiArabic.variable} font-sans bg-[#f8fafc] site-grid-bg text-slate-900 dark:bg-[#090d16] dark:text-slate-100 antialiased overflow-x-hidden transition-colors duration-300`} suppressHydrationWarning>
         <ThemeProvider>
           <NextIntlClientProvider messages={messages}>
             <SvgSymbols />

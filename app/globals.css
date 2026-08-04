@@ -20,15 +20,26 @@
   --color-glass-border: rgba(0, 0, 0, 0.08);
   --color-glass-bg: rgba(255, 255, 255, 0.75);
 
-  /* Fonts */
+  /* Fonts — --font-sans is the active font, overridden per locale below */
+  --font-sans: var(--next-font-epilogue), sans-serif;
   --font-epilogue: "Epilogue", sans-serif;
   --font-dmsans: "DM Sans", sans-serif;
 }
 
-:root {
-  /* Active font — changed per locale via html[lang] selector */
-  --font-sans: var(--next-font-epilogue);
+/* Locale Font Overrides */
+html[lang="ar"],
+html[lang="ar"] body {
+  --font-sans: var(--next-font-noto-kufi), "Noto Kufi Arabic", sans-serif !important;
+  font-family: var(--next-font-noto-kufi), "Noto Kufi Arabic", sans-serif !important;
+}
 
+html[lang="en"],
+html[lang="en"] body {
+  --font-sans: var(--next-font-epilogue), "Epilogue", sans-serif !important;
+  font-family: var(--next-font-epilogue), "Epilogue", sans-serif !important;
+}
+
+:root {
   /* Core palette */
   --cyan: #0284c7;
   --blue: #2563eb;
@@ -128,20 +139,15 @@ html , body {
     border-radius: 2px;
   }
 
-/* Arabic locale: swap font to Alexandria */
-html[lang="ar"] {
-  --font-sans: var(--next-font-alexandria);
-}
 
   body {
     background-color: var(--bg);
-    /* font-sans class on <body> picks up --font-sans, which changes per locale */
+    /* font-family is inherited from font-sans on <body> in layout, --font-sans switches per locale */
     color: #0f172a;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     overflow-x: hidden;
   }
-
   ::selection {
     background-color: #2563eb;
     color: #ffffff;
