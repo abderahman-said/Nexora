@@ -4,9 +4,11 @@ import React from "react";
 import { InteractiveCircleButton } from "./InteractiveCircleButton";
 import { useSiteData } from "@/hooks/useSiteData";
 import type { FooterSidePanelProps } from './types';
+import { useTranslations } from 'next-intl';
 
 export function FooterSidePanel({ sidePanelRef }: FooterSidePanelProps) {
     const { contact } = useSiteData();
+    const t = useTranslations('footer');
     return (
         <div 
             ref={sidePanelRef}
@@ -16,16 +18,16 @@ export function FooterSidePanel({ sidePanelRef }: FooterSidePanelProps) {
 
             <div className="space-y-2 mt-2 relative z-10">
                 <h3 className="text-2xl lg:text-3xl font-extrabold text-slate-900 dark:text-white tracking-tight">
-                    Have a project?
+                    {t('haveProject')}
                 </h3>
                 <p className="text-xs text-slate-500 dark:text-slate-400 max-w-[240px] mx-auto">
-                    Let's discuss how we can engineer your vision.
+                    {t('discussProject')}
                 </p>
             </div>
 
             <div className="my-6 flex items-center justify-center relative z-10">
                 <InteractiveCircleButton href={contact.whatsapp}>
-                    Contact us
+                    {t('contactBtn')}
                 </InteractiveCircleButton>
             </div>
                 <p className="font-mono font-semibold text-slate-800 dark:text-slate-200 text-sm tracking-wider flex items-center justify-center gap-2">

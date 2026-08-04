@@ -41,7 +41,7 @@ export default function InteractiveCard({
       {stepNumber && (
         <div
           className="
-                    absolute -top-7 left-1/2 -translate-x-1/2
+                    absolute -top-7 start-1/2 -translate-x-1/2 rtl:translate-x-1/2
                     w-14 h-14 rounded-full
                     bg-gradient-to-br from-blue-600 via-sky-500 to-indigo-600 text-white
                     font-black text-lg flex items-center justify-center

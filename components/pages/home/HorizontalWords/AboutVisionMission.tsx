@@ -1,10 +1,11 @@
 import React from 'react';
 import { Target, Rocket, ArrowRight, CheckCircle2, ShieldCheck, Cpu } from 'lucide-react';
 import Link from 'next/link';
-import { useLocale } from 'next-intl';
+import { useLocale, useTranslations } from 'next-intl';
 
 export default function AboutVisionMission() {
     const locale = useLocale();
+    const t = useTranslations("homeAbout");
     return (
         <div className="w-full mt-6 space-y-4">
             {/* ── Vision & Mission Stacked/Grid Cards ── */}
@@ -15,7 +16,7 @@ export default function AboutVisionMission() {
                     group relative p-5 sm:p-6 rounded-2xl
                     bg-white dark:bg-slate-900/90
                     border border-slate-200/90 dark:border-slate-800
-                    border-l-4 border-l-blue-600 dark:border-l-blue-500
+                    border-s-4 border-s-blue-600 dark:border-s-blue-500
                     shadow-lg shadow-slate-200/50 dark:shadow-none
                     transition-all duration-300 hover:shadow-xl hover:-translate-y-0.5
                 ">
@@ -25,26 +26,26 @@ export default function AboutVisionMission() {
                         </div>
                         <div>
                             <div className="text-[0.65rem] font-bold tracking-widest text-blue-600 dark:text-sky-400 uppercase">
-                                FORWARD FOCUS
+                                {t('vision_tag')}
                             </div>
                             <h3 className="text-base font-extrabold text-slate-900 dark:text-white">
-                                Our Vision
+                                {t('vision_title')}
                             </h3>
                         </div>
                     </div>
 
                     <p className="text-xs text-slate-600 dark:text-slate-300 leading-relaxed font-normal mb-3">
-                        To engineer transformative, resilient digital ecosystems that empower global enterprises to pioneer AI & cloud innovation.
+                        {t('vision_desc')}
                     </p>
 
                     <div className="flex flex-wrap gap-2 pt-2 border-t border-slate-100 dark:border-slate-800/60">
                         <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-slate-100 dark:bg-slate-800 text-[0.7rem] font-semibold text-slate-700 dark:text-slate-300">
                             <CheckCircle2 className="w-3 h-3 text-blue-600 dark:text-sky-400" />
-                            Future-Proof Systems
+                            {t('vision_feature_1')}
                         </span>
                         <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-slate-100 dark:bg-slate-800 text-[0.7rem] font-semibold text-slate-700 dark:text-slate-300">
                             <CheckCircle2 className="w-3 h-3 text-blue-600 dark:text-sky-400" />
-                            AI Integration
+                            {t('vision_feature_2')}
                         </span>
                     </div>
                 </div>
@@ -54,7 +55,7 @@ export default function AboutVisionMission() {
                     group relative p-5 sm:p-6 rounded-2xl
                     bg-white dark:bg-slate-900/90
                     border border-slate-200/90 dark:border-slate-800
-                    border-l-4 border-l-sky-500 dark:border-l-sky-400
+                    border-s-4 border-s-sky-500 dark:border-s-sky-400
                     shadow-lg shadow-slate-200/50 dark:shadow-none
                     transition-all duration-300 hover:shadow-xl hover:-translate-y-0.5
                 ">
@@ -64,26 +65,26 @@ export default function AboutVisionMission() {
                         </div>
                         <div>
                             <div className="text-[0.65rem] font-bold tracking-widest text-sky-600 dark:text-sky-400 uppercase">
-                                OUR PURPOSE
+                                {t('mission_tag')}
                             </div>
                             <h3 className="text-base font-extrabold text-slate-900 dark:text-white">
-                                Our Mission
+                                {t('mission_title')}
                             </h3>
                         </div>
                     </div>
 
                     <p className="text-xs text-slate-600 dark:text-slate-300 leading-relaxed font-normal mb-3">
-                        To deliver high-performance software engineering, combining clean code with scalable systems to drive measurable growth.
+                        {t('mission_desc')}
                     </p>
 
                     <div className="flex flex-wrap gap-2 pt-2 border-t border-slate-100 dark:border-slate-800/60">
                         <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-slate-100 dark:bg-slate-800 text-[0.7rem] font-semibold text-slate-700 dark:text-slate-300">
                             <ShieldCheck className="w-3 h-3 text-sky-600 dark:text-sky-400" />
-                            Enterprise Security
+                            {t('mission_feature_1')}
                         </span>
                         <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-slate-100 dark:bg-slate-800 text-[0.7rem] font-semibold text-slate-700 dark:text-slate-300">
                             <Cpu className="w-3 h-3 text-sky-600 dark:text-sky-400" />
-                            Agile Architecture
+                            {t('mission_feature_2')}
                         </span>
                     </div>
                 </div>
@@ -102,13 +103,13 @@ export default function AboutVisionMission() {
                         hover:-translate-y-0.5 transition-all duration-300 group
                     "
                 >
-                    <span>DISCOVER OUR STORY</span>
-                    <ArrowRight className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" />
+                    <span>{t('button_story')}</span>
+                    <ArrowRight className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1 rtl:rotate-180 rtl:group-hover:-translate-x-1" />
                 </Link>
 
                 <div className="flex items-center gap-3 text-xs font-semibold text-slate-500 dark:text-slate-400">
-                    <span className="text-slate-900 dark:text-white font-extrabold text-sm">250+</span>
-                    <span>Global Enterprise Solutions Delivered</span>
+                    <span className="text-slate-900 dark:text-white font-extrabold text-sm">{t('stats_number')}</span>
+                    <span>{t('stats_text')}</span>
                 </div>
             </div>
         </div>

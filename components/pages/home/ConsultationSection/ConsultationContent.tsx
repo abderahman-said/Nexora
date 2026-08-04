@@ -9,7 +9,10 @@ import {
   Clock,
 } from "lucide-react";
 
+import { useTranslations } from "next-intl";
+
 export default function ConsultationContent() {
+  const t = useTranslations("homeConsultation");
   return (
     <div className="lg:col-span-7 relative z-10 flex flex-col justify-center space-y-5 sm:space-y-6">
       {/* Header Tag Badge */}
@@ -24,7 +27,7 @@ export default function ConsultationContent() {
                 "
         >
           <MessageSquare className="w-3.5 h-3.5" />
-          <span>LET&apos;S CONSULTATION</span>
+          <span>{t('badge')}</span>
         </div>
       </div>
 
@@ -33,9 +36,9 @@ export default function ConsultationContent() {
         suppressHydrationWarning
         className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-slate-900 dark:text-white tracking-tight leading-[1.18]"
       >
-        Let&apos;s Build Your Next{" "}
+        {t('title_main')}{" "}
         <span className="bg-gradient-to-r from-blue-600 via-sky-400 to-indigo-500 bg-clip-text text-transparent">
-          Digital Solution
+          {t('title_highlight')}
         </span>
       </h2>
 
@@ -44,7 +47,7 @@ export default function ConsultationContent() {
         suppressHydrationWarning
         className="text-slate-600 dark:text-slate-300 text-sm sm:text-base leading-relaxed max-w-2xl font-normal"
       >
-        Ready to turn your ideas into reality? Whether you need a website, mobile application, e-commerce platform, or custom software, our team is ready to build scalable, high-performance solutions tailored to your business goals.
+        {t('description')}
       </p>
 
       {/* 3 Key Benefit Chips */}
@@ -52,21 +55,21 @@ export default function ConsultationContent() {
         <div className="flex items-center gap-2.5 p-3 rounded-xl bg-slate-50 dark:bg-slate-900/60 border border-slate-200/80 dark:border-slate-800/80">
           <CheckCircle2 className="w-4 h-4 text-blue-600 dark:text-sky-400 shrink-0" />
           <span className="text-xs font-bold text-slate-800 dark:text-slate-200">
-            Free Tech Audit
+            {t('feature_1')}
           </span>
         </div>
 
         <div className="flex items-center gap-2.5 p-3 rounded-xl bg-slate-50 dark:bg-slate-900/60 border border-slate-200/80 dark:border-slate-800/80">
           <ShieldCheck className="w-4 h-4 text-blue-600 dark:text-sky-400 shrink-0" />
           <span className="text-xs font-bold text-slate-800 dark:text-slate-200">
-            NDA Protected
+            {t('feature_2')}
           </span>
         </div>
 
         <div className="flex items-center gap-2.5 p-3 rounded-xl bg-slate-50 dark:bg-slate-900/60 border border-slate-200/80 dark:border-slate-800/80">
           <Clock className="w-4 h-4 text-blue-600 dark:text-sky-400 shrink-0" />
           <span className="text-xs font-bold text-slate-800 dark:text-slate-200">
-            Fast Turnaround
+            {t('feature_3')}
           </span>
         </div>
       </div>
@@ -83,8 +86,8 @@ export default function ConsultationContent() {
                         hover:scale-[1.02] active:scale-95 transition-all duration-300 group
                     "
         >
-          <span>CONTACT US NOW</span>
-          <ArrowRight className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" />
+          <span>{t('button_contact')}</span>
+          <ArrowRight className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1 rtl:rotate-180 rtl:group-hover:-translate-x-1" />
         </Link>
 
         <Link
@@ -103,7 +106,7 @@ export default function ConsultationContent() {
                     "
         >
           <PhoneCall className="w-4 h-4 text-emerald-500" />
-          <span>QUICK WHATSAPP</span>
+          <span>{t('button_whatsapp')}</span>
         </Link>
       </div>
     </div>

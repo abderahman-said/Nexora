@@ -74,12 +74,12 @@ export function ClientCard({ client }: ClientCardProps) {
             </div>
 
             {/* Testimonial Quote Comment */}
-            <p className="relative z-10 text-xs sm:text-sm text-slate-600 dark:text-slate-300 leading-relaxed font-normal my-4 text-left">
+            <p className="relative z-10 text-xs sm:text-sm text-slate-600 dark:text-slate-300 leading-relaxed font-normal my-4  ">
                 {client.comment}
             </p>
 
             {/* Client Name & Role */}
-            <div className="relative z-10 text-left pt-3 border-t border-slate-100 dark:border-slate-800/80 mt-auto">
+            <div className="relative z-10   pt-3 border-t border-slate-100 dark:border-slate-800/80 mt-auto">
                 <h3 className="text-lg font-extrabold text-slate-900 dark:text-white tracking-tight group-hover:text-blue-600 dark:group-hover:text-sky-400 transition-colors duration-300">
                     {client.clientName}
                 </h3>

@@ -7,7 +7,10 @@ import { TeamCard } from "./TeamCard";
 import Container from "@/components/ui/Container";
 import SectionHeader from "@/components/ui/SectionHeader";
 
+import { useTranslations } from "next-intl";
+
 export default function TeamSection() {
+  const t = useTranslations("homeTeam");
   return (
     <section
       id="team"
@@ -24,9 +27,9 @@ export default function TeamSection() {
                 <span className="relative inline-flex h-3.5 w-3.5 rounded-full bg-blue-500 shadow-[0_0_12px_#2563eb]" />
               </span>
               <span>
-                Our{" "}
+                {t('title_our')}{" "}
                 <span className="bg-gradient-to-r from-blue-600 via-sky-400 to-indigo-500 dark:from-blue-400 dark:via-sky-300 dark:to-indigo-400 bg-clip-text text-transparent">
-                  Team
+                  {t('title_team')}
                 </span>
               </span>
             </span>

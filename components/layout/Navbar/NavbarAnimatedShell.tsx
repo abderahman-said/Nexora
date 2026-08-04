@@ -18,7 +18,7 @@ export function NavbarAnimatedShell({ children }: NavbarAnimatedShellProps) {
     >
       <Container
         ref={navInnerRef}
-        className="nexora-nav-inner pointer-events-auto flex items-center justify-end   py-3 transition-colors duration-500   max-md:py-1.5"
+        className="nexora-nav-inner pointer-events-auto flex items-center justify-end  transition-colors duration-500  py-5  md:py-7"
       >
         {children}
       </Container>

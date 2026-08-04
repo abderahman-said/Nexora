@@ -1,13 +1,17 @@
 "use client";
 
 import React from "react";
-import { STEPS } from "./gsapCardData";
+import { getSteps } from "./gsapCardData";
 import { ProcessCard } from "./ProcessCard";
 import Container from "@/components/ui/Container";
 import SectionHeader from "@/components/ui/SectionHeader";
 import GSAPSlider from "@/components/ui/GSAPSlider";
 
+import { useTranslations } from "next-intl";
+
 export default function GSAPCardGrid() {
+  const t = useTranslations("homeProcess");
+  const stepsData = getSteps(t);
   return (
     <section
       id="process"
@@ -24,9 +28,9 @@ export default function GSAPCardGrid() {
                 <span className="relative inline-flex h-3.5 w-3.5 rounded-full bg-blue-500 shadow-[0_0_12px_#2563eb]" />
               </span>
               <span>
-                How To Work{" "}
+                {t('title_main')}{" "}
                 <span className="bg-gradient-to-r from-blue-600 via-sky-400 to-indigo-500 dark:from-blue-400 dark:via-sky-300 dark:to-indigo-400 bg-clip-text text-transparent">
-                  It!
+                  {t('title_highlight')}
                 </span>
               </span>
             </span>
@@ -36,7 +40,7 @@ export default function GSAPCardGrid() {
         {/* ── Cards Slider ── */}
         <div className="relative mt-8">
           <GSAPSlider
-            items={STEPS}
+            items={stepsData}
             renderItem={(item) => (item ? <ProcessCard step={item} /> : null)}
             defaultVisibleCount={3}
             mobileVisibleCount={1}

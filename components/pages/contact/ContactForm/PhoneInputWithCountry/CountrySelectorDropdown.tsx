@@ -62,7 +62,7 @@ export default function CountrySelectorDropdown({
                                 onClick={() => onSelectCountry(country)}
                                 className={`
                                     w-full flex items-center justify-between px-3 py-2 rounded-xl text-xs sm:text-sm
-                                    transition-colors cursor-pointer group text-left
+                                    transition-colors cursor-pointer group  
                                     ${
                                         isSelected
                                             ? 'bg-blue-50 dark:bg-blue-950/70 border border-blue-200 dark:border-blue-800/80 font-bold'

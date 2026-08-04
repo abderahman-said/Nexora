@@ -1,10 +1,13 @@
 import React from 'react';
 import { Layers } from 'lucide-react';
 import Container from '@/components/ui/Container';
- import { COMPANY_STORY } from '../aboutData';
+import { getCompanyStory } from '../aboutData';
 import AboutVisionMission from './AboutVisionMission';
+import { useTranslations } from 'next-intl';
 
 export default function AboutStory() {
+    const t = useTranslations('about');
+    const COMPANY_STORY = getCompanyStory(t);
     return (
         <section
             id="about-story"

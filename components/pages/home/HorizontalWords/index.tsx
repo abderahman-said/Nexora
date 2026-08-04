@@ -6,11 +6,13 @@ import AboutVisual from "./AboutVisual";
 import AboutVisionMission from "./AboutVisionMission";
 import { useAboutGSAP } from "./useAboutGSAP";
 import Container from "@/components/ui/Container";
+import { useTranslations } from "next-intl";
 
 const HorizontalWords = () => {
   const sectionRef = useRef<HTMLDivElement>(null);
   const visualRef = useRef<HTMLDivElement>(null);
   const contentRef = useRef<HTMLDivElement>(null);
+  const t = useTranslations("homeAbout");
 
   useAboutGSAP({ sectionRef, visualRef, contentRef });
 
@@ -26,8 +28,8 @@ const HorizontalWords = () => {
           aria-hidden="true"
           className="absolute inset-0 pointer-events-none overflow-hidden"
         >
-          <div className="absolute top-1/4 left-0 w-96 h-96 rounded-full bg-blue-500/10 dark:bg-blue-600/10 blur-3xl" />
-          <div className="absolute bottom-1/4 right-0 w-96 h-96 rounded-full bg-sky-500/10 dark:bg-sky-600/10 blur-3xl" />
+          <div className="absolute top-1/4 start-0 w-96 h-96 rounded-full bg-blue-500/10 dark:bg-blue-600/10 blur-3xl" />
+          <div className="absolute bottom-1/4 end-0 w-96 h-96 rounded-full bg-sky-500/10 dark:bg-sky-600/10 blur-3xl" />
         </div>
 
         <Container className="relative z-10">
@@ -48,21 +50,21 @@ const HorizontalWords = () => {
                   <div className="w-5 h-5 rounded-md bg-blue-600 dark:bg-sky-500 flex items-center justify-center text-white">
                     <Layers className="w-3.5 h-3.5" />
                   </div>
-                  <span>ABOUT NEXORA IT SOLUTIONS</span>
+                  <span>{t('badge')}</span>
                 </div>
               </div>
 
               {/* Main Section Headline */}
               <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-slate-900 dark:text-white tracking-tight leading-[1.15]">
-               Building Technology That Powers Business {" "}
+               {t('title_main')} {" "}
                 <span className="bg-gradient-to-r from-blue-600 via-sky-500 to-indigo-600 bg-clip-text text-transparent">
-                  Growth
+                  {t('title_highlight')}
                 </span>
               </h2>
 
               {/* Section Lead Description */}
               <p className="text-base sm:text-lg text-slate-600 dark:text-slate-300 leading-relaxed font-normal">
-               At Nexora Solutions, we transform ideas into powerful digital products that help businesses grow. We specialize in custom software, web development, mobile applications, and scalable digital solutions designed to deliver performance, innovation, and long-term value.
+               {t('description')}
               </p>
 
               {/* ── Vision & Mission (Replacing Tabs) ── */}

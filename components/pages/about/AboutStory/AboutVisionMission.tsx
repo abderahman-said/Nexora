@@ -1,8 +1,11 @@
 import React from "react";
 import { Target, Rocket, CheckCircle2, ShieldCheck, Cpu } from "lucide-react";
-import { COMPANY_STORY } from "../aboutData";
+import { getCompanyStory } from "../aboutData";
+import { useTranslations } from "next-intl";
 
 export default function AboutVisionMission() {
+  const t = useTranslations("about");
+  const COMPANY_STORY = getCompanyStory(t);
   return (
     <div className="w-full mt-6 space-y-4">
       {/* ── Vision & Mission Stacked/Grid Cards ── */}
@@ -24,27 +27,26 @@ export default function AboutVisionMission() {
             </div>
             <div>
               <div className="text-[0.65rem] font-bold tracking-widest text-blue-600 dark:text-sky-400 uppercase">
-                FORWARD FOCUS
+                {t('vision_mission.vision_badge')}
               </div>
               <h3 className="text-base font-extrabold text-slate-900 dark:text-white">
-                Our Vision
+                {t('vision_mission.vision_title')}
               </h3>
             </div>
           </div>
 
           <p className="text-xs text-slate-600 dark:text-slate-300 leading-relaxed font-normal mb-3">
-            To engineer transformative, resilient digital ecosystems that
-            empower global enterprises to pioneer AI & cloud innovation.
+            {t('vision_mission.vision_desc')}
           </p>
 
           <div className="flex flex-wrap gap-2 pt-2 border-t border-slate-100 dark:border-slate-800/60">
             <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-slate-100 dark:bg-slate-800 text-[0.7rem] font-semibold text-slate-700 dark:text-slate-300">
               <CheckCircle2 className="w-3 h-3 text-blue-600 dark:text-sky-400" />
-              Future-Proof Systems
+              {t('vision_mission.vision_f1')}
             </span>
             <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-slate-100 dark:bg-slate-800 text-[0.7rem] font-semibold text-slate-700 dark:text-slate-300">
               <CheckCircle2 className="w-3 h-3 text-blue-600 dark:text-sky-400" />
-              AI Integration
+              {t('vision_mission.vision_f2')}
             </span>
           </div>
         </div>
@@ -66,27 +68,26 @@ export default function AboutVisionMission() {
             </div>
             <div>
               <div className="text-[0.65rem] font-bold tracking-widest text-sky-600 dark:text-sky-400 uppercase">
-                OUR PURPOSE
+                {t('vision_mission.mission_badge')}
               </div>
               <h3 className="text-base font-extrabold text-slate-900 dark:text-white">
-                Our Mission
+                {t('vision_mission.mission_title')}
               </h3>
             </div>
           </div>
 
           <p className="text-xs text-slate-600 dark:text-slate-300 leading-relaxed font-normal mb-3">
-            To deliver high-performance software engineering, combining clean
-            code with scalable systems to drive measurable growth.
+            {t('vision_mission.mission_desc')}
           </p>
 
           <div className="flex flex-wrap gap-2 pt-2 border-t border-slate-100 dark:border-slate-800/60">
             <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-slate-100 dark:bg-slate-800 text-[0.7rem] font-semibold text-slate-700 dark:text-slate-300">
               <ShieldCheck className="w-3 h-3 text-sky-600 dark:text-sky-400" />
-              Enterprise Security
+              {t('vision_mission.mission_f1')}
             </span>
             <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-slate-100 dark:bg-slate-800 text-[0.7rem] font-semibold text-slate-700 dark:text-slate-300">
               <Cpu className="w-3 h-3 text-sky-600 dark:text-sky-400" />
-              Agile Architecture
+              {t('vision_mission.mission_f2')}
             </span>
           </div>
         </div>

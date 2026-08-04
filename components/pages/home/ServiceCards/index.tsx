@@ -3,14 +3,17 @@
 import React from "react";
 import { Layers, ArrowRight } from "lucide-react";
 import Link from "next/link";
-import { useLocale } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import GSAPSlider from "@/components/ui/GSAPSlider";
-import { SERVICES } from "./servicesData";
+import { getServices } from "./servicesData";
 import { ServiceCard } from "./ServiceCard";
 import Container from "@/components/ui/Container";
 
 export default function ServiceCards() {
   const locale = useLocale();
+  const t = useTranslations("homeServices");
+  const servicesData = getServices(t);
+
   return (
     <section
       id="services"
@@ -78,7 +81,7 @@ export default function ServiceCards() {
           </svg>
 
           {/* Background Radial Glow */}
-          <div className="absolute -top-24 -right-24 w-96 h-96 rounded-full bg-blue-600/20 blur-3xl pointer-events-none" />
+          <div className="absolute -top-24 -end-24 w-96 h-96 rounded-full bg-blue-600/20 blur-3xl pointer-events-none" />
 
           {/* Header Content Row */}
           <div className="relative z-10 flex flex-col md:flex-row md:items-end justify-between gap-8">
@@ -86,13 +89,13 @@ export default function ServiceCards() {
             <div className="max-w-2xl space-y-4">
               <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-blue-50 dark:bg-blue-950/80 border border-blue-200/80 dark:border-blue-800/80 text-blue-600 dark:text-blue-400 font-bold text-xs tracking-wider uppercase shadow-sm">
                 <Layers className="w-3.5 h-3.5" />
-                <span>LATEST SERVICES</span>
+                <span>{t('badge')}</span>
               </div>
 
               <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-slate-900 dark:text-white tracking-tight leading-[1.15]">
-                We Provide Exclusive Service For{" "}
+                {t('title_main')}{" "}
                 <span className="bg-gradient-to-r from-blue-600 via-sky-500 to-indigo-500 dark:from-blue-400 dark:via-sky-300 dark:to-indigo-400 bg-clip-text text-transparent">
-                  Your Business
+                  {t('title_highlight')}
                 </span>
               </h2>
             </div>
@@ -109,8 +112,8 @@ export default function ServiceCards() {
                                     hover:-translate-y-0.5 transition-all duration-300 group
                                 "
               >
-                <span>VIEW ALL SERVICES</span>
-                <ArrowRight className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" />
+                <span>{t('button_view_all')}</span>
+                <ArrowRight className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1 rtl:rotate-180 rtl:group-hover:-translate-x-1" />
               </Link>
             </div>
           </div>
@@ -119,7 +122,7 @@ export default function ServiceCards() {
         {/* Overlapping Reusable GSAP Cards Slider Row */}
         <div className="relative z-20 -mt-[171px] md:-mt-[210px] px-2 sm:px-4">
           <GSAPSlider
-            items={SERVICES}
+            items={servicesData}
             ItemComponent={ServiceCard}
             defaultVisibleCount={3}
             mobileVisibleCount={1}

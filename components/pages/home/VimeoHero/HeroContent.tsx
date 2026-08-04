@@ -4,6 +4,7 @@ import Link from "next/link";
 import { ArrowRight  } from "lucide-react";
 import Magnet from "@/components/ui/Magnet";
 import type { HeroContentProps } from "./types";
+import { useTranslations } from "next-intl";
 
 function WhatsappIcon({ className }: { className?: string }) {
   const finalClassName = className || "w-5 h-5";
@@ -21,8 +22,10 @@ export default function HeroContent({
   // badgeRef,
   // imageRef,
 }: HeroContentProps) {
+  const t = useTranslations("homeHero");
+
   return (
-      <div className="relative z-10  md:mt-[-50px]  mt-0   flex flex-col items-start text-left max-w-[800px]">
+      <div className="relative z-10  md:mt-[-50px]  mt-0   flex flex-col items-start text-start max-w-[800px]">
          
 
         {/* Main Headline */}
@@ -30,11 +33,11 @@ export default function HeroContent({
           ref={headRef}
           className="text-3xl sm:text-5xl lg:text-5xl xl:text-6xl font-extrabold tracking-tight text-white dark:text-white leading-[1.12] mb-4 sm:mb-5"
         >
-          <span className="split-word">We </span>{" "}
-          <span className="split-word">Build </span>{" "}
-          <span className="split-word">Digital Products</span>{" "}
+          <span className="split-word">{t('title_we')}</span>{" "}
+          <span className="split-word">{t('title_build')}</span>{" "}
+          <span className="split-word">{t('title_digital_products')}</span>{" "}
           <span className="split-word bg-gradient-to-r from-blue-600 via-sky-500 to-indigo-600 bg-clip-text text-transparent">
-           That Grow Your Business
+           {t('title_grow_business')}
           </span>
         </h1>
 
@@ -43,7 +46,7 @@ export default function HeroContent({
           ref={subRef}
           className="text-sm sm:text-lg text-white dark:text-slate-300 font-medium leading-relaxed max-w-xl mb-6 sm:mb-8"
         >
-          We transform your ideas into powerful web, mobile, and software solutions that drive business growth. Every solution is built for performance, scalability, and long-term success.
+          {t('description')}
         </p>
 
         {/* Action Buttons (Primary CTA + WhatsApp Button with Equal Heights) */}
@@ -63,8 +66,8 @@ export default function HeroContent({
                 hover:shadow-2xl hover:shadow-blue-500/40 hover:-translate-y-0.5 active:translate-y-0 w-full sm:w-auto
               "
             >
-              <span className="relative z-10 uppercase">ABOUT US</span>
-              <ArrowRight className="relative z-10 h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
+              <span className="relative z-10 uppercase">{t('about_us')}</span>
+              <ArrowRight className="relative z-10 h-4 w-4 transition-transform duration-300 group-hover:translate-x-1 rtl:rotate-180 rtl:group-hover:-translate-x-1" />
             </Link>
           </Magnet>
 
@@ -88,12 +91,12 @@ export default function HeroContent({
               </div>
 
               {/* Text side-by-side */}
-              <div className="text-left pr-1">
+              <div className="text-start pe-1">
                 <span className="block text-xs sm:text-sm font-bold text-slate-900 dark:text-white group-hover:text-emerald-600 dark:group-hover:text-emerald-400 transition-colors leading-tight">
-                  WhatsApp Us
+                  {t('whatsapp_us')}
                 </span>
                 <span className="block text-[0.65rem] sm:text-[0.7rem] font-semibold text-slate-500 dark:text-slate-400">
-                  Chat Instantly
+                  {t('chat_instantly')}
                 </span>
               </div>
             </Link>

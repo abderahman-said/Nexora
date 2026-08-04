@@ -7,7 +7,10 @@ import { TESTIMONIALS } from "./clientsData";
 import { ClientCard } from "./ClientCard";
 import Container from "@/components/ui/Container";
 
+import { useTranslations } from "next-intl";
+
 export default function ClientsSection() {
+  const t = useTranslations("homeClients");
   return (
     <section
       id="testimonials"
@@ -34,13 +37,13 @@ export default function ClientsSection() {
           <div className="relative z-10 max-w-3xl mx-auto space-y-4">
             <div className="me-auto md:mx-auto inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-blue-50 dark:bg-blue-950/80 border border-blue-200/80 dark:border-blue-800/80 text-blue-600 dark:text-blue-400 font-bold text-xs tracking-wider uppercase shadow-sm">
               <MessageSquareQuote className="w-3.5 h-3.5" />
-              <span>CUSTOMER FEEDBACK</span>
+              <span>{t('badge')}</span>
             </div>
 
             <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-slate-900 dark:text-white tracking-tight leading-[1.15] ">
-             What Happy Clients Say {" "}
+             {t('title_main')}{" "}
               <span className="block mt-1 bg-gradient-to-r from-blue-600 via-sky-500 to-indigo-500 dark:from-blue-400 dark:via-sky-300 dark:to-indigo-400 bg-clip-text text-transparent">
-               About Us 
+               {t('title_highlight')}
               </span>
             </h2>
           </div>

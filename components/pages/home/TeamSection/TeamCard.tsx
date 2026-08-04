@@ -2,9 +2,11 @@ import React from "react";
 import { Crown } from "lucide-react";
 import Image from "next/image";
 import type { TeamCardProps } from './types';
+import { useTranslations } from 'next-intl';
 
 export function TeamCard({ member }: TeamCardProps) {
-  const isFounder = member.role === "Founder & CEO";
+  const t = useTranslations("homeTeam");
+  const isFounder = member.id === 1;
 
   return (
     <div
@@ -40,9 +42,9 @@ export function TeamCard({ member }: TeamCardProps) {
 
         {/* Founder Crown Badge */}
         {isFounder && (
-          <div className="absolute top-3 left-3 bg-gradient-to-r from-amber-500 to-yellow-500 text-white px-1.5 md:px-3 py-1 md:py-1.5 rounded-full text-[10px] md:text-xs font-medium flex items-center gap-1 md:gap-1.5 shadow-lg shadow-amber-500/40 z-10 border border-white/20 backdrop-blur-sm">
+          <div className="absolute top-3 start-3 bg-gradient-to-r from-amber-500 to-yellow-500 text-white px-1.5 md:px-3 py-1 md:py-1.5 rounded-full text-[10px] md:text-xs font-medium flex items-center gap-1 md:gap-1.5 shadow-lg shadow-amber-500/40 z-10 border border-white/20 backdrop-blur-sm">
             <Crown className="w-3 h-3 md:w-3.5 md:h-3.5" />
-            <span className="tracking-wide uppercase ">Founder</span>
+            <span className="tracking-wide uppercase ">{t('founder_badge')}</span>
           </div>
         )}
       </div>
@@ -62,7 +64,7 @@ export function TeamCard({ member }: TeamCardProps) {
         <p
           className={`text-xs font-semibold ${isFounder ? "text-amber-600 dark:text-amber-400" : "text-blue-600 dark:text-sky-400"}`}
         >
-          {member.role}
+          {t(`roles.${member.role.replace(/ & /g, '_&_').replace(/ /g, '_')}`)}
         </p>
       </div>
     </div>

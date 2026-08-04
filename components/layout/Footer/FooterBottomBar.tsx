@@ -15,13 +15,13 @@ export function FooterBottomBar() {
                     href={`/${locale}/privacy`}
                     className="hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
                 >
-                    Privacy Policy
+                    {t('footer.privacyPolicy')}
                 </Link>
                 <Link 
                     href={`/${locale}/terms`}
                     className="hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
                 >
-                    Terms of Service
+                    {t('footer.termsOfService')}
                 </Link>
             </div>
           

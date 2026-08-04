@@ -58,5 +58,254 @@
     "governingLawDesc": "These terms are governed by the laws of Egypt. Any disputes will be resolved in Egyptian courts.",
     "contactUs": "Contact Us",
     "contactUsDesc": "For questions about these Terms of Service, please contact us at legal@nexora.solutions"
+  },
+  "homeHero": {
+    "title_we": "We ",
+    "title_build": "Build ",
+    "title_digital_products": "Digital Products ",
+    "title_grow_business": "That Grow Your Business",
+    "description": "We transform your ideas into powerful web, mobile, and software solutions that drive business growth. Every solution is built for performance, scalability, and long-term success.",
+    "about_us": "ABOUT US",
+    "whatsapp_us": "WhatsApp Us",
+    "chat_instantly": "Chat Instantly"
+  },
+  "homeAbout": {
+    "badge": "ABOUT NEXORA IT SOLUTIONS",
+    "title_main": "Building Technology That Powers Business ",
+    "title_highlight": "Growth",
+    "description": "At Nexora Solutions, we transform ideas into powerful digital products that help businesses grow. We specialize in custom software, web development, mobile applications, and scalable digital solutions designed to deliver performance, innovation, and long-term value.",
+    "vision_tag": "FORWARD FOCUS",
+    "vision_title": "Our Vision",
+    "vision_desc": "To engineer transformative, resilient digital ecosystems that empower global enterprises to pioneer AI & cloud innovation.",
+    "vision_feature_1": "Future-Proof Systems",
+    "vision_feature_2": "AI Integration",
+    "mission_tag": "OUR PURPOSE",
+    "mission_title": "Our Mission",
+    "mission_desc": "To deliver high-performance software engineering, combining clean code with scalable systems to drive measurable growth.",
+    "mission_feature_1": "Enterprise Security",
+    "mission_feature_2": "Agile Architecture",
+    "button_story": "DISCOVER OUR STORY",
+    "stats_number": "250+",
+    "stats_text": "Global Enterprise Solutions Delivered",
+    "visual_years": "10+ Years",
+    "visual_excellence": "Industry Excellence",
+    "visual_uptime": "99.8% Uptime",
+    "visual_sla": "Enterprise SLA Guaranteed"
+  },
+  "homeServices": {
+    "badge": "LATEST SERVICES",
+    "title_main": "We Provide Exclusive Service For ",
+    "title_highlight": "Your Business",
+    "button_view_all": "VIEW ALL SERVICES",
+    "items": {
+      "business_analysis": {
+        "title": "Business Analysis",
+        "badge": "STRATEGY",
+        "description": "Continually engage customized data strategies and quality growth models tailored for enterprise scalability.",
+        "feature_1": "Market Intelligence",
+        "feature_2": "Data Modeling",
+        "feature_3": "ROI Optimization"
+      },
+      "software_services": {
+        "title": "Software Services",
+        "badge": "ARCHITECTURE",
+        "description": "End-to-end custom software architecture engineered for high performance, security, and seamless integration.",
+        "feature_1": "Custom Microservices",
+        "feature_2": "Enterprise Security",
+        "feature_3": "Cloud Automation"
+      },
+      "web_development": {
+        "title": "Web Development",
+        "badge": "FULL-STACK",
+        "description": "High-speed, responsive web platforms built with Next.js, modern frameworks, and cloud-native backends.",
+        "feature_1": "Next.js & React",
+        "feature_2": "API Integration",
+        "feature_3": "High Performance"
+      },
+      "ui_ux_design": {
+        "title": "UI/UX Design",
+        "badge": "EXPERIENCE",
+        "description": "Modern user-centered design systems, intuitive interfaces, and engaging user experiences that convert.",
+        "feature_1": "Design Systems",
+        "feature_2": "Interactive Prototypes",
+        "feature_3": "User Journeys"
+      }
+    }
+  },
+  "homeProjects": {
+    "title_our": "Our ",
+    "title_work": "Work",
+    "button_see_more": "See More",
+    "categories": {
+      "mobile_e_commerce": "Mobile E-Commerce",
+      "web_e_commerce": "Web E-Commerce",
+      "mobile_app": "Mobile App"
+    }
+  },
+  "homeProcess": {
+    "title_main": "How To Work ",
+    "title_highlight": "It!",
+    "steps": {
+      "step1": {
+        "title": "Select a project",
+        "badge": "DISCOVERY",
+        "description": "Continua scale empowered metrics with cost effective innovation and strategic alignment.",
+        "feature_1": "Requirements Scoping",
+        "feature_2": "Target User Profiling",
+        "feature_3": "ROI Strategy"
+      },
+      "step2": {
+        "title": "Project analysis",
+        "badge": "ANALYSIS",
+        "description": "Comprehensive data modeling and system architecture analysis for optimal performance.",
+        "feature_1": "Architecture Blueprint",
+        "feature_2": "Data Flow Design",
+        "feature_3": "Security Audit"
+      },
+      "step3": {
+        "title": "Plan Execute",
+        "badge": "EXECUTION",
+        "description": "Sprint execution, agile development, and clean code implementation with rigorous testing.",
+        "feature_1": "Sprint Development",
+        "feature_2": "Automated Testing",
+        "feature_3": "Code Quality Check"
+      },
+      "step4": {
+        "title": "Deliver result",
+        "badge": "DELIVERY",
+        "description": "Seamless cloud deployment, high availability release, and measurable business growth.",
+        "feature_1": "Zero-Downtime Launch",
+        "feature_2": "Performance Audits",
+        "feature_3": "24/7 Monitoring"
+      }
+    }
+  },
+  "homeTeam": {
+    "title_our": "Our ",
+    "title_team": "Team",
+    "founder_badge": "Founder",
+    "roles": {
+      "Founder_&_CEO": "Founder & CEO",
+      "QA_Tester": "QA Tester",
+      "Android_Developer": "Android Developer",
+      "Front_End_Developer": "Front End Developer"
+    }
+  },
+  "homeClients": {
+    "badge": "CUSTOMER FEEDBACK",
+    "title_main": "What Happy Clients Say ",
+    "title_highlight": "About Us"
+  },
+  "homeConsultation": {
+    "visual_live": "Live Consultation Active",
+    "visual_hours": "Working Hours: ",
+    "badge": "LET'S CONSULTATION",
+    "title_main": "Let's Build Your Next ",
+    "title_highlight": "Digital Solution",
+    "description": "Ready to turn your ideas into reality? Whether you need a website, mobile application, e-commerce platform, or custom software, our team is ready to build scalable, high-performance solutions tailored to your business goals.",
+    "feature_1": "Free Tech Audit",
+    "feature_2": "NDA Protected",
+    "feature_3": "Fast Turnaround",
+    "button_contact": "CONTACT US NOW",
+    "button_whatsapp": "QUICK WHATSAPP"
+  },
+  "nav": {
+    "about": "About Us",
+    "services": "Services",
+    "ourWork": "Our Work",
+    "contact": "Contact Us"
+  },
+  "footer": {
+    "brandDescription": "Nexora Solutions is a leading software agency providing innovative digital products, robust software architecture, and high-performance applications.",
+    "enterpriseCertified": "Enterprise Certified Agency",
+    "aboutUs": "About Us",
+    "ourServices": "Our Services",
+    "getInTouch": "Get in Touch",
+    "navigation": "Navigation",
+    "contactUs": "Contact Us",
+    "responseTime": "Response Time",
+    "rights": "All Rights Reserved",
+    "tagline": "Engineered for Excellence",
+    "privacyPolicy": "Privacy Policy",
+    "termsOfService": "Terms of Service",
+    "haveProject": "Have a project?",
+    "discussProject": "Let's discuss how we can engineer your vision.",
+    "contactBtn": "Contact us"
+  },
+  "about": {
+    "hero": {
+        "prefix": "About",
+        "highlight": "Us",
+        "breadcrumb": "About Us"
+    },
+    "story": {
+        "subtitle": "OUR JOURNEY",
+        "title": "Architecting Digital Transformation Since 2021",
+        "description": "Nexora Solutions was founded by a team of passionate software architects and engineers driven by a single mission: to bridge the gap between complex enterprise challenges and modern, high-performance software products.",
+        "p1": "From day one, we set out to build digital products that combine aesthetic beauty with rock-solid technical reliability. We empower fast-growing tech companies and established enterprises to scale seamlessly.",
+        "p2": "Today, our multi-disciplinary team spans full-stack engineering, cloud DevOps, AI integration, and luxury UX design—serving visionary clients across North America, Europe, and the MENA region.",
+        "highlight1_title": "Enterprise Standard",
+        "highlight1_desc": "Compliant with ISO & modern cybersecurity benchmarks.",
+        "highlight2_title": "99.9% Uptime Guarantee",
+        "highlight2_desc": "Robust cloud infrastructure designed for high availability.",
+        "highlight3_title": "Agile Delivery",
+        "highlight3_desc": "Rapid sprint cycles with predictable milestones."
+    },
+    "stats": {
+        "projects_completed": "Projects Completed",
+        "global_clients": "Global Clients",
+        "senior_engineers": "Senior Engineers",
+        "industry_awards": "Industry Awards"
+    },
+    "values": {
+        "badge": "OUR CORE VALUES",
+        "title_main": "Principles That Drive Our ",
+        "title_highlight": "Engineering Standard",
+        "btn_explore": "EXPLORE STANDARD",
+        "val1": {
+            "badge": "Excellence",
+            "title": "Uncompromised Quality",
+            "description": "We adhere to enterprise-grade engineering standards, clean architecture, and rigorous automated testing across every line of code.",
+            "f1": "Clean Code Standard",
+            "f2": "Zero-Downtime CI/CD",
+            "f3": "Security First"
+        },
+        "val2": {
+            "badge": "Innovation",
+            "title": "Cutting-Edge Technology",
+            "description": "Leveraging next-gen web frameworks, cloud-native infrastructure, and modern UI performance optimization for high-scale platforms.",
+            "f1": "Next.js 15 & React 19",
+            "f2": "Cloud Architecture",
+            "f3": "Real-time AI Integration"
+        },
+        "val3": {
+            "badge": "Transparency",
+            "title": "Client-Centric Alignment",
+            "description": "We believe in agile collaboration, transparent roadmap tracking, and complete alignment with your long-term business strategy.",
+            "f1": "Weekly Demos",
+            "f2": "Agile Roadmaps",
+            "f3": "Direct Communication"
+        },
+        "val4": {
+            "badge": "Reliability",
+            "title": "Long-Term Partnership",
+            "description": "Our relationship does not end at launch. We provide 24/7 proactive monitoring, scalable updates, and ongoing technical advisory.",
+            "f1": "24/7 SLA Support",
+            "f2": "Continuous Optimization",
+            "f3": "Scalability Audits"
+        }
+    },
+    "vision_mission": {
+        "vision_badge": "FORWARD FOCUS",
+        "vision_title": "Our Vision",
+        "vision_desc": "To engineer transformative, resilient digital ecosystems that empower global enterprises to pioneer AI & cloud innovation.",
+        "vision_f1": "Future-Proof Systems",
+        "vision_f2": "AI Integration",
+        "mission_badge": "OUR PURPOSE",
+        "mission_title": "Our Mission",
+        "mission_desc": "To deliver high-performance software engineering, combining clean code with scalable systems to drive measurable growth.",
+        "mission_f1": "Enterprise Security",
+        "mission_f2": "Agile Architecture"
+    }
   }
 }

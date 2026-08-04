@@ -1,8 +1,11 @@
 import React from 'react';
 import Container from '@/components/ui/Container';
-import { ABOUT_STATS } from '../aboutData';
+import { getAboutStats } from '../aboutData';
+import { useTranslations } from 'next-intl';
 
 export default function AboutStats() {
+    const t = useTranslations('about');
+    const ABOUT_STATS = getAboutStats(t);
     return (
         <section
             id="about-stats"

@@ -5,12 +5,14 @@ import Link from "next/link";
 import gsap from "gsap";
 import OptimizedImage from "@/components/ui/OptimizedImage";
 import type { ProjectCardProps } from "./types";
+import { useTranslations } from "next-intl";
 
 const MAX_TILT_DEG = 4;
 const LIFT_Y = -12;
 const DESKTOP_QUERY = "(min-width: 768px)";
 
 export default function ProjectCard({ p }: ProjectCardProps) {
+  const t = useTranslations("homeProjects.categories");
   const cardRef = useRef<HTMLDivElement>(null);
   const glareRef = useRef<HTMLDivElement>(null);
   const rectRef = useRef<DOMRect | null>(null);
@@ -156,7 +158,7 @@ export default function ProjectCard({ p }: ProjectCardProps) {
             {p.name}
           </h3>
           <p className="mb-2 sm:mb-3 text-[0.68rem] sm:text-[0.75rem] font-bold uppercase tracking-[0.1em] text-slate-600 dark:text-slate-300">
-            {p.category}
+            {t(p.category.replace(/ /g, "_").replace(/-/g, "_").toLowerCase())}
           </p>
         </div>
 

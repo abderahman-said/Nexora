@@ -4,9 +4,11 @@ import React from 'react';
 import Image from 'next/image';
 import { Headphones } from 'lucide-react';
 import { useSiteData } from '@/hooks/useSiteData';
+import { useTranslations } from 'next-intl';
 
 export default function ConsultationVisual() {
     const { contact } = useSiteData();
+    const t = useTranslations("homeConsultation");
     return (
         <div className="lg:col-span-5 relative group">
             {/* Outer Glow frame on hover */}
@@ -29,7 +31,7 @@ export default function ConsultationVisual() {
                 <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-transparent to-transparent pointer-events-none" />
 
                 <div className="
-                    absolute bottom-4 left-4 right-4 z-10 p-3.5 rounded-xl
+                    absolute bottom-4 start-4 end-4 z-10 p-3.5 rounded-xl
                     bg-white/95 dark:bg-slate-900/85 backdrop-blur-md border border-slate-200/80 dark:border-slate-700/80
                     flex items-center justify-between gap-3 shadow-xl
                 ">
@@ -39,8 +41,8 @@ export default function ConsultationVisual() {
                             <span className="relative inline-flex rounded-full h-3 w-3 bg-emerald-500" />
                         </span>
                         <div>
-                            <p suppressHydrationWarning className="text-xs font-extrabold text-slate-900 dark:text-white leading-none">Live Consultation Active</p>
-                            <p suppressHydrationWarning className="text-[0.65rem] text-slate-500 dark:text-slate-300 mt-0.5">Working Hours: {contact.workingHours}</p>
+                            <p suppressHydrationWarning className="text-xs font-extrabold text-slate-900 dark:text-white leading-none">{t('visual_live')}</p>
+                            <p suppressHydrationWarning className="text-[0.65rem] text-slate-500 dark:text-slate-300 mt-0.5">{t('visual_hours')} {contact.workingHours}</p>
                         </div>
                     </div>
 

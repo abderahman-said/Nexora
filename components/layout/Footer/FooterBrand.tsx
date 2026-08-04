@@ -10,7 +10,7 @@ export function FooterBrand() {
 
     return (
         <div className="flex flex-col items-start space-y-4">
-            <Link href="/" className="inline-block mb-5 group">
+            <Link href="/" className="inline-block group">
                 <Image
                     src="/assets/logo.png"
                     alt="Nexora Solutions"
@@ -26,7 +26,7 @@ export function FooterBrand() {
                     className="h-16 w-auto object-contain hidden dark:block transition-transform duration-300 group-hover:scale-105"
                 />
             </Link>
-            <p className="text-xs md:text-sm font-normal leading-relaxed text-slate-600 dark:text-slate-300 text-left max-w-[340px]">
+            <p className="text-xs md:text-sm font-normal leading-relaxed text-slate-600 dark:text-slate-300  max-w-[340px] mt-5 ">
                 {t('footer.brandDescription')}
             </p>
 

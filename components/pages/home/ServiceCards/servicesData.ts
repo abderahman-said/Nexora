@@ -1,13 +1,13 @@
 import type { Service } from './types';
 
-export const SERVICES: Service[] = [
+export const getServices = (t: any): Service[] => [
     {
         id: '01',
         slug: 'business-analysis',
-        title: 'Business Analysis',
-        badge: 'STRATEGY',
-        description: 'Continually engage customized data strategies and quality growth models tailored for enterprise scalability.',
-        features: ['Market Intelligence', 'Data Modeling', 'ROI Optimization'],
+        title: t('items.business_analysis.title'),
+        badge: t('items.business_analysis.badge'),
+        description: t('items.business_analysis.description'),
+        features: [t('items.business_analysis.feature_1'), t('items.business_analysis.feature_2'), t('items.business_analysis.feature_3')],
         icon: 'BarChart3',
         accent: '#2563eb',
         link: '/services/business-analysis',
@@ -15,10 +15,10 @@ export const SERVICES: Service[] = [
     {
         id: '02',
         slug: 'software-services',
-        title: 'Software Services',
-        badge: 'ARCHITECTURE',
-        description: 'End-to-end custom software architecture engineered for high performance, security, and seamless integration.',
-        features: ['Custom Microservices', 'Enterprise Security', 'Cloud Automation'],
+        title: t('items.software_services.title'),
+        badge: t('items.software_services.badge'),
+        description: t('items.software_services.description'),
+        features: [t('items.software_services.feature_1'), t('items.software_services.feature_2'), t('items.software_services.feature_3')],
         icon: 'Cpu',
         accent: '#0284c7',
         link: '/services/software-services',
@@ -26,10 +26,10 @@ export const SERVICES: Service[] = [
     {
         id: '03',
         slug: 'web-development',
-        title: 'Web Development',
-        badge: 'FULL-STACK',
-        description: 'High-speed, responsive web platforms built with Next.js, modern frameworks, and cloud-native backends.',
-        features: ['Next.js & React', 'API Integration', 'High Performance'],
+        title: t('items.web_development.title'),
+        badge: t('items.web_development.badge'),
+        description: t('items.web_development.description'),
+        features: [t('items.web_development.feature_1'), t('items.web_development.feature_2'), t('items.web_development.feature_3')],
         icon: 'Globe',
         accent: '#6366f1',
         link: '/services/web-development',
@@ -37,10 +37,10 @@ export const SERVICES: Service[] = [
     {
         id: '04',
         slug: 'ui-ux-design',
-        title: 'UI/UX Design',
-        badge: 'EXPERIENCE',
-        description: 'Modern user-centered design systems, intuitive interfaces, and engaging user experiences that convert.',
-        features: ['Design Systems', 'Interactive Prototypes', 'User Journeys'],
+        title: t('items.ui_ux_design.title'),
+        badge: t('items.ui_ux_design.badge'),
+        description: t('items.ui_ux_design.description'),
+        features: [t('items.ui_ux_design.feature_1'), t('items.ui_ux_design.feature_2'), t('items.ui_ux_design.feature_3')],
         icon: 'Palette',
         accent: '#8b5cf6',
         link: '/services/ui-ux-design',
