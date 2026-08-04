@@ -307,5 +307,61 @@
         "mission_f1": "Enterprise Security",
         "mission_f2": "Agile Architecture"
     }
+  },
+  "contact": {
+    "hero": {
+        "prefix": "Contact",
+        "highlight": "Us",
+        "breadcrumb": "Contact Us"
+    },
+    "info": {
+        "email_title": "Direct Email",
+        "email_sub": "Our team responds within 2 hours",
+        "email_action": "Send Email",
+        "phone_title": "Call / WhatsApp",
+        "phone_action": "WhatsApp Us",
+        "address_title": "Headquarters",
+        "address_sub": "Tech Innovation District",
+        "address_action": "View Location"
+    },
+    "form": {
+        "badge": "SEND US A MESSAGE",
+        "title": "Get In Touch With Us",
+        "name_label": "Name",
+        "name_placeholder": "e.g. John",
+        "email_label": "Email Address",
+        "email_placeholder": "john@example.com",
+        "phone_label": "Phone Number",
+        "subject_label": "Subject",
+        "subject_placeholder": "Project Inquiry / General Question",
+        "message_label": "Message",
+        "message_placeholder": "Write your message here...",
+        "btn_sending": "Sending Message...",
+        "btn_send": "SEND MESSAGE"
+    }
+  },
+  "services_page": {
+    "hero": {
+        "prefix": "Our",
+        "highlight": "Services",
+        "breadcrumb": "Services"
+    },
+    "details": {
+        "badge": "WHAT WE DO",
+        "title": "Comprehensive Digital Solutions",
+        "subtitle": "We transform your ideas into powerful web, mobile, and software solutions that drive business growth. Every solution is built for performance, scalability, and long-term success."
+    },
+    "process": {
+        "badge": "HOW WE WORK",
+        "title": "Our Development Process",
+        "subtitle": "We follow a proven methodology to ensure successful project delivery from concept to deployment."
+    }
+  },
+  "projects_page": {
+    "hero": {
+        "prefix": "Our",
+        "highlight": "Work",
+        "breadcrumb": "Work"
+    }
   }
 }

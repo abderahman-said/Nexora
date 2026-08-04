@@ -1,37 +1,39 @@
 import { Mail, Phone, MapPin } from 'lucide-react';
 import type { ContactInfoItem } from './types';
 import { useSiteData } from '@/hooks/useSiteData';
+import { useTranslations } from 'next-intl';
 
 export function useContactInfo() {
     const siteData = useSiteData();
+    const t = useTranslations('contact');
 
     const CONTACT_INFO: ContactInfoItem[] = [
         {
             id: 1,
-            title: 'Direct Email',
+            title: t('info.email_title'),
             value: siteData.contact.email,
-            subtext: 'Our team responds within 2 hours',
+            subtext: t('info.email_sub'),
             icon: Mail,
             action: `mailto:${siteData.contact.email}`,
-            actionText: 'Send Email',
+            actionText: t('info.email_action'),
         },
         {
             id: 2,
-            title: 'Call / WhatsApp',
+            title: t('info.phone_title'),
             value: siteData.contact.phone,
             subtext: siteData.contact.workingHours,
             icon: Phone,
             action: siteData.contact.whatsapp,
-            actionText: 'WhatsApp Us',
+            actionText: t('info.phone_action'),
         },
         {
             id: 3,
-            title: 'Headquarters',
+            title: t('info.address_title'),
             value: siteData.contact.shortAddress,
-            subtext: 'Tech Innovation District',
+            subtext: t('info.address_sub'),
             icon: MapPin,
             action: siteData.map.linkUrl,
-            actionText: 'View Location',
+            actionText: t('info.address_action'),
         },
         // {
         //     id: 4,

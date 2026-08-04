@@ -3,17 +3,21 @@
 import React from 'react';
 import Container from '@/components/ui/Container';
 import SectionHeader from '@/components/ui/SectionHeader';
-import { SERVICES } from '@/components/pages/home/ServiceCards/servicesData';
+import { getServices } from '@/components/pages/home/ServiceCards/servicesData';
 import { ServiceCard } from '@/components/pages/home/ServiceCards/ServiceCard';
+import { useTranslations } from 'next-intl';
 
 export default function ServiceDetails() {
+    const tServices = useTranslations('homeServices');
+    const SERVICES = getServices(tServices);
+    const t = useTranslations('services_page.details');
     return (
         <section className="scroll-section relative w-full py-16 sm:py-24 bg-white dark:bg-[#060913] border-b border-slate-200/90 dark:border-slate-800/80 transition-colors duration-300">
             <Container className="relative z-10">
                 <SectionHeader
-                    badge="WHAT WE DO"
-                    title="Comprehensive Digital Solutions"
-                    subtitle="We transform your ideas into powerful web, mobile, and software solutions that drive business growth. Every solution is built for performance, scalability, and long-term success."
+                    badge={t('badge')}
+                    title={t('title')}
+                    subtitle={t('subtitle')}
                     align="center"
                 />
                 

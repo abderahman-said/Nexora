@@ -7,8 +7,10 @@ import Button from '@/components/ui/Button';
 import { useContactForm } from './useContactForm';
 import PhoneInputWithCountry from './PhoneInputWithCountry';
 import SuccessState from './SuccessState';
+import { useTranslations } from 'next-intl';
 
 export default function ContactInquiryForm() {
+    const t = useTranslations('contact.form');
     const {
         formData,
         errors,
@@ -37,31 +39,31 @@ export default function ContactInquiryForm() {
                     <div className="space-y-5">
                         <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-blue-50 dark:bg-blue-950/80 border border-blue-200/80 dark:border-blue-800/80 text-blue-600 dark:text-sky-400 font-bold text-xs uppercase tracking-wider shadow-sm">
                             <MessageSquare className="w-3.5 h-3.5" />
-                            <span>SEND US A MESSAGE</span>
+                            <span>{t('badge')}</span>
                         </div>
                         <h2 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-slate-900 dark:text-white tracking-tight">
-                            Get In Touch With Us
+                            {t('title')}
                         </h2>
                     </div>
 
                     {/* Name & Email Row */}
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-5">
                         <FormInput
-                            label="Name"
+                            label={t('name_label')}
                             required
                             icon={User}
                             type="text"
-                            placeholder="e.g. John"
+                            placeholder={t('name_placeholder')}
                             value={formData.name}
                             error={errors.name}
                             onChange={(e: React.ChangeEvent<HTMLInputElement>) => handleChange('name', e.target.value)}
                         />
                         <FormInput
-                            label="Email Address"
+                            label={t('email_label')}
                             required
                             icon={Mail}
                             type="email"
-                            placeholder="john@example.com"
+                            placeholder={t('email_placeholder')}
                             value={formData.email}
                             error={errors.email}
                             onChange={(e: React.ChangeEvent<HTMLInputElement>) => handleChange('email', e.target.value)}
@@ -71,17 +73,17 @@ export default function ContactInquiryForm() {
                     {/* Phone & Subject Row */}
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-5">
                         <PhoneInputWithCountry
-                            label="Phone Number"
+                            label={t('phone_label')}
                             value={formData.phone}
                             error={errors.phone}
                             onChange={handlePhoneChange}
                         />
                         <FormInput
-                            label="Subject"
+                            label={t('subject_label')}
                             required
                             icon={FileText}
                             type="text"
-                            placeholder="Project Inquiry / General Question"
+                            placeholder={t('subject_placeholder')}
                             value={formData.subject}
                             error={errors.subject}
                             onChange={(e: React.ChangeEvent<HTMLInputElement>) => handleChange('subject', e.target.value)}
@@ -90,11 +92,11 @@ export default function ContactInquiryForm() {
 
                     {/* Message Textarea */}
                     <FormInput
-                        label="Message"
+                        label={t('message_label')}
                         required
                         isTextarea
                         rows={4}
-                        placeholder="Write your message here..."
+                        placeholder={t('message_placeholder')}
                         value={formData.message}
                         error={errors.message}
                         onChange={(e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => handleChange('message', e.target.value)}
@@ -116,10 +118,10 @@ export default function ContactInquiryForm() {
                             "
                         >
                             {isSubmitting ? (
-                                <span>Sending Message...</span>
+                                <span>{t('btn_sending')}</span>
                             ) : (
                                 <>
-                                    <span>SEND MESSAGE</span>
+                                    <span>{t('btn_send')}</span>
                                     <Send className="w-4 h-4" />
                                 </>
                             )}

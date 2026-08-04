@@ -89,13 +89,13 @@ export default function ServiceCards() {
             <div className="max-w-2xl space-y-4">
               <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-blue-50 dark:bg-blue-950/80 border border-blue-200/80 dark:border-blue-800/80 text-blue-600 dark:text-blue-400 font-bold text-xs tracking-wider uppercase shadow-sm">
                 <Layers className="w-3.5 h-3.5" />
-                <span>{t('badge')}</span>
+                <span>{t("badge")}</span>
               </div>
 
               <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-slate-900 dark:text-white tracking-tight leading-[1.15]">
-                {t('title_main')}{" "}
+                {t("title_main")}{" "}
                 <span className="bg-gradient-to-r from-blue-600 via-sky-500 to-indigo-500 dark:from-blue-400 dark:via-sky-300 dark:to-indigo-400 bg-clip-text text-transparent">
-                  {t('title_highlight')}
+                  {t("title_highlight")}
                 </span>
               </h2>
             </div>
@@ -112,7 +112,7 @@ export default function ServiceCards() {
                                     hover:-translate-y-0.5 transition-all duration-300 group
                                 "
               >
-                <span>{t('button_view_all')}</span>
+                <span>{t("button_view_all")}</span>
                 <ArrowRight className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1 rtl:rotate-180 rtl:group-hover:-translate-x-1" />
               </Link>
             </div>
@@ -134,7 +134,7 @@ export default function ServiceCards() {
             autoplay={false}
             pauseOnHover={false}
             enableDrag={true}
-            infinite={false}
+            infinite={true}
           />
         </div>
       </Container>

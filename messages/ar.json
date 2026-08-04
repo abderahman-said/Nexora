@@ -309,5 +309,61 @@
         "mission_f1": "أمان المؤسسات",
         "mission_f2": "بنية مرنة"
     }
+  },
+  "contact": {
+    "hero": {
+        "prefix": "تواصل",
+        "highlight": "معنا",
+        "breadcrumb": "تواصل معنا"
+    },
+    "info": {
+        "email_title": "البريد الإلكتروني المباشر",
+        "email_sub": "فريقنا يرد خلال ساعتين",
+        "email_action": "إرسال بريد إلكتروني",
+        "phone_title": "اتصال / واتساب",
+        "phone_action": "تواصل عبر واتساب",
+        "address_title": "المقر الرئيسي",
+        "address_sub": "منطقة الابتكار التقني",
+        "address_action": "عرض الموقع"
+    },
+    "form": {
+        "badge": "أرسل لنا رسالة",
+        "title": "ابق على تواصل معنا",
+        "name_label": "الاسم",
+        "name_placeholder": "مثال: أحمد",
+        "email_label": "البريد الإلكتروني",
+        "email_placeholder": "ahmed@example.com",
+        "phone_label": "رقم الهاتف",
+        "subject_label": "الموضوع",
+        "subject_placeholder": "استفسار عن مشروع / سؤال عام",
+        "message_label": "الرسالة",
+        "message_placeholder": "اكتب رسالتك هنا...",
+        "btn_sending": "جاري إرسال الرسالة...",
+        "btn_send": "إرسال الرسالة"
+    }
+  },
+  "services_page": {
+    "hero": {
+        "prefix": "خدماتنا",
+        "highlight": "المتميزة",
+        "breadcrumb": "الخدمات"
+    },
+    "details": {
+        "badge": "ماذا نفعل",
+        "title": "حلول رقمية شاملة",
+        "subtitle": "نحن نحول أفكارك إلى حلول ويب وهواتف وبرمجيات قوية تدفع نمو أعمالك. يتم بناء كل حل من أجل الأداء العالي وقابلية التوسع والنجاح على المدى الطويل."
+    },
+    "process": {
+        "badge": "كيف نعمل",
+        "title": "عملية التطوير لدينا",
+        "subtitle": "نتبع منهجية مجربة لضمان تسليم المشروع بنجاح من الفكرة إلى الإطلاق."
+    }
+  },
+  "projects_page": {
+    "hero": {
+        "prefix": "أعمالنا",
+        "highlight": "المتميزة",
+        "breadcrumb": "أعمالنا"
+    }
   }
 }

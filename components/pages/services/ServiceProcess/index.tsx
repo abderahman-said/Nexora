@@ -3,17 +3,21 @@
 import React from 'react';
 import Container from '@/components/ui/Container';
 import SectionHeader from '@/components/ui/SectionHeader';
-import { STEPS } from '@/components/pages/home/GSAPCardGrid/gsapCardData';
+import { getSteps } from '@/components/pages/home/GSAPCardGrid/gsapCardData';
 import { ProcessCard } from '@/components/pages/home/GSAPCardGrid/ProcessCard';
+import { useTranslations } from 'next-intl';
 
 export default function ServiceProcess() {
+    const tProcess = useTranslations('homeProcess');
+    const STEPS = getSteps(tProcess);
+    const t = useTranslations('services_page.process');
     return (
         <section className="scroll-section relative w-full py-16 sm:py-24 bg-slate-50 dark:bg-[#0a0f1e] border-b border-slate-200/90 dark:border-slate-800/80 transition-colors duration-300">
             <Container className="relative z-10">
                 <SectionHeader
-                    badge="HOW WE WORK"
-                    title="Our Development Process"
-                    subtitle="We follow a proven methodology to ensure successful project delivery from concept to deployment."
+                    badge={t('badge')}
+                    title={t('title')}
+                    subtitle={t('subtitle')}
                     align="center"
                 />
                 

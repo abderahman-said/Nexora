@@ -17,6 +17,7 @@ import { useTranslations, useLocale } from "next-intl";
 import { useSiteData } from "@/hooks/useSiteData";
 import ThemeToggle from "@/components/ui/ThemeToggle";
 import LanguageToggle from "@/components/ui/LanguageToggle";
+import { FacebookIcon, LinkedInIcon, WhatsappIcon } from "@/components/icons/SocialIcons";
 
 const emptySubscribe = () => () => {};
 const getSnapshot = () => true;
@@ -42,30 +43,7 @@ function lockBodyScroll() {
 function unlockBodyScroll() {
   document.body.style.overflow = "";
 }
-
-function LinkedInIcon(props: React.SVGProps<SVGSVGElement>) {
-  return (
-    <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" {...props}>
-      <path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.28 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.75M6.88 8.56a1.68 1.68 0 0 0 1.68-1.68c0-.93-.75-1.69-1.68-1.69a1.69 1.69 0 0 0-1.69 1.69c0 .93.76 1.68 1.69 1.68m1.39 9.94v-8.37H5.5v8.37h2.77z" />
-    </svg>
-  );
-}
-
-function FacebookIcon(props: React.SVGProps<SVGSVGElement>) {
-  return (
-    <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" {...props}>
-      <path d="M22 12c0-5.52-4.48-10-10-10S2 6.48 2 12c0 4.99 3.66 9.12 8.44 9.88v-6.99H7.9v-2.89h2.54V9.8c0-2.51 1.49-3.89 3.78-3.89 1.09 0 2.23.19 2.23.19v2.47h-1.26c-1.24 0-1.63.77-1.63 1.56v1.88h2.78l-.45 2.89h-2.33v6.99C18.34 21.12 22 16.99 22 12z" />
-    </svg>
-  );
-}
-
-function WhatsappIcon(props: React.SVGProps<SVGSVGElement>) {
-  return (
-    <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" {...props}>
-      <path d="M17.47 6.46A7.63 7.63 0 0 0 12 4.25a7.71 7.71 0 0 0-7.7 7.71c0 1.54.4 3.03 1.16 4.35L4.25 20l3.8-1a7.7 7.7 0 0 0 3.95 1.08h.01a7.7 7.7 0 0 0 7.7-7.71 7.65 7.65 0 0 0-2.24-5.41zm-5.47 11.23h-.01a6.4 6.4 0 0 1-3.26-.9l-.23-.14-2.42.63.64-2.36-.15-.24a6.4 6.4 0 0 1-.98-3.41c0-3.53 2.87-6.4 6.41-6.4 1.71 0 3.32.67 4.53 1.88a6.38 6.38 0 0 1 1.88 4.54c-.01 3.53-2.88 6.4-6.41 6.4zm3.53-4.81c-.19-.1-1.14-.56-1.32-.62-.18-.06-.31-.1-.44.1-.13.19-.5.62-.61.75-.11.13-.23.15-.42.05-.19-.1-.81-.3-1.55-.96-.58-.51-.97-1.14-1.08-1.33-.11-.19-.01-.3.08-.39.1-.09.2-.2.3-.31s.13-.19.19-.31.03-.23-.01-.33c-.05-.1-.44-1.06-.6-1.45-.16-.39-.32-.34-.44-.34h-.38c-.13 0-.34.05-.51.24-.18.19-.68.66-.68 1.62s.7 1.88.8 2.02c.09.13 1.38 2.1 3.34 2.95.47.2.83.33 1.12.42.47.15.9.13 1.24.08.38-.06 1.14-.47 1.3-9.2.16-.46.16-.85.11-.93-.05-.1-.19-.15-.38-.25z" />
-    </svg>
-  );
-}
+ 
 
 export function MobileNav() {
   const t = useTranslations();
