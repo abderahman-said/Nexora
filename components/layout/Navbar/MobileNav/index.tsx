@@ -52,9 +52,6 @@ export function MobileNav() {
   const navLinks = getNavLinks(t, locale);
 
   const [isOpen, setIsOpen] = useState(false);
-  // Kept OFF while the drawer is translating, ON only once it's settled,
-  // so the expensive backdrop-blur never competes with the slide animation.
-  const [drawerReady, setDrawerReady] = useState(false);
   const mounted = useSyncExternalStore(
     emptySubscribe,
     getSnapshot,
@@ -72,6 +69,7 @@ export function MobileNav() {
   const linksContainerRef = useRef<HTMLUListElement>(null);
   const footerCtaRef = useRef<HTMLDivElement>(null);
   const footerInfoRef = useRef<HTMLDivElement>(null);
+  const glowRef = useRef<HTMLDivElement>(null);
   const dividerRefs = useRef<Array<HTMLSpanElement | null>>([]);
 
   // Single persistent, reversible timeline: built once, paused + reversed,
@@ -106,16 +104,29 @@ export function MobileNav() {
             willChange: "transform, opacity",
           });
           gsap.set(drawerRef.current, { display: "flex" });
+          tl.timeScale(1); // Normal speed on open
         },
         onComplete: () => {
-          setDrawerReady(true);
+          // Add blur AFTER animation ends — zero React re-render
+          drawerRef.current?.classList.add("drawer-blur-active");
+          glowRef.current?.classList.remove("opacity-0");
           gsap.set([backdropRef.current, drawerRef.current], {
             willChange: "auto",
+          });
+        },
+        onReverseStart: () => {
+          tl.timeScale(1.8); // Close 1.8× faster → snappy
+          // Remove blur before animation starts — GPU free for slide
+          drawerRef.current?.classList.remove("drawer-blur-active");
+          glowRef.current?.classList.add("opacity-0");
+          gsap.set([backdropRef.current, drawerRef.current], {
+            willChange: "transform, opacity",
           });
         },
         onReverseComplete: () => {
           gsap.set([backdropRef.current, drawerRef.current], {
             display: "none",
+            willChange: "auto",
           });
           unlockBodyScroll();
         },
@@ -147,8 +158,8 @@ export function MobileNav() {
         { xPercent: isRtl ? 100 : -100 },
         {
           xPercent: 0,
-          duration: 0.5,
-          onReverseStart: () => setDrawerReady(false),
+          duration: 0.42,
+          ease: "power3.inOut",
         },
         0,
       );
@@ -257,23 +268,30 @@ export function MobileNav() {
             <div
               ref={drawerRef}
               style={{ display: "none" }}
-              className={`fixed top-0 z-[99999] h-[100vh] w-[70vw] max-w-[400px] start-0 flex flex-col overscroll-none
-                ${
-                  drawerReady
-                    ? "bg-white/70 dark:bg-[#09090f]/60 backdrop-blur-2xl backdrop-saturate-150"
-                    : "bg-white/95 dark:bg-[#0b0b12]/95"
-                }
+              className="fixed top-0 z-[99999] h-[100vh] w-[70vw] max-w-[400px] start-0 flex flex-col overscroll-none
+                bg-white/95 dark:bg-[#0b0b12]/95
+                drawer-blur-inactive
                 border-e border-slate-200/70 dark:border-white/10
-                shadow-2xl shadow-black/30 overflow-hidden transition-colors duration-150`}
+                shadow-2xl shadow-black/30 overflow-hidden"
             >
+              <style>{`
+                .drawer-blur-active {
+                  background-color: rgb(255 255 255 / 0.7) !important;
+                  backdrop-filter: blur(40px) saturate(150%) !important;
+                  -webkit-backdrop-filter: blur(40px) saturate(150%) !important;
+                }
+                .dark .drawer-blur-active {
+                  background-color: rgb(9 9 15 / 0.6) !important;
+                }
+              `}</style>
+
               <div className="absolute top-0 inset-x-0 h-[3px] bg-gradient-to-r from-blue-600 via-sky-400 to-indigo-600" />
 
-              {drawerReady && (
-                <>
-                  <div className="absolute top-[-60px] end-[-60px] h-56 w-56 rounded-full bg-blue-500/10 dark:bg-blue-600/15 blur-3xl pointer-events-none animate-in fade-in duration-300" />
-                  <div className="absolute bottom-[-40px] start-[-40px] h-48 w-48 rounded-full bg-sky-400/5 dark:bg-sky-500/10 blur-3xl pointer-events-none animate-in fade-in duration-300" />
-                </>
-              )}
+              {/* Glow orbs — always mounted, shown/hidden via opacity only (no unmount re-render) */}
+              <div ref={glowRef} className="opacity-0 transition-opacity duration-300 pointer-events-none">
+                <div className="absolute top-[-60px] end-[-60px] h-56 w-56 rounded-full bg-blue-500/10 dark:bg-blue-600/15 blur-3xl" />
+                <div className="absolute bottom-[-40px] start-[-40px] h-48 w-48 rounded-full bg-sky-400/5 dark:bg-sky-500/10 blur-3xl" />
+              </div>
 
               <div className="flex flex-col flex-1 px-5 sm:px-8 pt-3 sm:pt-5 pb-8 gap-4 md:gap-10 relative z-10 overflow-y-auto overflow-x-hidden overscroll-contain">
                 <MobileNavHeader drawerHeaderRef={drawerHeaderRef} closeMenu={closeMenu} />
