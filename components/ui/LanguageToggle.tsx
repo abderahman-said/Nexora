@@ -39,9 +39,8 @@ function buildOverlayMarkup(newLocale: string, logoSrc: string, isDark: boolean)
           class="relative z-10 w-[76px] animate-pulse motion-reduce:animate-none [animation-duration:2.2s] drop-shadow-[0_0_18px_rgba(59,130,246,0.35)]"
         />
       </div>
-      <div class="mt-7 flex items-center gap-2 font-mono text-[11px] font-semibold uppercase tracking-[0.2em] ${
-          isDark ? 'text-slate-400' : 'text-slate-500'
-      }">
+      <div class="mt-7 flex items-center gap-2 font-mono text-[11px] font-semibold uppercase tracking-[0.2em] ${isDark ? 'text-slate-400' : 'text-slate-500'
+        }">
         <span>${newLocale === 'ar' ? 'جاري التحويل' : 'Switching'}</span>
         <span class="h-1 w-1 rounded-full bg-current animate-bounce motion-reduce:animate-none [animation-delay:0s]"></span>
         <span class="h-1 w-1 rounded-full bg-current animate-bounce motion-reduce:animate-none [animation-delay:0.15s]"></span>
@@ -106,16 +105,15 @@ export default function LanguageToggle({ className = '' }: LanguageToggleProps) 
         const newPath = `/${newLocale}${pathWithoutLocale}`;
 
         const isDark = document.documentElement.classList.contains('dark');
-        const logoSrc = isDark ? '/assets/logo_dark.PNG' : '/assets/logo.png';
+        const logoSrc = isDark ? '/assets/logo_dark.png' : '/assets/logo.png';
 
         const overlay = document.createElement('div');
         overlay.id = OVERLAY_ID;
         overlay.setAttribute('dir', newLocale === 'ar' ? 'rtl' : 'ltr');
         overlay.setAttribute('role', 'status');
         overlay.setAttribute('aria-live', 'polite');
-        overlay.className = `fixed inset-0 z-[999999] flex items-center justify-center pointer-events-none opacity-0 backdrop-blur-lg ${
-            isDark ? 'bg-[#090d16]/80' : 'bg-[#f8fafc]/80'
-        }`;
+        overlay.className = `fixed inset-0 z-[999999] flex items-center justify-center pointer-events-none opacity-0 backdrop-blur-lg ${isDark ? 'bg-[#090d16]/80' : 'bg-[#f8fafc]/80'
+            }`;
         overlay.style.transition = `opacity ${FADE_MS}ms ease-in-out`;
 
         const loaderContainer = document.createElement('div');
