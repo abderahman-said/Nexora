@@ -80,7 +80,7 @@ export function ClientCard({ client }: ClientCardProps) {
 
             {/* Client Name & Role */}
             <div className="relative z-10   pt-3 border-t border-slate-100 dark:border-slate-800/80 mt-auto">
-                <h3 className="text-lg font-extrabold text-slate-900 dark:text-white tracking-tight group-hover:text-blue-600 dark:group-hover:text-sky-400 transition-colors duration-300">
+                <h3 className="gsap-managed text-lg font-extrabold text-slate-900 dark:text-white tracking-tight group-hover:text-blue-600 dark:group-hover:text-sky-400 transition-colors duration-300">
                     {client.clientName}
                 </h3>
                 <p className="text-xs font-semibold text-slate-400 dark:text-slate-500 mt-0.5">

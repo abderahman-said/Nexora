@@ -123,6 +123,14 @@ export interface OptimizedImageProps extends Omit<import('next/image').ImageProp
   alt: string;
 }
 
+export interface LogoProps {
+  className?: string;
+  imageClassName?: string;
+  width?: number;
+  height?: number;
+  onClick?: () => void;
+}
+
 export interface SharedHeroProps {
     id: string;
     titlePrefix: string;

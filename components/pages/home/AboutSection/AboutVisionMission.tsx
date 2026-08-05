@@ -28,7 +28,7 @@ export default function AboutVisionMission() {
                             <div className="text-[0.65rem] font-bold tracking-widest text-blue-600 dark:text-sky-400 uppercase">
                                 {t('vision_tag')}
                             </div>
-                            <h3 className="text-base font-extrabold text-slate-900 dark:text-white">
+                            <h3 className="gsap-managed text-base font-extrabold text-slate-900 dark:text-white">
                                 {t('vision_title')}
                             </h3>
                         </div>
@@ -67,7 +67,7 @@ export default function AboutVisionMission() {
                             <div className="text-[0.65rem] font-bold tracking-widest text-sky-600 dark:text-sky-400 uppercase">
                                 {t('mission_tag')}
                             </div>
-                            <h3 className="text-base font-extrabold text-slate-900 dark:text-white">
+                            <h3 className="gsap-managed text-base font-extrabold text-slate-900 dark:text-white">
                                 {t('mission_title')}
                             </h3>
                         </div>

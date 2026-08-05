@@ -52,7 +52,7 @@ export function TeamCard({ member }: TeamCardProps) {
       {/* Member Details */}
       <div className="relative z-10 space-y-1 pb-2">
         <h3
-          className={`text-xl font-extrabold text-slate-900 dark:text-white tracking-tight flex items-center justify-center gap-2 transition-colors duration-300 ${isFounder ? "group-hover:text-amber-500 dark:group-hover:text-amber-400" : "group-hover:text-blue-600 dark:group-hover:text-sky-400"}`}
+          className={`gsap-managed text-xl font-extrabold text-slate-900 dark:text-white tracking-tight flex items-center justify-center gap-2 transition-colors duration-300 ${isFounder ? "group-hover:text-amber-500 dark:group-hover:text-amber-400" : "group-hover:text-blue-600 dark:group-hover:text-sky-400"}`}
         >
           {member.name}
         </h3>

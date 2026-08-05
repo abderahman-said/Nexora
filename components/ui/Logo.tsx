@@ -2,14 +2,7 @@ import React from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { useLocale } from "next-intl";
-
-interface LogoProps {
-  className?: string;
-  imageClassName?: string;
-  width?: number;
-  height?: number;
-  onClick?: () => void;
-}
+import { LogoProps } from "./types";
 
 export default function Logo({
   className = "inline-block group",
@@ -29,7 +22,7 @@ export default function Logo({
         className={`${imageClassName} dark:hidden`}
       />
       <Image
-        src="/assets/logo_dark.PNG"
+        src="/assets/logo_dark.png"
         alt="Nexora Solutions Dark"
         width={width}
         height={height}

@@ -154,7 +154,7 @@ export default function ProjectCard({ p }: ProjectCardProps) {
 
         {/* Content overlaid at the bottom */}
         <div className="relative z-[3] flex h-full flex-col justify-end gap-2 sm:gap-3 px-5 py-3 sm:px-6  md:px-7 md:py-4 pointer-events-none">
-          <h3 className="m-0 mb-1.5 sm:mb-2 text-[clamp(19px,4vw,28px)] font-black leading-[1.18] tracking-[-0.03em] text-slate-900 dark:text-white transition-colors duration-300 group-hover/3d:text-blue-600 dark:group-hover/3d:text-blue-300">
+          <h3 className="m-0 mb-1.5 sm:mb-2 text-[clamp(19px,4vw,28px)] font-black leading-[1.18] tracking-[-0.03em] text-slate-900 dark:text-white transition-colors duration-300 group-hover/3d:text-blue-600 dark:group-hover/3d:text-blue-300 gsap-managed">
             {p.name}
           </h3>
           <p className="mb-2 sm:mb-3 text-[0.68rem] sm:text-[0.75rem] font-bold uppercase tracking-[0.1em] text-slate-600 dark:text-slate-300">
