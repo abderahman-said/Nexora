@@ -9,8 +9,8 @@ import { EarthIcon } from 'lucide-react';
 import type { LanguageToggleProps } from './types';
 
 const OVERLAY_ID = 'lang-switch-overlay';
-const ROUTE_DELAY_MS = 10; // start routing almost immediately
-const FADE_OUT_MS = 300; // time to fade the overlay out (matches CSS duration)
+const SHOW_DELAY_MS = 150;
+const FADE_MS = 150;
 
 const DOT_POSITIONS = [
     { top: '8%', left: '50%', delay: '0s' },
@@ -19,7 +19,6 @@ const DOT_POSITIONS = [
     { top: '50%', left: '8%', delay: '0.9s' },
 ] as const;
 
-/** Builds the loader markup shown while the locale is switching. Pure Tailwind, no injected <style>. */
 function buildOverlayMarkup(newLocale: string, logoSrc: string, isDark: boolean) {
     const dots = DOT_POSITIONS.map(
         ({ top, left, delay }) => `
@@ -56,27 +55,49 @@ export default function LanguageToggle({ className = '' }: LanguageToggleProps) 
     const pathname = usePathname();
     const router = useRouter();
     const isSwitchingRef = React.useRef(false);
+    const showTimerRef = React.useRef<ReturnType<typeof setTimeout> | null>(null);
 
     const isArabic = locale === 'ar';
 
-    // Once the new locale route has loaded, fade the overlay out and remove it.
-    // The overlay lives outside the React tree (appended to <body>) so it survives
-    // any remount of this component caused by the locale segment changing.
+    // Hide overlay (if present) as soon as the locale actually changes,
+    // using transitionend instead of a fixed setTimeout so it's exact.
     React.useEffect(() => {
-        const overlay = document.getElementById(OVERLAY_ID);
-        if (!overlay) return;
+        // If the nav finished before the overlay was even shown, cancel the pending show.
+        if (showTimerRef.current) {
+            clearTimeout(showTimerRef.current);
+            showTimerRef.current = null;
+        }
 
-        overlay.style.opacity = '0';
-        const removeTimeout = setTimeout(() => {
+        const overlay = document.getElementById(OVERLAY_ID);
+        if (!overlay) {
+            isSwitchingRef.current = false;
+            return;
+        }
+
+        const remove = () => {
             overlay.remove();
             isSwitchingRef.current = false;
-        }, FADE_OUT_MS);
+        };
 
-        return () => clearTimeout(removeTimeout);
+        // If the overlay never got its opacity to 1 (nav was instant), just remove it.
+        if (overlay.style.opacity !== '1') {
+            remove();
+            return;
+        }
+
+        overlay.style.transition = `opacity ${FADE_MS}ms ease-in-out`;
+        overlay.addEventListener('transitionend', remove, { once: true });
+        // Fallback in case transitionend never fires (tab backgrounded, etc.)
+        const fallback = setTimeout(remove, FADE_MS + 100);
+        overlay.style.opacity = '0';
+
+        return () => {
+            overlay.removeEventListener('transitionend', remove);
+            clearTimeout(fallback);
+        };
     }, [locale]);
 
     const toggleLanguage = () => {
-        // Guard against double-triggering while a switch is already in progress.
         if (isSwitchingRef.current || document.getElementById(OVERLAY_ID)) return;
         isSwitchingRef.current = true;
 
@@ -92,24 +113,29 @@ export default function LanguageToggle({ className = '' }: LanguageToggleProps) 
         overlay.setAttribute('dir', newLocale === 'ar' ? 'rtl' : 'ltr');
         overlay.setAttribute('role', 'status');
         overlay.setAttribute('aria-live', 'polite');
-        overlay.className = `fixed inset-0 z-[999999] flex items-center justify-center pointer-events-none opacity-0 backdrop-blur-lg transition-opacity duration-300 ease-in-out ${
+        overlay.className = `fixed inset-0 z-[999999] flex items-center justify-center pointer-events-none opacity-0 backdrop-blur-lg ${
             isDark ? 'bg-[#090d16]/80' : 'bg-[#f8fafc]/80'
         }`;
+        overlay.style.transition = `opacity ${FADE_MS}ms ease-in-out`;
 
         const loaderContainer = document.createElement('div');
         loaderContainer.className = 'flex flex-col items-center justify-center';
         loaderContainer.innerHTML = buildOverlayMarkup(newLocale, logoSrc, isDark);
-
         overlay.appendChild(loaderContainer);
-        document.body.appendChild(overlay);
 
-        requestAnimationFrame(() => {
-            overlay.style.opacity = '1';
-        });
+        // Only actually attach + fade in the overlay if the navigation is taking
+        // noticeably long. Fast navigations never show a loader at all.
+        showTimerRef.current = setTimeout(() => {
+            document.body.appendChild(overlay);
+            requestAnimationFrame(() => {
+                overlay.style.opacity = '1';
+            });
+        }, SHOW_DELAY_MS);
 
-        setTimeout(() => {
+        // Kick off navigation immediately.
+        React.startTransition(() => {
             router.push(newPath);
-        }, ROUTE_DELAY_MS);
+        });
     };
 
     return (
