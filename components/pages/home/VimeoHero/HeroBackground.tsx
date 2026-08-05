@@ -10,7 +10,6 @@ const VIDEO_WEBM =
   "https://res.cloudinary.com/yqfotvgz/video/upload/v1785791193/hero_yizsuj.webm";
 
 export default function HeroBackground({ glowRef }: HeroBackgroundProps) {
-  const currentYear = new Date().getFullYear();
   const [isVideoReady, setIsVideoReady] = useState(false);
   const videoRef = useRef<HTMLVideoElement>(null);
 
