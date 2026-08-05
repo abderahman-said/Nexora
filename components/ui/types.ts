@@ -39,7 +39,7 @@ export interface SectionHeaderProps {
     align?: 'left' | 'center' | 'between';
     as?: ElementType;
     size?: 'hero' | 'default';
-    titleRef?: Ref<any>;
+    titleRef?: Ref<HTMLElement>;
     rightElement?: ReactNode;
     className?: string;
     animClass?: string;
@@ -49,7 +49,7 @@ export interface SectionHeaderProps {
 export interface GSAPSliderProps<T> {
   items: T[];
   renderItem?: (item: T, index: number, isActive?: boolean) => React.ReactNode;
-  ItemComponent?: React.ComponentType<any>;
+  ItemComponent?: React.ElementType;
   autoplay?: boolean;
   autoplayInterval?: number;
   defaultVisibleCount?: number;
@@ -83,7 +83,7 @@ export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElemen
   children?: ReactNode;
   disabled?: boolean;
   href?: string;
-  [key: string]: any;
+  [key: string]: unknown;
 }
 
 export interface FormInputProps extends ComponentPropsWithRef<'input'> {
@@ -95,7 +95,7 @@ export interface FormInputProps extends ComponentPropsWithRef<'input'> {
     error?: string;
     containerClassName?: string;
     inputClassName?: string;
-    [key: string]: any;
+    [key: string]: unknown;
 }
 
 export interface InteractiveCardProps {

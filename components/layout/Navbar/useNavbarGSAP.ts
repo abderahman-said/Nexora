@@ -5,6 +5,13 @@ import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import type { UseNavbarGSAPProps } from './types';
 
+interface LenisInstance {
+  scroll: number;
+  on: (event: string, callback: () => void) => void;
+  off: (event: string, callback: () => void) => void;
+}
+type WindowWithLenis = Window & typeof globalThis & { __lenis?: LenisInstance };
+
 gsap.registerPlugin(ScrollTrigger);
 
 export function useNavbarGSAP({
@@ -53,7 +60,7 @@ export function useNavbarGSAP({
       let removeScrollListener: (() => void) | null = null;
 
       const getScrollY = () => {
-        const lenis = (window as any).__lenis;
+        const lenis = (window as WindowWithLenis).__lenis;
         return lenis ? lenis.scroll : window.scrollY;
       };
 
@@ -94,7 +101,7 @@ export function useNavbarGSAP({
         // نظّف أي listener قديم الأول
         removeScrollListener?.();
 
-        const lenis = (window as any).__lenis;
+        const lenis = (window as WindowWithLenis).__lenis;
         // نزامن lastScrollY مع المصدر الفعلي قبل ما نبدأ نستمع، عشان منحسبش diff وهمي
         lastScrollY = Math.max(0, lenis ? lenis.scroll : window.scrollY);
 
@@ -132,7 +139,7 @@ export function useNavbarGSAP({
       let switchCheckInterval: ReturnType<typeof setInterval> | null = null;
       if (!usingLenis) {
         switchCheckInterval = setInterval(() => {
-          if ((window as any).__lenis) {
+          if ((window as WindowWithLenis).__lenis) {
             attachScrollListener();
             if (switchCheckInterval) clearInterval(switchCheckInterval);
           }

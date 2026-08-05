@@ -24,7 +24,7 @@ const SUBMIT_DELAY_MS = 1200;
 
 export function validateForm(
     data: FormData,
-    t: (key: string, values?: any) => string,
+    t: (key: string, values?: Record<string, string | number>) => string,
     tFields: (key: string) => string,
     phoneLength?: number
 ): FormErrors {

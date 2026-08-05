@@ -41,7 +41,7 @@ export function FooterAnimatedShell({
         </div>
 
         {React.isValidElement(sidePanel)
-          ? React.cloneElement(sidePanel as ReactElement<any>, { sidePanelRef })
+          ? React.cloneElement(sidePanel as ReactElement<Record<string, unknown>>, { sidePanelRef })
           : sidePanel}
       </div>
     </footer>

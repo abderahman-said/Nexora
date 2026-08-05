@@ -6,9 +6,9 @@ import { FacebookIcon, LinkedInIcon, WhatsappIcon } from "@/components/icons/Soc
 
 interface MobileNavFooterProps {
   footerInfoRef: React.RefObject<HTMLDivElement | null>;
-  contact: any;
-  map: any;
-  social: any;
+  contact: { shortAddress: string; phone: string; email: string; whatsapp: string; };
+  map: { linkUrl: string; };
+  social: { facebook: string; instagram: string; linkedin: string; };
 }
 
 export function MobileNavFooter({ footerInfoRef, contact, map, social }: MobileNavFooterProps) {

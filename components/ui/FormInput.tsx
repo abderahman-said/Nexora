@@ -37,7 +37,7 @@ const FormInput = forwardRef<HTMLInputElement | HTMLTextAreaElement, FormInputPr
                     )}
 
                     <InputComponent
-                        ref={ref as any}
+                        ref={ref as React.Ref<HTMLInputElement & HTMLTextAreaElement>}
                         id={id}
                         rows={isTextarea ? rows : undefined}
                         className={`

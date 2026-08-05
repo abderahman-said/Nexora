@@ -17,7 +17,7 @@ export default function InteractiveCard({
   className = "",
 }: InteractiveCardProps) {
   const locale = useLocale();
-  const Wrapper = (buttonLink ? Link : "div") as any;
+  const Wrapper: React.ElementType = buttonLink ? Link : "div";
 
   let formattedLink = buttonLink;
   if (buttonLink && buttonLink.startsWith('/')) {
