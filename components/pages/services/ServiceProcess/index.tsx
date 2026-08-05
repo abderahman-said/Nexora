@@ -3,7 +3,7 @@
 import React from "react";
 import Container from "@/components/ui/Container";
 import SectionHeader from "@/components/ui/SectionHeader";
-import { getSteps } from "@/components/pages/home/ProcessSection/ProcessCardData";
+import { getSteps } from "@/lib/data/ProcessCardData";
 import { ProcessCard } from "@/components/pages/home/ProcessSection/ProcessCard";
 import { useTranslations } from "next-intl";
 

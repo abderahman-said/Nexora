@@ -3,7 +3,7 @@
 import React from 'react';
 import Container from '@/components/ui/Container';
 import SectionHeader from '@/components/ui/SectionHeader';
-import { getServices } from '@/components/pages/home/ServiceCards/servicesData';
+import { getServices } from '@/lib/data/servicesData';
 import { ServiceCard } from '@/components/pages/home/ServiceCards/ServiceCard';
 import { useTranslations } from 'next-intl';
 

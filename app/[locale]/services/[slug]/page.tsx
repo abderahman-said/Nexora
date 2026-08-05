@@ -1,6 +1,6 @@
 import { notFound } from 'next/navigation';
 import SingleServicePage from '@/components/pages/services/SingleServicePage';
-import { getServices, SERVICE_SLUGS } from '@/components/pages/home/ServiceCards/servicesData';
+import { getServices, SERVICE_SLUGS } from '@/lib/data/servicesData';
 import type { Metadata } from 'next';
 import { getTranslations } from 'next-intl/server';
 
