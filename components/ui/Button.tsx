@@ -1,5 +1,6 @@
 import React, { forwardRef } from 'react';
 import type { ButtonProps, ButtonVariant, ButtonSize } from './types';
+import { cn } from '@/lib/utils';
 
 const VARIANTS: Record<ButtonVariant, string> = {
   primary: 'bg-blue-600 text-white hover:bg-blue-700 dark:bg-blue-600 dark:hover:bg-blue-500 shadow-sm border border-transparent',
@@ -36,7 +37,7 @@ const Button = forwardRef<HTMLButtonElement | HTMLAnchorElement, ButtonProps>(fu
   return (
     <Component
       ref={ref}
-      className={`${baseStyles} ${variantStyles} ${sizeStyles} ${className}`}
+      className={cn(baseStyles, variantStyles, sizeStyles, className)}
       disabled={Component === 'button' ? disabled : undefined}
       {...props}
     >

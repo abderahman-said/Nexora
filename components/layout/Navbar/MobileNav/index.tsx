@@ -9,7 +9,7 @@ import React, {
 } from "react";
 import { createPortal } from "react-dom";
 import { gsap } from "gsap";
-import { getNavLinks } from "../navData";
+import { getNavLinks } from "@/lib/data/navData";
 import { useTranslations, useLocale } from "next-intl";
 import { useSiteData } from "@/hooks/useSiteData";
 

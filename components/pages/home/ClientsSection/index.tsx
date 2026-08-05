@@ -3,7 +3,7 @@
 import React from "react";
 import { MessageSquareQuote } from "lucide-react";
 import GSAPSlider from "@/components/ui/GSAPSlider";
-import { getClients } from "./clientsData";
+import { getClients } from "@/lib/data/clientsData";
 import { ClientCard } from "./ClientCard";
 import Container from "@/components/ui/Container";
 

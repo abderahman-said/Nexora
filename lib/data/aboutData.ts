@@ -1,14 +1,15 @@
 import { Shield, Target, Zap, HeartHandshake, Globe, Rocket, Award, Users } from 'lucide-react';
-import type { AboutStat, CoreValue, CompanyStory } from './types';
+import type { AboutStat, CoreValue, CompanyStory } from '@/components/pages/about/types';
+import { useTranslations } from 'next-intl';
 
-export const getAboutStats = (t: any): AboutStat[] => [
+export const getAboutStats = (t: ReturnType<typeof useTranslations>): AboutStat[] => [
     { id: 1, label: t('stats.projects_completed'), value: '150+', icon: Rocket, color: 'from-blue-600 to-sky-500' },
     { id: 2, label: t('stats.global_clients'), value: '45+', icon: Globe, color: 'from-sky-500 to-indigo-600' },
     { id: 3, label: t('stats.senior_engineers'), value: '25+', icon: Users, color: 'from-indigo-600 to-blue-600' },
     { id: 4, label: t('stats.industry_awards'), value: '12+', icon: Award, color: 'from-blue-500 to-cyan-400' },
 ];
 
-export const getCoreValues = (t: any): CoreValue[] => [
+export const getCoreValues = (t: ReturnType<typeof useTranslations>): CoreValue[] => [
     {
         step: '01',
         badge: t('values.val1.badge'),
@@ -43,7 +44,7 @@ export const getCoreValues = (t: any): CoreValue[] => [
     },
 ];
 
-export const getCompanyStory = (t: any): CompanyStory => ({
+export const getCompanyStory = (t: ReturnType<typeof useTranslations>): CompanyStory => ({
     subtitle: t('story.subtitle'),
     title: t('story.title'),
     description: t('story.description'),

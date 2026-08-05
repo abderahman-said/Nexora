@@ -4,7 +4,7 @@ import React from 'react';
 import { Award } from 'lucide-react';
 import Container from '@/components/ui/Container';
 import InteractiveCard from '@/components/ui/InteractiveCard';
-import { getCoreValues } from '../aboutData';
+import { getCoreValues } from '@/lib/data/aboutData';
 import { useTranslations } from 'next-intl';
 
 export default function AboutValues() {

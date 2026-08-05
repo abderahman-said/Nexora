@@ -1,7 +1,8 @@
 import { ClipboardList, MonitorCheck, Settings2, TrendingUp } from 'lucide-react';
-import type { Step } from './types';
+import type { Step } from '@/components/pages/home/ProcessSection/types';
+import { useTranslations } from 'next-intl';
 
-export const getSteps = (t: any): Step[] => [
+export const getSteps = (t: ReturnType<typeof useTranslations>): Step[] => [
     {
         step: '01',
         title: t('steps.step1.title'),

@@ -15,13 +15,15 @@
   "dependencies": {
     "@gsap/react": "^2.1.2",
     "@tailwindcss/postcss": "^4.3.3",
+    "clsx": "^2.1.1",
     "gsap": "^3.12.5",
     "lenis": "^1.1.14",
     "lucide-react": "^1.27.0",
     "next": "15.2.8",
     "next-intl": "^4.13.4",
     "react": "^19.0.0",
-    "react-dom": "^19.0.0"
+    "react-dom": "^19.0.0",
+    "tailwind-merge": "^3.6.0"
   },
   "devDependencies": {
     "@types/node": "26.1.2",

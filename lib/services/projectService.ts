@@ -1,4 +1,4 @@
-import { projects } from "@/components/pages/home/ProjectsSection/projectsData";
+import { projects } from "@/lib/data/projectsData";
 import { Project } from "@/types/project";
 
 /**

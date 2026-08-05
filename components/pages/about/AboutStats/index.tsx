@@ -1,6 +1,6 @@
 import React from 'react';
 import Container from '@/components/ui/Container';
-import { getAboutStats } from '../aboutData';
+import { getAboutStats } from '@/lib/data/aboutData';
 import { useTranslations } from 'next-intl';
 
 export default function AboutStats() {

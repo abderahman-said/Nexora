@@ -4,10 +4,10 @@ import { useRef } from 'react';
 import HeroBackground from './HeroBackground';
 import HeroContent from './HeroContent';
 // import HeroCircularBadge from './HeroCircularBadge';
-import { useVimeoHeroGSAP } from './useVimeoHeroGSAP';
+import { useVideoHeroGSAP } from './useVideoHeroGSAP';
 import Container from '@/components/ui/Container';
 
-export default function VimeoHero() {
+export default function VideoHero() {
     const heroRef = useRef<HTMLDivElement>(null);
     const headRef = useRef<HTMLHeadingElement>(null);
     const subRef = useRef<HTMLParagraphElement>(null);
@@ -17,7 +17,7 @@ export default function VimeoHero() {
     const glowRef = useRef<HTMLDivElement>(null);
     const imageRef = useRef<HTMLDivElement>(null);
 
-    useVimeoHeroGSAP({ heroRef, headRef, subRef, statsRef, ctaRef, badgeRef, glowRef, imageRef });
+    useVideoHeroGSAP({ heroRef, headRef, subRef, statsRef, ctaRef, badgeRef, glowRef, imageRef });
 
     return (
         <section

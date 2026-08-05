@@ -1,15 +1,15 @@
 "use client";
 
 import React from "react";
-import { getSteps } from "./gsapCardData";
-import { ProcessCard } from "./ProcessCard";
+ import { ProcessCard } from "./ProcessCard";
 import Container from "@/components/ui/Container";
 import SectionHeader from "@/components/ui/SectionHeader";
 import GSAPSlider from "@/components/ui/GSAPSlider";
 
 import { useTranslations } from "next-intl";
+import { getSteps } from "@/lib/data/ProcessCardData";
 
-export default function GSAPCardGrid() {
+export default function ProcessSection() {
   const t = useTranslations("homeProcess");
   const stepsData = getSteps(t);
   return (

@@ -1,4 +1,4 @@
-import type { NavLink } from './types';
+import type { NavLink } from '@/components/layout/Navbar/types';
 
 export const getNavLinks = (t: (key: string) => string, locale: string): NavLink[] => [
     { label: t('nav.about'), href: `/${locale}/about` },

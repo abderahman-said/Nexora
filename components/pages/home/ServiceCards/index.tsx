@@ -5,7 +5,7 @@ import { Layers, ArrowRight } from "lucide-react";
 import Link from "next/link";
 import { useLocale, useTranslations } from "next-intl";
 import GSAPSlider from "@/components/ui/GSAPSlider";
-import { getServices } from "./servicesData";
+import { getServices } from "@/lib/data/servicesData";
 import { ServiceCard } from "./ServiceCard";
 import Container from "@/components/ui/Container";
 

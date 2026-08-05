@@ -1,7 +1,7 @@
 import React from 'react';
 import { Layers } from 'lucide-react';
 import Container from '@/components/ui/Container';
-import { getCompanyStory } from '../aboutData';
+import { getCompanyStory } from '@/lib/data/aboutData';
 import AboutVisionMission from './AboutVisionMission';
 import { useTranslations } from 'next-intl';
 

@@ -1,6 +1,6 @@
 import React from "react";
 import { Target, Rocket, CheckCircle2, ShieldCheck, Cpu } from "lucide-react";
-import { getCompanyStory } from "../aboutData";
+import { getCompanyStory } from "@/lib/data/aboutData";
 import { useTranslations } from "next-intl";
 
 export default function AboutVisionMission() {

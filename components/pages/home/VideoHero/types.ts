@@ -12,7 +12,7 @@ export interface HeroContentProps {
   imageRef: RefObject<HTMLDivElement | null>;
 }
 
-export interface UseVimeoHeroGSAPProps {
+export interface UseVideoHeroGSAPProps {
   heroRef: RefObject<HTMLDivElement | null>;
   headRef: RefObject<HTMLHeadingElement | null>;
   subRef: RefObject<HTMLParagraphElement | null>;

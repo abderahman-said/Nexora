@@ -1,4 +1,5 @@
-import type { Service } from './types';
+import type { Service } from '@/components/pages/home/ServiceCards/types';
+import { useTranslations } from 'next-intl';
 
 export const SERVICE_SLUGS = [
     'business-analysis',
@@ -7,7 +8,7 @@ export const SERVICE_SLUGS = [
     'ui-ux-design',
 ] as const;
 
-export const getServices = (t: any): Service[] => [
+export const getServices = (t: ReturnType<typeof useTranslations>): Service[] => [
     {
         id: '01',
         slug: 'business-analysis',
