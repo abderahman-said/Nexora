@@ -4,7 +4,6 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { useTranslations, useLocale } from 'next-intl';
 import { FooterSocials } from "./FooterSocials";
-
 import logoLight from "@/public/assets/logo.png";
 import logoDark from "@/public/assets/logo_dark.png";
 
