@@ -83,7 +83,6 @@ export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElemen
   children?: ReactNode;
   disabled?: boolean;
   href?: string;
-  [key: string]: unknown;
 }
 
 export interface FormInputProps extends ComponentPropsWithRef<'input'> {
@@ -95,7 +94,6 @@ export interface FormInputProps extends ComponentPropsWithRef<'input'> {
     error?: string;
     containerClassName?: string;
     inputClassName?: string;
-    [key: string]: unknown;
 }
 
 export interface InteractiveCardProps {
