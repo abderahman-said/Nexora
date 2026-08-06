@@ -363,6 +363,8 @@
         "message_placeholder": "Write your message here...",
         "btn_sending": "Sending Message...",
         "btn_send": "SEND MESSAGE",
+        "search_country": "Search country or code...",
+        "no_country": "No country found",
         "validation": {
             "required": "{field} is required",
             "min_length": "{field} must be at least {length} characters",

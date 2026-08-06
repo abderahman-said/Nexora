@@ -1,5 +1,6 @@
 import React from 'react';
 import { Search, Check } from 'lucide-react';
+import { useTranslations } from 'next-intl';
 import CountryFlagIcon from './CountryFlagIcon';
 import { CountrySelectorDropdownProps } from './types';
 
@@ -11,6 +12,8 @@ export default function CountrySelectorDropdown({
     selectedCountry,
     onSelectCountry,
 }: CountrySelectorDropdownProps) {
+    const t = useTranslations('contact.form');
+
     return (
         <div
             className="
@@ -24,11 +27,11 @@ export default function CountrySelectorDropdown({
         >
             {/* Search Bar Input */}
             <div className="relative shrink-0">
-                <Search className="w-4 h-4 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none" />
+                <Search className="w-4 h-4 text-slate-400 absolute start-3 top-1/2 -translate-y-1/2 pointer-events-none" />
                 <input
                     ref={searchInputRef}
                     type="text"
-                    placeholder="Search country or code..."
+                    placeholder={t('search_country')}
                     value={searchQuery}
                     onChange={onSearchChange}
                     className="
@@ -88,7 +91,7 @@ export default function CountrySelectorDropdown({
                     })
                 ) : (
                     <div className="py-4 text-center text-xs text-slate-400">
-                        No country found
+                        {t('no_country')}
                     </div>
                 )}
             </div>

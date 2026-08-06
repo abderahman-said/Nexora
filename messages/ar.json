@@ -365,6 +365,8 @@
         "message_placeholder": "اكتب رسالتك هنا...",
         "btn_sending": "جاري إرسال الرسالة...",
         "btn_send": "إرسال الرسالة",
+        "search_country": "ابحث عن دولة أو كود...",
+        "no_country": "لا توجد دولة بهذا الاسم",
         "validation": {
             "required": "{field} مطلوب",
             "min_length": "يجب أن يتكون {field} من {length} أحرف على الأقل",
