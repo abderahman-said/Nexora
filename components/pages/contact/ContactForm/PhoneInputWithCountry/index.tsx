@@ -115,13 +115,13 @@ export default function PhoneInputWithCountry({
                 </label>
             )}
 
-            <div className="relative" dir="ltr">
+            <div className="relative" >
                 <div
                     className={`
-                        flex items-center w-full rounded-2xl
+                        flex items-center w-full rounded-2xl overflow-hidden
                         bg-slate-50 dark:bg-slate-900/80 text-slate-900 dark:text-white
                         border ${error ? 'border-red-500 focus-within:border-red-500' : 'border-slate-200 dark:border-slate-800 focus-within:border-blue-500 dark:focus-within:border-sky-400'}
-                        transition-colors relative
+                        transition-colors relative 
                     `}
                 >
                     <CountryCodeButton
