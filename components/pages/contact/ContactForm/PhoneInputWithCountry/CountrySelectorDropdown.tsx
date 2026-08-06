@@ -17,7 +17,7 @@ export default function CountrySelectorDropdown({
     return (
         <div
             className="
-                absolute top-full left-0 mt-2 w-72 sm:w-80 max-h-80 z-50
+                absolute top-full start-0 mt-2 w-full max-h-80 z-50
                 bg-white dark:bg-[#0d1222]
                 border border-slate-200/90 dark:border-slate-800
                 rounded-2xl shadow-2xl shadow-slate-950/20 dark:shadow-black/60
