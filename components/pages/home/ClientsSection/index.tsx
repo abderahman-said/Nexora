@@ -24,7 +24,7 @@ export default function ClientsSection() {
                     relative rounded-3xl sm:rounded-[2.5rem] 
                     bg-slate-900 dark:bg-slate-950
                     border border-slate-200/80 dark:border-slate-800/90 shadow-2xl
-                    p-6 sm:p-12 lg:p-16 !pb-42 !md:pb-62
+                    p-6 sm:p-12 lg:p-16 !pb-40 !md:pb-62
                     overflow-hidden text-start md:text-center
                 "
         >
@@ -38,13 +38,13 @@ export default function ClientsSection() {
           <div className="relative z-10 max-w-3xl mx-auto space-y-4">
             <div className="me-auto md:mx-auto inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-blue-50 dark:bg-blue-950/80 border border-blue-200/80 dark:border-blue-800/80 text-blue-600 dark:text-blue-400 font-bold text-xs tracking-wider uppercase shadow-sm">
               <MessageSquareQuote className="w-3.5 h-3.5" />
-              <span>{t('badge')}</span>
+              <span>{t("badge")}</span>
             </div>
 
-            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-slate-900 dark:text-white tracking-tight leading-[1.15] ">
-             {t('title_main')}{" "}
+            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-slate-900 dark:text-white tracking-tight leading-[1.6]! ">
+              {t("title_main")}{" "}
               <span className="block mt-1 bg-gradient-to-r from-blue-600 via-sky-500 to-indigo-500 dark:from-blue-400 dark:via-sky-300 dark:to-indigo-400 bg-clip-text text-transparent">
-               {t('title_highlight')}
+                {t("title_highlight")}
               </span>
             </h2>
           </div>

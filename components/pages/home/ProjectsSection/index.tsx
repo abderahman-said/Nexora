@@ -1,7 +1,7 @@
 "use client";
 
 import { useRef } from "react";
-import Link from "next/link";
+import Link from 'next/link';
 import { ArrowRight } from "lucide-react";
 import { useLocale, useTranslations } from "next-intl";
 import ProjectCard from "./ProjectCard";

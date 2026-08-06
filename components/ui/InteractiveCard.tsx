@@ -2,7 +2,7 @@
 
 import React from "react";
 import { CheckCircle2 } from "lucide-react";
-import Link from "next/link";
+import Link from 'next/link';
 import { useLocale } from "next-intl";
 import type { InteractiveCardProps } from "./types";
 

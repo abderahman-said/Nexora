@@ -1,7 +1,7 @@
 "use client";
 
 import { useRef, useEffect, useCallback, MouseEvent } from "react";
-import Link from "next/link";
+import Link from 'next/link';
 import gsap from "gsap";
 import OptimizedImage from "@/components/ui/OptimizedImage";
 import type { ProjectCardProps } from "./types";

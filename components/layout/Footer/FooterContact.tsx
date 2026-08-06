@@ -1,7 +1,7 @@
 "use client";
 import React from "react";
 import { MapPin, Phone, Mail, Clock } from "lucide-react";
-import Link from "next/link";
+import Link from 'next/link';
 import { useTranslations } from "next-intl";
 import { useSiteData } from "@/hooks/useSiteData";
 

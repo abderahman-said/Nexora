@@ -15,7 +15,7 @@ export const INITIAL_FORM_DATA: FormData = {
 export const VALIDATION_RULES: Record<keyof FormData, ValidationRule> = {
     name: { required: true, minLength: 3, label: 'Name' },
     email: { required: true, pattern: /^[^\s@]+@[^\s@]+\.[^\s@]+$/, label: 'Email Address' },
-    phone: { required: false, minDigits: 6, label: 'Phone number' },
+    phone: { required: true, minDigits: 6, label: 'Phone number' },
     subject: { required: true, minLength: 3, label: 'Subject' },
     message: { required: true, minLength: 10, label: 'Message' },
 };

@@ -1,5 +1,5 @@
 import React from "react";
-import Link from "next/link";
+import Link from 'next/link';
 import { ChevronRight } from "lucide-react";
 import { useLocale, useTranslations } from 'next-intl';
 

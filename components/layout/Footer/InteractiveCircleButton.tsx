@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useRef, useEffect, MouseEvent } from "react";
-import Link from "next/link";
+import Link from 'next/link';
 import { gsap } from "gsap";
 import { ArrowUpRight } from "lucide-react";
 import type { InteractiveCircleButtonProps } from './types';

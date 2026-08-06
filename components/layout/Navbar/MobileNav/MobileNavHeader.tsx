@@ -1,7 +1,7 @@
-import React from 'react';
+import React from "react";
 import Link from 'next/link';
-import Image from 'next/image';
-import { useLocale } from 'next-intl';
+import Image from "next/image";
+import { useLocale } from "next-intl";
 import LanguageToggle from "@/components/ui/LanguageToggle";
 import ThemeToggle from "@/components/ui/ThemeToggle";
 
@@ -13,7 +13,10 @@ interface MobileNavHeaderProps {
   closeMenu: () => void;
 }
 
-export function MobileNavHeader({ drawerHeaderRef, closeMenu }: MobileNavHeaderProps) {
+export function MobileNavHeader({
+  drawerHeaderRef,
+  closeMenu,
+}: MobileNavHeaderProps) {
   const locale = useLocale();
   return (
     <div

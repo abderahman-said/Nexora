@@ -1,5 +1,5 @@
 import React from "react";
-import Link from "next/link";
+import Link from 'next/link';
 import Image from "next/image";
 import { useLocale } from "next-intl";
 import { NavbarAnimatedShell } from "./NavbarAnimatedShell";

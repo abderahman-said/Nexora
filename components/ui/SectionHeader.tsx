@@ -100,7 +100,7 @@ export default function SectionHeader({
   const titleSizeClasses =
     size === "hero"
       ? "text-[clamp(2.25rem,5.5vw,4.8rem)] max-w-[1100px] leading-[1.08]"
-      : "text-[clamp(2.1rem,4.5vw,3.8rem)] leading-[1.15]";
+      : "text-[clamp(2.1rem,4.5vw,3.8rem)] leading-[1.6]!";
 
   if (align === "center") {
     return (

@@ -1,10 +1,10 @@
 import React from "react";
-import Link from "next/link";
+import Link from 'next/link';
 import Image from "next/image";
 import { ChevronsRight } from "lucide-react";
 import Container from "@/components/ui/Container";
 import type { SharedHeroProps } from "./types";
-import { useTranslations } from "next-intl";
+import { useTranslations, useLocale } from "next-intl";
 
 export default function SharedHero({
   id,
@@ -14,6 +14,7 @@ export default function SharedHero({
   backgroundImage = "/assets/about_banner.webp",
 }: SharedHeroProps) {
   const t = useTranslations('nav');
+  const locale = useLocale();
 
   return (
     <section
@@ -52,7 +53,7 @@ export default function SharedHero({
             <ol className="inline-flex items-center gap-2 text-sm sm:text-base font-semibold text-slate-600 dark:text-slate-300">
               <li>
                 <Link
-                  href="/"
+                  href={`/${locale}`}
                   className="hover:text-blue-600 dark:hover:text-sky-400 transition-colors"
                 >
                   {t('home')}

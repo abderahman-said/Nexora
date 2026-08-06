@@ -74,6 +74,7 @@ export default function ContactInquiryForm() {
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-5">
                         <PhoneInputWithCountry
                             label={t('phone_label')}
+                            required
                             value={formData.phone}
                             error={errors.phone}
                             onChange={handlePhoneChange}
