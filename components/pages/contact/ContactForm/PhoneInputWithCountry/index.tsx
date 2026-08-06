@@ -4,6 +4,7 @@ import React, { useState, useRef, useEffect, useMemo, ChangeEvent } from 'react'
 import { COUNTRIES } from '@/lib/COUNTRIES';
 import { CountryOption } from '@/types/country';
 import type { PhoneInputWithCountryProps } from '../types';
+import { useLocale } from 'next-intl';
 
 import CountrySelectorDropdown from './CountrySelectorDropdown';
 import CountryCodeButton from './CountryCodeButton';
@@ -23,6 +24,7 @@ export default function PhoneInputWithCountry({
     const [selectedCountry, setSelectedCountry] = useState<CountryOption>(EGYPT_COUNTRY);
     const [isOpen, setIsOpen] = useState(false);
     const [searchQuery, setSearchQuery] = useState('');
+    const locale = useLocale();
     const dropdownRef = useRef<HTMLDivElement>(null);
     const inputRef = useRef<HTMLInputElement>(null);
     const searchInputRef = useRef<HTMLInputElement>(null);
@@ -60,12 +62,25 @@ export default function PhoneInputWithCountry({
         };
     }, [isOpen]);
 
+    // Translate countries based on locale
+    const translatedCountries = useMemo(() => {
+        try {
+            const regionNames = new Intl.DisplayNames([locale], { type: 'region' });
+            return COUNTRIES.map(country => ({
+                ...country,
+                name: regionNames.of(country.iso.toUpperCase()) || country.name
+            }));
+        } catch (e) {
+            return COUNTRIES;
+        }
+    }, [locale]);
+
     // Filter countries list by search term
     const filteredCountries = useMemo(() => {
-        if (!searchQuery.trim()) return COUNTRIES;
+        if (!searchQuery.trim()) return translatedCountries;
         const q = searchQuery.toLowerCase().trim();
-        return COUNTRIES.filter((c) => c.name.toLowerCase().includes(q) || c.code.includes(q));
-    }, [searchQuery]);
+        return translatedCountries.filter((c) => c.name.toLowerCase().includes(q) || c.code.includes(q));
+    }, [searchQuery, translatedCountries]);
 
     const handleSelectCountry = (country: CountryOption) => {
         setSelectedCountry(country);

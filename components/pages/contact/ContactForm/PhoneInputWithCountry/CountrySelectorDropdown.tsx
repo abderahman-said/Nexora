@@ -54,7 +54,7 @@ export default function CountrySelectorDropdown({
             >
                 {filteredCountries.length > 0 ? (
                     filteredCountries.map((country, idx) => {
-                        const isSelected = country.code === selectedCountry.code && country.name === selectedCountry.name;
+                        const isSelected = country.iso === selectedCountry.iso;
                         return (
                             <button
                                 key={`${country.name}-${country.code}-${idx}`}
