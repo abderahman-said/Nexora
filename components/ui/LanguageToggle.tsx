@@ -74,7 +74,9 @@ export default function LanguageToggle({ className = '' }: LanguageToggleProps) 
         }
 
         const remove = () => {
-            overlay.remove();
+            if (document.body.contains(overlay)) {
+                overlay.remove();
+            }
             isSwitchingRef.current = false;
         };
 
@@ -95,6 +97,17 @@ export default function LanguageToggle({ className = '' }: LanguageToggleProps) 
             clearTimeout(fallback);
         };
     }, [locale]);
+
+    // Failsafe: if the component unmounts for any reason, clean up the DOM!
+    React.useEffect(() => {
+        return () => {
+            const overlay = document.getElementById(OVERLAY_ID);
+            if (overlay && document.body.contains(overlay)) {
+                overlay.remove();
+            }
+            isSwitchingRef.current = false;
+        };
+    }, []);
 
     const toggleLanguage = () => {
         if (isSwitchingRef.current || document.getElementById(OVERLAY_ID)) return;
@@ -128,6 +141,17 @@ export default function LanguageToggle({ className = '' }: LanguageToggleProps) 
             requestAnimationFrame(() => {
                 overlay.style.opacity = '1';
             });
+            
+            // Failsafe: max duration of 5 seconds, after which it forcefully removes the overlay
+            // in case navigation got completely stuck or failed on a slow mobile connection.
+            setTimeout(() => {
+                const el = document.getElementById(OVERLAY_ID);
+                if (el && document.body.contains(el)) {
+                    el.style.opacity = '0';
+                    setTimeout(() => el.remove(), FADE_MS);
+                    isSwitchingRef.current = false;
+                }
+            }, 5000);
         }, SHOW_DELAY_MS);
 
         // Kick off navigation immediately.

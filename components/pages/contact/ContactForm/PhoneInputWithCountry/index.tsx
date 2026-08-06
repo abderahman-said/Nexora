@@ -115,7 +115,7 @@ export default function PhoneInputWithCountry({
                 </label>
             )}
 
-            <div className="relative">
+            <div className="relative" dir="ltr">
                 <div
                     className={`
                         flex items-center w-full rounded-2xl
