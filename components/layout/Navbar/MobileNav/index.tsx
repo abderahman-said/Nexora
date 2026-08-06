@@ -114,15 +114,6 @@ export function MobileNav() {
             willChange: "auto",
           });
         },
-        onReverseStart: () => {
-          tl.timeScale(3); // Close 3× faster → instant snap on mobile
-          // Remove blur before animation starts — GPU free for slide
-          drawerRef.current?.classList.remove("drawer-blur-active");
-          glowRef.current?.classList.add("opacity-0");
-          gsap.set([backdropRef.current, drawerRef.current], {
-            willChange: "transform, opacity",
-          });
-        },
         onReverseComplete: () => {
           gsap.set([backdropRef.current, drawerRef.current], {
             display: "none",
@@ -234,9 +225,16 @@ export function MobileNav() {
 
     if (isOpen) {
       lockBodyScroll();
-      tl.play();
+      tl.timeScale(1).play();
     } else {
-      tl.reverse();
+      // Prep GPU & remove expensive effects BEFORE reversing
+      drawerRef.current?.classList.remove("drawer-blur-active");
+      glowRef.current?.classList.add("opacity-0");
+      gsap.set([backdropRef.current, drawerRef.current], {
+        willChange: "transform, opacity",
+      });
+      // 3× faster on close → instant snap on mobile
+      tl.timeScale(3).reverse();
     }
   }, [isOpen]);
 
