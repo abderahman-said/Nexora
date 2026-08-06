@@ -115,7 +115,7 @@ export function MobileNav() {
           });
         },
         onReverseStart: () => {
-          tl.timeScale(1.8); // Close 1.8× faster → snappy
+          tl.timeScale(3); // Close 3× faster → instant snap on mobile
           // Remove blur before animation starts — GPU free for slide
           drawerRef.current?.classList.remove("drawer-blur-active");
           glowRef.current?.classList.add("opacity-0");
@@ -174,12 +174,12 @@ export function MobileNav() {
         );
       }
 
-      // Nav links stagger up
+      // Nav links stagger up (open) — no stagger on reverse so close feels instant
       if (linksContainerRef.current) {
         tl.fromTo(
           Array.from(linksContainerRef.current.children),
           { opacity: 0, y: 18 },
-          { opacity: 1, y: 0, duration: 0.35, stagger: 0.05 },
+          { opacity: 1, y: 0, duration: 0.3, stagger: { each: 0.05, from: "start" } },
           0.24,
         );
       }
@@ -191,8 +191,8 @@ export function MobileNav() {
           { scaleX: 0 },
           {
             scaleX: 1,
-            duration: 0.3,
-            stagger: 0.05,
+            duration: 0.25,
+            stagger: 0.04,
             transformOrigin: "0% 50%",
           },
           0.3,
@@ -204,8 +204,8 @@ export function MobileNav() {
         tl.fromTo(
           footerCtaRef.current,
           { opacity: 0, y: 14 },
-          { opacity: 1, y: 0, duration: 0.3 },
-          0.36,
+          { opacity: 1, y: 0, duration: 0.28 },
+          0.34,
         );
       }
 
@@ -214,8 +214,8 @@ export function MobileNav() {
         tl.fromTo(
           Array.from(footerInfoRef.current.children),
           { opacity: 0, y: 12 },
-          { opacity: 1, y: 0, duration: 0.28, stagger: 0.04 },
-          0.4,
+          { opacity: 1, y: 0, duration: 0.24, stagger: 0.03 },
+          0.38,
         );
       }
 
