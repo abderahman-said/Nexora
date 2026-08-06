@@ -25,7 +25,7 @@ export function FooterBottomBar() {
                 </Link>
             </div>
           
-            <p className="text-[11px] text-slate-400 dark:text-slate-500 font-mono">{t('footer.tagline')}</p>
+            <p className="text-[11px] text-slate-400 dark:text-slate-500">{t('footer.tagline')}</p>
         </div>
     );
 }
