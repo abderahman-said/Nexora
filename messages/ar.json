@@ -6,26 +6,7 @@
     "cancel": "إلغاء",
     "close": "إغلاق"
   },
-  "nav": {
-    "home": "الرئيسية",
-    "about": "من نحن",
-    "services": "خدماتنا",
-    "ourWork": "أعمالنا",
-    "process": "عملية العمل",
-    "contact": "تواصل معنا"
-  },
-  "footer": {
-    "navigation": "التنقل",
-    "aboutUs": "من نحن",
-    "ourServices": "خدماتنا",
-    "getInTouch": "تواصل معنا",
-    "contactUs": "تواصل معنا",
-    "brandDescription": "نكسورا سوليوشنز هي وكالة تقنية رائدة متخصصة في تطوير برمجيات المؤسسات، وهياكل SaaS، والحلول السحابية حول العالم.",
-    "enterpriseCertified": "شريك تقني معتمد للمؤسسات",
-    "rights": "جميع الحقوق محفوظة",
-    "tagline": "برمج. ابتكر. ارتقِ.",
-    "responseTime": "وقت الاستجابة"
-  },
+
   "privacy": {
     "hero": {
       "prefix": "سياسة",
@@ -258,6 +239,7 @@
     "about": "من نحن",
     "services": "الخدمات",
     "ourWork": "أعمالنا",
+    "process": "عملية العمل",
     "contact": "اتصل بنا"
   },
   "footer": {
