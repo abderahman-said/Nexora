@@ -4,6 +4,7 @@ import Image from "next/image";
 import { ChevronsRight } from "lucide-react";
 import Container from "@/components/ui/Container";
 import type { SharedHeroProps } from "./types";
+import { useTranslations } from "next-intl";
 
 export default function SharedHero({
   id,
@@ -12,6 +13,8 @@ export default function SharedHero({
   breadcrumbLabel,
   backgroundImage = "/assets/about_banner.webp",
 }: SharedHeroProps) {
+  const t = useTranslations('nav');
+
   return (
     <section
       id={id}
@@ -52,7 +55,7 @@ export default function SharedHero({
                   href="/"
                   className="hover:text-blue-600 dark:hover:text-sky-400 transition-colors"
                 >
-                  Home
+                  {t('home')}
                 </Link>
               </li>
               <li className="flex items-center text-blue-600 dark:text-sky-400">

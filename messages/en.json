@@ -7,6 +7,7 @@
     "close": "Close"
   },
   "nav": {
+    "home": "Home",
     "about": "About",
     "services": "Services",
     "ourWork": "Our Work",
