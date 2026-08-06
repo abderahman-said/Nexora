@@ -42,8 +42,9 @@ export default function CountrySelectorDropdown({
 
             {/* Scrollable Country List Container */}
             <div
+                data-lenis-prevent="true"
                 className="
-                    overflow-y-auto max-h-60 min-h-0 space-y-1 pr-1
+                    overscroll-contain overflow-y-auto max-h-60 min-h-0 space-y-1 pr-1
                     scrollbar-thin scrollbar-thumb-slate-300 dark:scrollbar-thumb-slate-700
                 "
                 style={{
