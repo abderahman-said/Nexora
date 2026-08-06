@@ -21,22 +21,22 @@
   --color-glass-bg: rgba(255, 255, 255, 0.75);
 
   /* Fonts — --font-sans is the active font, overridden per locale below */
-  --font-sans: var(--next-font-epilogue), sans-serif;
-  --font-epilogue: "Epilogue", sans-serif;
+  --font-sans: var(--next-font-inter), sans-serif;
+  --font-inter: "Inter", sans-serif;
   --font-dmsans: "DM Sans", sans-serif;
 }
 
 /* Locale Font Overrides */
 html[lang="ar"],
 html[lang="ar"] body {
-  --font-sans: var(--next-font-noto-kufi), "Noto Kufi Arabic", sans-serif !important;
-  font-family: var(--next-font-noto-kufi), "Noto Kufi Arabic", sans-serif !important;
+  --font-sans: var(--next-font-cairo), "Cairo", sans-serif !important;
+  font-family: var(--next-font-cairo), "Cairo", sans-serif !important;
 }
 
 html[lang="en"],
 html[lang="en"] body {
-  --font-sans: var(--next-font-epilogue), "Epilogue", sans-serif !important;
-  font-family: var(--next-font-epilogue), "Epilogue", sans-serif !important;
+  --font-sans: var(--next-font-inter), "Inter", sans-serif !important;
+  font-family: var(--next-font-inter), "Inter", sans-serif !important;
 }
 
 :root {

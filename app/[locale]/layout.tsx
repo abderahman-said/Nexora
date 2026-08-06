@@ -1,4 +1,4 @@
-import { Epilogue, Noto_Kufi_Arabic } from 'next/font/google';
+import { Inter, Cairo } from 'next/font/google';
 import '../globals.css';
 import { ThemeProvider } from '@/context/ThemeContext';
 import SvgSymbols from '@/components/icons/SvgSymbols';
@@ -11,16 +11,16 @@ import { getMessages } from 'next-intl/server';
 import type { Metadata, Viewport } from 'next';
 import React from 'react';
 
-const epilogue = Epilogue({
+const inter = Inter({
   subsets: ['latin'],
-  variable: '--next-font-epilogue',
+  variable: '--next-font-inter',
   display: 'swap',
   preload: true,
 });
 
-const notoKufiArabic = Noto_Kufi_Arabic({
+const cairo = Cairo({
   subsets: ['arabic'],
-  variable: '--next-font-noto-kufi',
+  variable: '--next-font-cairo',
   display: 'swap',
   preload: true,
 });
@@ -204,7 +204,7 @@ export default async function LocaleLayout({
           }}
         />
       </head>
-      <body className={`${epilogue.variable} ${notoKufiArabic.variable} font-sans bg-[#f8fafc] site-grid-bg text-slate-900 dark:bg-[#090d16] dark:text-slate-100 antialiased overflow-x-hidden transition-colors duration-300`} suppressHydrationWarning>
+      <body className={`${inter.variable} ${cairo.variable} font-sans bg-[#f8fafc] site-grid-bg text-slate-900 dark:bg-[#090d16] dark:text-slate-100 antialiased overflow-x-hidden transition-colors duration-300`} suppressHydrationWarning>
         <ThemeProvider>
           <NextIntlClientProvider messages={messages}>
             <SvgSymbols />

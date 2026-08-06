@@ -30,7 +30,7 @@ export function FooterSidePanel({ sidePanelRef }: FooterSidePanelProps) {
                     {t('contactBtn')}
                 </InteractiveCircleButton>
             </div>
-            <p className="font-mono font-semibold text-slate-800 dark:text-slate-200 text-sm tracking-wider flex items-center justify-center gap-2">
+            <p className="font-semibold text-slate-800 dark:text-slate-200 text-sm tracking-wider flex items-center justify-center gap-2">
                 <span className="inline-block h-2 w-2 rounded-full bg-emerald-500 dark:bg-emerald-400 animate-pulse" />
                 <span>{contact.workingHours}</span>
             </p>

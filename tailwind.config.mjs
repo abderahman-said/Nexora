@@ -22,8 +22,8 @@ export default {
         'brand-black-deep': '#0d1b2a',
       },
       fontFamily: {
-        epilogue: ['var(--next-font-epilogue)', 'sans-serif'],
-        notokufi: ['var(--next-font-noto-kufi)', 'sans-serif'],
+        inter: ['var(--next-font-inter)', 'sans-serif'],
+        cairo: ['var(--next-font-cairo)', 'sans-serif'],
         dmsans: ['DM Sans', 'sans-serif'],
       },
       keyframes: {

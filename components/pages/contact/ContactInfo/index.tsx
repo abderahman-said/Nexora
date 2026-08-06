@@ -37,7 +37,7 @@ export default function ContactInfo() {
                                         <span className="text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider block mb-1">
                                             {item.title}
                                         </span>
-                                        <h3 className="text-lg font-extrabold text-slate-900 dark:text-white tracking-tight">
+                                        <h3 className="text-lg font-extrabold text-slate-900 dark:text-white tracking-tight" dir={item.id === 2 ? "ltr" : undefined}>
                                             {item.value}
                                         </h3>
                                         <p className="text-xs text-slate-600 dark:text-slate-400 mt-1">

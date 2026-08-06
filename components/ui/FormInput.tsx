@@ -38,7 +38,7 @@ const FormInput = forwardRef<
 
       <div className="relative">
         {Icon && !isTextarea && (
-          <Icon className="w-4 h-4 text-slate-400 absolute left-4 top-1/2 -translate-y-1/2 pointer-events-none z-10" />
+          <Icon className="w-4 h-4 text-slate-400 absolute start-4 top-1/2 -translate-y-1/2 pointer-events-none z-10" />
         )}
 
         <InputComponent
