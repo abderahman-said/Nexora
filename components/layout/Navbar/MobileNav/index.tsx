@@ -99,26 +99,32 @@ export function MobileNav() {
         reversed: true,
         defaults: { ease: "power2.inOut", force3D: true },
         onStart: () => {
-          gsap.set([backdropRef.current, drawerRef.current], {
-            display: "block",
-            willChange: "transform, opacity",
-          });
-          gsap.set(drawerRef.current, { display: "flex" });
-          tl.timeScale(1); // Normal speed on open
+          // Direct style — no GSAP conflict with timeline elements
+          if (backdropRef.current) {
+            backdropRef.current.style.display = "block";
+            backdropRef.current.style.willChange = "transform, opacity";
+          }
+          if (drawerRef.current) {
+            drawerRef.current.style.display = "flex";
+            drawerRef.current.style.willChange = "transform, opacity";
+          }
         },
         onComplete: () => {
-          // Add blur AFTER animation ends — zero React re-render
+          // Add blur AFTER open animation ends — zero React re-render
           drawerRef.current?.classList.add("drawer-blur-active");
           glowRef.current?.classList.remove("opacity-0");
-          gsap.set([backdropRef.current, drawerRef.current], {
-            willChange: "auto",
-          });
+          if (backdropRef.current) backdropRef.current.style.willChange = "auto";
+          if (drawerRef.current) drawerRef.current.style.willChange = "auto";
         },
         onReverseComplete: () => {
-          gsap.set([backdropRef.current, drawerRef.current], {
-            display: "none",
-            willChange: "auto",
-          });
+          if (backdropRef.current) {
+            backdropRef.current.style.display = "none";
+            backdropRef.current.style.willChange = "auto";
+          }
+          if (drawerRef.current) {
+            drawerRef.current.style.display = "none";
+            drawerRef.current.style.willChange = "auto";
+          }
           unlockBodyScroll();
         },
       });
@@ -227,13 +233,13 @@ export function MobileNav() {
       lockBodyScroll();
       tl.timeScale(1).play();
     } else {
-      // Prep GPU & remove expensive effects BEFORE reversing
+      // Remove blur class before reverse — frees GPU from backdrop-filter cost
       drawerRef.current?.classList.remove("drawer-blur-active");
       glowRef.current?.classList.add("opacity-0");
-      gsap.set([backdropRef.current, drawerRef.current], {
-        willChange: "transform, opacity",
-      });
-      // 3× faster on close → instant snap on mobile
+      // Direct style (NOT gsap.set) to avoid competing with timeline internals
+      if (backdropRef.current) backdropRef.current.style.willChange = "transform, opacity";
+      if (drawerRef.current) drawerRef.current.style.willChange = "transform, opacity";
+      // 3× faster → instant close on mobile
       tl.timeScale(3).reverse();
     }
   }, [isOpen]);
