@@ -33,9 +33,11 @@ html[lang="ar"] body {
   font-family: var(--next-font-cairo), "Cairo", sans-serif !important;
 }
 
-/* Fix Arabic disconnected letters caused by tracking/letter-spacing */
-html[lang="ar"] * {
-  letter-spacing: normal !important;
+/* Fix Arabic disconnected letters specifically overriding Tailwind tracking utilities */
+@layer utilities {
+  html[lang="ar"] :is(.tracking-tighter, .tracking-tight, .tracking-normal, .tracking-wide, .tracking-wider, .tracking-widest) {
+    letter-spacing: normal !important;
+  }
 }
 
 html[lang="en"],
