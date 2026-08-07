@@ -70,7 +70,7 @@ export default function PhoneInputWithCountry({
                 ...country,
                 name: regionNames.of(country.iso.toUpperCase()) || country.name
             }));
-        } catch (e) {
+        } catch {
             return COUNTRIES;
         }
     }, [locale]);

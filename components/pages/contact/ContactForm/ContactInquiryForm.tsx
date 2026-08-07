@@ -108,14 +108,12 @@ export default function ContactInquiryForm() {
                         <Button
                             type="submit"
                             disabled={isSubmitting}
-                            variant="gradient"
-                            size="lg"
                             className="
-                                w-full py-3.5 sm:py-4 px-8 rounded-full
-                                font-extrabold text-xs sm:text-sm tracking-wider uppercase
-                                shadow-xl shadow-blue-500/25 hover:shadow-2xl hover:shadow-blue-500/40
-                                hover:-translate-y-0.5 active:scale-95 transition-all duration-300
-                                flex items-center justify-center gap-3
+                                w-full flex items-center gap-2 px-6 py-4 rounded-full
+                                bg-gradient-to-r from-blue-600 to-sky-600 text-white
+                                font-bold text-base tracking-wider 
+                                shadow-md shadow-blue-500/20 hover:shadow-lg hover:shadow-blue-500/35
+                                hover:-translate-y-0.5 transition-all duration-300 group
                             "
                         >
                             {isSubmitting ? (
