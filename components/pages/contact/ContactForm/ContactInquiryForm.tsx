@@ -109,7 +109,7 @@ export default function ContactInquiryForm() {
                             type="submit"
                             disabled={isSubmitting}
                             className="
-                                w-full flex items-center gap-2 px-6 py-4 rounded-full
+                                w-full flex items-center  justify-center gap-2 px-6 py-4 rounded-full
                                 bg-gradient-to-r from-blue-600 to-sky-600 text-white
                                 font-bold text-base tracking-wider 
                                 shadow-md shadow-blue-500/20 hover:shadow-lg hover:shadow-blue-500/35
