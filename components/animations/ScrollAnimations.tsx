@@ -156,23 +156,34 @@ function animateSections(reduceMotion: boolean) {
       !reduceMotion &&
       !isMobile
     ) {
-      gsap.fromTo(
-        sec,
-        { opacity: 0, y: 15 },
-        {
-          opacity: 1,
-          y: 0,
-          duration: 0.8,
-          ease: "power3.out",
-          clearProps: "opacity,transform",
-          scrollTrigger: {
-            trigger: sec,
-            start: "top 92%",
-            toggleActions: "play none none none",
-            once: true,
-          },
-        },
-      );
+      const secVisible = sec.getBoundingClientRect().top < window.innerHeight;
+      if (secVisible) {
+        // Already visible — animate from current state (don't set opacity:0 first)
+        gsap.fromTo(
+          sec,
+          { y: 15 },
+          { y: 0, duration: 0.8, ease: "power3.out", clearProps: "transform" }
+        );
+      } else {
+        // Off-screen — hide and reveal on scroll
+        gsap.set(sec, { opacity: 0, y: 15 });
+        gsap.to(
+          sec,
+          {
+            opacity: 1,
+            y: 0,
+            duration: 0.8,
+            ease: "power3.out",
+            clearProps: "opacity,transform",
+            scrollTrigger: {
+              trigger: sec,
+              start: "top 92%",
+              toggleActions: "play none none none",
+              once: true,
+            },
+          }
+        );
+      }
     }
 
     if (left) {
@@ -286,26 +297,23 @@ function animateSections(reduceMotion: boolean) {
     headings.forEach((h) => {
       if (!h) return;
       
-      // We skip getBoundingClientRect on mobile to avoid layout thrashing (Forced Reflow)
-      let alreadyVisible = false;
-      if (!isMobile) {
-         const rect = h.getBoundingClientRect();
-         alreadyVisible = rect.top < window.innerHeight * 0.9;
-      }
+      const alreadyVisible = h.getBoundingClientRect().top < window.innerHeight;
 
       if (alreadyVisible) {
-        // Animate immediately without ScrollTrigger
+        // Already in viewport — animate from current position only, do NOT set opacity:0
         gsap.fromTo(
           h,
-          { opacity: 0, y: reduceMotion ? 0 : 40 },
-          { opacity: 1, y: 0, duration: 0.9, ease: "power3.out", clearProps: "opacity,transform" }
+          { y: reduceMotion ? 0 : 20 },
+          { y: 0, duration: 0.9, ease: "power3.out", clearProps: "transform,translate,rotate,scale" }
         );
         return;
       }
 
-      gsap.from(h, {
-        opacity: 0,
-        y: reduceMotion ? 0 : 40,
+      // Off-screen — set hidden first then reveal on scroll
+      gsap.set(h, { opacity: 0, y: reduceMotion ? 0 : 40 });
+      gsap.to(h, {
+        opacity: 1,
+        y: 0,
         duration: 0.9,
         ease: "power3.out",
         clearProps: "opacity,transform,translate,rotate,scale",
@@ -323,49 +331,83 @@ function animateSections(reduceMotion: boolean) {
       (p) => !p.closest(".bento-card, .process-step, .hw-feature, .about-feature, .animate-as-card")
     );
     if (paras.length > 0 && !isMobile) {
-      gsap.from(paras, {
-        opacity: 0,
-        y: reduceMotion ? 0 : 24,
-        duration: 0.7,
-        stagger: 0.08,
-        ease: "power2.out",
-        clearProps: "opacity,transform,translate,rotate,scale",
-        scrollTrigger: {
-          trigger: sec,
-          start: "top 85%",
-          toggleActions: "play none none none",
-          once: true,
-        },
-      });
+      const visibleParas = paras.filter(p => p.getBoundingClientRect().top < window.innerHeight);
+      const hiddenParas = paras.filter(p => p.getBoundingClientRect().top >= window.innerHeight);
+
+      if (visibleParas.length > 0) {
+        // Already visible — animate from current state, no opacity:0 flash
+        gsap.fromTo(visibleParas,
+          { y: reduceMotion ? 0 : 16 },
+          { y: 0, duration: 0.7, stagger: 0.08, ease: "power2.out", clearProps: "transform,translate,rotate,scale" }
+        );
+      }
+      
+      if (hiddenParas.length > 0) {
+        // Off-screen — hide first, then reveal on scroll
+        gsap.set(hiddenParas, { opacity: 0, y: reduceMotion ? 0 : 24 });
+        gsap.to(hiddenParas, {
+          opacity: 1, y: 0, duration: 0.7, stagger: 0.08, ease: "power2.out",
+          clearProps: "opacity,transform,translate,rotate,scale",
+          scrollTrigger: {
+            trigger: hiddenParas[0],
+            start: "top 85%",
+            toggleActions: "play none none none",
+            once: true,
+          }
+        });
+      }
     }
   });
 
   const cards = gsap.utils
     .toArray(".bento-card:not(.gsap-card-init), .process-step:not(.gsap-card-init), .hw-feature:not(.gsap-card-init), .about-feature:not(.gsap-card-init), .animate-as-card:not(.gsap-card-init)")
     .filter(Boolean);
+  
   if (cards.length > 0) {
-    cards.forEach(c => (c as Element).classList.add("gsap-card-init"));
-    ScrollTrigger.batch(cards as Element[], {
-      start: isMobile ? "top 95%" : "top 88%",
-      once: true,
-      onEnter(batch) {
-        if (!batch || !batch.length) return;
-        gsap.fromTo(
-          batch,
-          { opacity: 0, y: reduceMotion ? 0 : (isMobile ? 30 : 60), scale: reduceMotion ? 1 : 0.95 },
-          {
-            opacity: 1,
-            y: 0,
-            scale: 1,
-            duration: 0.8,
-            ease: "power3.out",
-            stagger: isMobile ? 0 : 0.1,
-            overwrite: true,
-            clearProps: "opacity,transform,translate,rotate,scale",
-          }
-        );
-      },
+    const visibleCards: Element[] = [];
+    const hiddenCards: Element[] = [];
+
+    cards.forEach(c => {
+      const el = c as Element;
+      el.classList.add("gsap-card-init");
+      if (el.getBoundingClientRect().top < window.innerHeight) {
+        visibleCards.push(el);
+      } else {
+        // Only hide off-screen cards
+        gsap.set(el, { opacity: 0, y: isMobile ? 30 : 60, scale: 0.95 });
+        hiddenCards.push(el);
+      }
     });
+
+    if (visibleCards.length > 0) {
+      // Already visible — animate from current (natural) state only
+      gsap.fromTo(
+        visibleCards,
+        { y: reduceMotion ? 0 : (isMobile ? 15 : 20), scale: reduceMotion ? 1 : 0.98 },
+        {
+          y: 0, scale: 1, duration: 0.8, ease: "power3.out",
+          stagger: isMobile ? 0 : 0.08, clearProps: "transform,translate,rotate,scale"
+        }
+      );
+    }
+
+    if (hiddenCards.length > 0) {
+      ScrollTrigger.batch(hiddenCards, {
+        start: isMobile ? "top 95%" : "top 88%",
+        once: true,
+        onEnter(batch) {
+          if (!batch || !batch.length) return;
+          gsap.to(
+            batch,
+            {
+              opacity: 1, y: 0, scale: 1, duration: 0.8, ease: "power3.out",
+              stagger: isMobile ? 0 : 0.1, overwrite: true,
+              clearProps: "opacity,transform,translate,rotate,scale"
+            }
+          );
+        },
+      });
+    }
   }
 }
 
