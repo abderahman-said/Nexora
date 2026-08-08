@@ -20,7 +20,6 @@ export function FooterBrand() {
           width={160}
           height={60}
           className="h-16 w-auto object-contain transition-transform duration-300 group-hover:scale-105 dark:hidden"
-          priority
         />
         <Image
           src={logoDark}
@@ -28,7 +27,6 @@ export function FooterBrand() {
           width={160}
           height={60}
           className="h-16 w-auto object-contain transition-transform duration-300 group-hover:scale-105 hidden dark:block"
-          priority
         />
       </Link>
       <p className="text-xs md:text-sm font-normal leading-relaxed text-slate-600 dark:text-slate-300  max-w-[340px] mt-5 ">

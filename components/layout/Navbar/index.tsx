@@ -20,7 +20,6 @@ export default function Navbar() {
             width={100}
             height={40}
             className="h-[40px] w-auto object-contain transition-transform duration-300 group-hover:scale-105 shrink-0 dark:hidden"
-            priority
           />
           <Image
             src={logoDark}

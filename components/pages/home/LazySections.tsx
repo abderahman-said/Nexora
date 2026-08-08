@@ -19,56 +19,42 @@ const ClientsSection = dynamic(
   () => import("@/components/pages/home/ClientsSection"),
 );
 
+function SectionSkeleton({ height = "min-h-[500px]" }: { height?: string }) {
+  return (
+    <div className={`w-full ${height} flex flex-col items-center justify-center p-8`}>
+      <div className="w-full max-w-6xl space-y-6 animate-pulse">
+        <div className="h-8 w-48 bg-slate-200 dark:bg-slate-800/60 rounded-full mx-auto" />
+        <div className="h-4 w-96 bg-slate-200/70 dark:bg-slate-800/40 rounded-full mx-auto" />
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 pt-6">
+          <div className="h-64 bg-slate-200/50 dark:bg-slate-900/60 rounded-3xl" />
+          <div className="h-64 bg-slate-200/50 dark:bg-slate-900/60 rounded-3xl" />
+          <div className="h-64 bg-slate-200/50 dark:bg-slate-900/60 rounded-3xl" />
+        </div>
+      </div>
+    </div>
+  );
+}
+
 export default function LazySections() {
   return (
     <>
-      <Suspense
-        fallback={
-          <div className="min-h-[600px] flex items-center justify-center text-slate-400">
-            Loading portfolio...
-          </div>
-        }
-      >
+      <Suspense fallback={<SectionSkeleton height="min-h-[600px]" />}>
         <ProjectsSection />
       </Suspense>
 
-      <Suspense
-        fallback={
-          <div className="min-h-[500px] flex items-center justify-center text-slate-400">
-            Loading workflow...
-          </div>
-        }
-      >
+      <Suspense fallback={<SectionSkeleton height="min-h-[500px]" />}>
         <ProcessSection />
       </Suspense>
 
-      <Suspense
-        fallback={
-          <div className="min-h-[500px] flex items-center justify-center text-slate-400">
-            Loading team...
-          </div>
-        }
-      >
+      <Suspense fallback={<SectionSkeleton height="min-h-[500px]" />}>
         <TeamSection />
       </Suspense>
 
-      <Suspense
-        fallback={
-          <div className="min-h-[400px] flex items-center justify-center text-slate-400">
-            Loading clients...
-          </div>
-        }
-      >
+      <Suspense fallback={<SectionSkeleton height="min-h-[400px]" />}>
         <ClientsSection />
       </Suspense>
 
-      <Suspense
-        fallback={
-          <div className="min-h-[400px] flex items-center justify-center text-slate-400">
-            Loading consultation...
-          </div>
-        }
-      >
+      <Suspense fallback={<SectionSkeleton height="min-h-[400px]" />}>
         <ConsultationSection />
       </Suspense>
     </>

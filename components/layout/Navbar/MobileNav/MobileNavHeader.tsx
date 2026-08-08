@@ -38,7 +38,6 @@ export function MobileNavHeader({
           width={100}
           height={30}
           className="h-10 w-auto object-contain hidden dark:block"
-          priority
         />
       </Link>
       <div className="flex items-center gap-2">

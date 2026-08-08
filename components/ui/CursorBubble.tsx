@@ -23,7 +23,9 @@ export default function CursorBubble() {
         const onPointerMove = (e: PointerEvent) => {
             xTo(e.clientX + 13);
             yTo(e.clientY - 43);
+        };
 
+        const onMouseOver = (e: MouseEvent) => {
             const target = e.target as HTMLElement | null;
             const found = target?.closest(targetSelector) as HTMLElement | null;
 
@@ -33,7 +35,17 @@ export default function CursorBubble() {
                 else cursorBubble.textContent = 'click';
                 gsap.killTweensOf(cursorBubble, 'opacity,scale,rotation');
                 gsap.to(cursorBubble, { opacity: 1, scale: 1, rotation: 0, duration: 1.7, delay: 0.1, ease: 'elastic.out(1, 0.4)' });
-            } else if (!found && isHoveringClickable) {
+            }
+        };
+
+        const onMouseOut = (e: MouseEvent) => {
+            const target = e.target as HTMLElement | null;
+            const related = e.relatedTarget as HTMLElement | null;
+            
+            // If we're moving into another valid target, don't hide
+            if (related && related.closest(targetSelector)) return;
+
+            if (isHoveringClickable) {
                 isHoveringClickable = false;
                 gsap.killTweensOf(cursorBubble, 'opacity,scale,rotation');
                 gsap.to(cursorBubble, { opacity: 1, scale: 0, rotation: -30, duration: 0.3, ease: 'sine.inOut' });
@@ -49,10 +61,14 @@ export default function CursorBubble() {
         };
 
         window.addEventListener('pointermove', onPointerMove, { passive: true });
+        document.addEventListener('mouseover', onMouseOver, { passive: true });
+        document.addEventListener('mouseout', onMouseOut, { passive: true });
         document.addEventListener('mouseleave', onMouseLeave, { passive: true });
 
         return () => {
             window.removeEventListener('pointermove', onPointerMove);
+            document.removeEventListener('mouseover', onMouseOver);
+            document.removeEventListener('mouseout', onMouseOut);
             document.removeEventListener('mouseleave', onMouseLeave);
         };
     }, []);

@@ -105,7 +105,7 @@ export default function SectionHeader({
   if (align === "center") {
     return (
       <CornerFrame
-        extraClass={`mb-6 md:mb-8 flex flex-col items-start px-8 py-6 text-start  ${className}`}
+        extraClass={`mb-6 md:mb-8 flex flex-col items-center px-8 py-6 text-center ${className}`}
       >
         {CodeTagBadge}
         {title && (

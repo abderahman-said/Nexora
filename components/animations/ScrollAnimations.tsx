@@ -307,12 +307,17 @@ function animateRing(ring: Element | null, sec: Element) {
     duration: 8,
     repeat: -1,
     ease: "none",
+    paused: true,
   });
 
   ScrollTrigger.create({
     trigger: sec,
     start: "top bottom",
     end: "bottom top",
+    onEnter: () => ringTween.play(),
+    onLeave: () => ringTween.pause(),
+    onEnterBack: () => ringTween.play(),
+    onLeaveBack: () => ringTween.pause(),
     onUpdate(self) {
       const speed = 1 + Math.abs(self.getVelocity()) / 600;
       gsap.to(ringTween, { timeScale: speed, duration: 0.3, overwrite: "auto" });
@@ -323,7 +328,18 @@ function animateRing(ring: Element | null, sec: Element) {
 function animateShape(shape: Element | null, sec: Element) {
   if (!shape) return;
 
-  gsap.to(shape, { rotation: -360, duration: 12, repeat: -1, ease: "none" });
+  const shapeTween = gsap.to(shape, { rotation: -360, duration: 12, repeat: -1, ease: "none", paused: true });
+
+  ScrollTrigger.create({
+    trigger: sec,
+    start: "top bottom",
+    end: "bottom top",
+    onEnter: () => shapeTween.play(),
+    onLeave: () => shapeTween.pause(),
+    onEnterBack: () => shapeTween.play(),
+    onLeaveBack: () => shapeTween.pause(),
+  });
+
   gsap.to(shape, {
     scale: 1.6,
     opacity: 0.6,

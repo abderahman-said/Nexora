@@ -39,15 +39,17 @@ export default function SmoothScroll() {
 
       tickerFn = (time: number) => lenis?.raf(time * 1000);
       gsap.ticker.add(tickerFn);
-      gsap.ticker.lagSmoothing(0, 0);
 
       window.__lenis = lenis;
 
-      const originalTitle = document.title;
+      let savedTitle = "";
       handleVisibility = () => {
-        document.title = document.hidden
-          ? "Hey, over here!👋 - Nexora"
-          : originalTitle;
+        if (document.hidden) {
+          savedTitle = document.title;
+          document.title = "Hey, over here!👋 - Nexora";
+        } else if (savedTitle) {
+          document.title = savedTitle;
+        }
       };
       document.addEventListener("visibilitychange", handleVisibility);
     }, 100);

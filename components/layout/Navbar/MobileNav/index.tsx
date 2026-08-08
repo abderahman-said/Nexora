@@ -279,13 +279,17 @@ export function MobileNav() {
                 shadow-2xl shadow-black/30 overflow-hidden"
             >
               <style>{`
+                .drawer-blur-inactive {
+                  backdrop-filter: blur(20px) saturate(150%);
+                  -webkit-backdrop-filter: blur(20px) saturate(150%);
+                }
                 .drawer-blur-active {
-                  background-color: rgb(255 255 255 / 0.7) !important;
-                  backdrop-filter: blur(40px) saturate(150%) !important;
-                  -webkit-backdrop-filter: blur(40px) saturate(150%) !important;
+                  background-color: rgb(255 255 255 / 0.75) !important;
+                  backdrop-filter: blur(40px) saturate(180%) !important;
+                  -webkit-backdrop-filter: blur(40px) saturate(180%) !important;
                 }
                 .dark .drawer-blur-active {
-                  background-color: rgb(9 9 15 / 0.6) !important;
+                  background-color: rgb(9 9 15 / 0.7) !important;
                 }
               `}</style>
 

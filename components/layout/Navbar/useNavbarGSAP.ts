@@ -156,7 +156,6 @@ export function useNavbarGSAP({
 
     return () => {
       ctx.revert();
-      ScrollTrigger.getAll().forEach(t => t.kill());
     };
   }, [navRef, navInnerRef, logoRef, linksRef, ctaRef]);
 }

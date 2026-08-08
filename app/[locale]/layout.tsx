@@ -25,82 +25,101 @@ const cairo = Cairo({
   preload: true,
 });
 
-export const metadata: Metadata = {
-  metadataBase: new URL('https://nexora-solutions.co'),
-  title: {
-    default: 'Nexora Solutions | Premium Enterprise Software Agency',
-    template: '%s | Nexora Solutions',
-  },
-  description:
-    'Nexora Solutions is a premium software engineering agency specializing in scalable web platforms, mobile products, cloud architecture, and high-performance UI/UX design. Code. Innovate. Elevate.',
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}): Promise<Metadata> {
+  const { locale } = await params;
+  const isAr = locale === 'ar';
+  const siteUrl = 'https://nexora-solutions.co';
 
-  keywords: [
-    'Software Agency',
-    'Software Engineering',
-    'Application Development',
-    'Mobile Apps',
-    'UI/UX Design Systems',
-    'Integrated Tech Solutions',
-    'Technical Consulting',
-    'Custom Enterprise Software',
-    'Nexora Solutions',
-  ],
+  return {
+    metadataBase: new URL(siteUrl),
+    title: {
+      default: isAr
+        ? 'نيكسورا حلول البرمجيات | شركتك البرمجية المتكاملة'
+        : 'Nexora Solutions | Premium Enterprise Software Agency',
+      template: '%s | Nexora Solutions',
+    },
+    description: isAr
+      ? 'نيكسورا سيرفيسز هي وكالة هندسة برمجية رائدة متخصصة في تطوير منصات الويب والموبايل والحلول السحابية وتصاميم UI/UX.'
+      : 'Nexora Solutions is a premium software engineering agency specializing in scalable web platforms, mobile products, cloud architecture, and high-performance UI/UX design.',
 
-  authors: [{ name: 'Nexora Solutions' }],
-  creator: 'Nexora Solutions',
-  publisher: 'Nexora Solutions',
+    keywords: [
+      'Software Agency',
+      'Software Engineering',
+      'Application Development',
+      'Mobile Apps',
+      'UI/UX Design Systems',
+      'Technical Consulting',
+      'Custom Enterprise Software',
+      'Nexora Solutions',
+    ],
 
-  alternates: {
-    canonical: 'https://nexora-solutions.co',
-  },
+    authors: [{ name: 'Nexora Solutions' }],
+    creator: 'Nexora Solutions',
+    publisher: 'Nexora Solutions',
 
-  openGraph: {
-    title: 'Nexora Solutions | Premium Enterprise Software Agency',
-    description:
-      'We build digital solutions that drive business growth. Scalable web apps, mobile products, custom enterprise software, and cloud architecture.',
-    url: 'https://nexora-solutions.co/',
-    siteName: 'Nexora Solutions',
-    images: [
-      {
-        url: '/assets/logo.png',
-        width: 1200,
-        height: 630,
-        alt: 'Nexora Solutions — Premium Software Agency',
+    alternates: {
+      canonical: `${siteUrl}/${locale}`,
+      languages: {
+        en: `${siteUrl}/en`,
+        ar: `${siteUrl}/ar`,
       },
-    ],
-    locale: 'en_US',
-    type: 'website',
-  },
+    },
 
-  twitter: {
-    card: 'summary_large_image',
-    title: 'Nexora Solutions | Premium Software Agency',
-    description:
-      'Code. Innovate. Elevate. Premium software engineering for modern enterprises.',
-    images: ['/assets/logo.png'],
-  },
+    openGraph: {
+      title: isAr
+        ? 'نيكسورا للحلول البرمجية | تطوير مواقع وتطبيقات الموبايل'
+        : 'Nexora Solutions | Premium Enterprise Software Agency',
+      description: isAr
+        ? 'نقوم بتبني وتطوير الحلول البرمجية الرقمية لنمو الأعمال.'
+        : 'We build digital solutions that drive business growth. Scalable web apps, mobile products, custom enterprise software, and cloud architecture.',
+      url: `${siteUrl}/${locale}`,
+      siteName: 'Nexora Solutions',
+      images: [
+        {
+          url: '/assets/logo.png',
+          width: 1200,
+          height: 630,
+          alt: 'Nexora Solutions — Premium Software Agency',
+        },
+      ],
+      locale: isAr ? 'ar_EG' : 'en_US',
+      type: 'website',
+    },
 
-  icons: {
-    icon: [
-      { url: '/favicon.ico' },
-      { url: '/favicon.png', type: 'image/png' },
-    ],
-    shortcut: '/favicon.png',
-    apple: '/favicon.png',
-  },
+    twitter: {
+      card: 'summary_large_image',
+      title: 'Nexora Solutions | Premium Software Agency',
+      description:
+        'Code. Innovate. Elevate. Premium software engineering for modern enterprises.',
+      images: ['/assets/logo.png'],
+    },
 
-  robots: {
-    index: true,
-    follow: true,
-    googleBot: {
+    icons: {
+      icon: [
+        { url: '/favicon.ico' },
+        { url: '/favicon.png', type: 'image/png' },
+      ],
+      shortcut: '/favicon.png',
+      apple: '/favicon.png',
+    },
+
+    robots: {
       index: true,
       follow: true,
-      'max-video-preview': -1,
-      'max-image-preview': 'large',
-      'max-snippet': -1,
+      googleBot: {
+        index: true,
+        follow: true,
+        'max-video-preview': -1,
+        'max-image-preview': 'large',
+        'max-snippet': -1,
+      },
     },
-  },
-};
+  };
+}
 
 export const viewport: Viewport = {
   width: 'device-width',
@@ -110,56 +129,6 @@ export const viewport: Viewport = {
     { media: '(prefers-color-scheme: light)', color: '#f8fafc' },
     { media: '(prefers-color-scheme: dark)', color: '#090d16' },
   ],
-};
-
-const jsonLdSchema = {
-  '@context': 'https://schema.org',
-  '@graph': [
-    {
-      '@type': 'Organization',
-      '@id': 'https://nexora-solutions.co/#organization',
-      name: 'Nexora Solutions',
-      url: 'https://nexora-solutions.co/',
-      logo: {
-        '@type': 'ImageObject',
-        url: 'https://nexora-solutions.co/assets/logo.png',
-      },
-      description: 'Enterprise software engineering agency building scalable web & mobile solutions.',
-      sameAs: [
-        'https://www.linkedin.com',
-        'https://github.com'
-      ],
-      knowsAbout: [
-        'Software Development',
-        'Web Architecture',
-        'Mobile Application Development',
-        'UI/UX Systems',
-        'Cloud Computing'
-      ]
-    },
-    {
-      '@type': 'WebSite',
-      '@id': 'https://nexora-solutions.co/#website',
-      url: 'https://nexora-solutions.co/',
-      name: 'Nexora Solutions',
-      publisher: {
-        '@id': 'https://nexora-solutions.co/#organization'
-      },
-      inLanguage: 'en-US'
-    },
-    {
-      '@type': 'ProfessionalService',
-      '@id': 'https://nexora-solutions.co/#service',
-      name: 'Nexora Solutions Software Engineering',
-      url: 'https://nexora-solutions.co/',
-      image: 'https://nexora-solutions.co/assets/hero.webp',
-      priceRange: '$$$',
-      address: {
-        '@type': 'PostalAddress',
-        addressCountry: 'EG'
-      }
-    }
-  ]
 };
 
 export default async function LocaleLayout({
@@ -172,6 +141,56 @@ export default async function LocaleLayout({
   const { locale } = await params;
   const messages = await getMessages();
   const dir = locale === 'ar' ? 'rtl' : 'ltr';
+
+  const jsonLdSchema = {
+    '@context': 'https://schema.org',
+    '@graph': [
+      {
+        '@type': 'Organization',
+        '@id': 'https://nexora-solutions.co/#organization',
+        name: 'Nexora Solutions',
+        url: 'https://nexora-solutions.co/',
+        logo: {
+          '@type': 'ImageObject',
+          url: 'https://nexora-solutions.co/assets/logo.png',
+        },
+        description: 'Enterprise software engineering agency building scalable web & mobile solutions.',
+        sameAs: [
+          'https://www.linkedin.com',
+          'https://github.com'
+        ],
+        knowsAbout: [
+          'Software Development',
+          'Web Architecture',
+          'Mobile Application Development',
+          'UI/UX Systems',
+          'Cloud Computing'
+        ]
+      },
+      {
+        '@type': 'WebSite',
+        '@id': 'https://nexora-solutions.co/#website',
+        url: `https://nexora-solutions.co/${locale}`,
+        name: 'Nexora Solutions',
+        publisher: {
+          '@id': 'https://nexora-solutions.co/#organization'
+        },
+        inLanguage: locale === 'ar' ? 'ar-EG' : 'en-US'
+      },
+      {
+        '@type': 'ProfessionalService',
+        '@id': 'https://nexora-solutions.co/#service',
+        name: 'Nexora Solutions Software Engineering',
+        url: `https://nexora-solutions.co/${locale}`,
+        image: 'https://nexora-solutions.co/assets/hero.webp',
+        priceRange: '$$$',
+        address: {
+          '@type': 'PostalAddress',
+          addressCountry: 'EG'
+        }
+      }
+    ]
+  };
 
   return (
     <html lang={locale} dir={dir} className="dark" suppressHydrationWarning>

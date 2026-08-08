@@ -122,7 +122,9 @@ export default function LanguageToggle({
 
     const newLocale = isArabic ? "en" : "ar";
     const pathWithoutLocale = pathname.replace(/^\/(ar|en)/, "");
-    const newPath = `/${newLocale}${pathWithoutLocale}`;
+    const search = typeof window !== "undefined" ? window.location.search : "";
+    const hash = typeof window !== "undefined" ? window.location.hash : "";
+    const newPath = `/${newLocale}${pathWithoutLocale}${search}${hash}`;
 
     const isDark = document.documentElement.classList.contains("dark");
     const logoSrc = isDark ? "/assets/logo_dark.png" : "/assets/logo.png";
