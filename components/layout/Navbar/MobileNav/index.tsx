@@ -239,8 +239,8 @@ export function MobileNav() {
       // Direct style (NOT gsap.set) to avoid competing with timeline internals
       if (backdropRef.current) backdropRef.current.style.willChange = "transform, opacity";
       if (drawerRef.current) drawerRef.current.style.willChange = "transform, opacity";
-      // 3× faster → instant close on mobile
-      tl.timeScale(3).reverse();
+      // 6× faster → near-instant close, non-blocking
+      tl.timeScale(6).reverse();
     }
   }, [isOpen]);
 

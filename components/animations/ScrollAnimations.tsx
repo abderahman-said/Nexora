@@ -325,8 +325,8 @@ function animateSections(reduceMotion: boolean) {
         ease: "power2.out",
         clearProps: "opacity,transform,translate,rotate,scale",
         scrollTrigger: {
-          trigger: paras[0],
-          start: "top 90%",
+          trigger: sec,
+          start: "top 85%",
           toggleActions: "play none none none",
           once: true,
         },

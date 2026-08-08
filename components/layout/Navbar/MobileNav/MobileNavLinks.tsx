@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import { ArrowRight } from 'lucide-react';
 
 interface MobileNavLinksProps {
@@ -10,6 +11,19 @@ interface MobileNavLinksProps {
 }
 
 export function MobileNavLinks({ linksContainerRef, setDividerRef, navLinks, closeMenu }: MobileNavLinksProps) {
+  const router = useRouter();
+
+  const handleNavClick = useCallback(
+    (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
+      e.preventDefault();
+      // Navigate immediately — don't wait for close animation
+      router.push(href);
+      // Close menu in parallel (non-blocking)
+      closeMenu();
+    },
+    [router, closeMenu]
+  );
+
   return (
     <nav className="flex flex-col justify-center" aria-label="Main navigation">
       <ul ref={linksContainerRef} className="list-none p-0 m-0">
@@ -17,7 +31,8 @@ export function MobileNavLinks({ linksContainerRef, setDividerRef, navLinks, clo
           <li key={href} className="relative overflow-hidden">
             <Link
               href={href}
-              onClick={closeMenu}
+              prefetch={true}
+              onClick={(e) => handleNavClick(e, href)}
               className="group flex items-center justify-between gap-4 py-1.5 sm:py-2.5"
             >
               <span className="text-[20px] sm:text-2xl font-extrabold tracking-tight text-slate-800 dark:text-slate-100 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors duration-300">
