@@ -10,7 +10,7 @@ export function TeamCard({ member }: TeamCardProps) {
 
   return (
     <div
-      className={`
+      className={`animate-as-card
                 group relative flex flex-col items-center text-center
                 bg-white dark:bg-[#0c101d]
                 border rounded-3xl p-5

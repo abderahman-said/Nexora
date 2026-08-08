@@ -15,7 +15,7 @@ export default function ConsultationSection() {
       <Container className="relative z-10 px-4 sm:px-6 lg:px-8">
         {/* ── Main consultation Card Container ── */}
         <div
-          className="
+          className="animate-as-card
                     relative rounded-3xl lg:rounded-[2.5rem]
                     bg-white/95 dark:bg-[#0c101d]/95
                     border border-slate-200/90 dark:border-slate-800/90

@@ -6,7 +6,7 @@ import type { ClientCardProps } from './types';
 export function ClientCard({ client }: ClientCardProps) {
     return (
         <div
-            className="
+            className="animate-as-card
                 group relative flex flex-col justify-between
                 bg-white dark:bg-[#0c101d]
                 border border-slate-200/90 dark:border-slate-800/90

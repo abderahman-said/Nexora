@@ -277,8 +277,11 @@ function animateSections(reduceMotion: boolean) {
       });
     }
 
-    const headings = sec.querySelectorAll(
+    const headingsRaw = sec.querySelectorAll(
       "h2:not(.gsap-managed), h3:not(.gsap-managed)",
+    );
+    const headings = Array.from(headingsRaw).filter(
+      (h) => !h.closest(".bento-card, .process-step, .hw-feature, .about-feature, .animate-as-card")
     );
     headings.forEach((h) => {
       if (!h) return;
@@ -315,7 +318,10 @@ function animateSections(reduceMotion: boolean) {
       });
     });
 
-    const paras = Array.from(sec.querySelectorAll("p:not(.sd-label)"));
+    const parasRaw = Array.from(sec.querySelectorAll("p:not(.sd-label)"));
+    const paras = parasRaw.filter(
+      (p) => !p.closest(".bento-card, .process-step, .hw-feature, .about-feature, .animate-as-card")
+    );
     if (paras.length > 0 && !isMobile) {
       gsap.from(paras, {
         opacity: 0,
@@ -335,25 +341,25 @@ function animateSections(reduceMotion: boolean) {
   });
 
   const cards = gsap.utils
-    .toArray(".bento-card:not(.gsap-card-init), .process-step:not(.gsap-card-init), .hw-feature:not(.gsap-card-init), .about-feature:not(.gsap-card-init)")
+    .toArray(".bento-card:not(.gsap-card-init), .process-step:not(.gsap-card-init), .hw-feature:not(.gsap-card-init), .about-feature:not(.gsap-card-init), .animate-as-card:not(.gsap-card-init)")
     .filter(Boolean);
-  if (cards.length > 0 && !isMobile) {
+  if (cards.length > 0) {
     cards.forEach(c => (c as Element).classList.add("gsap-card-init"));
     ScrollTrigger.batch(cards as Element[], {
-      start: "top 88%",
+      start: isMobile ? "top 95%" : "top 88%",
       once: true,
       onEnter(batch) {
         if (!batch || !batch.length) return;
         gsap.fromTo(
           batch,
-          { opacity: 0, y: reduceMotion ? 0 : 60, scale: reduceMotion ? 1 : 0.95 },
+          { opacity: 0, y: reduceMotion ? 0 : (isMobile ? 30 : 60), scale: reduceMotion ? 1 : 0.95 },
           {
             opacity: 1,
             y: 0,
             scale: 1,
             duration: 0.8,
             ease: "power3.out",
-            stagger: 0.1,
+            stagger: isMobile ? 0 : 0.1,
             overwrite: true,
             clearProps: "opacity,transform,translate,rotate,scale",
           }

@@ -31,7 +31,7 @@ export default function InteractiveCard({
   return (
     <Wrapper
       {...props}
-      className={`
+      className={`animate-as-card
                 group relative flex flex-col justify-between
                 bg-white dark:bg-[#0c101d] h-full
                 border border-slate-200/90 dark:border-slate-800/90

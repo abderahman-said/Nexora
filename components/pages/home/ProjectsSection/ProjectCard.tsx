@@ -123,7 +123,7 @@ export default function ProjectCard({ p }: ProjectCardProps) {
       onMouseEnter={handleMouseEnter}
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
-      className="proj-3d-card group/3d relative h-full w-full cursor-pointer py-2 sm:py-3 md:py-4 will-change-transform hover:z-50"
+      className="animate-as-card proj-3d-card group/3d relative h-full w-full cursor-pointer py-2 sm:py-3 md:py-4 will-change-transform hover:z-50"
       style={{ transformStyle: "preserve-3d" }}
     >
       <Link
