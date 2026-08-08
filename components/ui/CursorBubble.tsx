@@ -39,7 +39,7 @@ export default function CursorBubble() {
         };
 
         const onMouseOut = (e: MouseEvent) => {
-            const target = e.target as HTMLElement | null;
+            // const target = e.target as HTMLElement | null;
             const related = e.relatedTarget as HTMLElement | null;
             
             // If we're moving into another valid target, don't hide

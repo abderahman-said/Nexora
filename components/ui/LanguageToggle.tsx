@@ -43,17 +43,8 @@ function buildOverlayMarkup(
           class="relative z-10 w-[76px] animate-pulse motion-reduce:animate-none [animation-duration:2.2s] drop-shadow-[0_0_18px_rgba(59,130,246,0.35)]"
         />
       </div>
-      <div class="mt-7 flex items-center gap-2 text-[11px] font-semibold uppercase ${newLocale === "ar" ? "tracking-normal" : "tracking-[0.2em]"} ${
-        isDark ? "text-slate-400" : "text-slate-500"
-      }">
-        <span>${newLocale === "ar" ? "جاري التحويل" : "Switching"}</span>
-        <span class="h-1 w-1 rounded-full bg-current animate-bounce motion-reduce:animate-none [animation-delay:0s]"></span>
-        <span class="h-1 w-1 rounded-full bg-current animate-bounce motion-reduce:animate-none [animation-delay:0.15s]"></span>
-        <span class="h-1 w-1 rounded-full bg-current animate-bounce motion-reduce:animate-none [animation-delay:0.3s]"></span>
-      </div>
     `;
 }
-
 export default function LanguageToggle({
   className = "",
 }: LanguageToggleProps) {
