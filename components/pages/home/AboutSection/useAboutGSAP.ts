@@ -18,8 +18,8 @@ export function useAboutGSAP({ sectionRef, visualRef, contentRef }: UseAboutGSAP
                 scrollTrigger: {
                     trigger: section,
                     start: 'top 80%',
-                    end: 'bottom 20%',
-                    toggleActions: 'play none none reverse',
+                    toggleActions: 'play none none none',
+                    once: true,
                 }
             });
 

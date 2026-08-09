@@ -58,25 +58,23 @@ export function useVideoHeroGSAP({ heroRef, headRef, subRef, statsRef, ctaRef, b
             }, '-=0.3');
         }
 
-        // Scroll parallax — hero moves up slightly (Desktop only for 60fps mobile scrolling)
+        // Side decorators parallax — single shared ScrollTrigger for all elements
         if (heroRef.current && typeof window !== 'undefined' && window.innerWidth >= 768) {
-            // Side decorators parallax at different speeds
             const sideEls = heroRef.current.querySelectorAll('.hero-side-el');
-            sideEls.forEach((el, i) => {
-                const speed = 0.3 + i * 0.15;
-                const dir   = i % 2 === 0 ? -1 : 1;
-                gsap.to(el, {
-                    y: `${dir * 120}px`,
-                    rotation: dir * 25,
+            if (sideEls.length > 0) {
+                const elsArray = Array.from(sideEls);
+                gsap.to(elsArray, {
+                    y: (i) => (i % 2 === 0 ? -80 : 80),
+                    rotation: (i) => (i % 2 === 0 ? -15 : 15),
                     ease: 'none',
                     scrollTrigger: {
                         trigger: heroRef.current,
                         start: 'top top',
                         end: 'bottom top',
-                        scrub: speed,
+                        scrub: 1,
                     },
                 });
-            });
+            }
         }
 
         // Glow circle follows mouse — center on cursor

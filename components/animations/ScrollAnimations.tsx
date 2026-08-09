@@ -214,29 +214,58 @@ function animateCards(isMobile: boolean, reduceMotion: boolean) {
 
   if (cards.length === 0) return;
 
+  // Read all rects in one batch BEFORE any writes (prevents layout thrashing)
+  const rects = cards.map((card) => card.getBoundingClientRect());
+  const vh = window.innerHeight;
+  const halfW = window.innerWidth / 2;
+  const threshold = window.innerWidth * 0.1;
+
   const visible: Element[] = [];
   const hidden: Element[] = [];
+  const hiddenX: number[] = [];
 
-  cards.forEach((card) => {
+  cards.forEach((card, i) => {
     card.classList.add("gsap-card-init");
-    if (card.getBoundingClientRect().top < window.innerHeight) {
+    const rect = rects[i];
+
+    if (rect.top < vh) {
       visible.push(card);
     } else {
-      gsap.set(card, { opacity: 0, y: isMobile ? 30 : 60, scale: 0.95 });
+      // Determine x direction for side-by-side sections
+      let initialX = 0;
+      if (!isMobile) {
+        const cardCenter = rect.left + rect.width / 2;
+        if (cardCenter < halfW - threshold) initialX = -40;
+        else if (cardCenter > halfW + threshold) initialX = 40;
+      }
+      hiddenX.push(initialX);
       hidden.push(card);
     }
+  });
+
+  // Write phase — set initial states after all reads are done
+  hidden.forEach((card, i) => {
+    gsap.set(card, {
+      opacity: 0,
+      y: isMobile ? 25 : 45,
+      x: hiddenX[i],
+      scale: 0.97,
+    });
   });
 
   if (visible.length > 0) {
     gsap.fromTo(
       visible,
-      { y: reduceMotion ? 0 : isMobile ? 15 : 20, scale: reduceMotion ? 1 : 0.98 },
+      {
+        y: reduceMotion ? 0 : isMobile ? 12 : 18,
+        scale: reduceMotion ? 1 : 0.98,
+      },
       {
         y: 0,
         scale: 1,
-        duration: 0.8,
+        duration: 0.7,
         ease: "power3.out",
-        stagger: isMobile ? 0 : 0.08,
+        stagger: isMobile ? 0 : 0.06,
         clearProps: "transform,translate,rotate,scale",
       },
     );
@@ -250,11 +279,12 @@ function animateCards(isMobile: boolean, reduceMotion: boolean) {
         if (!batch?.length) return;
         gsap.to(batch, {
           opacity: 1,
+          x: 0,
           y: 0,
           scale: 1,
-          duration: 0.8,
+          duration: 0.7,
           ease: "power3.out",
-          stagger: isMobile ? 0 : 0.1,
+          stagger: isMobile ? 0 : 0.08,
           overwrite: true,
           clearProps: "opacity,transform,translate,rotate,scale",
         });
