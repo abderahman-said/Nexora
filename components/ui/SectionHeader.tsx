@@ -8,8 +8,8 @@ import type {
 function CornerFrame({ children, extraClass = "" }: CornerFrameProps) {
   return (
     <div className={`relative ${extraClass}`}>
-      <span className="pointer-events-none absolute top-0 start-0 h-6 w-6 border-t-2 border-s-2 border-violet-300/40 dark:border-violet-700/40" />
-      <span className="pointer-events-none absolute bottom-0 end-0 h-6 w-6 border-b-2 border-e-2 border-cyan-300/40 dark:border-cyan-700/40" />
+      <span className="md:block hidden pointer-events-none absolute top-0 start-0 h-6 w-6 border-t-2 border-s-2 border-violet-300/40 dark:border-violet-700/40" />
+      <span className="md:block hidden pointer-events-none absolute bottom-0 end-0 h-6 w-6 border-b-2 border-e-2 border-cyan-300/40 dark:border-cyan-700/40" />
       {children}
     </div>
   );
@@ -105,7 +105,7 @@ export default function SectionHeader({
   if (align === "center") {
     return (
       <CornerFrame
-        extraClass={`mb-6 md:mb-8 flex flex-col items-center px-8 py-6 text-center ${className}`}
+        extraClass={`mb-6 md:mb-8 flex flex-col items-center px-0 py-0 md:px-8 md:py-6 text-center ${className}`}
       >
         {CodeTagBadge}
         {title && (
@@ -131,7 +131,7 @@ export default function SectionHeader({
   if (align === "between") {
     return (
       <CornerFrame
-        extraClass={`mb-6 md:mb-8 flex items-end justify-between gap-8 px-8 py-6   max-[900px]:items-start ${className}`}
+        extraClass={`mb-6 md:mb-8 flex items-end justify-between gap-8 px-0 py-0 md:px-8 md:py-6   max-[900px]:items-start ${className}`}
       >
         <div className="max-w-[720px]">
           {CodeTagBadge}
@@ -161,7 +161,7 @@ export default function SectionHeader({
   // Default: 'left'
   return (
     <CornerFrame
-      extraClass={`mb-6 md:mb-8 flex flex-col items-start px-8 py-6 ${className}`}
+      extraClass={`mb-6 md:mb-8 flex flex-col items-start px-0 py-0 md:px-8 md:py-6 ${className}`}
     >
       {CodeTagBadge}
       {title && (

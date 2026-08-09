@@ -48,7 +48,7 @@ export default function ProjectsSection() {
             <Link
               href={`/${locale}/projects`}
               aria-label={`${t("button_see_more")} ${t("title_work")}`}
-              className="inline-flex whitespace-nowrap items-center gap-2 rounded-full bg-gradient-to-r from-blue-600 to-sky-600 px-4 md:px-6 py-1 md:py-2.5 text-[10px] md:text-xs lg:text-base font-bold uppercase tracking-wider text-white shadow-md shadow-blue-500/20 transition-all hover:-translate-y-0.5 hover:shadow-lg hover:shadow-blue-500/35 group"
+              className="inline-flex whitespace-nowrap items-center gap-2 rounded-full bg-gradient-to-r from-blue-600 to-sky-600 px-3 md:px-6 py-1.5 md:py-2.5 text-[10px] md:text-xs lg:text-base font-bold uppercase tracking-wider text-white shadow-md shadow-blue-500/20 transition-all hover:-translate-y-0.5 hover:shadow-lg hover:shadow-blue-500/35 group"
             >
               <span>{t("button_see_more")}</span>
               <ArrowRight className="h-4 w-4  rtl:scale-x-[-1] transition-transform duration-300 group-hover:translate-x-1 rtl:group-hover:-translate-x-1" />

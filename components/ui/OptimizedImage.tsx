@@ -2,7 +2,7 @@ import Image from 'next/image';
 import React from 'react';
 import type { OptimizedImageProps } from './types';
 
-const DEFAULT_BLUR_DATA_URL = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAIAAACQd1PeAAAADElEQVR4nGNQTX4NAAIkAXSaGkHUAAAAAElFTkSuQmCC';
+const DEFAULT_BLUR_DATA_URL = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=';
 
 const OptimizedImage: React.FC<OptimizedImageProps> = ({
   src,
@@ -13,7 +13,7 @@ const OptimizedImage: React.FC<OptimizedImageProps> = ({
   className = '',
   sizes = '(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw',
   quality = 75,
-  placeholder = 'blur',
+  placeholder = 'empty',
   blurDataURL,
   ...props
 }) => {
