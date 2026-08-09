@@ -67,7 +67,10 @@ export function useGSAPSlider<T>({
   const [isTabHidden, setIsTabHidden] = useState(false);
   const [isOffscreen, setIsOffscreen] = useState(false);
   const isPaused = isHoverPaused || isTabHidden || isOffscreen;
-  const [isDragging, setIsDragging] = useState(false);
+  // isDragging is NOT React state — it drives only a cursor CSS class.
+  // Using state here caused a re-render on every pointerdown/pointerup,
+  // which was producing frame drops on mobile with 2-3 sliders on screen.
+  const isDragging = false; // kept for API compat, cursor handled via DOM ref below
 
   const [visibleCards, setVisibleCards] = useState<number>(defaultVisibleCount);
   const [isCenterActive, setIsCenterActive] = useState<boolean>(false);
@@ -83,6 +86,7 @@ export function useGSAPSlider<T>({
   const rafIdRef = useRef<number | null>(null);
   const containerWidthRef = useRef(1);
   const rootRef = useRef<HTMLDivElement>(null);
+  const dragContainerRef = useRef<HTMLDivElement | null>(null); // for cursor class only
   const cardRefs = useRef<Array<HTMLDivElement | null>>([]);
   const hasMountedScaleRef = useRef(false);
 
@@ -300,7 +304,11 @@ export function useGSAPSlider<T>({
     isDraggingRef.current = true;
     dragStartXRef.current = e.clientX;
     dragCurrentXRef.current = e.clientX;
-    setIsDragging(true);
+    // Direct DOM class — zero React re-render
+    if (dragContainerRef.current) {
+      dragContainerRef.current.classList.remove("cursor-grab");
+      dragContainerRef.current.classList.add("cursor-grabbing");
+    }
   };
 
   const applyDragPosition = useCallback(() => {
@@ -330,7 +338,11 @@ export function useGSAPSlider<T>({
     (e.target as HTMLElement).releasePointerCapture?.(e.pointerId);
     if (!isDraggingRef.current) return;
     isDraggingRef.current = false;
-    setIsDragging(false);
+    // Direct DOM class — zero React re-render
+    if (dragContainerRef.current) {
+      dragContainerRef.current.classList.remove("cursor-grabbing");
+      dragContainerRef.current.classList.add("cursor-grab");
+    }
 
     if (rafIdRef.current != null) {
       cancelAnimationFrame(rafIdRef.current);
@@ -443,6 +455,7 @@ export function useGSAPSlider<T>({
     rootRef,
     trackRef,
     cardRefs,
+    dragContainerRef,
     isDragging,
     setIsHoverPaused,
     handlePointerDown,

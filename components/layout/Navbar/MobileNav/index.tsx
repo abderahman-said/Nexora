@@ -265,7 +265,7 @@ export function MobileNav() {
               ref={backdropRef}
               onClick={closeMenu}
               style={{ display: "none" }}
-              className="fixed inset-0 z-[990] bg-black/20 backdrop-blur-sm"
+              className="fixed inset-0 z-[990] bg-black/20"
               aria-hidden="true"
             />
 
@@ -280,13 +280,14 @@ export function MobileNav() {
             >
               <style>{`
                 .drawer-blur-inactive {
-                  backdrop-filter: blur(20px) saturate(150%);
-                  -webkit-backdrop-filter: blur(20px) saturate(150%);
+                  /* No blur during animation to prevent mobile lag */
+                  backdrop-filter: none;
+                  -webkit-backdrop-filter: none;
                 }
                 .drawer-blur-active {
                   background-color: rgb(255 255 255 / 0.75) !important;
-                  backdrop-filter: blur(40px) saturate(180%) !important;
-                  -webkit-backdrop-filter: blur(40px) saturate(180%) !important;
+                  backdrop-filter: blur(16px) saturate(150%) !important;
+                  -webkit-backdrop-filter: blur(16px) saturate(150%) !important;
                 }
                 .dark .drawer-blur-active {
                   background-color: rgb(9 9 15 / 0.7) !important;
@@ -297,8 +298,8 @@ export function MobileNav() {
 
               {/* Glow orbs — always mounted, shown/hidden via opacity only (no unmount re-render) */}
               <div ref={glowRef} className="opacity-0 transition-opacity duration-300 pointer-events-none">
-                <div className="absolute top-[-60px] end-[-60px] h-56 w-56 rounded-full bg-blue-500/10 dark:bg-blue-600/15 blur-3xl" />
-                <div className="absolute bottom-[-40px] start-[-40px] h-48 w-48 rounded-full bg-sky-400/5 dark:bg-sky-500/10 blur-3xl" />
+                <div className="absolute top-[-60px] end-[-60px] h-56 w-56 rounded-full bg-blue-500/10 dark:bg-blue-600/15 blur-xl" />
+                <div className="absolute bottom-[-40px] start-[-40px] h-48 w-48 rounded-full bg-sky-400/5 dark:bg-sky-500/10 blur-xl" />
               </div>
 
               <div className="flex flex-col flex-1 px-5 sm:px-8 pt-3 sm:pt-5 pb-8 gap-4 md:gap-10 relative z-10 overflow-y-auto overflow-x-hidden overscroll-contain">

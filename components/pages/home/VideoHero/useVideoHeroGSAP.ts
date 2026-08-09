@@ -71,7 +71,7 @@ export function useVideoHeroGSAP({ heroRef, headRef, subRef, statsRef, ctaRef, b
                         trigger: heroRef.current,
                         start: 'top top',
                         end: 'bottom top',
-                        scrub: true, // direct tracking, no extra lag on top of Lenis
+                        scrub: 0.5, // smoothed tracking — fewer DOM updates vs scrub:true
                     },
                 });
             }

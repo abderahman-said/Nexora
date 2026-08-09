@@ -23,7 +23,7 @@ export function MobileNavHeader({
       ref={drawerHeaderRef}
       className="flex items-center justify-between shrink-0 pb-2 sm:pb-4 border-b border-slate-100 dark:border-white/[0.07]"
     >
-      <Link href={`/${locale}`} className="inline-block" onClick={closeMenu}>
+      <Link href={`/${locale}`} className="inline-block" style={{ touchAction: 'manipulation' }} onClick={() => React.startTransition(closeMenu)}>
         <Image
           src={logoLight}
           alt="Nexora Solutions"

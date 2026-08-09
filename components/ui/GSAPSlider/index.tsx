@@ -21,7 +21,7 @@ export default function GSAPSlider<T extends { id?: string | number }>(props: GS
   const sliderState = useGSAPSlider(props);
   const {
     totalItems, maxIndex, dotsCount, rootRef, setIsHoverPaused,
-    isDragging, handlePointerDown,
+    dragContainerRef, handlePointerDown,
     handlePointerMove, handlePointerUp, handleClickCapture,
     activeIndex, goToSlideWithReset
   } = sliderState;
@@ -36,7 +36,8 @@ export default function GSAPSlider<T extends { id?: string | number }>(props: GS
       onMouseLeave={() => pauseOnHover && setIsHoverPaused(false)}
     >
       <div
-        className={`w-full overflow-hidden pt-8 md:pb-3 md:pb-6 px-2 md:px-3 select-none ${enableDrag ? (isDragging ? "cursor-grabbing" : "cursor-grab") : ""}`}
+        ref={dragContainerRef}
+        className={`w-full overflow-hidden pt-8 md:pb-3 md:pb-6 px-2 md:px-3 select-none ${enableDrag ? "cursor-grab" : ""}`}
         onPointerDown={handlePointerDown}
         onPointerMove={handlePointerMove}
         onPointerUp={handlePointerUp}

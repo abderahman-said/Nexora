@@ -16,10 +16,13 @@ export function MobileNavLinks({ linksContainerRef, setDividerRef, navLinks, clo
   const handleNavClick = useCallback(
     (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
       e.preventDefault();
-      // Navigate immediately — don't wait for close animation
-      router.push(href);
-      // Close menu in parallel (non-blocking)
-      closeMenu();
+      // Close menu and navigate in a single low-priority transition.
+      // No setTimeout — the GSAP timeline runs on the compositor (GPU)
+      // so it won't block the JS navigation call.
+      React.startTransition(() => {
+        closeMenu();
+        router.push(href);
+      });
     },
     [router, closeMenu]
   );
@@ -33,12 +36,13 @@ export function MobileNavLinks({ linksContainerRef, setDividerRef, navLinks, clo
               href={href}
               prefetch={true}
               onClick={(e) => handleNavClick(e, href)}
+              style={{ touchAction: 'manipulation' }}
               className="group flex items-center justify-between gap-4 py-1.5 sm:py-2.5"
             >
-              <span className="text-[20px] sm:text-2xl font-extrabold tracking-tight text-slate-800 dark:text-slate-100 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors duration-300">
+              <span className="text-[20px] sm:text-2xl font-extrabold tracking-tight text-slate-800 dark:text-slate-100 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors duration-150">
                 {label}
               </span>
-              <ArrowRight className="h-5 w-5  rtl:scale-x-[-1]  text-blue-500/80 dark:text-sky-400/80 group-hover:text-blue-600 dark:group-hover:text-blue-400 rtl:-scale-x-100 group-hover:translate-x-1 rtl:group-hover:-translate-x-1 transition-all duration-300 shrink-0" />
+              <ArrowRight className="h-5 w-5 rtl:scale-x-[-1] text-blue-500/80 dark:text-sky-400/80 group-hover:text-blue-600 dark:group-hover:text-blue-400 group-hover:translate-x-1 rtl:group-hover:-translate-x-1 transition-[color,transform] duration-200 shrink-0" />
             </Link>
             <span
               ref={(el) => setDividerRef(el, i)}

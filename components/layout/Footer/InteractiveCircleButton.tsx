@@ -75,6 +75,7 @@ export function InteractiveCircleButton({ href, children }: InteractiveCircleBut
             y: mouseY * 0.18,
             duration: 0.3,
             ease: "power2.out",
+            overwrite: "auto",
         });
     };
 
@@ -116,7 +117,7 @@ export function InteractiveCircleButton({ href, children }: InteractiveCircleBut
             onMouseEnter={handleMouseEnter}
             onMouseMove={handleMouseMove}
             onMouseLeave={handleMouseLeave}
-            className="relative flex h-36 w-36 flex-col items-center justify-center rounded-full border border-slate-300 dark:border-white/25 bg-white dark:bg-white/5 backdrop-blur-sm overflow-hidden text-slate-900 dark:text-white shadow-xl cursor-pointer group transition-all duration-300 hover:border-blue-500 dark:hover:border-blue-400 hover:shadow-[0_0_30px_rgba(59,130,246,0.2)] dark:hover:shadow-[0_0_30px_rgba(59,130,246,0.3)]"
+            className="relative flex h-36 w-36 flex-col items-center justify-center rounded-full border border-slate-300 dark:border-white/25 bg-white dark:bg-white/5 backdrop-blur-sm overflow-hidden text-slate-900 dark:text-white shadow-xl cursor-pointer group transition-[border-color,box-shadow] duration-300 hover:border-blue-500 dark:hover:border-blue-400 hover:shadow-[0_0_30px_rgba(59,130,246,0.2)] dark:hover:shadow-[0_0_30px_rgba(59,130,246,0.3)]"
         >
             <span
                 ref={circleRef}
@@ -128,7 +129,7 @@ export function InteractiveCircleButton({ href, children }: InteractiveCircleBut
                 <span className="text-base md:text-lg font-bold tracking-wide text-slate-800 dark:text-slate-100 group-hover:text-white transition-colors duration-300">
                     {children}
                 </span>
-                <ArrowUpRight className="h-5 w-5 text-blue-600 rtl:scale-x-[-1]  dark:text-blue-400 group-hover:text-white group-hover:translate-x-1 group-hover:-translate-y-1 transition-all duration-300" />
+                <ArrowUpRight className="h-5 w-5 text-blue-600 rtl:scale-x-[-1] dark:text-blue-400 group-hover:text-white group-hover:translate-x-1 group-hover:-translate-y-1 transition-[color,transform] duration-300" />
             </span>
         </Link>
     );
