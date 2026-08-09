@@ -128,7 +128,7 @@ html , body {
   }
 
   html {
-    scroll-behavior: smooth;
+    /* scroll-behavior: smooth removed — Lenis handles smooth scrolling, conflict causes jank */
     scrollbar-width: thin;
     scrollbar-color: rgba(0, 0, 0, 0.2) transparent;
     overflow-x: hidden;
@@ -206,6 +206,8 @@ body.is-transitioning .js-cursor-bubble {
 /* ─── Content Sections ───────────────────────────────────────────────── */
 .scroll-section {
   position: relative;
+  /* isolate paint layers to prevent full-page repaints on scroll */
+  isolation: isolate;
 }
 
 /* استثناء الأقسام اللي فيها GSAP ScrollTrigger pinning */

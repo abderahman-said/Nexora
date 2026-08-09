@@ -29,10 +29,10 @@ export default function SmoothScroll() {
       }
 
       lenis = new Lenis({
-        duration: 0.9,
+        duration: 0.75,        // snappier feel — was 0.9 which felt laggy
         easing: (t) => 1 - Math.pow(1 - t, 3),
         smoothWheel: true,
-        wheelMultiplier: 1.0,
+        wheelMultiplier: 0.9,  // slightly reduced to prevent over-scroll feel
         touchMultiplier: 1.5,
       });
 

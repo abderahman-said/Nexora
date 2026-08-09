@@ -22,6 +22,8 @@ const Magnet: React.FC<MagnetProps> = ({
       rectRef.current = magnetRef.current.getBoundingClientRect();
       if (innerRef.current) {
         innerRef.current.style.transition = activeTransition;
+        // Activate GPU compositing only during interaction
+        innerRef.current.style.willChange = 'transform';
       }
     }
   }, [activeTransition]);
@@ -54,6 +56,8 @@ const Magnet: React.FC<MagnetProps> = ({
     if (innerRef.current) {
       innerRef.current.style.transition = inactiveTransition;
       innerRef.current.style.transform = 'translate3d(0px, 0px, 0)';
+      // Release GPU layer after interaction ends
+      innerRef.current.style.willChange = 'auto';
     }
   }, [inactiveTransition]);
 
@@ -68,10 +72,11 @@ const Magnet: React.FC<MagnetProps> = ({
     >
       <div
         ref={innerRef}
-        className={`will-change-transform ${innerClassName}`}
+        className={innerClassName}
         style={{
           transform: 'translate3d(0px, 0px, 0)',
           transition: inactiveTransition,
+          willChange: 'auto',
         }}
       >
         {children}

@@ -37,8 +37,7 @@ export default function ConsultationVisual() {
                 ">
                     <div className="flex items-center gap-2.5">
                         <span className="relative flex h-3 w-3">
-                            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
-                            <span className="relative inline-flex rounded-full h-3 w-3 bg-emerald-500" />
+                            <span className="relative inline-flex rounded-full h-3 w-3 bg-emerald-500 shadow-[0_0_8px_rgba(52,211,153,0.6)]" />
                         </span>
                         <div>
                             <p suppressHydrationWarning className="text-xs font-extrabold text-slate-900 dark:text-white leading-none">{t('visual_live')}</p>

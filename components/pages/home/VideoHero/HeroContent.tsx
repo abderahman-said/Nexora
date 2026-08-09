@@ -86,7 +86,7 @@ export default function HeroContent({
             >
               {/* Authentic WhatsApp Green Icon Circle */}
               <div className="relative flex items-center justify-center w-8 sm:w-9 h-8 sm:h-9 rounded-full bg-emerald-500 text-white shadow-md shadow-emerald-500/30 group-hover:scale-105 transition-transform duration-300 shrink-0">
-                <span className="absolute inset-0 rounded-full bg-emerald-400/40 animate-ping opacity-70 pointer-events-none" />
+                <span className="absolute inset-0 rounded-full bg-emerald-400/40 opacity-0 group-hover:opacity-70 transition-opacity duration-300 pointer-events-none" />
                 <WhatsappIcon className="w-4 sm:w-5 h-4 sm:h-5 text-white fill-current" />
               </div>
 

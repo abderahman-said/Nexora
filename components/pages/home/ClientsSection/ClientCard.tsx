@@ -56,7 +56,7 @@ export function ClientCard({ client }: ClientCardProps) {
                         group-hover:shadow-xl group-hover:shadow-blue-500/60 group-hover:scale-110 group-hover:rotate-12
                         transition-all duration-500 ease-out z-20
                     ">
-                        <span className="absolute inset-0 rounded-full bg-blue-500/40 animate-ping opacity-60 pointer-events-none" />
+                        <span className="absolute inset-0 rounded-full bg-blue-500/40 opacity-0 group-hover:opacity-60 transition-opacity duration-300 pointer-events-none" />
                         <span className="absolute -inset-1 rounded-full bg-gradient-to-r from-blue-500 to-sky-400 opacity-0 group-hover:opacity-50 blur-sm transition-opacity duration-500 pointer-events-none" />
                         <Quote className="w-3.5 h-3.5 fill-current stroke-none rotate-180 relative z-10 transform transition-transform duration-500 ease-out group-hover:rotate-12 group-hover:scale-110" />
                     </div>
