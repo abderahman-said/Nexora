@@ -21,6 +21,9 @@ export default function ScrollAnimations() {
   const pathname = usePathname();
 
   useEffect(() => {
+    // Temporarily disabled section entrance animations
+    return;
+    
     const reduceMotion = window.matchMedia(
       "(prefers-reduced-motion: reduce)",
     ).matches;

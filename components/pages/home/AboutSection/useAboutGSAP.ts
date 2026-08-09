@@ -7,6 +7,8 @@ gsap.registerPlugin(ScrollTrigger);
 
 export function useAboutGSAP({ sectionRef, visualRef, contentRef }: UseAboutGSAPProps) {
     useEffect(() => {
+        // Temporarily disabled
+        return;
         const ctx = gsap.context(() => {
             const section = sectionRef.current;
             const visual = visualRef.current;

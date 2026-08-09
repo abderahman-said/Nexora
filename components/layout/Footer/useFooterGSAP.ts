@@ -7,6 +7,8 @@ gsap.registerPlugin(ScrollTrigger);
 
 export function useFooterGSAP({ footerRef, columnsRef, sidePanelRef, bgRef }: UseFooterGSAPProps) {
   useEffect(() => {
+    // Temporarily disabled
+    return;
     if (!footerRef.current) return;
 
     const reduceMotion =

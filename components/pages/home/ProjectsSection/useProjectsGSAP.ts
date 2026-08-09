@@ -9,6 +9,8 @@ export function useProjectsGSAP(
   sliderWrapperRef: RefObject<HTMLElement | null>
 ) {
   useEffect(() => {
+    // Temporarily disabled
+    return;
     const section = sectionRef?.current;
     if (!section) return;
 
