@@ -32,7 +32,9 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { locale } = await params;
   const isAr = locale === 'ar';
-  const siteUrl = 'https://nexora-solutions.co';
+  
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL 
+    || (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : 'https://nexora-solutions.co');
 
   return {
     metadataBase: new URL(siteUrl),

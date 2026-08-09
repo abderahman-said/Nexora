@@ -210,6 +210,21 @@ body.is-transitioning .js-cursor-bubble {
   isolation: isolate;
 }
 
+/* ─── TEMP: Force all GSAP-animated elements visible (disable scroll animations) ─── */
+.bento-card,
+.process-step,
+.hw-feature,
+.about-feature,
+.animate-as-card,
+.scroll-section h2,
+.scroll-section h3,
+.scroll-section p {
+  opacity: 1 !important;
+  transform: none !important;
+  translate: none !important;
+}
+
+
 /* استثناء الأقسام اللي فيها GSAP ScrollTrigger pinning */
 .scroll-section.pin-container,
 .scroll-section:has(.pin-container) {

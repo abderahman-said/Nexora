@@ -29,24 +29,18 @@ export function useNavbarGSAP({
     gsap.set(navInner, { y: 0 });
 
     const ctx = gsap.context(() => {
-      // 1. Entrance animation on initial load - simplified, no opacity animation
-      const tl = gsap.timeline({ delay: 0.1 });
-
-      tl.from(navInner, {
-        y: -20,
-        duration: 0.8,
-        ease: "power2.out",
-      });
-
-      if (logoRef?.current) {
-        tl.from(logoRef.current, { opacity: 0, x: -20, duration: 0.6, ease: "power3.out" }, "-=0.4");
-      }
-      if (linksRef?.current?.children?.length) {
-        tl.from(linksRef.current.children, { opacity: 0, y: -10, duration: 0.5, stagger: 0.05, ease: "power3.out" }, "-=0.4");
-      }
-      if (ctaRef?.current) {
-        tl.from(ctaRef.current, { opacity: 0, scale: 0.9, duration: 0.5, ease: "back.out(1.5)" }, "-=0.3");
-      }
+      // 1. TEMPORARILY DISABLED - Entrance animation on initial load
+      // const tl = gsap.timeline({ delay: 0.1 });
+      // tl.from(navInner, { y: -20, duration: 0.8, ease: "power2.out" });
+      // if (logoRef?.current) {
+      //   tl.from(logoRef.current, { opacity: 0, x: -20, duration: 0.6, ease: "power3.out" }, "-=0.4");
+      // }
+      // if (linksRef?.current?.children?.length) {
+      //   tl.from(linksRef.current.children, { opacity: 0, y: -10, duration: 0.5, stagger: 0.05, ease: "power3.out" }, "-=0.4");
+      // }
+      // if (ctaRef?.current) {
+      //   tl.from(ctaRef.current, { opacity: 0, scale: 0.9, duration: 0.5, ease: "back.out(1.5)" }, "-=0.3");
+      // }
 
       // 2. Smart Scroll Handling — مصدر واحد بس للـ scroll، بيتحدد مرة واحدة بعد ما يتأكد Lenis جاهز ولا لأ
       let lastScrollY = 0;
