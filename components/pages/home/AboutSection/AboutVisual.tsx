@@ -1,19 +1,15 @@
 import React from "react";
 import Image from "next/image";
 import type { AboutVisualProps } from "./types";
-import { useTranslations } from "next-intl";
 
 export default function AboutVisual({ visualRef }: AboutVisualProps) {
-  const t = useTranslations("homeAbout");
   return (
     <div
       ref={visualRef}
       className="relative w-full max-w-[560px] mx-auto lg:mx-0"
     >
-      {/* Ambient Background Glow */}
       <div className="absolute -inset-4 bg-gradient-to-r from-blue-600/20 via-sky-500/15 to-indigo-600/20 rounded-3xl blur-2xl pointer-events-none" />
 
-      {/* Main Visual Container */}
       <div className="relative z-10 w-full aspect-[4/3.2] sm:aspect-[4/3] rounded-3xl overflow-hidden border border-slate-200/80 dark:border-slate-800 shadow-2xl shadow-slate-900/10 dark:shadow-blue-950/40 group">
         {/* Team Image */}
         <Image
