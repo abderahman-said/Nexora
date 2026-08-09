@@ -47,6 +47,7 @@ export default function HeroBackground({ glowRef }: HeroBackgroundProps) {
           controls={false}
           disablePictureInPicture
           preload="auto"
+          onLoadedData={() => setIsVideoReady(true)}
           onPlaying={() => setIsVideoReady(true)}
           onError={(e) =>
             console.error("Video element error:", e.currentTarget.error)
@@ -54,17 +55,17 @@ export default function HeroBackground({ glowRef }: HeroBackgroundProps) {
           className={`w-full h-full object-cover scale-105 pointer-events-none transition-opacity duration-700 ${isVideoReady ? "opacity-80" : "opacity-0"
             }`}
         >
-          {/* MP4 (H.264) الأول: بيشتغل على كل المتصفحات بما فيها Safari */}
-          <source
-            src={APP_CONSTANTS.VIDEO.HERO_MP4}
-            type="video/mp4"
-            onError={() => console.error("mp4 source failed to load")}
-          />
-          {/* WebM (VP9): بديل أخف حجمًا للمتصفحات اللي بتدعمه (مش Safari) */}
+          {/* WebM (VP9): الأسرع والأخف حجماً لمعظم المتصفحات الحديثة */}
           <source
             src={APP_CONSTANTS.VIDEO.HERO_WEBM}
             type="video/webm"
             onError={() => console.error("webm source failed to load")}
+          />
+          {/* MP4 (H.264): كبديل للمتصفحات اللي مش بتدعم WebM زي Safari */}
+          <source
+            src={APP_CONSTANTS.VIDEO.HERO_MP4}
+            type="video/mp4"
+            onError={() => console.error("mp4 source failed to load")}
           />
         </video>
 
