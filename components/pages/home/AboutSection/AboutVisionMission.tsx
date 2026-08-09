@@ -92,11 +92,10 @@ export default function AboutVisionMission() {
             </div>
 
             {/* ── Action & Stats Row ── */}
-            <div className="pt-3 flex flex-wrap items-center justify-between gap-4">
                 <Link
                     href={`/${locale}/about`}
                     className="
-                        inline-flex items-center gap-2 px-6 py-3 rounded-full
+                        inline-flex mt-3 items-center gap-2 px-6 py-3 rounded-full
                         bg-gradient-to-r from-blue-600 to-sky-600 text-white
                         font-bold text-xs tracking-wider uppercase
                         shadow-md shadow-blue-500/20 hover:shadow-lg hover:shadow-blue-500/35
@@ -106,12 +105,6 @@ export default function AboutVisionMission() {
                     <span>{t('button_story')}</span>
                     <ArrowRight className="w-4 h-4   transition-transform duration-300 group-hover:translate-x-1 rtl:rotate-180 rtl:group-hover:-translate-x-1" />
                 </Link>
-
-                <div className="flex items-center gap-3 text-xs font-semibold text-slate-500 dark:text-slate-400">
-                    <span className="text-slate-900 dark:text-white font-extrabold text-sm">{t('stats_number')}</span>
-                    <span>{t('stats_text')}</span>
-                </div>
-            </div>
         </div>
     );
 }

@@ -35,7 +35,7 @@ export default function ClientsSection() {
           />
 
           {/* Section Header Content */}
-          <div className="relative z-10 max-w-3xl mx-auto space-y-4">
+          <div className="relative z-10 max-w-4xl mx-auto space-y-4">
             <div className="me-auto md:mx-auto inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-blue-50 dark:bg-blue-950/80 border border-blue-200/80 dark:border-blue-800/80 text-blue-600 dark:text-blue-400 font-bold text-xs tracking-wider uppercase shadow-sm">
               <MessageSquareQuote className="w-3.5 h-3.5" />
               <span>{t("badge")}</span>
