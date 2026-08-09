@@ -34,9 +34,12 @@ export default function ScrollAnimations() {
 
       // Refresh after fonts load for accurate layout calculations.
       if (document.fonts?.ready) {
-        document.fonts.ready.then(() => ScrollTrigger.refresh());
+        document.fonts.ready.then(() => {
+          setTimeout(() => ScrollTrigger.refresh(), 100);
+        });
+      } else {
+        setTimeout(() => ScrollTrigger.refresh(), 150);
       }
-      requestAnimationFrame(() => ScrollTrigger.refresh());
     };
 
     const timer = setTimeout(initNewElements, INIT_DELAY_MS);

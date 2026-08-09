@@ -206,8 +206,6 @@ body.is-transitioning .js-cursor-bubble {
 /* ─── Content Sections ───────────────────────────────────────────────── */
 .scroll-section {
   position: relative;
-  content-visibility: auto;
-  contain-intrinsic-size: 1px 600px;
 }
 
 /* استثناء الأقسام اللي فيها GSAP ScrollTrigger pinning */
