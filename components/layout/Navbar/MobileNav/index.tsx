@@ -4,7 +4,6 @@ import React, {
   useState,
   useRef,
   useEffect,
-  useCallback,
   useSyncExternalStore,
 } from "react";
 import { createPortal } from "react-dom";
@@ -35,9 +34,11 @@ function useCloseOnEscape(isOpen: boolean, onClose: () => void) {
   }, [isOpen, onClose]);
 }
 
-/** Locks body scroll. */
+/** Locks body scroll — deferred 1 RAF to avoid layout reflow in the same frame as GSAP play() */
 function lockBodyScroll() {
-  document.body.style.overflow = "hidden";
+  requestAnimationFrame(() => {
+    document.body.style.overflow = "hidden";
+  });
 }
 
 function unlockBodyScroll() {
@@ -67,18 +68,12 @@ export function MobileNav() {
   const drawerRef = useRef<HTMLDivElement>(null);
   const drawerHeaderRef = useRef<HTMLDivElement>(null);
   const linksContainerRef = useRef<HTMLUListElement>(null);
-  const footerCtaRef = useRef<HTMLDivElement>(null);
   const footerInfoRef = useRef<HTMLDivElement>(null);
   const glowRef = useRef<HTMLDivElement>(null);
-  const dividerRefs = useRef<Array<HTMLSpanElement | null>>([]);
 
   // Single persistent, reversible timeline: built once, paused + reversed,
   // then toggled via play()/reverse().
   const tlRef = useRef<gsap.core.Timeline | null>(null);
-
-  const setDividerRef = useCallback((el: HTMLSpanElement | null, i: number) => {
-    dividerRefs.current[i] = el;
-  }, []);
 
   // ── Build the timeline once the refs exist ──
   useEffect(() => {
@@ -92,132 +87,73 @@ export function MobileNav() {
     }
 
     const ctx = gsap.context(() => {
-      const dividers = dividerRefs.current.filter(Boolean);
-
       const tl = gsap.timeline({
         paused: true,
         reversed: true,
-        defaults: { ease: "power2.inOut", force3D: true },
+        defaults: { ease: "power2.out", force3D: true },
         onStart: () => {
-          // Direct style — no GSAP conflict with timeline elements
           if (backdropRef.current) {
             backdropRef.current.style.display = "block";
-            backdropRef.current.style.willChange = "transform, opacity";
           }
           if (drawerRef.current) {
             drawerRef.current.style.display = "flex";
-            drawerRef.current.style.willChange = "transform, opacity";
           }
         },
         onComplete: () => {
-          // Add blur AFTER open animation ends — zero React re-render
+          // Add blur AFTER open animation ends — avoids backdrop-filter during sliding
           drawerRef.current?.classList.add("drawer-blur-active");
           glowRef.current?.classList.remove("opacity-0");
-          if (backdropRef.current) backdropRef.current.style.willChange = "auto";
-          if (drawerRef.current) drawerRef.current.style.willChange = "auto";
         },
         onReverseComplete: () => {
-          if (backdropRef.current) {
-            backdropRef.current.style.display = "none";
-            backdropRef.current.style.willChange = "auto";
-          }
-          if (drawerRef.current) {
-            drawerRef.current.style.display = "none";
-            drawerRef.current.style.willChange = "auto";
-          }
+          if (backdropRef.current) backdropRef.current.style.display = "none";
+          if (drawerRef.current) drawerRef.current.style.display = "none";
+          drawerRef.current?.classList.remove("drawer-blur-active");
+          glowRef.current?.classList.add("opacity-0");
           unlockBodyScroll();
         },
       });
 
-      // Menu icon <-> Close icon crossfade
-      tl.to(
-        menuIconRef.current,
-        { rotate: 90, opacity: 0, scale: 0.6, duration: 0.22 },
-        0,
-      ).fromTo(
-        closeIconRef.current,
-        { rotate: -90, opacity: 0, scale: 0.6 },
-        { rotate: 0, opacity: 1, scale: 1, duration: 0.3 },
-        0.08,
-      );
+      // ── Phase 0: GPU-only (transform + opacity) — runs simultaneously ──
+
+      // Icon crossfade
+      tl.to(menuIconRef.current, { rotate: 90, opacity: 0, scale: 0.6, duration: 0.2 }, 0)
+        .fromTo(closeIconRef.current,
+          { rotate: -90, opacity: 0, scale: 0.6 },
+          { rotate: 0, opacity: 1, scale: 1, duration: 0.25 },
+          0.06,
+        );
 
       // Backdrop fade
-      tl.fromTo(
-        backdropRef.current,
-        { opacity: 0 },
-        { opacity: 1, duration: 0.35 },
-        0,
-      );
+      tl.fromTo(backdropRef.current, { opacity: 0 }, { opacity: 1, duration: 0.3 }, 0);
 
-      // Drawer slide
+      // Drawer slide — only transform, no shadow during animation (removed shadow-2xl)
       tl.fromTo(
         drawerRef.current,
         { xPercent: isRtl ? 100 : -100 },
-        {
-          xPercent: 0,
-          duration: 0.42,
-          ease: "power3.inOut",
-        },
+        { xPercent: 0, duration: 0.38, ease: "power3.out" },
         0,
       );
 
-      // Header row drops in
-      if (drawerHeaderRef.current) {
-        tl.fromTo(
-          drawerHeaderRef.current,
-          { opacity: 0, y: -10 },
-          { opacity: 1, y: 0, duration: 0.3 },
-          0.2,
-        );
-      }
+      // ── Phase 1: Content appears as ONE fade — much fewer per-frame calcs ──
+      // Collect all inner content elements into one array, animate as a group
+      const contentEls = [
+        drawerHeaderRef.current,
+        linksContainerRef.current,
+        footerInfoRef.current,
+      ].filter(Boolean);
 
-      // Nav links stagger up (open) — no stagger on reverse so close feels instant
-      if (linksContainerRef.current) {
+      if (contentEls.length) {
         tl.fromTo(
-          Array.from(linksContainerRef.current.children),
-          { opacity: 0, y: 18 },
-          { opacity: 1, y: 0, duration: 0.3, stagger: { each: 0.05, from: "start" } },
-          0.24,
-        );
-      }
-
-      // Dividers draw in
-      if (dividers.length) {
-        tl.fromTo(
-          dividers,
-          { scaleX: 0 },
-          {
-            scaleX: 1,
-            duration: 0.25,
-            stagger: 0.04,
-            transformOrigin: "0% 50%",
-          },
-          0.3,
-        );
-      }
-
-      // Footer CTA
-      if (footerCtaRef.current) {
-        tl.fromTo(
-          footerCtaRef.current,
-          { opacity: 0, y: 14 },
-          { opacity: 1, y: 0, duration: 0.28 },
-          0.34,
-        );
-      }
-
-      // Footer info cards
-      if (footerInfoRef.current) {
-        tl.fromTo(
-          Array.from(footerInfoRef.current.children),
+          contentEls,
           { opacity: 0, y: 12 },
-          { opacity: 1, y: 0, duration: 0.24, stagger: 0.03 },
-          0.38,
+          { opacity: 1, y: 0, duration: 0.28, stagger: 0.06 },
+          0.22,
         );
       }
 
       tlRef.current = tl;
     });
+
 
     return () => {
       ctx.revert();
@@ -233,12 +169,6 @@ export function MobileNav() {
       lockBodyScroll();
       tl.timeScale(1).play();
     } else {
-      // Remove blur class before reverse — frees GPU from backdrop-filter cost
-      drawerRef.current?.classList.remove("drawer-blur-active");
-      glowRef.current?.classList.add("opacity-0");
-      // Direct style (NOT gsap.set) to avoid competing with timeline internals
-      if (backdropRef.current) backdropRef.current.style.willChange = "transform, opacity";
-      if (drawerRef.current) drawerRef.current.style.willChange = "transform, opacity";
       // 6× faster → near-instant close, non-blocking
       tl.timeScale(6).reverse();
     }
@@ -261,10 +191,26 @@ export function MobileNav() {
       {mounted &&
         createPortal(
           <>
+            {/* Drawer CSS — rendered once at portal root, not inside the animated drawer */}
+            <style>{`
+              .drawer-blur-inactive {
+                backdrop-filter: none;
+                -webkit-backdrop-filter: none;
+              }
+              .drawer-blur-active {
+                background-color: rgb(255 255 255 / 0.75) !important;
+                backdrop-filter: blur(16px) saturate(150%) !important;
+                -webkit-backdrop-filter: blur(16px) saturate(150%) !important;
+              }
+              .dark .drawer-blur-active {
+                background-color: rgb(9 9 15 / 0.7) !important;
+              }
+            `}</style>
+
             <div
               ref={backdropRef}
               onClick={closeMenu}
-              style={{ display: "none" }}
+              style={{ display: "none", contain: "layout style" }}
               className="fixed inset-0 z-[990] bg-black/20"
               aria-hidden="true"
             />
@@ -276,28 +222,12 @@ export function MobileNav() {
                 bg-white/95 dark:bg-[#0b0b12]/95
                 drawer-blur-inactive
                 border-e border-slate-200/70 dark:border-white/10
-                shadow-2xl shadow-black/30 overflow-hidden"
+                overflow-hidden"
             >
-              <style>{`
-                .drawer-blur-inactive {
-                  /* No blur during animation to prevent mobile lag */
-                  backdrop-filter: none;
-                  -webkit-backdrop-filter: none;
-                }
-                .drawer-blur-active {
-                  background-color: rgb(255 255 255 / 0.75) !important;
-                  backdrop-filter: blur(16px) saturate(150%) !important;
-                  -webkit-backdrop-filter: blur(16px) saturate(150%) !important;
-                }
-                .dark .drawer-blur-active {
-                  background-color: rgb(9 9 15 / 0.7) !important;
-                }
-              `}</style>
-
               <div className="absolute top-0 inset-x-0 h-[3px] bg-gradient-to-r from-blue-600 via-sky-400 to-indigo-600" />
 
-              {/* Glow orbs — always mounted, shown/hidden via opacity only (no unmount re-render) */}
-              <div ref={glowRef} className="opacity-0 transition-opacity duration-300 pointer-events-none">
+              {/* Glow orbs — opacity toggled via classList, no CSS transition to avoid compositor conflict */}
+              <div ref={glowRef} className="opacity-0 pointer-events-none">
                 <div className="absolute top-[-60px] end-[-60px] h-56 w-56 rounded-full bg-blue-500/10 dark:bg-blue-600/15 blur-xl" />
                 <div className="absolute bottom-[-40px] start-[-40px] h-48 w-48 rounded-full bg-sky-400/5 dark:bg-sky-500/10 blur-xl" />
               </div>
@@ -307,7 +237,6 @@ export function MobileNav() {
                 
                 <MobileNavLinks 
                   linksContainerRef={linksContainerRef} 
-                  setDividerRef={setDividerRef} 
                   navLinks={navLinks} 
                   closeMenu={closeMenu} 
                 />
