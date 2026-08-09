@@ -218,7 +218,7 @@ export function MobileNav() {
             <div
               ref={drawerRef}
               style={{ display: "none" }}
-              className="fixed top-0 z-[99999] h-[100vh] w-[70vw] max-w-[400px] start-0 flex flex-col overscroll-none
+              className="fixed top-0 z-[99999] h-[100dvh] w-[70vw] max-w-[400px] start-0 flex flex-col overscroll-none
                 bg-white/95 dark:bg-[#0b0b12]/95
                 drawer-blur-inactive
                 border-e border-slate-200/70 dark:border-white/10

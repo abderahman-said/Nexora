@@ -27,11 +27,8 @@ export function MobileNavFooter({
   social,
 }: MobileNavFooterProps) {
   return (
-    <div className="mt-auto space-y-4 shrink-0 pb-6 sm:pb-0">
-      <div
-        ref={footerInfoRef}
-        className="grid grid-cols-1 gap-1.5 sm:gap-2 text-[10px] md:text-xs"
-      >
+    <div ref={footerInfoRef} className="mt-auto space-y-4 shrink-0 pb-6 sm:pb-0">
+      <div className="grid grid-cols-1 gap-1.5 sm:gap-2 text-[10px] md:text-xs">
         <Link
           href={map.linkUrl}
           target="_blank"
