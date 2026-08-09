@@ -139,7 +139,7 @@ function animateSectionEntrance(sec: Element, reduceMotion: boolean, isMobile: b
     gsap.fromTo(
       sec,
       { y: 15 },
-      { y: 0, duration: 0.8, ease: "power3.out", clearProps: "transform" },
+      { y: 0, duration: 0.5, ease: "power3.out", clearProps: "transform" },
     );
     return;
   }
@@ -148,12 +148,12 @@ function animateSectionEntrance(sec: Element, reduceMotion: boolean, isMobile: b
   gsap.to(sec, {
     opacity: 1,
     y: 0,
-    duration: 0.8,
+    duration: 0.5,
     ease: "power3.out",
     clearProps: "opacity,transform",
     scrollTrigger: {
       trigger: sec,
-      start: "top 92%",
+      start: "top 98%",
       toggleActions: "play none none none",
       once: true,
     },
@@ -184,9 +184,9 @@ function animateSections(reduceMotion: boolean) {
       revealOnScroll([h], {
         reduceMotion,
         yOffset: 40,
-        visibleYOffset: 20,
-        duration: 0.9,
-        start: isMobile ? "top 100%" : "top 90%",
+        visibleYOffset: 15,
+        duration: 0.5,
+        start: isMobile ? "top 100%" : "top 95%",
       }),
     );
 
@@ -195,9 +195,9 @@ function animateSections(reduceMotion: boolean) {
       revealOnScroll(paragraphs, {
         reduceMotion,
         yOffset: 24,
-        visibleYOffset: 16,
-        duration: 0.7,
-        stagger: 0.08,
+        visibleYOffset: 12,
+        duration: 0.45,
+        stagger: 0.05,
       });
     }
   });
@@ -247,7 +247,7 @@ function animateCards(isMobile: boolean, reduceMotion: boolean) {
   hidden.forEach((card, i) => {
     gsap.set(card, {
       opacity: 0,
-      y: isMobile ? 25 : 45,
+      y: isMobile ? 15 : 25,
       x: hiddenX[i],
       scale: 0.97,
     });
@@ -263,7 +263,7 @@ function animateCards(isMobile: boolean, reduceMotion: boolean) {
       {
         y: 0,
         scale: 1,
-        duration: 0.7,
+        duration: 0.45,
         ease: "power3.out",
         stagger: isMobile ? 0 : 0.06,
         clearProps: "transform,translate,rotate,scale",
@@ -273,7 +273,7 @@ function animateCards(isMobile: boolean, reduceMotion: boolean) {
 
   if (hidden.length > 0) {
     ScrollTrigger.batch(hidden, {
-      start: isMobile ? "top 95%" : "top 88%",
+      start: isMobile ? "top 100%" : "top 95%",
       once: true,
       onEnter(batch) {
         if (!batch?.length) return;
@@ -282,9 +282,9 @@ function animateCards(isMobile: boolean, reduceMotion: boolean) {
           x: 0,
           y: 0,
           scale: 1,
-          duration: 0.7,
+          duration: 0.45,
           ease: "power3.out",
-          stagger: isMobile ? 0 : 0.08,
+          stagger: isMobile ? 0 : 0.05,
           overwrite: true,
           clearProps: "opacity,transform,translate,rotate,scale",
         });

@@ -37,16 +37,16 @@ export function useFooterGSAP({ footerRef, columnsRef, sidePanelRef, bgRef }: Us
         const columnItems = Array.from(columnsRef.current.children);
         gsap.fromTo(
           columnItems,
-          { opacity: 0, y: 30 },
+          { opacity: 0, y: 15 },
           {
             opacity: 1,
             y: 0,
-            duration: 0.8,
-            stagger: 0.12,
-            ease: "power2.out",
+            duration: 0.5,
+            stagger: 0.08,
+            ease: "power3.out",
             scrollTrigger: {
               trigger: footerRef.current,
-              start: "top 95%",
+              start: "top 100%",
               once: true,
               onEnter: () => clearTimeout(safetyTimer),
             },
@@ -58,16 +58,16 @@ export function useFooterGSAP({ footerRef, columnsRef, sidePanelRef, bgRef }: Us
       if (sidePanelRef.current) {
         gsap.fromTo(
           sidePanelRef.current,
-          { opacity: 0, x: 30 },
+          { opacity: 0, x: 15 },
           {
             opacity: 1,
             x: 0,
-            duration: 0.9,
-            delay: 0.2,
-            ease: "power2.out",
+            duration: 0.5,
+            delay: 0.1,
+            ease: "power3.out",
             scrollTrigger: {
               trigger: footerRef.current,
-              start: "top 95%",
+              start: "top 100%",
               once: true,
             },
           },

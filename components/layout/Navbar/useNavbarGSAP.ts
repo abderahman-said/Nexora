@@ -5,12 +5,7 @@ import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import type { UseNavbarGSAPProps } from './types';
 
-interface LenisInstance {
-  scroll: number;
-  on: (event: string, callback: () => void) => void;
-  off: (event: string, callback: () => void) => void;
-}
-type WindowWithLenis = Window & typeof globalThis & { __lenis?: LenisInstance };
+// Removed Lenis interface
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -56,12 +51,11 @@ export function useNavbarGSAP({
       // 2. Smart Scroll Handling — مصدر واحد بس للـ scroll، بيتحدد مرة واحدة بعد ما يتأكد Lenis جاهز ولا لأ
       let lastScrollY = 0;
       let isHidden = false;
-      let usingLenis = false;
+      // let usingLenis = false;
       let removeScrollListener: (() => void) | null = null;
 
       const getScrollY = () => {
-        const lenis = (window as WindowWithLenis).__lenis;
-        return lenis ? lenis.scroll : window.scrollY;
+        return window.scrollY;
       };
 
       const handleScroll = () => {
@@ -101,19 +95,11 @@ export function useNavbarGSAP({
         // نظّف أي listener قديم الأول
         removeScrollListener?.();
 
-        const lenis = (window as WindowWithLenis).__lenis;
         // نزامن lastScrollY مع المصدر الفعلي قبل ما نبدأ نستمع، عشان منحسبش diff وهمي
-        lastScrollY = Math.max(0, lenis ? lenis.scroll : window.scrollY);
+        lastScrollY = Math.max(0, window.scrollY);
 
-        if (lenis) {
-          usingLenis = true;
-          lenis.on("scroll", handleScroll);
-          removeScrollListener = () => lenis.off("scroll", handleScroll);
-        } else {
-          usingLenis = false;
-          window.addEventListener("scroll", handleScroll, { passive: true });
-          removeScrollListener = () => window.removeEventListener("scroll", handleScroll);
-        }
+        window.addEventListener("scroll", handleScroll, { passive: true });
+        removeScrollListener = () => window.removeEventListener("scroll", handleScroll);
       };
 
       // Sync initial scroll state — handles browser scroll restoration on fresh tab load
@@ -135,22 +121,9 @@ export function useNavbarGSAP({
       // في الأول، خد اللي متاح (غالبًا native، لأن Lenis لسه بيتعمله init)
       attachScrollListener();
 
-      // لو Lenis اتعمله init بعد كده (delay 100ms في SmoothScroll)، بدّل المصدر لـ lenis
-      let switchCheckInterval: ReturnType<typeof setInterval> | null = null;
-      if (!usingLenis) {
-        switchCheckInterval = setInterval(() => {
-          if ((window as WindowWithLenis).__lenis) {
-            attachScrollListener();
-            if (switchCheckInterval) clearInterval(switchCheckInterval);
-          }
-        }, 150);
-        // متستناش أكتر من كده، سيب الـ interval يشتغل لحد ما ينضاف أو يتشال الكومبوننت
-      }
-
       return () => {
         clearTimeout(initTimer);
         removeScrollListener?.();
-        if (switchCheckInterval) clearInterval(switchCheckInterval);
       };
     }, navRef);
 

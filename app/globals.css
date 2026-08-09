@@ -128,7 +128,7 @@ html , body {
   }
 
   html {
-    /* scroll-behavior: smooth removed — Lenis handles smooth scrolling, conflict causes jank */
+    scroll-behavior: smooth;
     scrollbar-width: thin;
     scrollbar-color: rgba(0, 0, 0, 0.2) transparent;
     overflow-x: hidden;

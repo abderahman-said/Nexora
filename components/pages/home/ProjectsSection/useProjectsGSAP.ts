@@ -21,17 +21,17 @@ export function useProjectsGSAP(
 
       gsap.fromTo(
         cards,
-        { opacity: 0, y: 35, scale: 0.96 },
+        { opacity: 0, y: 20, scale: 0.96 },
         {
           opacity: 1,
           y: 0,
           scale: 1,
-          duration: 0.6,
-          stagger: 0.08,
+          duration: 0.4,
+          stagger: 0.05,
           ease: 'power3.out',
           scrollTrigger: {
             trigger: section,
-            start: 'top 80%',
+            start: 'top 95%',
             once: true,
           },
         }

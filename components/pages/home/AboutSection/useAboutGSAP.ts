@@ -17,7 +17,7 @@ export function useAboutGSAP({ sectionRef, visualRef, contentRef }: UseAboutGSAP
             const tl = gsap.timeline({
                 scrollTrigger: {
                     trigger: section,
-                    start: 'top 80%',
+                    start: 'top 95%',
                     toggleActions: 'play none none none',
                     once: true,
                 }
@@ -26,13 +26,13 @@ export function useAboutGSAP({ sectionRef, visualRef, contentRef }: UseAboutGSAP
             // Entrance animation for Visual and Content
             tl.fromTo(
                 visual,
-                { opacity: 0, x: -50, scale: 0.95 },
-                { opacity: 1, x: 0, scale: 1, duration: 0.9, ease: 'power3.out' }
+                { opacity: 0, x: -25, scale: 0.95 },
+                { opacity: 1, x: 0, scale: 1, duration: 0.5, ease: 'power3.out' }
             ).fromTo(
                 content,
-                { opacity: 0, x: 50 },
-                { opacity: 1, x: 0, duration: 0.9, ease: 'power3.out' },
-                '-=0.7'
+                { opacity: 0, x: 25 },
+                { opacity: 1, x: 0, duration: 0.5, ease: 'power3.out' },
+                '-=0.3'
             );
 
         }, sectionRef);
