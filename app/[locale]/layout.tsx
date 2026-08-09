@@ -63,14 +63,6 @@ export async function generateMetadata({
     creator: 'Nexora Solutions',
     publisher: 'Nexora Solutions',
 
-    alternates: {
-      canonical: `${siteUrl}/${locale}`,
-      languages: {
-        en: `${siteUrl}/en`,
-        ar: `${siteUrl}/ar`,
-      },
-    },
-
     openGraph: {
       title: isAr
         ? 'نيكسورا للحلول البرمجية | تطوير مواقع وتطبيقات الموبايل'
