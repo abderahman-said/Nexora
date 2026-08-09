@@ -19,11 +19,7 @@ const DOT_POSITIONS = [
   { top: "50%", left: "8%", delay: "0.9s" },
 ] as const;
 
-function buildOverlayMarkup(
-  newLocale: string,
-  logoSrc: string,
-  isDark: boolean,
-) {
+function buildOverlayMarkup(logoSrc: string, isDark: boolean) {
   const dots = DOT_POSITIONS.map(
     ({ top, left, delay }) => `
       <span
@@ -132,7 +128,7 @@ export default function LanguageToggle({
 
     const loaderContainer = document.createElement("div");
     loaderContainer.className = "flex flex-col items-center justify-center";
-    loaderContainer.innerHTML = buildOverlayMarkup(newLocale, logoSrc, isDark);
+    loaderContainer.innerHTML = buildOverlayMarkup(logoSrc, isDark);
     overlay.appendChild(loaderContainer);
 
     // Only actually attach + fade in the overlay if the navigation is taking
