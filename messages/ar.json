@@ -155,8 +155,8 @@
     }
   },
   "homeProjects": {
-    "title_our": "أعمالنا ",
-    "title_work": "السابقة",
+    "title_our": "",
+    "title_work": "أعمالنا",
     "button_see_more": "عرض المزيد",
     "categories": {
       "mobile_e_commerce": "تطبيق متجر إلكتروني",
@@ -203,8 +203,8 @@
     }
   },
   "homeTeam": {
-    "title_our": "فريقنا ",
-    "title_team": "الرائع",
+    "title_our": "",
+    "title_team": "فريقنا",
     "founder_badge": "المؤسس",
     "roles": {
       "Founder_&_CEO": "مؤسس ومدير تنفيذي",
