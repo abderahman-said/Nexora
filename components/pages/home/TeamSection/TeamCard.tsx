@@ -14,7 +14,7 @@ export function TeamCard({ member }: TeamCardProps) {
                 group relative flex flex-col items-center text-center
                 bg-white dark:bg-[#0c101d]
                 border rounded-3xl p-5
-                transition-[transform,border-color,box-shadow] duration-300 ease-out
+                transition-all duration-300 ease-out
                 overflow-hidden hover:-translate-y-2
                 ${
                   isFounder
