@@ -4,10 +4,10 @@ import React, {
   useState,
   useRef,
   useEffect,
+  useCallback,
   useSyncExternalStore,
 } from "react";
 import { createPortal } from "react-dom";
-import { gsap } from "gsap";
 import { getNavLinks } from "@/lib/data/navData";
 import { useTranslations, useLocale } from "next-intl";
 import { useSiteData } from "@/hooks/useSiteData";
@@ -34,15 +34,18 @@ function useCloseOnEscape(isOpen: boolean, onClose: () => void) {
   }, [isOpen, onClose]);
 }
 
-/** Locks body scroll — deferred 1 RAF to avoid layout reflow in the same frame as GSAP play() */
 function lockBodyScroll() {
-  requestAnimationFrame(() => {
-    document.body.style.overflow = "hidden";
-  });
+  document.body.style.overflow = "hidden";
 }
 
 function unlockBodyScroll() {
   document.body.style.overflow = "";
+}
+
+// Cancel all pending Web Animations on an element (safe no-op if none)
+function cancelAnims(el: HTMLElement | null) {
+  if (!el) return;
+  el.getAnimations().forEach((a) => a.cancel());
 }
 
 export function MobileNav() {
@@ -59,7 +62,7 @@ export function MobileNav() {
     getServerSnapshot,
   );
 
-  // Menu button icon refs (Menu <-> X crossfade)
+  // Menu button icon refs
   const menuIconRef = useRef<HTMLSpanElement>(null);
   const closeIconRef = useRef<HTMLSpanElement>(null);
 
@@ -69,183 +72,265 @@ export function MobileNav() {
   const drawerHeaderRef = useRef<HTMLDivElement>(null);
   const linksContainerRef = useRef<HTMLUListElement>(null);
   const footerInfoRef = useRef<HTMLDivElement>(null);
-  const glowRef = useRef<HTMLDivElement>(null);
 
-  // Single persistent, reversible timeline: built once, paused + reversed,
-  // then toggled via play()/reverse().
-  const tlRef = useRef<gsap.core.Timeline | null>(null);
+  // Pending close-then-navigate callback
+  const pendingNavRef = useRef<(() => void) | null>(null);
 
-  // ── Build the timeline once the refs exist ──
-  useEffect(() => {
-    if (
-      !menuIconRef.current ||
-      !closeIconRef.current ||
-      !backdropRef.current ||
-      !drawerRef.current
-    ) {
-      return;
-    }
+  // ─── OPEN ───────────────────────────────────────────────────────────────────
+  const runOpenAnimation = useCallback(() => {
+    const backdrop = backdropRef.current;
+    const drawer = drawerRef.current;
+    if (!backdrop || !drawer) return;
 
-    const ctx = gsap.context(() => {
-      const tl = gsap.timeline({
-        paused: true,
-        reversed: true,
-        defaults: { ease: "power2.out", force3D: true },
-        onStart: () => {
-          if (backdropRef.current) {
-            backdropRef.current.style.display = "block";
-          }
-          if (drawerRef.current) {
-            drawerRef.current.style.display = "flex";
-          }
-        },
-        onComplete: () => {
-          // Add blur AFTER open animation ends — avoids backdrop-filter during sliding
-          drawerRef.current?.classList.add("drawer-blur-active");
-          glowRef.current?.classList.remove("opacity-0");
-        },
-        onReverseComplete: () => {
-          if (backdropRef.current) backdropRef.current.style.display = "none";
-          if (drawerRef.current) drawerRef.current.style.display = "none";
-          drawerRef.current?.classList.remove("drawer-blur-active");
-          glowRef.current?.classList.add("opacity-0");
-          unlockBodyScroll();
-        },
-      });
+    // Cancel any leftover animations from a previous open/close cycle
+    cancelAnims(backdrop);
+    cancelAnims(drawer);
 
-      // ── Phase 0: GPU-only (transform + opacity) — runs simultaneously ──
+    // Make visible
+    backdrop.style.display = "block";
+    drawer.style.display = "flex";
+    // Promote drawer to its own GPU layer for the slide animation
+    drawer.style.willChange = "transform";
 
-      // Icon crossfade
-      tl.to(menuIconRef.current, { rotate: 90, opacity: 0, scale: 0.6, duration: 0.2 }, 0)
-        .fromTo(closeIconRef.current,
-          { rotate: -90, opacity: 0, scale: 0.6 },
-          { rotate: 0, opacity: 1, scale: 1, duration: 0.25 },
-          0.06,
-        );
+    // Force reflow so display:flex is flushed before the animation starts
+    void drawer.offsetWidth;
 
-      // Backdrop fade
-      tl.fromTo(backdropRef.current, { opacity: 0 }, { opacity: 1, duration: 0.3 }, 0);
-
-      // Drawer slide — only transform, no shadow during animation (removed shadow-2xl)
-      tl.fromTo(
-        drawerRef.current,
-        { xPercent: isRtl ? 100 : -100 },
-        { xPercent: 0, duration: 0.38, ease: "power3.out" },
-        0,
-      );
-
-      // ── Phase 1: Content appears as ONE fade — much fewer per-frame calcs ──
-      // Collect all inner content elements into one array, animate as a group
-      const contentEls = [
-        drawerHeaderRef.current,
-        linksContainerRef.current,
-        footerInfoRef.current,
-      ].filter(Boolean);
-
-      if (contentEls.length) {
-        tl.fromTo(
-          contentEls,
-          { opacity: 0, y: 12 },
-          { opacity: 1, y: 0, duration: 0.28, stagger: 0.06 },
-          0.22,
-        );
-      }
-
-      tlRef.current = tl;
+    // Backdrop fade-in
+    backdrop.animate([{ opacity: 0 }, { opacity: 1 }], {
+      duration: 250,
+      easing: "ease-out",
+      fill: "forwards",
     });
 
+    // Drawer slide-in — GPU transform only, no layout changes
+    const slideFrom = isRtl ? "100%" : "-100%";
+    const drawerAnim = drawer.animate(
+      [
+        { transform: `translateX(${slideFrom})` },
+        { transform: "translateX(0)" },
+      ],
+      {
+        duration: 320,
+        easing: "cubic-bezier(0.16, 1, 0.3, 1)",
+        fill: "forwards",
+      },
+    );
 
-    return () => {
-      ctx.revert();
-      tlRef.current = null;
+    drawerAnim.onfinish = () => {
+      // Release will-change after animation — avoids permanent GPU memory cost
+      if (drawer) drawer.style.willChange = "auto";
     };
-  }, [mounted, isRtl]); 
+
+    // Icon crossfade: Menu → X
+    cancelAnims(menuIconRef.current);
+    cancelAnims(closeIconRef.current);
+    menuIconRef.current?.animate(
+      [
+        { opacity: 1, transform: "rotate(0deg) scale(1)" },
+        { opacity: 0, transform: "rotate(90deg) scale(0.6)" },
+      ],
+      { duration: 180, easing: "ease-out", fill: "forwards" },
+    );
+    closeIconRef.current?.animate(
+      [
+        { opacity: 0, transform: "rotate(-90deg) scale(0.6)" },
+        { opacity: 1, transform: "rotate(0deg) scale(1)" },
+      ],
+      { duration: 220, delay: 50, easing: "ease-out", fill: "forwards" },
+    );
+
+    // Inner content — staggered fade-up (no transform on container, GPU-safe)
+    const contentEls: HTMLElement[] = [
+      drawerHeaderRef.current as HTMLElement | null,
+      linksContainerRef.current as HTMLElement | null,
+      footerInfoRef.current as HTMLElement | null,
+    ].filter((el): el is HTMLElement => Boolean(el));
+
+    contentEls.forEach((el, i) => {
+      cancelAnims(el);
+      el.animate(
+        [
+          { opacity: 0, transform: "translateY(10px)" },
+          { opacity: 1, transform: "translateY(0)" },
+        ],
+        {
+          duration: 240,
+          delay: 180 + i * 50,
+          easing: "ease-out",
+          fill: "forwards",
+        },
+      );
+    });
+  }, [isRtl]);
+
+  // ─── CLOSE ──────────────────────────────────────────────────────────────────
+  const runCloseAnimation = useCallback(
+    (onDone?: () => void) => {
+      const backdrop = backdropRef.current;
+      const drawer = drawerRef.current;
+      if (!backdrop || !drawer) {
+        onDone?.();
+        return;
+      }
+
+      // Cancel lingering open animations immediately
+      cancelAnims(backdrop);
+      cancelAnims(drawer);
+
+      // Promote for GPU slide-out
+      drawer.style.willChange = "transform";
+
+      // Very fast close (~80ms) so navigation feels instant
+      const closeDuration = 80;
+
+      backdrop.animate([{ opacity: 1 }, { opacity: 0 }], {
+        duration: closeDuration,
+        easing: "ease-in",
+        fill: "forwards",
+      });
+
+      const slideTo = isRtl ? "100%" : "-100%";
+      const drawerAnim = drawer.animate(
+        [
+          { transform: "translateX(0)" },
+          { transform: `translateX(${slideTo})` },
+        ],
+        { duration: closeDuration, easing: "ease-in", fill: "forwards" },
+      );
+
+      // Icon crossfade: X → Menu
+      cancelAnims(closeIconRef.current);
+      cancelAnims(menuIconRef.current);
+      closeIconRef.current?.animate(
+        [
+          { opacity: 1, transform: "rotate(0deg) scale(1)" },
+          { opacity: 0, transform: "rotate(90deg) scale(0.6)" },
+        ],
+        { duration: closeDuration, easing: "ease-in", fill: "forwards" },
+      );
+      menuIconRef.current?.animate(
+        [
+          { opacity: 0, transform: "rotate(-90deg) scale(0.6)" },
+          { opacity: 1, transform: "rotate(0deg) scale(1)" },
+        ],
+        { duration: closeDuration, easing: "ease-in", fill: "forwards" },
+      );
+
+      // Reset inner content opacity so next open starts fresh
+      const contentEls: HTMLElement[] = [
+        drawerHeaderRef.current as HTMLElement | null,
+        linksContainerRef.current as HTMLElement | null,
+        footerInfoRef.current as HTMLElement | null,
+      ].filter((el): el is HTMLElement => Boolean(el));
+
+      contentEls.forEach((el) => {
+        cancelAnims(el);
+        el.animate([{ opacity: 0 }], {
+          duration: closeDuration,
+          easing: "ease-in",
+          fill: "forwards",
+        });
+      });
+
+      drawerAnim.onfinish = () => {
+        backdrop.style.display = "none";
+        drawer.style.display = "none";
+        drawer.style.willChange = "auto";
+        unlockBodyScroll();
+        // Fire any pending navigation AFTER the drawer is fully hidden
+        onDone?.();
+      };
+    },
+    [isRtl],
+  );
 
   useEffect(() => {
-    const tl = tlRef.current;
-    if (!tl) return;
-
+    if (!mounted) return;
     if (isOpen) {
       lockBodyScroll();
-      tl.timeScale(1).play();
+      runOpenAnimation();
     } else {
-      // 6× faster → near-instant close, non-blocking
-      tl.timeScale(6).reverse();
+      // Check if there's a pending navigation waiting for close to finish
+      const nav = pendingNavRef.current;
+      pendingNavRef.current = null;
+      runCloseAnimation(nav ?? undefined);
     }
-  }, [isOpen]);
+  }, [isOpen, mounted, runOpenAnimation, runCloseAnimation]);
 
   useEffect(() => unlockBodyScroll, []);
 
   useCloseOnEscape(isOpen, () => setIsOpen(false));
-  const closeMenu = () => setIsOpen(false);
+
+  /**
+   * Called by MobileNavLinks when a link is tapped.
+   * Closes the drawer first, then runs the callback once the animation
+   * completes — avoids the JS navigation + close animation racing each other.
+   */
+  const closeMenuThenRun = useCallback(
+    (cb: () => void) => {
+      pendingNavRef.current = cb;
+      setIsOpen(false);
+    },
+    [],
+  );
+
+  const closeMenu = useCallback(() => setIsOpen(false), []);
 
   return (
     <>
-      <MobileNavTrigger 
-        isOpen={isOpen} 
-        toggleMenu={() => setIsOpen((prev) => !prev)} 
-        menuIconRef={menuIconRef} 
-        closeIconRef={closeIconRef} 
+      <MobileNavTrigger
+        isOpen={isOpen}
+        toggleMenu={() => setIsOpen((prev) => !prev)}
+        menuIconRef={menuIconRef}
+        closeIconRef={closeIconRef}
       />
 
       {mounted &&
         createPortal(
           <>
-            {/* Drawer CSS — rendered once at portal root, not inside the animated drawer */}
-            <style>{`
-              .drawer-blur-inactive {
-                backdrop-filter: none;
-                -webkit-backdrop-filter: none;
-              }
-              .drawer-blur-active {
-                background-color: rgb(255 255 255 / 0.75) !important;
-                backdrop-filter: blur(16px) saturate(150%) !important;
-                -webkit-backdrop-filter: blur(16px) saturate(150%) !important;
-              }
-              .dark .drawer-blur-active {
-                background-color: rgb(9 9 15 / 0.7) !important;
-              }
-            `}</style>
-
             <div
               ref={backdropRef}
               onClick={closeMenu}
               style={{ display: "none", contain: "layout style" }}
-              className="fixed inset-0 z-[990] bg-black/20"
+              className="fixed inset-0 z-[990] bg-black/30"
               aria-hidden="true"
             />
 
             <div
               ref={drawerRef}
-              style={{ display: "none" }}
+              style={{ display: "none", contain: "layout style paint" }}
               className="fixed top-0 z-[99999] h-[100dvh] w-[70vw] max-w-[400px] start-0 flex flex-col overscroll-none
-                bg-white/95 dark:bg-[#0b0b12]/95
-                drawer-blur-inactive
+                bg-white dark:bg-[#0b0b12]
                 border-e border-slate-200/70 dark:border-white/10
                 overflow-hidden"
             >
+              {/* Top accent bar */}
               <div className="absolute top-0 inset-x-0 h-[3px] bg-gradient-to-r from-blue-600 via-sky-400 to-indigo-600" />
 
-              {/* Glow orbs — opacity toggled via classList, no CSS transition to avoid compositor conflict */}
-              <div ref={glowRef} className="opacity-0 pointer-events-none">
-                <div className="absolute top-[-60px] end-[-60px] h-56 w-56 rounded-full bg-blue-500/10 dark:bg-blue-600/15 blur-xl" />
-                <div className="absolute bottom-[-40px] start-[-40px] h-48 w-48 rounded-full bg-sky-400/5 dark:bg-sky-500/10 blur-xl" />
-              </div>
+              {/* Subtle static glow — no blur filter, just a soft radial gradient */}
+              <div
+                className="pointer-events-none absolute inset-0"
+                style={{
+                  background:
+                    "radial-gradient(ellipse 260px 200px at top right, rgba(59,130,246,0.07) 0%, transparent 70%), " +
+                    "radial-gradient(ellipse 200px 160px at bottom left, rgba(14,165,233,0.04) 0%, transparent 70%)",
+                }}
+              />
 
               <div className="flex flex-col flex-1 px-5 sm:px-8 pt-3 sm:pt-5 pb-8 gap-4 md:gap-10 relative z-10 overflow-y-auto overflow-x-hidden overscroll-contain">
                 <MobileNavHeader drawerHeaderRef={drawerHeaderRef} closeMenu={closeMenu} />
-                
-                <MobileNavLinks 
-                  linksContainerRef={linksContainerRef} 
-                  navLinks={navLinks} 
-                  closeMenu={closeMenu} 
+
+                <MobileNavLinks
+                  linksContainerRef={linksContainerRef}
+                  navLinks={navLinks}
+                  closeMenuThenRun={closeMenuThenRun}
                 />
 
-                <MobileNavFooter 
-                  footerInfoRef={footerInfoRef} 
-                  contact={contact} 
-                  map={map} 
-                  social={social} 
+                <MobileNavFooter
+                  footerInfoRef={footerInfoRef}
+                  contact={contact}
+                  map={map}
+                  social={social}
                 />
               </div>
             </div>

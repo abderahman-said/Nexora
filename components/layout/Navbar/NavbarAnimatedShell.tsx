@@ -1,20 +1,21 @@
 "use client";
 
-import React, { useRef  } from "react";
-import { useNavbarGSAP } from "./useNavbarGSAP";
+import React, { useRef } from "react";
+import { useNavbarScroll } from "./useNavbarScroll";
 import Container from "@/components/ui/Container";
-import type { NavbarAnimatedShellProps } from './types';
+import type { NavbarAnimatedShellProps } from "./types";
 
 export function NavbarAnimatedShell({ children }: NavbarAnimatedShellProps) {
   const navRef = useRef<HTMLElement>(null);
   const navInnerRef = useRef<HTMLDivElement>(null);
 
-  useNavbarGSAP({ navRef, navInnerRef });
+  useNavbarScroll({ navRef });
 
   return (
     <header
       ref={navRef}
-      className="group fixed left-0 top-0 z-[1000] w-full pointer-events-none transition-[padding] duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] "
+      className="group fixed left-0 top-0 z-[1000] w-full pointer-events-none transition-[padding] duration-500 ease-[cubic-bezier(0.16,1,0.3,1)]"
+      style={{ transition: "transform 0.35s cubic-bezier(0.16,1,0.3,1), padding 0.5s cubic-bezier(0.16,1,0.3,1)" }}
     >
       <Container
         ref={navInnerRef}

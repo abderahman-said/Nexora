@@ -1,24 +1,24 @@
 "use client";
 
 import { useEffect } from "react";
-import Lenis from "lenis";
-import { gsap } from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
 
-gsap.registerPlugin(ScrollTrigger);
-
+// Type declaration only — referenced by TransitionScribble.tsx
 declare global {
   interface Window {
-    __lenis?: Lenis;
+    __lenis?: { scrollTo: (target: number, opts?: object) => void };
   }
 }
 
+
+/**
+ * Lightweight tab-visibility title switcher.
+ * All GSAP / Lenis / ScrollTrigger references removed.
+ */
 export default function SmoothScroll() {
   useEffect(() => {
-    let handleVisibility: (() => void) | null = null;
-
     let savedTitle = "";
-    handleVisibility = () => {
+
+    const handleVisibility = () => {
       if (document.hidden) {
         savedTitle = document.title;
         document.title = "Hey, over here!👋 - Nexora";
@@ -26,12 +26,9 @@ export default function SmoothScroll() {
         document.title = savedTitle;
       }
     };
-    document.addEventListener("visibilitychange", handleVisibility);
 
-    return () => {
-      if (handleVisibility)
-        document.removeEventListener("visibilitychange", handleVisibility);
-    };
+    document.addEventListener("visibilitychange", handleVisibility);
+    return () => document.removeEventListener("visibilitychange", handleVisibility);
   }, []);
 
   return null;

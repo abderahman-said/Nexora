@@ -4,7 +4,7 @@ import { useRef } from 'react';
 import HeroBackground from './HeroBackground';
 import HeroContent from './HeroContent';
 // import HeroCircularBadge from './HeroCircularBadge';
-import { useVideoHeroGSAP } from './useVideoHeroGSAP';
+import { useVideoHeroAnimation } from './useVideoHeroAnimation';
 import Container from '@/components/ui/Container';
 
 export default function VideoHero() {
@@ -17,7 +17,7 @@ export default function VideoHero() {
     const glowRef = useRef<HTMLDivElement>(null);
     const imageRef = useRef<HTMLDivElement>(null);
 
-    useVideoHeroGSAP({ heroRef, headRef, subRef, statsRef, ctaRef, badgeRef, glowRef, imageRef });
+    useVideoHeroAnimation({ heroRef, headRef, subRef, statsRef, ctaRef, badgeRef, glowRef, imageRef });
 
     return (
         <section

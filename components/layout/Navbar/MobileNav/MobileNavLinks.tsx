@@ -6,24 +6,25 @@ import { ArrowRight } from 'lucide-react';
 interface MobileNavLinksProps {
   linksContainerRef: React.RefObject<HTMLUListElement | null>;
   navLinks: { label: string; href: string }[];
-  closeMenu: () => void;
+  /** Close the drawer first, then run the callback once animation finishes */
+  closeMenuThenRun: (cb: () => void) => void;
 }
 
-export function MobileNavLinks({ linksContainerRef, navLinks, closeMenu }: MobileNavLinksProps) {
+export function MobileNavLinks({ linksContainerRef, navLinks, closeMenuThenRun }: MobileNavLinksProps) {
   const router = useRouter();
 
   const handleNavClick = useCallback(
     (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
       e.preventDefault();
-      // Close menu and navigate in a single low-priority transition.
-      // No setTimeout — the GSAP timeline runs on the compositor (GPU)
-      // so it won't block the JS navigation call.
-      React.startTransition(() => {
-        closeMenu();
-        router.push(href);
+      // Close the drawer completely, THEN navigate.
+      // This prevents the close animation and route transition from racing.
+      closeMenuThenRun(() => {
+        React.startTransition(() => {
+          router.push(href);
+        });
       });
     },
-    [router, closeMenu]
+    [router, closeMenuThenRun],
   );
 
   return (
