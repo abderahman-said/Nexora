@@ -9,7 +9,6 @@ import { projectService } from "@/lib/services/projectService";
 import SectionHeader from "@/components/ui/SectionHeader";
 import Container from "@/components/ui/Container";
 import GSAPSlider from "@/components/ui/GSAPSlider";
-import { useProjectsGSAP } from "./useProjectsGSAP";
 
 export default function ProjectsSection() {
   const locale = useLocale();
@@ -17,8 +16,6 @@ export default function ProjectsSection() {
   const allProjects = projectService.getAllProjects();
   const sectionRef = useRef<HTMLElement>(null);
   const sliderWrapperRef = useRef<HTMLDivElement>(null);
-
-  useProjectsGSAP(sectionRef, sliderWrapperRef);
 
   return (
     <section

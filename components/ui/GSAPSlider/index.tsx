@@ -88,7 +88,12 @@ export default function GSAPSlider<T extends { id?: string | number }>(
       window.removeEventListener("resize", onResize);
       cancelAnimationFrame(raf);
     };
-  }, [defaultVisibleCount, mobileVisibleCount, tabletVisibleCount, centerModeMobile]);
+  }, [
+    defaultVisibleCount,
+    mobileVisibleCount,
+    tabletVisibleCount,
+    centerModeMobile,
+  ]);
 
   const totalItems = items.length;
 
@@ -103,14 +108,15 @@ export default function GSAPSlider<T extends { id?: string | number }>(
 
   // If infinite={true}, we always use real loop and every item can be the active/leftmost slide
   const useLoop = infinite;
-  
+
   // Dots/pagination counts
   // - loop or centeredSlides mode: every item can be active → dotsCount = totalItems
   // - normal non-loop paged mode: one dot per "page" → dotsCount = totalItems - visibleCount + 1
   const effectiveVisible = isCenterMode ? 1 : visibleCount;
-  const maxIndex = (useLoop || useCenteredSlides)
-    ? Math.max(0, totalItems - 1)
-    : Math.max(0, Math.floor(totalItems - effectiveVisible));
+  const maxIndex =
+    useLoop || useCenteredSlides
+      ? Math.max(0, totalItems - 1)
+      : Math.max(0, Math.floor(totalItems - effectiveVisible));
   const dotsCount = maxIndex + 1;
 
   const goToSlide = useCallback(
@@ -160,6 +166,7 @@ export default function GSAPSlider<T extends { id?: string | number }>(
             spaceBetween={spaceBetween}
             centeredSlides={useCenteredSlides}
             loop={useLoop}
+            loopAdditionalSlides={useLoop ? totalItems : undefined}
             allowTouchMove={enableDrag}
             grabCursor={enableDrag}
             speed={600}
@@ -215,7 +222,7 @@ export default function GSAPSlider<T extends { id?: string | number }>(
 
                     return (
                       <div
-                        className={`h-full flex flex-col origin-center transition-all duration-500 ease-in-out ${hasScale ? "px-0.5 md:px-1" : "px-2 sm:px-3.5"}`}
+                        className={`h-full flex flex-col origin-center transition-all duration-500 ease-in-out ${hasScale ? "px-0.5 md:px-1" : ""}`}
                         style={{
                           transform: `scale(${slideScale})`,
                           opacity: slideOpacity,
@@ -232,7 +239,7 @@ export default function GSAPSlider<T extends { id?: string | number }>(
                             isActive={slideIsActive}
                           />
                         ) : (
-                          renderItem?.(item, index, slideIsActive) ?? null
+                          (renderItem?.(item, index, slideIsActive) ?? null)
                         )}
                       </div>
                     );

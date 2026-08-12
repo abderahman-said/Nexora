@@ -2,7 +2,6 @@
 
 import { useRef, useEffect, useCallback, MouseEvent } from "react";
 import Link from 'next/link';
-import gsap from "gsap";
 import OptimizedImage from "@/components/ui/OptimizedImage";
 import type { ProjectCardProps } from "./types";
 import { useTranslations } from "next-intl";
@@ -20,12 +19,6 @@ export default function ProjectCard({ p }: ProjectCardProps) {
   const reducedMotionRef = useRef(false);
 
   useEffect(() => {
-    const card = cardRef.current;
-    const glare = glareRef.current;
-    if (!card) return;
-
-    gsap.set(card, { transformPerspective: 800, transformOrigin: "50% 50%" });
-
     const desktopMql = window.matchMedia(DESKTOP_QUERY);
     const motionMql = window.matchMedia("(prefers-reduced-motion: reduce)");
 
@@ -40,8 +33,6 @@ export default function ProjectCard({ p }: ProjectCardProps) {
     return () => {
       desktopMql.removeEventListener("change", syncDesktop);
       motionMql.removeEventListener("change", syncMotion);
-      if (card) gsap.killTweensOf(card);
-      if (glare) gsap.killTweensOf(glare);
     };
   }, []);
 
@@ -50,19 +41,14 @@ export default function ProjectCard({ p }: ProjectCardProps) {
   const handleMouseEnter = useCallback(() => {
     if (!canAnimate() || !cardRef.current) return;
     rectRef.current = cardRef.current.getBoundingClientRect();
-    gsap.to(cardRef.current, {
-      y: LIFT_Y,
-      duration: 0.35,
-      ease: "power3.out",
-      overwrite: "auto",
-    });
+    
+    // Equivalent to power3.out
+    cardRef.current.style.transition = "transform 0.35s cubic-bezier(0.215, 0.61, 0.355, 1)";
+    cardRef.current.style.transform = `perspective(800px) translateY(${LIFT_Y}px) rotateX(0deg) rotateY(0deg)`;
+    
     if (glareRef.current) {
-      gsap.to(glareRef.current, {
-        opacity: 1,
-        duration: 0.3,
-        ease: "power1.out",
-        overwrite: "auto",
-      });
+      glareRef.current.style.transition = "opacity 0.3s ease-out";
+      glareRef.current.style.opacity = "1";
     }
   }, []);
 
@@ -73,46 +59,27 @@ export default function ProjectCard({ p }: ProjectCardProps) {
     const py = e.clientY - rect.top;
 
     const rotateY = ((px - rect.width / 2) / (rect.width / 2)) * MAX_TILT_DEG;
-    const rotateX =
-      ((py - rect.height / 2) / (rect.height / 2)) * -MAX_TILT_DEG;
+    const rotateX = ((py - rect.height / 2) / (rect.height / 2)) * -MAX_TILT_DEG;
 
-    gsap.to(cardRef.current, {
-      rotateX,
-      rotateY,
-      duration: 0.25,
-      ease: "power2.out",
-      overwrite: "auto",
-    });
+    // Equivalent to power2.out
+    cardRef.current.style.transition = "transform 0.25s cubic-bezier(0.25, 0.46, 0.45, 0.94)";
+    cardRef.current.style.transform = `perspective(800px) translateY(${LIFT_Y}px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
 
     if (glareRef.current) {
-      glareRef.current.style.setProperty(
-        "--glare-x",
-        `${(px / rect.width) * 100}%`,
-      );
-      glareRef.current.style.setProperty(
-        "--glare-y",
-        `${(py / rect.height) * 100}%`,
-      );
+      glareRef.current.style.setProperty("--glare-x", `${(px / rect.width) * 100}%`);
+      glareRef.current.style.setProperty("--glare-y", `${(py / rect.height) * 100}%`);
     }
   }, []);
 
   const handleMouseLeave = useCallback(() => {
     if (!canAnimate() || !cardRef.current) return;
-    gsap.to(cardRef.current, {
-      y: 0,
-      rotateX: 0,
-      rotateY: 0,
-      duration: 0.4,
-      ease: "power3.out",
-      overwrite: "auto",
-    });
+    
+    cardRef.current.style.transition = "transform 0.4s cubic-bezier(0.215, 0.61, 0.355, 1)";
+    cardRef.current.style.transform = `perspective(800px) translateY(0px) rotateX(0deg) rotateY(0deg)`;
+    
     if (glareRef.current) {
-      gsap.to(glareRef.current, {
-        opacity: 0,
-        duration: 0.3,
-        ease: "power1.out",
-        overwrite: "auto",
-      });
+      glareRef.current.style.transition = "opacity 0.3s ease-out";
+      glareRef.current.style.opacity = "0";
     }
     rectRef.current = null;
   }, []);
@@ -124,7 +91,7 @@ export default function ProjectCard({ p }: ProjectCardProps) {
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
       className="animate-as-card proj-3d-card group/3d relative h-full w-full cursor-pointer py-2 sm:py-3 md:py-4 will-change-transform hover:z-50"
-      style={{ transformStyle: "preserve-3d" }}
+      style={{ transformStyle: "preserve-3d", transformOrigin: "50% 50%", transform: "perspective(800px)" }}
     >
       <Link
         href={p.link || "#"}
@@ -154,7 +121,7 @@ export default function ProjectCard({ p }: ProjectCardProps) {
 
         {/* Content overlaid at the bottom */}
         <div className="relative z-[3] flex h-full flex-col justify-end gap-2 sm:gap-3 px-5 py-3 sm:px-6  md:px-7 md:py-4 pointer-events-none">
-          <h3 className="m-0 mb-1.5 sm:mb-2 text-[clamp(19px,4vw,28px)] font-black leading-[1.18] tracking-[-0.03em] text-slate-900 dark:text-white transition-colors duration-300 group-hover/3d:text-blue-600 dark:group-hover/3d:text-blue-300 gsap-managed">
+          <h3 className="m-0 mb-1.5 sm:mb-2 text-[clamp(19px,4vw,28px)] font-black leading-[1.18] tracking-[-0.03em] text-slate-900 dark:text-white transition-colors duration-300 group-hover/3d:text-blue-600 dark:group-hover/3d:text-blue-300">
             {p.name}
           </h3>
           <p className="mb-2 sm:mb-3 text-[0.68rem] sm:text-[0.75rem] font-bold uppercase tracking-[0.1em] text-slate-600 dark:text-slate-300">

@@ -1,7 +1,6 @@
 'use client';
 
 import { useEffect } from 'react';
-import { gsap } from 'gsap';
 import { ANIMATION_CONFIG } from '@/lib/data';
 
 export default function TransitionScribble() {
@@ -19,13 +18,14 @@ export default function TransitionScribble() {
 
         const runScribbleAnimation = (e: Event) => {
             if (e) e.preventDefault();
-            if (gsap.isTweening(transitionScribblePath) || gsap.isTweening(transitionScribbleSvg) || document.body.classList.contains('is-transitioning')) return;
+            if (document.body.classList.contains('is-transitioning')) return;
 
             const config = ANIMATION_CONFIG.transitionScribble;
-            const durIn = config.durationIn || 0.8;
-            const durOut = config.durationOut || 1.5;
+            const durInMs = (config.durationIn || 0.8) * 1000;
+            const durOutMs = (config.durationOut || 1.5) * 1000;
 
-            gsap.set(transitionScribbleSvg, { scale: config.scale, opacity: 1 });
+            transitionScribbleSvg.style.transform = `scale(${config.scale})`;
+            transitionScribbleSvg.style.opacity = '1';
 
             const pathLength = transitionScribblePath.getTotalLength();
             const l = pathLength + 5;
@@ -51,57 +51,91 @@ export default function TransitionScribble() {
             }
 
             transitionLogo.style.color = logoColor;
-
-            gsap.set(transitionScribblePath, { strokeDasharray: l, strokeDashoffset: l, strokeWidth: config.strokeWidthStart, opacity: 1 });
-            gsap.set(transitionScribbleSvg, { opacity: 1, x: 0, y: 0, rotation: 0 });
-            gsap.set(transitionLogo, { opacity: 0, scale: 1 });
-
+            
             document.body.classList.add('is-transitioning');
             const cursorBubble = document.querySelector('.js-cursor-bubble');
-            if (cursorBubble) gsap.to(cursorBubble, { opacity: 0, duration: 0.2 });
+            if (cursorBubble) {
+                cursorBubble.animate([
+                    { opacity: 1 },
+                    { opacity: 0 }
+                ], { duration: 200, fill: 'forwards' });
+            }
 
-            const drawTl = gsap.timeline({
-                onComplete: () => {
+            // Path Animation Part 1: Draw IN
+            const pathAnimIn = transitionScribblePath.animate([
+                { strokeDasharray: `${l}px`, strokeDashoffset: l, strokeWidth: config.strokeWidthStart },
+                { strokeDasharray: `${l}px`, strokeDashoffset: 0, strokeWidth: config.strokeWidthMax }
+            ], {
+                duration: durInMs,
+                easing: 'ease-in-out',
+                fill: 'forwards'
+            });
+
+            // Logo Animation: Fade IN
+            transitionLogo.animate([
+                { opacity: 0, visibility: 'hidden' },
+                { opacity: 1, visibility: 'visible' }
+            ], {
+                delay: durInMs * 0.5,
+                duration: durInMs * 0.5,
+                easing: 'ease-out',
+                fill: 'forwards'
+            });
+
+            // Logo Animation: Rotate Loop
+            const svg = transitionLogo.querySelector('svg');
+            let logoRotateAnim: Animation | null = null;
+            if (svg) {
+                logoRotateAnim = svg.animate([
+                    { transform: 'rotate(-5deg)' },
+                    { transform: 'rotate(5deg)' }
+                ], {
+                    delay: durInMs * 0.5,
+                    duration: 150,
+                    iterations: Infinity,
+                    direction: 'alternate',
+                    easing: 'steps(2, end)'
+                });
+            }
+
+            pathAnimIn.onfinish = () => {
+                // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                const lenis = (window as any).__lenis;
+                if (lenis) lenis.scrollTo(0, { immediate: true });
+                else window.scrollTo(0, 0);
+
+                // Path Animation Part 2: Draw OUT
+                const pathAnimOut = transitionScribblePath.animate([
+                    { strokeDasharray: `${l}px`, strokeDashoffset: 0, strokeWidth: config.strokeWidthMax },
+                    { strokeDasharray: `${l}px`, strokeDashoffset: -l, strokeWidth: config.strokeWidthStart }
+                ], {
+                    duration: durOutMs,
+                    easing: 'ease-in-out',
+                    fill: 'forwards'
+                });
+
+                // Logo Animation: Fade OUT
+                transitionLogo!.animate([
+                    { opacity: 1 },
+                    { opacity: 0 }
+                ], {
+                    delay: durOutMs * 0.48,
+                    duration: 200,
+                    fill: 'forwards'
+                });
+
+                pathAnimOut.onfinish = () => {
                     document.body.classList.remove('is-transitioning');
-                    gsap.set(transitionScribblePath, { strokeWidth: '0%' });
-                    gsap.set(transitionScribbleSvg, { opacity: 0 });
+                    transitionScribblePath.style.strokeWidth = '0%';
+                    transitionScribbleSvg.style.opacity = '0';
                     if (transitionLogo && transitionLogo.parentNode) {
                         transitionLogo.parentNode.removeChild(transitionLogo);
                     }
-                }
-            });
-
-            drawTl.to(transitionScribblePath, { strokeDashoffset: 0, duration: durIn, ease: 'power1.inOut' }, 0);
-            drawTl.to(transitionScribblePath, { strokeWidth: config.strokeWidthMax, duration: durIn, ease: 'power2.inOut' }, 0);
-
-            drawTl.call(() => {
-                const lenis = window.__lenis;
-                if (lenis) lenis.scrollTo(0, { immediate: true });
-                else window.scrollTo(0, 0);
-            }, undefined, durIn);
-
-            drawTl.to(transitionScribblePath, { strokeDashoffset: -l, duration: durOut, ease: 'power2.inOut' }, durIn);
-            drawTl.to(transitionScribblePath, { strokeWidth: config.strokeWidthStart, duration: durOut, ease: 'power2.inOut' }, durIn);
-
-            drawTl.set(transitionLogo, { autoAlpha: 0 }, 0);
-            drawTl.to(transitionLogo, {
-                autoAlpha: 1, duration: durIn * 0.5, ease: 'power2.out',
-                onStart: () => {
-                    const svg = transitionLogo?.querySelector('svg');
-                    if (svg) gsap.to(svg, { rotation: 5, duration: 0.15, repeat: -1, yoyo: true, ease: 'steps(1)', overwrite: 'auto' });
-                }
-            }, durIn * 0.5);
-
-            drawTl.set(transitionLogo, {
-                autoAlpha: 0,
-                onComplete: () => {
-                    const svg = transitionLogo?.querySelector('svg');
-                    if (svg) {
-                        gsap.killTweensOf(svg);
-                        gsap.set(svg, { rotation: 0 });
+                    if (logoRotateAnim) {
+                        logoRotateAnim.cancel();
                     }
-                }
-            }, durIn + (durOut * 0.48));
+                };
+            };
         };
 
         logoTruusClickable.addEventListener('click', runScribbleAnimation);
