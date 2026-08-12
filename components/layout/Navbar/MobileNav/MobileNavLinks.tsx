@@ -1,6 +1,7 @@
 import React from 'react';
 import Link from 'next/link';
 import { ArrowRight } from 'lucide-react';
+import { usePathname } from 'next/navigation';
 
 interface MobileNavLinksProps {
   navLinks: { label: string; href: string }[];
@@ -8,8 +9,12 @@ interface MobileNavLinksProps {
 }
 
 export function MobileNavLinks({ navLinks, closeMenu }: MobileNavLinksProps) {
+  const pathname = usePathname();
 
-  const handleLinkClick = () => {
+  const handleLinkClick = (href: string) => {
+    if (href !== pathname && !href.startsWith('#')) {
+      window.dispatchEvent(new Event('start-nav-loader'));
+    }
     closeMenu();
   };
 
@@ -21,7 +26,7 @@ export function MobileNavLinks({ navLinks, closeMenu }: MobileNavLinksProps) {
             <Link
               href={href}
               prefetch={true}
-              onClick={handleLinkClick}
+              onClick={() => handleLinkClick(href)}
               style={{ touchAction: 'manipulation' }}
               className="group flex items-center justify-between gap-4 py-2 border-b border-slate-100 dark:border-white/[0.06]"
             >

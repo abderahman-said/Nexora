@@ -21,17 +21,34 @@ function LoaderContent() {
   const searchParams = useSearchParams();
   const { isDark } = useTheme();
 
+  const targetPathnameRef = React.useRef<string | null>(null);
+
   useEffect(() => {
-    const handleStart = () => setIsLoading(true);
+    const handleStart = () => {
+      targetPathnameRef.current = pathname;
+      setIsLoading(true);
+    };
     window.addEventListener("start-nav-loader", handleStart);
     return () => window.removeEventListener("start-nav-loader", handleStart);
-  }, []);
+  }, [pathname]);
 
   useEffect(() => {
     if (isLoading) {
-      // Small delay to ensure the page renders before we hide the loader
-      const t = setTimeout(() => setIsLoading(false), 200);
-      return () => clearTimeout(t);
+      // Hide loader ONLY when pathname actually changes away from the initial route
+      if (targetPathnameRef.current !== null && pathname !== targetPathnameRef.current) {
+        const t = setTimeout(() => {
+          setIsLoading(false);
+          targetPathnameRef.current = null;
+        }, 150);
+        return () => clearTimeout(t);
+      } else {
+        // Safety timeout (3.5s) if navigation is cancelled or stays on same route
+        const safety = setTimeout(() => {
+          setIsLoading(false);
+          targetPathnameRef.current = null;
+        }, 3500);
+        return () => clearTimeout(safety);
+      }
     }
   }, [pathname, searchParams, isLoading]);
 
