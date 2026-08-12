@@ -15,8 +15,14 @@ const DOT_POSITIONS = [
   { top: "50%", left: "8%", delay: "0.9s" },
 ] as const;
 
+// How long the loader must stay visible before we bother rendering the
+// heavier dot-ping animations. Fast navigations never reach this, so the
+// heaviest part of the loader simply never renders for most clicks.
+const DOTS_APPEAR_AFTER_MS = 300;
+
 function LoaderContent() {
   const [isLoading, setIsLoading] = useState(false);
+  const [showDots, setShowDots] = useState(false);
   const pathname = usePathname();
   const searchParams = useSearchParams();
   const { isDark } = useTheme();
@@ -26,7 +32,10 @@ function LoaderContent() {
   useEffect(() => {
     const handleStart = () => {
       targetPathnameRef.current = pathname;
-      setIsLoading(true);
+      // Defer to the next frame so any in-flight UI work (like the mobile
+      // drawer closing) gets to finish its own frame first, instead of
+      // everything competing for the main thread in the same tick.
+      requestAnimationFrame(() => setIsLoading(true));
     };
     window.addEventListener("start-nav-loader", handleStart);
     return () => window.removeEventListener("start-nav-loader", handleStart);
@@ -35,7 +44,10 @@ function LoaderContent() {
   useEffect(() => {
     if (isLoading) {
       // Hide loader ONLY when pathname actually changes away from the initial route
-      if (targetPathnameRef.current !== null && pathname !== targetPathnameRef.current) {
+      if (
+        targetPathnameRef.current !== null &&
+        pathname !== targetPathnameRef.current
+      ) {
         const t = setTimeout(() => {
           setIsLoading(false);
           targetPathnameRef.current = null;
@@ -52,6 +64,19 @@ function LoaderContent() {
     }
   }, [pathname, searchParams, isLoading]);
 
+  // Only mount the ping dots once the loader has been visible for a bit.
+  useEffect(() => {
+    if (!isLoading) return;
+    const t = setTimeout(() => setShowDots(true), DOTS_APPEAR_AFTER_MS);
+    // Reset in the cleanup, not synchronously in the effect body, so the
+    // reset only fires when isLoading actually flips back to false (or on
+    // unmount) instead of running as a direct top-level setState call.
+    return () => {
+      clearTimeout(t);
+      setShowDots(false);
+    };
+  }, [isLoading]);
+
   const logoSrc = isDark ? logoDark : logoLight;
 
   return (
@@ -63,19 +88,31 @@ function LoaderContent() {
       {isLoading && (
         <div className="flex flex-col items-center justify-center">
           <div className="relative flex h-[168px] w-[168px] items-center justify-center">
-            <div className="absolute inset-0 rounded-full animate-spin motion-reduce:animate-none [animation-duration:1.6s] bg-[conic-gradient(from_0deg,transparent_0%,#3b82f6_15%,#0ea5e9_35%,transparent_55%,transparent_100%)] [mask-image:radial-gradient(farthest-side,transparent_calc(100%-3px),#000_calc(100%-3px))] [-webkit-mask-image:radial-gradient(farthest-side,transparent_calc(100%-3px),#000_calc(100%-3px))]"></div>
+            {/*
+              Spinner rebuilt without mask-image / -webkit-mask-image.
+              On iOS Safari, a masked element that is also being rotated via
+              animate-spin gets re-rasterized on the CPU every frame instead
+              of being handed to the GPU compositor like a plain transform.
+              A border-based conic spinner gives a very similar look while
+              staying fully GPU-composited.
+            */}
+            <div
+              className="absolute inset-0 rounded-full animate-spin motion-reduce:animate-none [animation-duration:1.6s]
+                border-[3px] border-transparent border-t-blue-500 border-r-sky-500"
+            ></div>
             <div
               className={`absolute inset-0 rounded-full border-[3px] ${
                 isDark ? "border-white/[0.06]" : "border-black/[0.06]"
               }`}
             ></div>
-            {DOT_POSITIONS.map(({ top, left, delay }, i) => (
-              <span
-                key={i}
-                className="absolute h-1.5 w-1.5 -translate-x-1/2 -translate-y-1/2 rounded-full bg-gradient-to-br from-blue-500 to-sky-500 animate-ping motion-reduce:animate-none"
-                style={{ top, left, animationDelay: delay }}
-              ></span>
-            ))}
+            {showDots &&
+              DOT_POSITIONS.map(({ top, left, delay }, i) => (
+                <span
+                  key={i}
+                  className="absolute h-1.5 w-1.5 -translate-x-1/2 -translate-y-1/2 rounded-full bg-gradient-to-br from-blue-500 to-sky-500 animate-ping motion-reduce:animate-none"
+                  style={{ top, left, animationDelay: delay }}
+                ></span>
+              ))}
             <Image
               src={logoSrc}
               alt="Loading"
@@ -94,7 +131,11 @@ const getSnapshot = () => true;
 const getServerSnapshot = () => false;
 
 export function GlobalNavigationLoader() {
-  const mounted = React.useSyncExternalStore(emptySubscribe, getSnapshot, getServerSnapshot);
+  const mounted = React.useSyncExternalStore(
+    emptySubscribe,
+    getSnapshot,
+    getServerSnapshot,
+  );
 
   if (!mounted) return null;
 
