@@ -3,7 +3,6 @@
 import Link from 'next/link';
 import { ArrowRight  } from "lucide-react";
 import Magnet from "@/components/ui/Magnet";
-import type { HeroContentProps } from "./types";
 import { useLocale, useTranslations } from "next-intl";
 
 function WhatsappIcon({ className }: { className?: string }) {
@@ -15,13 +14,7 @@ function WhatsappIcon({ className }: { className?: string }) {
   );
 }
 
-export default function HeroContent({
-  headRef,
-  subRef,
-  ctaRef,
-  // badgeRef,
-  // imageRef,
-}: HeroContentProps) {
+export default function HeroContent() {
   const t = useTranslations("homeHero");
   const locale = useLocale();
   return (
@@ -30,7 +23,6 @@ export default function HeroContent({
 
         {/* Main Headline */}
         <h1
-          ref={headRef}
           className="text-3xl sm:text-5xl lg:text-5xl xl:text-6xl font-extrabold tracking-tight text-white dark:text-white !leading-[1.6] mb-4 sm:mb-5"
         >
           <span className="split-word">{t('title_we')}</span>{" "}
@@ -43,7 +35,6 @@ export default function HeroContent({
 
         {/* Paragraph Description */}
         <p
-          ref={subRef}
           className="text-sm sm:text-lg text-white dark:text-slate-300 font-medium leading-relaxed max-w-xl mb-6 sm:mb-8"
         >
           {t('description')}
@@ -51,7 +42,6 @@ export default function HeroContent({
 
         {/* Action Buttons (Primary CTA + WhatsApp Button with Equal Heights) */}
         <div
-          ref={ctaRef}
           className="flex items-stretch sm:items-center gap-3 sm:gap-6 w-full"
         >
           {/* Primary Button */}

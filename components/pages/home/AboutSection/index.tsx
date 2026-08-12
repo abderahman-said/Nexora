@@ -1,25 +1,18 @@
 "use client";
 
-import React, { useRef } from "react";
+import React from "react";
 import { Layers } from "lucide-react";
 import AboutVisual from "./AboutVisual";
 import AboutVisionMission from "./AboutVisionMission";
-import { useAboutGSAP } from "./useAboutGSAP";
 import Container from "@/components/ui/Container";
 import { useTranslations } from "next-intl";
 
 const HorizontalWords = () => {
-  const sectionRef = useRef<HTMLDivElement>(null);
-  const visualRef = useRef<HTMLDivElement>(null);
-  const contentRef = useRef<HTMLDivElement>(null);
   const t = useTranslations("homeAbout");
-
-  useAboutGSAP({ sectionRef, visualRef, contentRef });
 
   return (
     <>
       <section
-        ref={sectionRef}
         id="about"
         className="scroll-section relative w-full  pb-8 bg-transparent dark:bg-[#090d16] site-grid-bg overflow-hidden"
       >
@@ -36,12 +29,11 @@ const HorizontalWords = () => {
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-16 items-center pt-10">
             {/* ── LEFT COLUMN: Structured Team Visual & Glass Chips ── */}
             <div className="lg:col-span-5 flex justify-center">
-              <AboutVisual visualRef={visualRef} />
+              <AboutVisual />
             </div>
 
             {/* ── RIGHT COLUMN: Content Header & Vision/Mission Cards ── */}
             <div
-              ref={contentRef}
               className="lg:col-span-7 flex flex-col justify-center space-y-5"
             >
               {/* Section Badge / Status Tag */}

@@ -1,28 +1,11 @@
-'use client';
-
-import { useRef } from 'react';
 import HeroBackground from './HeroBackground';
 import HeroContent from './HeroContent';
-// import HeroCircularBadge from './HeroCircularBadge';
-import { useVideoHeroAnimation } from './useVideoHeroAnimation';
 import Container from '@/components/ui/Container';
 
 export default function VideoHero() {
-    const heroRef = useRef<HTMLDivElement>(null);
-    const headRef = useRef<HTMLHeadingElement>(null);
-    const subRef = useRef<HTMLParagraphElement>(null);
-    const statsRef = useRef<HTMLDivElement>(null);
-    const ctaRef = useRef<HTMLDivElement>(null);
-    const badgeRef = useRef<HTMLDivElement>(null);
-    const glowRef = useRef<HTMLDivElement>(null);
-    const imageRef = useRef<HTMLDivElement>(null);
-
-    useVideoHeroAnimation({ heroRef, headRef, subRef, statsRef, ctaRef, badgeRef, glowRef, imageRef });
-
     return (
         <section
             id="hero"
-            ref={heroRef}
             className="
                 relative min-h-[90vh] md:min-h-[100vh] flex flex-col items-center justify-center
                 overflow-hidden bg-[#f8fafc] dark:bg-[#090d16]
@@ -30,19 +13,11 @@ export default function VideoHero() {
                  md:pt-24
             "
         >
-            <HeroBackground glowRef={glowRef} />
+            <HeroBackground />
 
             <Container className="relative z-10">
-                <HeroContent
-                    headRef={headRef}
-                    subRef={subRef}
-                    ctaRef={ctaRef}
-                    badgeRef={badgeRef}
-                    imageRef={imageRef}
-                />
+                <HeroContent />
             </Container>
-
-            {/* <HeroCircularBadge /> */}
         </section>
     );
 }

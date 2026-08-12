@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect } from "react";
-import type { UseNavbarGSAPProps } from "./types";
+import type { UseNavbarScrollProps } from "./types";
 
 /**
  * Navbar hide/show on scroll — pure CSS transitions, no GSAP.
@@ -10,7 +10,7 @@ import type { UseNavbarGSAPProps } from "./types";
  */
 export function useNavbarScroll({
   navRef,
-}: Pick<UseNavbarGSAPProps, "navRef">) {
+}: UseNavbarScrollProps) {
   useEffect(() => {
     const nav = navRef.current;
     if (!nav) return;

@@ -1,11 +1,9 @@
 import React from "react";
 import Image from "next/image";
-import type { AboutVisualProps } from "./types";
 
-export default function AboutVisual({ visualRef }: AboutVisualProps) {
+export default function AboutVisual() {
   return (
     <div
-      ref={visualRef}
       className="relative w-full max-w-[560px] mx-auto lg:mx-0"
     >
       <div className="absolute -inset-4 bg-gradient-to-r from-blue-600/20 via-sky-500/15 to-indigo-600/20 rounded-3xl blur-2xl pointer-events-none" />

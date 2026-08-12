@@ -7,7 +7,6 @@ import type { NavbarAnimatedShellProps } from "./types";
 
 export function NavbarAnimatedShell({ children }: NavbarAnimatedShellProps) {
   const navRef = useRef<HTMLElement>(null);
-  const navInnerRef = useRef<HTMLDivElement>(null);
 
   useNavbarScroll({ navRef });
 
@@ -18,7 +17,6 @@ export function NavbarAnimatedShell({ children }: NavbarAnimatedShellProps) {
       style={{ transition: "transform 0.15s ease-out, padding 0.15s ease-out" }}
     >
       <Container
-        ref={navInnerRef}
         className="nexora-nav-inner pointer-events-auto flex items-center justify-end py-5 md:py-7"
       >
         {children}
