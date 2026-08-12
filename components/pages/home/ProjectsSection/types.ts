@@ -9,4 +9,5 @@ export interface Project {
 
 export interface ProjectCardProps {
   p: Project;
+  priority?: boolean;
 }

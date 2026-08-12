@@ -58,7 +58,7 @@ export default function ProjectsSection() {
             autoplay={false}
             pauseOnHover={false}
             enableDrag
-            renderItem={(p) => <ProjectCard key={p.id} p={p} />}
+            renderItem={(p, index) => <ProjectCard key={p.id} p={p} priority={index < 4} />}
           />
         </div>
       </Container>

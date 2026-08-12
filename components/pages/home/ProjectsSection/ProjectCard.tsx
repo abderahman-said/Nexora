@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useEffect, useCallback, MouseEvent } from "react";
+import { useRef, useEffect, useCallback, useState, MouseEvent } from "react";
 import Link from 'next/link';
 import OptimizedImage from "@/components/ui/OptimizedImage";
 import type { ProjectCardProps } from "./types";
@@ -10,8 +10,9 @@ const MAX_TILT_DEG = 4;
 const LIFT_Y = -12;
 const DESKTOP_QUERY = "(min-width: 768px)";
 
-export default function ProjectCard({ p }: ProjectCardProps) {
+export default function ProjectCard({ p, priority = false }: ProjectCardProps) {
   const t = useTranslations("homeProjects.categories");
+  const [isLoaded, setIsLoaded] = useState(false);
   const cardRef = useRef<HTMLDivElement>(null);
   const glareRef = useRef<HTMLDivElement>(null);
   const rectRef = useRef<DOMRect | null>(null);
@@ -101,13 +102,15 @@ export default function ProjectCard({ p }: ProjectCardProps) {
         className="group relative block h-[380px] sm:h-[430px] md:h-[540px] lg:h-[600px] flex-shrink-0 overflow-hidden rounded-[20px] sm:rounded-[24px] md:rounded-[26px] border border-slate-200/90 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-lg dark:shadow-black/30 transition-[border-color,box-shadow,background-color,transform] duration-500 ease-out max-lg:w-full group-hover/3d:border-blue-500/70 dark:group-hover/3d:border-blue-400/70 group-hover/3d:shadow-[0_32px_65px_-15px_rgba(37,99,235,0.32)] dark:group-hover/3d:shadow-[0_32px_65px_-15px_rgba(0,0,0,0.85)]"
       >
         {/* Full-bleed project image */}
-        <div className="absolute inset-0 z-0 block h-full w-full overflow-hidden">
+        <div className="absolute inset-0 z-0 block h-full w-full overflow-hidden bg-slate-200/90 dark:bg-slate-800/90">
           <OptimizedImage
-            className="card-img absolute inset-0 h-full w-full object-cover object-top transition-transform duration-700 ease-[cubic-bezier(0.4,0,0.2,1)] group-hover:scale-[1.09]"
+            className={`card-img absolute inset-0 h-full w-full object-cover object-top transition-[transform,opacity] duration-500 ease-[cubic-bezier(0.4,0,0.2,1)] group-hover:scale-[1.09] ${isLoaded || priority ? 'opacity-100' : 'opacity-0'}`}
             src={p.image}
             alt={p.name || ""}
             width={600}
             height={450}
+            priority={priority}
+            onLoad={() => setIsLoaded(true)}
             sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 600px"
             quality={80}
           />
