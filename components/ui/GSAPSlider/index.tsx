@@ -42,7 +42,27 @@ export default function GSAPSlider<T extends { id?: string | number }>(
   const [visibleCount, setVisibleCount] = useState(defaultVisibleCount);
   const [isCenterMode, setIsCenterMode] = useState(false);
 
-  // Responsive breakpoint detection
+  // ✅ FIX: lazy initializer بدل setState جوه الـ effect
+  // بيتنفذ وقت الـ render نفسه (مش بعده) فمفيش render إضافي
+  const [dir, setDir] = useState<"rtl" | "ltr">(() =>
+    typeof document !== "undefined"
+      ? ((document.documentElement.dir as "rtl" | "ltr") || "rtl")
+      : "rtl",
+  );
+
+  useEffect(() => {
+    // الـ effect دلوقتي بيعمل حاجة واحدة بس: يـ subscribe لتغييرات خارجية
+    // (external system) — مفيش setState مباشر جوه جسم الـ effect
+    const observer = new MutationObserver(() => {
+      const newDir = (document.documentElement.dir as "rtl" | "ltr") || "rtl";
+      // ده مقبول: بيتنفذ جوه callback استجابةً لتغيير خارجي حقيقي، مش تلقائيًا
+      setDir(newDir);
+      swiperRef.current?.changeLanguageDirection(newDir);
+    });
+    observer.observe(document.documentElement, { attributeFilter: ["dir"] });
+    return () => observer.disconnect();
+  }, []);
+
   useEffect(() => {
     let raf: number;
     const update = () => {
@@ -80,39 +100,53 @@ export default function GSAPSlider<T extends { id?: string | number }>(
 
   const totalItems = items.length;
 
-  // Whether this slider uses scale/opacity effects on the active slide
   const hasScale = activeScale !== 1 || inactiveScale !== 1;
   const hasOpacity = inactiveOpacity !== 1;
-
-  // centeredSlides = true only when:
-  // 1. Mobile center-peek mode (centerModeMobile), OR
-  // 2. Scale/opacity effects are used
   const useCenteredSlides = isCenterMode || hasScale || hasOpacity;
 
-  // Loop mode
-  const useLoop = infinite;
-
-  // Dots/pagination counts
   const effectiveVisible = isCenterMode ? 1 : visibleCount;
-  const maxIndex =
-    useLoop || useCenteredSlides
-      ? Math.max(0, totalItems - 1)
-      : Math.max(0, Math.floor(totalItems - effectiveVisible));
-  const dotsCount = maxIndex + 1;
+
+  const loopReady = totalItems >= effectiveVisible * 2;
+  const useLoop = infinite && loopReady;
+
+  // عدد الـ dots = عدد الصفحات الفعلية (total - visible + 1)
+  // في loop mode نستخدم نفس الحساب لأن الـ user يتنقل بين items
+  const dotsCount = Math.max(
+    1,
+    Math.ceil(totalItems / effectiveVisible),
+  );
+  const maxIndex = dotsCount - 1;
 
   const goToSlide = useCallback(
     (index: number) => {
       if (!swiperRef.current) return;
-      const target = Math.min(index, maxIndex);
+      // نحول من page index لـ slide index
+      const slideIndex = index * (effectiveVisible || 1);
+      const target = Math.min(slideIndex, totalItems - 1);
       if (useLoop) {
         swiperRef.current.slideToLoop(target);
       } else {
         swiperRef.current.slideTo(target);
       }
     },
-    [maxIndex, useLoop],
+    [maxIndex, useLoop, effectiveVisible, totalItems],
   );
 
+  // syncActiveIndex: نحول الـ realIndex لرقم صفحة (0-based) داخل نطاق الـ dots
+  const syncActiveIndex = useCallback(
+    (sw: SwiperType) => {
+      const ri = sw.realIndex;
+      // نقسم على عدد الـ visible عشان نحول من slide index لـ page index
+      const pageIndex = Math.min(
+        Math.floor(ri / (effectiveVisible || 1)),
+        maxIndex,
+      );
+      setActiveIndex(pageIndex);
+    },
+    [effectiveVisible, maxIndex],
+  );
+
+  // ✅ الـ early return دلوقتي بعد كل الـ hooks، مش قبلها
   if (totalItems === 0) return null;
 
   const spaceBetween = isCenterMode ? 12 : 14;
@@ -127,22 +161,18 @@ export default function GSAPSlider<T extends { id?: string | number }>(
         if (pauseOnHover && autoplay) swiperRef.current?.autoplay.resume();
       }}
     >
-      {/* overflow-x-hidden clips off-screen slides; vertical overflow kept open for scale */}
       <div className="w-full overflow-x-hidden">
         <div className="w-full pt-8 pb-3 md:pb-6 px-2 md:px-3 py-4 select-none">
           <Swiper
             modules={[Autoplay, A11y]}
+            dir={dir}
+            watchSlidesProgress={true}
             onSwiper={(sw) => {
               swiperRef.current = sw;
             }}
-            onSlideChange={(sw) => {
-              // Always use realIndex — it stays correct in both loop and non-loop mode
-              setActiveIndex(sw.realIndex);
-            }}
-            onRealIndexChange={(sw) => {
-              // Belt-and-suspenders: also sync on realIndex changes (covers loop wraps)
-              setActiveIndex(sw.realIndex);
-            }}
+            onSlideChange={syncActiveIndex}
+            onRealIndexChange={syncActiveIndex}
+            onSlideChangeTransitionEnd={syncActiveIndex}
             slidesPerView={isCenterMode ? "auto" : visibleCount}
             spaceBetween={spaceBetween}
             centeredSlides={useCenteredSlides}
@@ -172,6 +202,20 @@ export default function GSAPSlider<T extends { id?: string | number }>(
             wrapperClass="items-stretch"
           >
             {items.map((item, index) => {
+              const slideIsActive = index === activeIndex;
+
+              const slideScale = hasScale
+                ? slideIsActive
+                  ? activeScale
+                  : inactiveScale
+                : 1;
+
+              const slideOpacity = hasOpacity
+                ? slideIsActive
+                  ? 1
+                  : inactiveOpacity
+                : 1;
+
               return (
                 <SwiperSlide
                   key={(item as { id?: string | number }).id ?? index}
@@ -181,46 +225,27 @@ export default function GSAPSlider<T extends { id?: string | number }>(
                       : undefined
                   }
                 >
-                  {({ isActive: swiperActive }) => {
-                    // Use Swiper's own isActive — works correctly in both loop and non-loop
-                    const slideIsActive = swiperActive;
-
-                    const slideScale = hasScale
-                      ? slideIsActive
-                        ? activeScale
-                        : inactiveScale
-                      : 1;
-
-                    const slideOpacity = hasOpacity
-                      ? slideIsActive
-                        ? 1
-                        : inactiveOpacity
-                      : 1;
-
-                    return (
-                      <div
-                        className={`h-full flex flex-col origin-center transition-all duration-500 ease-in-out ${hasScale ? "px-0.5 md:px-1" : ""}`}
-                        style={{
-                          transform: `scale(${slideScale})`,
-                          opacity: slideOpacity,
-                          zIndex: slideIsActive ? 10 : 1,
-                        }}
-                      >
-                        {ItemComponent ? (
-                          <ItemComponent
-                            service={item}
-                            member={item}
-                            client={item}
-                            item={item}
-                            index={index}
-                            isActive={slideIsActive}
-                          />
-                        ) : (
-                          (renderItem?.(item, index, slideIsActive) ?? null)
-                        )}
-                      </div>
-                    );
-                  }}
+                  <div
+                    className={`h-full flex flex-col origin-center transition-all duration-500 ease-in-out ${hasScale ? "px-0.5 md:px-1" : ""}`}
+                    style={{
+                      transform: `scale(${slideScale})`,
+                      opacity: slideOpacity,
+                      zIndex: slideIsActive ? 10 : 1,
+                    }}
+                  >
+                    {ItemComponent ? (
+                      <ItemComponent
+                        service={item}
+                        member={item}
+                        client={item}
+                        item={item}
+                        index={index}
+                        isActive={slideIsActive}
+                      />
+                    ) : (
+                      (renderItem?.(item, index, slideIsActive) ?? null)
+                    )}
+                  </div>
                 </SwiperSlide>
               );
             })}
