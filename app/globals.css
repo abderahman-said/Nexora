@@ -147,7 +147,6 @@ html[lang="en"] body {
 
   body {
     background-color: var(--bg);
-    /* font-family is inherited from font-sans on <body> in layout, --font-sans switches per locale */
     color: #0f172a;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
@@ -160,8 +159,6 @@ html[lang="en"] body {
   img,
   svg,
   video,
-  canvas,
-  audio,
   iframe,
   embed,
   object {
@@ -210,13 +207,12 @@ html.theme-switching *::after {
 } */
 
 
-.scroll-section {
+/* .scroll-section {
   position: relative;
-  /* Removed isolation: isolate as it causes iOS Safari to drop layers during fast scrolling, leading to empty spaces */
-}
+} */
 
 /* ─── TEMP: Force all GSAP-animated elements visible (disable scroll animations) ─── */
-.bento-card,
+/* .bento-card,
 .process-step,
 .hw-feature,
 .about-feature,
@@ -225,9 +221,7 @@ html.theme-switching *::after {
 .scroll-section h3,
 .scroll-section p {
   opacity: 1 !important;
-  transform: none !important;
-  translate: none !important;
-}
+} */
 
 
 /* استثناء الأقسام اللي فيها GSAP ScrollTrigger pinning */

@@ -33,9 +33,15 @@ function getDirServerSnapshot(): "rtl" | "ltr" {
 // ── External store #2: عرض الشاشة (لحساب visibleCount / isCenterMode) ────
 function subscribeWidth(callback: () => void) {
   let raf: number;
+  let lastWidth = typeof window !== "undefined" ? window.innerWidth : 0;
   const handler = () => {
     cancelAnimationFrame(raf);
-    raf = requestAnimationFrame(callback);
+    raf = requestAnimationFrame(() => {
+      if (typeof window !== "undefined" && window.innerWidth !== lastWidth) {
+        lastWidth = window.innerWidth;
+        callback();
+      }
+    });
   };
   window.addEventListener("resize", handler);
   return () => {
@@ -131,13 +137,13 @@ export default function GSAPSlider<T extends { id?: string | number }>(
         if (pauseOnHover && autoplay) swiperRef.current?.autoplay.resume();
       }}
     >
-      <div className="w-full overflow-x-hidden">
+      <div className="w-full overflow-x-clip">
         <div className="w-full pt-12 pb-10 md:pb-12 px-2 md:px-3 select-none">
           <Swiper
             key={`${effectiveVisible}-${useLoop}`}
             modules={[Autoplay, A11y, Pagination]}
             dir={dir}
-            onSwiper={(sw) => {
+            onSwiper={(sw: SwiperType) => {
               swiperRef.current = sw;
               syncActiveIndex(sw);
             }}

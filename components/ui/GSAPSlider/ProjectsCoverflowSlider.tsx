@@ -42,7 +42,7 @@ export default function ProjectsCoverflowSlider({
       onMouseEnter={() => pauseOnHover && autoplay && swiperRef.current?.autoplay.pause()}
       onMouseLeave={() => pauseOnHover && autoplay && swiperRef.current?.autoplay.resume()}
     >
-      <div className="w-full overflow-x-hidden py-8 md:py-10 select-none">
+      <div className="w-full overflow-x-clip py-8 md:py-10 select-none">
         <Swiper
           key={dir}
           dir={dir}
@@ -72,12 +72,12 @@ export default function ProjectsCoverflowSlider({
                 }
               : false
           }
-          onSwiper={(sw) => (swiperRef.current = sw)}
+          onSwiper={(sw: SwiperType) => (swiperRef.current = sw)}
           className="!overflow-visible"
         >
           {items.map((item, index) => (
             <SwiperSlide key={item.id ?? index} className="!h-auto">
-              {({ isActive }) => (
+              {({ isActive }: { isActive: boolean }) => (
                 <div
                   className="h-full origin-center transition-transform duration-500 ease-out"
                   style={{
