@@ -227,7 +227,7 @@ export default async function LocaleLayout({
           <NextIntlClientProvider messages={messages}>
             <GlobalNavigationLoader />
             <SvgSymbols />
-            <div className="flex min-h-screen flex-col overflow-x-hidden">
+            <div className="flex min-h-[100dvh] flex-col overflow-x-clip">
               <Navbar />
               {children}
               <Footer />

@@ -115,8 +115,8 @@ html[lang="en"] body {
   --glass-bg: rgba(15, 23, 42, 0.8);
 }
 
-html, body {
-}
+/* html, body {
+} */
 @layer base {
   *,
   *::before,

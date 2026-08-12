@@ -39,9 +39,9 @@ function LoaderContent() {
 
   return (
     <div
-      className={`fixed inset-0 z-[999999] flex items-center justify-center pointer-events-none transition-all duration-300 ${
-        isDark ? "bg-[#090d16]/80" : "bg-[#f8fafc]/80"
-      } ${isLoading ? "opacity-100 backdrop-blur-lg visible" : "opacity-0 backdrop-blur-none invisible"}`}
+      className={`fixed inset-0 z-[999999] flex items-center justify-center pointer-events-none transition-opacity duration-300 ${
+        isDark ? "bg-[#090d16]/95" : "bg-[#f8fafc]/95"
+      } ${isLoading ? "opacity-100 visible" : "opacity-0 invisible"}`}
     >
       {isLoading && (
         <div className="flex flex-col items-center justify-center">

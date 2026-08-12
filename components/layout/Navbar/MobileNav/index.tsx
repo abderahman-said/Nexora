@@ -34,16 +34,24 @@ export function MobileNav() {
     getServerSnapshot,
   );
 
-  // Lock body scroll when menu is open
+  // Lock body scroll and prevent background touch scroll on iOS
   useEffect(() => {
     if (isOpen) {
       document.body.style.overflow = "hidden";
+      const preventTouch = (e: TouchEvent) => {
+        const target = e.target as HTMLElement | null;
+        if (target && target.getAttribute("data-mobile-backdrop") === "true") {
+          e.preventDefault();
+        }
+      };
+      document.addEventListener("touchmove", preventTouch, { passive: false });
+      return () => {
+        document.body.style.overflow = "";
+        document.removeEventListener("touchmove", preventTouch);
+      };
     } else {
       document.body.style.overflow = "";
     }
-    return () => {
-      document.body.style.overflow = "";
-    };
   }, [isOpen]);
 
   // Close menu on Escape key
@@ -74,7 +82,9 @@ export function MobileNav() {
             {/* Backdrop */}
             <div
               onClick={closeMenu}
-              className={`fixed inset-0 z-[990] bg-black/40 transition-all duration-100 ease-out ${
+              data-mobile-backdrop="true"
+              style={{ touchAction: 'none' }}
+              className={`fixed inset-0 z-[990] bg-black/40 transition-opacity duration-150 ease-out ${
                 isOpen ? "opacity-100 pointer-events-auto visible" : "opacity-0 pointer-events-none invisible"
               }`}
               aria-hidden="true"
@@ -85,7 +95,7 @@ export function MobileNav() {
               className={`fixed top-0 z-[99999] h-[100dvh] w-[75vw] max-w-[360px] start-0 flex flex-col overscroll-none
                 bg-white dark:bg-[#0b0b12]
                 border-e border-slate-200/70 dark:border-white/10
-                overflow-hidden transition-transform duration-100 ease-out ${
+                overflow-hidden transition-transform duration-200 ease-out will-change-transform ${
                   isOpen
                     ? "translate-x-0 pointer-events-auto"
                     : "-translate-x-full rtl:translate-x-full pointer-events-none"
@@ -104,7 +114,10 @@ export function MobileNav() {
                 }}
               />
 
-              <div className="flex flex-col flex-1 px-5 sm:px-8 pt-4 pb-8 gap-4 md:gap-8 relative z-10 overflow-y-auto overflow-x-hidden overscroll-contain">
+              <div
+                className="flex flex-col flex-1 px-5 sm:px-8 pt-4 pb-8 gap-4 md:gap-8 relative z-10 overflow-y-auto overflow-x-hidden overscroll-contain [-webkit-overflow-scrolling:touch]"
+                style={{ touchAction: 'pan-y' }}
+              >
                 <MobileNavHeader closeMenu={closeMenu} />
 
                 <MobileNavLinks

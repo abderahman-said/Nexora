@@ -21,7 +21,7 @@ export default function CountrySelectorDropdown({
                 bg-white dark:bg-[#0d1222]
                 border border-slate-200/90 dark:border-slate-800
                 rounded-2xl shadow-2xl shadow-slate-950/20 dark:shadow-black/60
-                p-2.5 flex flex-col gap-2 backdrop-blur-xl
+                p-2.5 flex flex-col gap-2
                 animate-in fade-in zoom-in-95 duration-150
             "
         >
