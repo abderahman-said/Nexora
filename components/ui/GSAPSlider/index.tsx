@@ -42,23 +42,6 @@ export default function GSAPSlider<T extends { id?: string | number }>(
   const [visibleCount, setVisibleCount] = useState(defaultVisibleCount);
   const [isCenterMode, setIsCenterMode] = useState(false);
 
-  // Track RTL/LTR direction changes at runtime (e.g. language toggle)
-  const [dir, setDir] = useState<"rtl" | "ltr">(() =>
-    typeof document !== "undefined" && document.documentElement.dir === "rtl"
-      ? "rtl"
-      : "ltr",
-  );
-
-  useEffect(() => {
-    if (typeof document === "undefined") return;
-    const target = document.documentElement;
-    const observer = new MutationObserver(() => {
-      setDir(target.dir === "rtl" ? "rtl" : "ltr");
-    });
-    observer.observe(target, { attributes: true, attributeFilter: ["dir"] });
-    return () => observer.disconnect();
-  }, []);
-
   // Responsive breakpoint detection
   useEffect(() => {
     let raf: number;
@@ -103,15 +86,13 @@ export default function GSAPSlider<T extends { id?: string | number }>(
 
   // centeredSlides = true only when:
   // 1. Mobile center-peek mode (centerModeMobile), OR
-  // 2. Scale/opacity effects are used — so the "hero" card is always centred
+  // 2. Scale/opacity effects are used
   const useCenteredSlides = isCenterMode || hasScale || hasOpacity;
 
-  // If infinite={true}, we always use real loop and every item can be the active/leftmost slide
+  // Loop mode
   const useLoop = infinite;
 
   // Dots/pagination counts
-  // - loop or centeredSlides mode: every item can be active → dotsCount = totalItems
-  // - normal non-loop paged mode: one dot per "page" → dotsCount = totalItems - visibleCount + 1
   const effectiveVisible = isCenterMode ? 1 : visibleCount;
   const maxIndex =
     useLoop || useCenteredSlides
@@ -123,7 +104,6 @@ export default function GSAPSlider<T extends { id?: string | number }>(
     (index: number) => {
       if (!swiperRef.current) return;
       const target = Math.min(index, maxIndex);
-      // slideToLoop handles cloned-slide offsets; only relevant when real loop is on
       if (useLoop) {
         swiperRef.current.slideToLoop(target);
       } else {
@@ -151,16 +131,17 @@ export default function GSAPSlider<T extends { id?: string | number }>(
       <div className="w-full overflow-x-hidden">
         <div className="w-full pt-8 pb-3 md:pb-6 px-2 md:px-3 py-4 select-none">
           <Swiper
-            // Remount on direction change so Swiper re-initialises RTL/LTR layout
-            key={dir}
             modules={[Autoplay, A11y]}
             onSwiper={(sw) => {
               swiperRef.current = sw;
             }}
             onSlideChange={(sw) => {
-              // realIndex stays stable across loop's internally cloned slides,
-              // and works fine in non-loop mode too.
-              setActiveIndex(useLoop ? sw.realIndex : sw.activeIndex);
+              // Always use realIndex — it stays correct in both loop and non-loop mode
+              setActiveIndex(sw.realIndex);
+            }}
+            onRealIndexChange={(sw) => {
+              // Belt-and-suspenders: also sync on realIndex changes (covers loop wraps)
+              setActiveIndex(sw.realIndex);
             }}
             slidesPerView={isCenterMode ? "auto" : visibleCount}
             spaceBetween={spaceBetween}
@@ -179,7 +160,6 @@ export default function GSAPSlider<T extends { id?: string | number }>(
                   }
                 : false
             }
-            dir={dir}
             style={{
               overflow: "visible",
               ...(isCenterMode
@@ -192,8 +172,6 @@ export default function GSAPSlider<T extends { id?: string | number }>(
             wrapperClass="items-stretch"
           >
             {items.map((item, index) => {
-              const isActive = index === activeIndex;
-
               return (
                 <SwiperSlide
                   key={(item as { id?: string | number }).id ?? index}
@@ -204,9 +182,8 @@ export default function GSAPSlider<T extends { id?: string | number }>(
                   }
                 >
                   {({ isActive: swiperActive }) => {
-                    // In real loop mode use Swiper's own isActive (accounts for clones)
-                    // In paged/rewind mode use our index comparison
-                    const slideIsActive = useLoop ? swiperActive : isActive;
+                    // Use Swiper's own isActive — works correctly in both loop and non-loop
+                    const slideIsActive = swiperActive;
 
                     const slideScale = hasScale
                       ? slideIsActive

@@ -139,28 +139,6 @@ export function MobileNav() {
       { duration: 220, delay: 50, easing: "ease-out", fill: "forwards" },
     );
 
-    // Inner content — staggered fade-up (no transform on container, GPU-safe)
-    const contentEls: HTMLElement[] = [
-      drawerHeaderRef.current as HTMLElement | null,
-      linksContainerRef.current as HTMLElement | null,
-      footerInfoRef.current as HTMLElement | null,
-    ].filter((el): el is HTMLElement => Boolean(el));
-
-    contentEls.forEach((el, i) => {
-      cancelAnims(el);
-      el.animate(
-        [
-          { opacity: 0, transform: "translateY(10px)" },
-          { opacity: 1, transform: "translateY(0)" },
-        ],
-        {
-          duration: 240,
-          delay: 180 + i * 50,
-          easing: "ease-out",
-          fill: "forwards",
-        },
-      );
-    });
   }, [isRtl]);
 
   // ─── CLOSE ──────────────────────────────────────────────────────────────────
@@ -216,21 +194,6 @@ export function MobileNav() {
         { duration: closeDuration, easing: "ease-in", fill: "forwards" },
       );
 
-      // Reset inner content opacity so next open starts fresh
-      const contentEls: HTMLElement[] = [
-        drawerHeaderRef.current as HTMLElement | null,
-        linksContainerRef.current as HTMLElement | null,
-        footerInfoRef.current as HTMLElement | null,
-      ].filter((el): el is HTMLElement => Boolean(el));
-
-      contentEls.forEach((el) => {
-        cancelAnims(el);
-        el.animate([{ opacity: 0 }], {
-          duration: closeDuration,
-          easing: "ease-in",
-          fill: "forwards",
-        });
-      });
 
       drawerAnim.onfinish = () => {
         backdrop.style.display = "none";
