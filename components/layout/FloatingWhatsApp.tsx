@@ -39,7 +39,7 @@ export default function FloatingWhatsApp() {
     >
       <Link
         href={`tel:${contact.phone.replace(/\s/g, "")}`}
-        className="group relative flex items-center justify-start ps-6 w-[80px] h-[52px] bg-white/95 dark:bg-slate-900/95 border border-slate-300/50 dark:border-white/20 text-slate-800 dark:text-white rounded-s-full shadow-lg dark:shadow-2xl hover:bg-slate-200 dark:hover:bg-[#252836] transition-all duration-300 hover:-translate-x-2 rtl:hover:translate-x-2"
+        className="group relative flex items-center justify-start ps-6 w-[80px] h-[52px] bg-white/95 dark:bg-slate-900/95 border border-slate-300/50 dark:border-white/20 text-slate-800 dark:text-white rounded-s-full shadow-lg dark:shadow-2xl hover:bg-slate-200 dark:hover:bg-[#252836] transition-colors duration-150"
         aria-label="Call us"
       >
         <svg
@@ -59,7 +59,7 @@ export default function FloatingWhatsApp() {
         href={contact.whatsapp}
         target="_blank"
         rel="noopener noreferrer"
-        className="group relative flex items-center justify-start ps-6 w-[80px] h-[52px] bg-white/95 dark:bg-slate-900/95 border border-slate-300/50 dark:border-white/20 text-slate-800 dark:text-white rounded-s-full shadow-lg dark:shadow-2xl hover:bg-slate-200 dark:hover:bg-[#252836] transition-all duration-300 hover:-translate-x-2 rtl:hover:translate-x-2"
+        className="group relative flex items-center justify-start ps-6 w-[80px] h-[52px] bg-white/95 dark:bg-slate-900/95 border border-slate-300/50 dark:border-white/20 text-slate-800 dark:text-white rounded-s-full shadow-lg dark:shadow-2xl hover:bg-slate-200 dark:hover:bg-[#252836] transition-colors duration-150"
         aria-label="Chat on WhatsApp"
       >
         <svg

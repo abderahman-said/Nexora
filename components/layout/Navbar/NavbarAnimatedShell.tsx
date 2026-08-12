@@ -13,8 +13,7 @@ export function NavbarAnimatedShell({ children }: NavbarAnimatedShellProps) {
   return (
     <header
       ref={navRef}
-      className="group fixed left-0 top-0 z-[1000] w-full pointer-events-none transition-all duration-150 ease-out"
-      style={{ transition: "transform 0.15s ease-out, padding 0.15s ease-out" }}
+      className="group fixed left-0 top-0 z-[1000] w-full pointer-events-none transition-transform duration-150 ease-out will-change-transform"
     >
       <Container
         className="nexora-nav-inner pointer-events-auto flex items-center justify-end py-5 md:py-7"

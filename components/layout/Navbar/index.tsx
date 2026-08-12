@@ -19,14 +19,14 @@ export default function Navbar() {
             alt="Nexora Solutions"
             width={100}
             height={40}
-            className="h-[40px] w-auto object-contain transition-transform duration-300 group-hover:scale-105 shrink-0 dark:hidden"
+            className="h-[40px] w-auto object-contain shrink-0 dark:hidden"
           />
           <Image
             src={logoDark}
             alt="Nexora Solutions Dark"
             width={100}
             height={40}
-            className="h-[40px] w-auto object-contain transition-transform duration-300 group-hover:scale-105 shrink-0 hidden dark:block"
+            className="h-[40px] w-auto object-contain shrink-0 hidden dark:block"
             priority
           />
         </Link>

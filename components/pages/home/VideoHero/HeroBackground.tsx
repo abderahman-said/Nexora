@@ -17,15 +17,25 @@ export default function HeroBackground() {
 
     // Important for iOS Safari autoplay
     video.muted = true;
-    video.defaultMuted = true;
     video.playsInline = true;
+
+    const handleReady = () => {
+      setVideoError(false);
+      setIsVideoReady(true);
+    };
+
+    // If video is already buffering/ready
+    if (video.readyState >= 2 && !video.paused) {
+      handleReady();
+    }
 
     const playVideo = async () => {
       try {
+        video.muted = true;
         await video.play();
+        handleReady();
       } catch (error) {
         console.warn("Video autoplay prevented:", error);
-        // Keep poster visible if autoplay is blocked
       }
     };
 
@@ -34,11 +44,30 @@ export default function HeroBackground() {
 
     // Extra attempt after the browser has initialized the video
     const timeout = window.setTimeout(() => {
-      playVideo();
+      if (video.paused) {
+        playVideo();
+      }
     }, 300);
+
+    // iOS Low Power Mode / Gesture restriction fallback: attempt play on user interaction
+    const handleUserInteraction = () => {
+      if (video.paused) {
+        playVideo();
+      }
+      window.removeEventListener("touchstart", handleUserInteraction);
+      window.removeEventListener("click", handleUserInteraction);
+      window.removeEventListener("scroll", handleUserInteraction);
+    };
+
+    window.addEventListener("touchstart", handleUserInteraction, { passive: true });
+    window.addEventListener("click", handleUserInteraction, { passive: true });
+    window.addEventListener("scroll", handleUserInteraction, { passive: true });
 
     return () => {
       window.clearTimeout(timeout);
+      window.removeEventListener("touchstart", handleUserInteraction);
+      window.removeEventListener("click", handleUserInteraction);
+      window.removeEventListener("scroll", handleUserInteraction);
     };
   }, []);
 
@@ -104,9 +133,15 @@ export default function HeroBackground() {
           controls={false}
           disablePictureInPicture
           disableRemotePlayback
+          onLoadedMetadata={handleVideoReady}
           onLoadedData={handleVideoReady}
           onCanPlay={handleVideoReady}
           onPlaying={handleVideoReady}
+          onTimeUpdate={() => {
+            if (!isVideoReady && !videoError) {
+              handleVideoReady();
+            }
+          }}
           onError={handleVideoError}
           className={`absolute inset-0 w-full h-full object-cover scale-105 pointer-events-none transition-opacity duration-700 ${
             isVideoReady && !videoError
