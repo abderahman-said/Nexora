@@ -33,7 +33,7 @@ export default function InteractiveCard({
     <Wrapper
       {...props}
       className={cn(
-        "animate-as-card group relative flex flex-col justify-between h-full",
+        "animate-as-card group relative flex flex-col justify-betwee",
         "bg-white dark:bg-[#0c101d]",
         "border border-slate-200/90 dark:border-slate-800/90 rounded-3xl",
         "p-3 md:p-8",

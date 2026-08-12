@@ -23,7 +23,7 @@ export default function ServiceDetails() {
                 
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-12">
                     {SERVICES.map((service) => (
-                        <ServiceCard key={service.id} service={service} className={"!py-12"} />
+                        <ServiceCard key={service.id} service={service} className={"!py-12 h-[279px] md:h-[377px]"} />
                     ))}
                 </div>
             </Container>

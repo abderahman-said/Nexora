@@ -44,6 +44,7 @@ export default function ProjectsCoverflowSlider({
     >
       <div className="w-full overflow-x-hidden py-8 md:py-10 select-none">
         <Swiper
+          key={dir}
           dir={dir}
           modules={[Autoplay, A11y, Pagination]}
           grabCursor={enableDrag}
@@ -53,10 +54,10 @@ export default function ProjectsCoverflowSlider({
           loop={loop}
           speed={650}
           slidesPerView={1.15}
-          spaceBetween={10}
+          spaceBetween={20}
           breakpoints={{
-            640: { slidesPerView: 2.2, spaceBetween: 28 },
-            1024: { slidesPerView: 3, spaceBetween: 36 },
+            640: { slidesPerView: 2.2, spaceBetween: 15 },
+            1024: { slidesPerView: 3, spaceBetween: 20 },
           }}
           autoplay={
             autoplay
