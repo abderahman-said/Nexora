@@ -30,15 +30,22 @@ function LoaderContent() {
   const targetPathnameRef = React.useRef<string | null>(null);
 
   useEffect(() => {
+    let timer: NodeJS.Timeout | null = null;
+
     const handleStart = () => {
       targetPathnameRef.current = pathname;
-      // Defer to the next frame so any in-flight UI work (like the mobile
-      // drawer closing) gets to finish its own frame first, instead of
-      // everything competing for the main thread in the same tick.
-      requestAnimationFrame(() => setIsLoading(true));
+      // Defer loader by 120ms so fast navigations don't flash, and the mobile
+      // drawer slide-out animation finishes smoothly without competing for main-thread CPU/GPU.
+      timer = setTimeout(() => {
+        setIsLoading(true);
+      }, 120);
     };
+
     window.addEventListener("start-nav-loader", handleStart);
-    return () => window.removeEventListener("start-nav-loader", handleStart);
+    return () => {
+      window.removeEventListener("start-nav-loader", handleStart);
+      if (timer) clearTimeout(timer);
+    };
   }, [pathname]);
 
   useEffect(() => {

@@ -42,31 +42,33 @@ export function MobileNav() {
   // instead of the whole document (this was the main source of iOS jank).
   const backdropRef = useRef<HTMLDivElement | null>(null);
 
-  // Lock body scroll and prevent background touch scroll on iOS
+  // Lock body scroll cleanly without changing body position.
+  // Using position:fixed forces Safari to rebuild the layout tree and reflow
+  // the entire page, which causes main-thread freezes when clicking links
+  // as Next.js navigates. Using overflow:hidden on both html and body avoids
+  // reflows completely.
   useEffect(() => {
-    if (isOpen) {
-      document.body.style.overflow = "hidden";
+    if (!isOpen) return;
 
-      const preventTouch = (e: TouchEvent) => {
-        e.preventDefault();
-      };
+    const htmlEl = document.documentElement;
+    const bodyEl = document.body;
 
-      // Attached ONLY to the backdrop element, not document.
-      // A document-wide { passive: false } touchmove listener forces Safari
-      // to synchronously check every touch move in the whole page before it
-      // can scroll, which is what caused the perceived "freeze".
-      const backdropEl = backdropRef.current;
-      backdropEl?.addEventListener("touchmove", preventTouch, {
-        passive: false,
-      });
+    const prevHtmlOverflow = htmlEl.style.overflow;
+    const prevBodyOverflow = bodyEl.style.overflow;
 
-      return () => {
-        document.body.style.overflow = "";
-        backdropEl?.removeEventListener("touchmove", preventTouch);
-      };
-    } else {
-      document.body.style.overflow = "";
-    }
+    htmlEl.style.overflow = "hidden";
+    bodyEl.style.overflow = "hidden";
+
+    // Prevent touch-scroll on the backdrop element only
+    const preventTouch = (e: TouchEvent) => e.preventDefault();
+    const backdropEl = backdropRef.current;
+    backdropEl?.addEventListener("touchmove", preventTouch, { passive: false });
+
+    return () => {
+      backdropEl?.removeEventListener("touchmove", preventTouch);
+      htmlEl.style.overflow = prevHtmlOverflow;
+      bodyEl.style.overflow = prevBodyOverflow;
+    };
   }, [isOpen]);
 
   // Close menu on Escape key
@@ -116,16 +118,20 @@ export function MobileNav() {
             />
 
             {/* Drawer */}
+            {/* NOTE: will-change-transform and overflow-hidden must NOT be on
+                the same element on iOS Safari — mixing them forces a new
+                stacking context that breaks GPU compositing and causes the
+                freeze. The outer shell owns the transform; the inner shell
+                clips the content. */}
             <div
-              className={`fixed top-0 z-[99999] h-[100dvh] w-[75vw] max-w-[360px] start-0 flex flex-col overscroll-none
-                bg-white dark:bg-[#0b0b12]
-                border-e border-slate-200/70 dark:border-white/10
-                overflow-hidden transition-transform duration-150 ease-out will-change-transform ${
-                  isOpen
-                    ? "translate-x-0 pointer-events-auto"
-                    : "-translate-x-full rtl:translate-x-full pointer-events-none"
-                }`}
+              className={`fixed top-0 z-[99999] h-[100dvh] w-[75vw] max-w-[360px] start-0 will-change-transform transition-transform duration-150 ease-out ${
+                isOpen
+                  ? "translate-x-0 pointer-events-auto"
+                  : "-translate-x-full rtl:translate-x-full pointer-events-none"
+              }`}
             >
+            {/* Inner shell: clips content, separate from the transform layer */}
+            <div className="relative flex flex-col h-full overscroll-none overflow-hidden bg-white dark:bg-[#0b0b12] border-e border-slate-200/70 dark:border-white/10">
               {/* Top accent bar */}
               <div className="absolute top-0 inset-x-0 h-[3px] bg-gradient-to-r from-blue-600 via-sky-400 to-indigo-600" />
 
@@ -133,8 +139,8 @@ export function MobileNav() {
                   never has to be built while the drawer is off-screen. */}
               {hasOpenedOnce && (
                 <div
-                  className="flex flex-col flex-1 px-5 sm:px-8 pt-4 pb-8 gap-4 md:gap-8 relative z-10 overflow-y-auto overflow-x-hidden overscroll-contain [-webkit-overflow-scrolling:touch]"
-                  style={{ touchAction: "pan-y" }}
+                  className="flex flex-col flex-1 px-5 sm:px-8 pt-4 pb-8 gap-4 md:gap-8 relative z-10 overflow-y-auto overflow-x-hidden overscroll-contain"
+                  style={{ touchAction: "pan-y", WebkitOverflowScrolling: "auto" }}
                 >
                   <MobileNavHeader closeMenu={closeMenu} />
 
@@ -143,6 +149,7 @@ export function MobileNav() {
                   <MobileNavFooter contact={contact} map={map} social={social} />
                 </div>
               )}
+            </div>
             </div>
           </>,
           document.body,
