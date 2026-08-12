@@ -39,13 +39,11 @@ export default function TeamSection() {
         <div className="relative z-20 w-full">
           <GSAPSlider
             items={TEAM_MEMBERS}
-            ItemComponent={TeamCard}
+            renderItem={(item) => <TeamCard member={item} />}
             defaultVisibleCount={3}
             mobileVisibleCount={1}
             centerModeMobile={true}
             centerCardWidthPercent={76}
-            showControls={false}
-            controlsPosition="center"
             showDots={true}
             autoplay={false}
             pauseOnHover={false}

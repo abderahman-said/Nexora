@@ -54,11 +54,9 @@ export default function ClientsSection() {
         <div className="relative z-20 -mt-32 lg:-mt-44 px-2">
           <GSAPSlider
             items={TESTIMONIALS}
-            ItemComponent={ClientCard}
+            renderItem={(item) => <ClientCard client={item} />}
             autoplay={false}
             defaultVisibleCount={3}
-            showControls={false}
-            controlsPosition="sides"
             showDots={true}
           />
         </div>

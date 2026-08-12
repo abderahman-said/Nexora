@@ -1,13 +1,61 @@
 "use client";
 
-import React, { useRef, useState, useEffect, useCallback } from "react";
+import React, {
+  useRef,
+  useState,
+  useEffect,
+  useCallback,
+  useId,
+  useSyncExternalStore,
+} from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
-import { Autoplay, A11y } from "swiper/modules";
+import { Autoplay, A11y, Pagination } from "swiper/modules";
 import type { Swiper as SwiperType } from "swiper";
 import type { GSAPSliderProps } from "../types";
-import { GSAPSliderControls } from "./GSAPSliderControls";
 
 import "swiper/css";
+import "swiper/css/pagination";
+import "swiper/css/scrollbar";
+
+// ── External store #1: اتجاه الصفحة (rtl/ltr) ─────────────────────────────
+// بنقرأ من document.documentElement.dir ونعمل subscribe لأي تغيير عليه
+// عن طريق MutationObserver، من غير أي setState جوه effect.
+function subscribeDir(callback: () => void) {
+  const observer = new MutationObserver(callback);
+  observer.observe(document.documentElement, { attributeFilter: ["dir"] });
+  return () => observer.disconnect();
+}
+function getDirSnapshot(): "rtl" | "ltr" {
+  return (document.documentElement.dir as "rtl" | "ltr") || "rtl";
+}
+function getDirServerSnapshot(): "rtl" | "ltr" {
+  return "rtl";
+}
+
+// ── External store #2: عرض الشاشة (لحساب visibleCount / isCenterMode) ────
+// بنعمل subscribe لـ resize مع rAF throttling زي الأصل، لكن من غير setState
+// مباشر جوه الـ effect؛ القيمة الخام (width) بس هي اللي بتتخزن عن طريق
+// useSyncExternalStore، والباقي (visibleCount, isCenterMode) بيتحسب في
+// الـ render نفسه كقيم مشتقة (derived) — أرخص وأنضف من state إضافية.
+function subscribeWidth(callback: () => void) {
+  let raf: number;
+  const handler = () => {
+    cancelAnimationFrame(raf);
+    raf = requestAnimationFrame(callback);
+  };
+  window.addEventListener("resize", handler);
+  return () => {
+    window.removeEventListener("resize", handler);
+    cancelAnimationFrame(raf);
+  };
+}
+function getWidthSnapshot(): number {
+  return window.innerWidth;
+}
+function getWidthServerSnapshot(): number {
+  // افتراض ديسكتوب وقت الـ SSR؛ هيتصحح فورًا على الكلاينت بعد أول قراءة حقيقية
+  return 1280;
+}
 
 export default function GSAPSlider<T extends { id?: string | number }>(
   props: GSAPSliderProps<T> & {
@@ -19,7 +67,6 @@ export default function GSAPSlider<T extends { id?: string | number }>(
   const {
     items,
     renderItem,
-    ItemComponent,
     autoplay = false,
     autoplayInterval = 4500,
     defaultVisibleCount = 3,
@@ -38,65 +85,42 @@ export default function GSAPSlider<T extends { id?: string | number }>(
   } = props;
 
   const swiperRef = useRef<SwiperType | null>(null);
-  const [activeIndex, setActiveIndex] = useState(0);
-  const [visibleCount, setVisibleCount] = useState(defaultVisibleCount);
-  const [isCenterMode, setIsCenterMode] = useState(false);
+  const [realActiveIndex, setRealActiveIndex] = useState(0);
 
-  // ✅ FIX: lazy initializer بدل setState جوه الـ effect
-  // بيتنفذ وقت الـ render نفسه (مش بعده) فمفيش render إضافي
-  const [dir, setDir] = useState<"rtl" | "ltr">(() =>
-    typeof document !== "undefined"
-      ? ((document.documentElement.dir as "rtl" | "ltr") || "rtl")
-      : "rtl",
+  const rawId = useId();
+  const paginationId = `gsap-pagination-${rawId.replace(/:/g, "")}`;
+
+  // ✅ من غير useEffect ولا setState — القيمة بتتحدث تلقائيًا لما الـ
+  // external source يتغيّر، والـ React بيتكفل بإعادة الـ render بنفسه.
+  const dir = useSyncExternalStore(
+    subscribeDir,
+    getDirSnapshot,
+    getDirServerSnapshot,
   );
 
+  const width = useSyncExternalStore(
+    subscribeWidth,
+    getWidthSnapshot,
+    getWidthServerSnapshot,
+  );
+
+  const isMobile = width < 640;
+  const isTablet = width < 1024;
+
+  const visibleCount = isMobile
+    ? mobileVisibleCount
+    : isTablet
+      ? (tabletVisibleCount ?? defaultVisibleCount)
+      : defaultVisibleCount;
+
+  const isCenterMode = centerModeMobile && isMobile;
+
+  // ✅ ده استخدام سليم للـ effect: بنزامن نظام خارجي (Swiper instance) مع
+  // آخر قيمة من React state — مش العكس. مطابق تمامًا للنمط اللي React
+  // بينصح بيه في رسالة الخطأ نفسها.
   useEffect(() => {
-    // الـ effect دلوقتي بيعمل حاجة واحدة بس: يـ subscribe لتغييرات خارجية
-    // (external system) — مفيش setState مباشر جوه جسم الـ effect
-    const observer = new MutationObserver(() => {
-      const newDir = (document.documentElement.dir as "rtl" | "ltr") || "rtl";
-      // ده مقبول: بيتنفذ جوه callback استجابةً لتغيير خارجي حقيقي، مش تلقائيًا
-      setDir(newDir);
-      swiperRef.current?.changeLanguageDirection(newDir);
-    });
-    observer.observe(document.documentElement, { attributeFilter: ["dir"] });
-    return () => observer.disconnect();
-  }, []);
-
-  useEffect(() => {
-    let raf: number;
-    const update = () => {
-      const w = window.innerWidth;
-      const isMobile = w < 640;
-      const isTablet = w < 1024;
-
-      setVisibleCount(
-        isMobile
-          ? mobileVisibleCount
-          : isTablet
-            ? (tabletVisibleCount ?? defaultVisibleCount)
-            : defaultVisibleCount,
-      );
-      setIsCenterMode(centerModeMobile && isMobile);
-    };
-
-    const onResize = () => {
-      cancelAnimationFrame(raf);
-      raf = requestAnimationFrame(update);
-    };
-
-    update();
-    window.addEventListener("resize", onResize);
-    return () => {
-      window.removeEventListener("resize", onResize);
-      cancelAnimationFrame(raf);
-    };
-  }, [
-    defaultVisibleCount,
-    mobileVisibleCount,
-    tabletVisibleCount,
-    centerModeMobile,
-  ]);
+    swiperRef.current?.changeLanguageDirection(dir);
+  }, [dir]);
 
   const totalItems = items.length;
 
@@ -106,47 +130,15 @@ export default function GSAPSlider<T extends { id?: string | number }>(
 
   const effectiveVisible = isCenterMode ? 1 : visibleCount;
 
-  const loopReady = totalItems >= effectiveVisible * 2;
-  const useLoop = infinite && loopReady;
+  // حماية: مش بنفعّل الـ loop غير لو في عناصر كافية لتجنب كسر عرض الكاردات
+  const useLoop = infinite && totalItems > effectiveVisible * 2;
 
-  // عدد الـ dots = عدد الصفحات الفعلية (total - visible + 1)
-  // في loop mode نستخدم نفس الحساب لأن الـ user يتنقل بين items
-  const dotsCount = Math.max(
-    1,
-    Math.ceil(totalItems / effectiveVisible),
-  );
-  const maxIndex = dotsCount - 1;
+  const showPaginationContainer = showDots && totalItems > effectiveVisible;
 
-  const goToSlide = useCallback(
-    (index: number) => {
-      if (!swiperRef.current) return;
-      // نحول من page index لـ slide index
-      const slideIndex = index * (effectiveVisible || 1);
-      const target = Math.min(slideIndex, totalItems - 1);
-      if (useLoop) {
-        swiperRef.current.slideToLoop(target);
-      } else {
-        swiperRef.current.slideTo(target);
-      }
-    },
-    [useLoop, effectiveVisible, totalItems],
-  );
+  const syncActiveIndex = useCallback((sw: SwiperType) => {
+    setRealActiveIndex(sw.realIndex);
+  }, []);
 
-  // syncActiveIndex: نحول الـ realIndex لرقم صفحة (0-based) داخل نطاق الـ dots
-  const syncActiveIndex = useCallback(
-    (sw: SwiperType) => {
-      const ri = sw.realIndex;
-      // نقسم على عدد الـ visible عشان نحول من slide index لـ page index
-      const pageIndex = Math.min(
-        Math.floor(ri / (effectiveVisible || 1)),
-        maxIndex,
-      );
-      setActiveIndex(pageIndex);
-    },
-    [effectiveVisible, maxIndex],
-  );
-
-  // ✅ الـ early return دلوقتي بعد كل الـ hooks، مش قبلها
   if (totalItems === 0) return null;
 
   const spaceBetween = isCenterMode ? 12 : 14;
@@ -164,11 +156,13 @@ export default function GSAPSlider<T extends { id?: string | number }>(
       <div className="w-full overflow-x-hidden">
         <div className="w-full pt-8 pb-3 md:pb-6 px-2 md:px-3 py-4 select-none">
           <Swiper
-            modules={[Autoplay, A11y]}
+            key={`${effectiveVisible}-${useLoop}`}
+            modules={[Autoplay, A11y, Pagination]}
             dir={dir}
             watchSlidesProgress={true}
             onSwiper={(sw) => {
               swiperRef.current = sw;
+              syncActiveIndex(sw);
             }}
             onSlideChange={syncActiveIndex}
             onRealIndexChange={syncActiveIndex}
@@ -176,8 +170,11 @@ export default function GSAPSlider<T extends { id?: string | number }>(
             slidesPerView={isCenterMode ? "auto" : visibleCount}
             spaceBetween={spaceBetween}
             centeredSlides={useCenteredSlides}
-            loop={useLoop}
-            loopAdditionalSlides={useLoop ? totalItems : undefined}
+            // loop={useLoop}
+            loop={true}
+            // loopAdditionalSlides={
+            //   useLoop ? Math.max(effectiveVisible * 2, 4) : undefined
+            // }
             allowTouchMove={enableDrag}
             grabCursor={enableDrag}
             speed={600}
@@ -187,6 +184,18 @@ export default function GSAPSlider<T extends { id?: string | number }>(
                     delay: autoplayInterval,
                     disableOnInteraction: false,
                     pauseOnMouseEnter: pauseOnHover,
+                  }
+                : false
+            }
+            pagination={
+              showPaginationContainer
+                ? {
+                    el: `[id="${paginationId}"]`,
+                    clickable: true,
+                    bulletActiveClass:
+                      "!w-7 !bg-sky-500 dark:!bg-sky-400 shadow-sm shadow-sky-400/50",
+                    renderBullet: (_index, bulletClassName) =>
+                      `<span class="${bulletClassName} h-2.5 w-2.5 rounded-full bg-slate-300 dark:bg-slate-700 hover:bg-slate-400 transition-all duration-500 cursor-pointer inline-block"></span>`,
                   }
                 : false
             }
@@ -202,7 +211,7 @@ export default function GSAPSlider<T extends { id?: string | number }>(
             wrapperClass="items-stretch"
           >
             {items.map((item, index) => {
-              const slideIsActive = index === activeIndex;
+              const slideIsActive = index === realActiveIndex;
 
               const slideScale = hasScale
                 ? slideIsActive
@@ -233,18 +242,7 @@ export default function GSAPSlider<T extends { id?: string | number }>(
                       zIndex: slideIsActive ? 10 : 1,
                     }}
                   >
-                    {ItemComponent ? (
-                      <ItemComponent
-                        service={item}
-                        member={item}
-                        client={item}
-                        item={item}
-                        index={index}
-                        isActive={slideIsActive}
-                      />
-                    ) : (
-                      (renderItem?.(item, index, slideIsActive) ?? null)
-                    )}
+                    {renderItem?.(item, index, slideIsActive) ?? null}
                   </div>
                 </SwiperSlide>
               );
@@ -253,13 +251,12 @@ export default function GSAPSlider<T extends { id?: string | number }>(
         </div>
       </div>
 
-      <GSAPSliderControls
-        showDots={showDots}
-        maxIndex={maxIndex}
-        dotsCount={dotsCount}
-        activeIndex={activeIndex}
-        goToSlideWithReset={goToSlide}
-      />
+      {showPaginationContainer && (
+        <div
+          id={paginationId}
+          className="flex items-center justify-center gap-1 px-1 mt-3 sm:mt-4"
+        />
+      )}
     </div>
   );
 }

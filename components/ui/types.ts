@@ -49,12 +49,9 @@ export interface SectionHeaderProps {
 export interface GSAPSliderProps<T> {
   items: T[];
   renderItem?: (item: T, index: number, isActive?: boolean) => React.ReactNode;
-  ItemComponent?: React.ElementType;
   autoplay?: boolean;
   autoplayInterval?: number;
   defaultVisibleCount?: number;
-  showControls?: boolean;
-  controlsPosition?: "center" | "sides";
   showDots?: boolean;
   pauseOnHover?: boolean;
   enableDrag?: boolean;

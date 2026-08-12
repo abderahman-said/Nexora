@@ -81,13 +81,11 @@ export default function ServiceCards() {
         <div className="relative z-20 -mt-[171px] md:-mt-[210px] px-2 sm:px-4">
           <GSAPSlider
             items={servicesData}
-            ItemComponent={ServiceCard}
+            renderItem={(item) => <ServiceCard service={item} />}
             defaultVisibleCount={3}
             mobileVisibleCount={1}
             centerModeMobile={true}
             centerCardWidthPercent={76}
-            showControls={false}
-            controlsPosition="center"
             showDots={true}
             autoplay={false}
             pauseOnHover={false}

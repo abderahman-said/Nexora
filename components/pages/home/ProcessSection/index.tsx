@@ -45,8 +45,6 @@ export default function ProcessSection() {
             mobileVisibleCount={1}
             centerModeMobile={true}
             centerCardWidthPercent={76}
-            showControls={false}
-            controlsPosition="center"
             showDots={true}
             autoplay={false}
             pauseOnHover={false}
