@@ -15,7 +15,7 @@ export function ProcessCard({ step }: ProcessCardProps) {
             title={step.title}
             description={step.description}
             features={step.features}
-            className="h-full"
+            className="h-[279px] md:h-[377px]"
         />
     );
 }

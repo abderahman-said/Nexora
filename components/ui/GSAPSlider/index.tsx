@@ -51,11 +51,7 @@ function getWidthServerSnapshot(): number {
 }
 
 export default function GSAPSlider<T extends { id?: string | number }>(
-  props: GSAPSliderProps<T> & {
-    activeScale?: number;
-    inactiveScale?: number;
-    inactiveOpacity?: number;
-  },
+  props: GSAPSliderProps<T>,
 ) {
   const {
     items,
@@ -72,9 +68,6 @@ export default function GSAPSlider<T extends { id?: string | number }>(
     centerModeMobile = false,
     centerCardWidthPercent = 76,
     infinite = false,
-    activeScale = 1,
-    inactiveScale = 1,
-    inactiveOpacity = 1,
   } = props;
 
   const swiperRef = useRef<SwiperType | null>(null);
@@ -112,9 +105,7 @@ export default function GSAPSlider<T extends { id?: string | number }>(
 
   const totalItems = items.length;
 
-  const hasScale = activeScale !== 1 || inactiveScale !== 1;
-  const hasOpacity = inactiveOpacity !== 1;
-  const useCenteredSlides = isCenterMode || hasScale || hasOpacity;
+  const useCenteredSlides = isCenterMode;
 
   const effectiveVisible = isCenterMode ? 1 : visibleCount;
 
@@ -192,18 +183,6 @@ export default function GSAPSlider<T extends { id?: string | number }>(
             {items.map((item, index) => {
               const slideIsActive = index === realActiveIndex;
 
-              const slideScale = hasScale
-                ? slideIsActive
-                  ? activeScale
-                  : inactiveScale
-                : 1;
-
-              const slideOpacity = hasOpacity
-                ? slideIsActive
-                  ? 1
-                  : inactiveOpacity
-                : 1;
-
               return (
                 <SwiperSlide
                   key={(item as { id?: string | number }).id ?? index}
@@ -213,14 +192,7 @@ export default function GSAPSlider<T extends { id?: string | number }>(
                       : undefined
                   }
                 >
-                  <div
-                    className={`h-full flex flex-col origin-center transition-all duration-500 ease-in-out ${hasScale ? "px-0.5 md:px-1" : ""}`}
-                    style={{
-                      transform: `scale(${slideScale})`,
-                      opacity: slideOpacity,
-                      zIndex: slideIsActive ? 10 : 1,
-                    }}
-                  >
+                  <div className="h-full flex flex-col">
                     {renderItem?.(item, index, slideIsActive) ?? null}
                   </div>
                 </SwiperSlide>

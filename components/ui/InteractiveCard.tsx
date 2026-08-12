@@ -111,15 +111,15 @@ export default function InteractiveCard({
               <div
                 key={fIdx}
                 className={cn(
-                  "flex items-center w-fit gap-2 px-1.5 py-1 md:px-2 md:py-1.5 rounded-xl",
+                  "flex items-center w-fit gap-1 md:gap-2 px-1   py-1 md:px-2 md:py-1.5 rounded-xl",
                   "bg-slate-50 dark:bg-slate-900/80",
                   "border border-slate-200/60 dark:border-slate-800/60",
                   "group-hover:border-blue-500/30 dark:group-hover:border-sky-500/30",
                   "transition-colors duration-300",
                 )}
               >
-                <CheckCircle2 className="w-3 h-3 md:w-3.5 md:h-3.5 text-blue-600 dark:text-sky-400 shrink-0" />
-                <span className="text-[10px] md:text-xs font-semibold text-slate-700 dark:text-slate-300">
+                <CheckCircle2 className="w-2.5 h-2.5 md:w-3.5 md:h-3.5 text-blue-600 dark:text-sky-400 shrink-0" />
+                <span className="text-[9px] md:text-xs font-semibold text-slate-700 dark:text-slate-300">
                   {feature}
                 </span>
               </div>

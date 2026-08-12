@@ -81,7 +81,9 @@ export default function ServiceCards() {
         <div className="relative z-20 -mt-[171px] md:-mt-[210px] px-2 sm:px-4">
           <GSAPSlider
             items={servicesData}
-            renderItem={(item) => <ServiceCard service={item} />}
+            renderItem={(item) => (
+              <ServiceCard service={item} className=" h-[279px] md:h-[377px]" />
+            )}
             defaultVisibleCount={3}
             mobileVisibleCount={1}
             centerModeMobile={true}
