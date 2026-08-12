@@ -128,7 +128,7 @@ html , body {
   }
 
   html {
-    scroll-behavior: smooth;
+    scroll-behavior: auto !important;
     scrollbar-width: thin;
     scrollbar-color: rgba(0, 0, 0, 0.2) transparent;
     overflow-x: hidden;
@@ -336,9 +336,4 @@ html[dir="ltr"] .swiper-slide {
   margin-left: 0 !important;
 }
 
-/* ─── PERFORMANCE: Disable all CSS animations site-wide ─── */
-*,
-*::before,
-*::after {
-  animation: none !important;
-}
+

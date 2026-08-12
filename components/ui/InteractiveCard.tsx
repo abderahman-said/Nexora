@@ -41,7 +41,7 @@ export default function InteractiveCard({
         "shadow-xl shadow-slate-200/40 dark:shadow-none",
         "hover:border-blue-500/60 dark:hover:border-sky-400/60",
         "hover:shadow-2xl hover:shadow-blue-500/20 dark:hover:shadow-blue-500/20",
-        "hover:-translate-y-3 transition-all duration-300 ease-out",
+        "hover:-translate-y-1 transition-all duration-150 ease-out",
         className,
       )}
     >

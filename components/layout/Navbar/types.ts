@@ -1,8 +1,4 @@
-import { RefObject, ReactNode } from "react";
-
-export interface UseNavbarScrollProps {
-  navRef: RefObject<HTMLElement | null>;
-}
+import { ReactNode } from "react";
 
 export interface NavLink {
   label: string;

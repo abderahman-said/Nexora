@@ -74,7 +74,7 @@ export function MobileNav() {
             {/* Backdrop */}
             <div
               onClick={closeMenu}
-              className={`fixed inset-0 z-[990] bg-black/40 transition-opacity duration-150 ease-out ${
+              className={`fixed inset-0 z-[990] bg-black/40 transition-opacity duration-100 ease-out ${
                 isOpen ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
               }`}
               aria-hidden="true"
@@ -85,7 +85,7 @@ export function MobileNav() {
               className={`fixed top-0 z-[99999] h-[100dvh] w-[75vw] max-w-[360px] start-0 flex flex-col overscroll-none
                 bg-white dark:bg-[#0b0b12]
                 border-e border-slate-200/70 dark:border-white/10
-                overflow-hidden transition-transform duration-150 ease-out will-change-transform ${
+                overflow-hidden transition-transform duration-100 ease-out ${
                   isOpen
                     ? "translate-x-0 pointer-events-auto"
                     : "-translate-x-full rtl:translate-x-full pointer-events-none"
