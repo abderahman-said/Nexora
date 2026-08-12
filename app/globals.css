@@ -323,3 +323,15 @@ button {
 /* Hide video controls globally for background videos */
 video::-webkit-media-controls-start-playback-button { display: none !important; }
 video::-webkit-media-controls { display: none !important; }
+
+/* ─── Swiper RTL/LTR Double Margin Fix ───────────────────────────────── */
+/* Fixes Swiper bug where both margin-left and margin-right are applied to clones */
+html[lang="ar"] .swiper-slide,
+html[dir="rtl"] .swiper-slide {
+  margin-right: 0 !important;
+}
+
+html[lang="en"] .swiper-slide,
+html[dir="ltr"] .swiper-slide {
+  margin-left: 0 !important;
+}
