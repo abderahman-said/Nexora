@@ -37,7 +37,6 @@ export default function ProcessSection() {
         />
 
         {/* ── Cards Slider ── */}
-        <div className="relative mt-8">
           <GSAPSlider
             items={stepsData}
             renderItem={(item) => (item ? <ProcessCard step={item} /> : null)}
@@ -52,7 +51,6 @@ export default function ProcessSection() {
                     infinite={true}
 
           />
-        </div>
       </Container>
     </section>
   );
