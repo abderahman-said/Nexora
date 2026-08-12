@@ -53,8 +53,8 @@ export default function ProjectsCoverflowSlider({
           centeredSlides
           loop={loop}
           speed={650}
-          slidesPerView={1.15}
-          spaceBetween={20}
+          slidesPerView={1.5}
+          spaceBetween={12}
           breakpoints={{
             640: { slidesPerView: 2.2, spaceBetween: 15 },
             1024: { slidesPerView: 3, spaceBetween: 20 },
