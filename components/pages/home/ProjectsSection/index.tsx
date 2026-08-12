@@ -1,6 +1,5 @@
 "use client";
 
-import { useRef } from "react";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import { useLocale, useTranslations } from "next-intl";
@@ -14,13 +13,10 @@ export default function ProjectsSection() {
   const locale = useLocale();
   const t = useTranslations("homeProjects");
   const allProjects = projectService.getAllProjects();
-  const sectionRef = useRef<HTMLElement>(null);
-  const sliderWrapperRef = useRef<HTMLDivElement>(null);
 
   return (
     <section
       id="portfolio"
-      ref={sectionRef}
       className="scroll-section relative w-full py-8 md:py-10 transition-colors duration-300 overflow-hidden"
     >
       <Container>
@@ -54,7 +50,6 @@ export default function ProjectsSection() {
         />
 
         <div
-          ref={sliderWrapperRef}
           className="w-full mt-[-10px] md:!mt-[-35px]"
         >
           <ProjectsCoverflowSlider

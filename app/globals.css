@@ -194,6 +194,7 @@ html , body {
 
 
 
+
 body.is-transitioning {
   pointer-events: none !important;
 }
@@ -202,6 +203,15 @@ body.is-transitioning .js-cursor-bubble {
   transform: scale(0) !important;
   display: none !important;
 }
+
+/* ─── Instant Theme Switch: block all transitions during dark/light toggle ─── */
+html.theme-switching *,
+html.theme-switching *::before,
+html.theme-switching *::after {
+  transition: none !important;
+  animation: none !important;
+}
+
 
 /* ─── Content Sections ───────────────────────────────────────────────── */
 .scroll-section {
