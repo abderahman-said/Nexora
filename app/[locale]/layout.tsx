@@ -222,14 +222,16 @@ export default async function LocaleLayout({
           }}
         />
       </head>
-      <body className={`${inter.variable} ${cairo.variable} font-sans bg-[#f8fafc] site-grid-bg text-slate-900 dark:bg-[#090d16] dark:text-slate-100 antialiased overflow-x-hidden`} suppressHydrationWarning>
+      <body className={`${inter.variable} ${cairo.variable} font-sans bg-[#f8fafc] site-grid-bg text-slate-900 dark:bg-[#090d16] dark:text-slate-100 antialiased`} suppressHydrationWarning>
         <ThemeProvider>
           <NextIntlClientProvider messages={messages}>
             <GlobalNavigationLoader />
             <SvgSymbols />
-            <Navbar />
-            {children}
-            <Footer />
+            <div className="flex min-h-screen flex-col overflow-x-hidden">
+              <Navbar />
+              {children}
+              <Footer />
+            </div>
             <FloatingWhatsApp />
           </NextIntlClientProvider>
         </ThemeProvider>
