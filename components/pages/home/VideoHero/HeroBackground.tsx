@@ -11,6 +11,10 @@ export default function HeroBackground({ glowRef }: HeroBackgroundProps) {
 
   useEffect(() => {
     if (videoRef.current) {
+      // Force muted state in DOM for iOS Safari autoplay
+      videoRef.current.defaultMuted = true;
+      videoRef.current.muted = true;
+      
       videoRef.current.play().catch((err) => {
         console.warn("Video autoplay prevented:", err);
       });
@@ -48,6 +52,7 @@ export default function HeroBackground({ glowRef }: HeroBackgroundProps) {
           disablePictureInPicture
           preload="auto"
           onLoadedData={() => setIsVideoReady(true)}
+          onCanPlay={() => setIsVideoReady(true)}
           onPlaying={() => setIsVideoReady(true)}
           onError={(e) =>
             console.error("Video element error:", e.currentTarget.error)
@@ -55,17 +60,17 @@ export default function HeroBackground({ glowRef }: HeroBackgroundProps) {
           className={`w-full h-full object-cover scale-105 pointer-events-none transition-opacity duration-700 ${isVideoReady ? "opacity-80" : "opacity-0"
             }`}
         >
-          {/* WebM (VP9): الأسرع والأخف حجماً لمعظم المتصفحات الحديثة */}
-          <source
-            src={APP_CONSTANTS.VIDEO.HERO_WEBM}
-            type="video/webm"
-            onError={() => console.error("webm source failed to load")}
-          />
-          {/* MP4 (H.264): كبديل للمتصفحات اللي مش بتدعم WebM زي Safari */}
+          {/* MP4 (H.264): الأساسي عشان مشاكل iOS Safari مع WebM */}
           <source
             src={APP_CONSTANTS.VIDEO.HERO_MP4}
             type="video/mp4"
             onError={() => console.error("mp4 source failed to load")}
+          />
+          {/* WebM (VP9): كبديل للمتصفحات اللي بتدعمه */}
+          <source
+            src={APP_CONSTANTS.VIDEO.HERO_WEBM}
+            type="video/webm"
+            onError={() => console.error("webm source failed to load")}
           />
         </video>
 

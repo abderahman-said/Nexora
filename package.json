@@ -16,10 +16,10 @@
     "@tailwindcss/postcss": "^4.3.3",
     "clsx": "^2.1.1",
     "lucide-react": "^1.27.0",
-    "next": "15.2.8",
+    "next": "^15.5.21",
     "next-intl": "^4.13.4",
-    "react": "^19.0.0",
-    "react-dom": "^19.0.0",
+    "react": "^19.2.8",
+    "react-dom": "^19.2.8",
     "swiper": "^14.1.0",
     "tailwind-merge": "^3.6.0"
   },
