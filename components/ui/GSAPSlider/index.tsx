@@ -18,8 +18,6 @@ import "swiper/css/pagination";
 import "swiper/css/scrollbar";
 
 // ── External store #1: اتجاه الصفحة (rtl/ltr) ─────────────────────────────
-// بنقرأ من document.documentElement.dir ونعمل subscribe لأي تغيير عليه
-// عن طريق MutationObserver، من غير أي setState جوه effect.
 function subscribeDir(callback: () => void) {
   const observer = new MutationObserver(callback);
   observer.observe(document.documentElement, { attributeFilter: ["dir"] });
@@ -33,10 +31,6 @@ function getDirServerSnapshot(): "rtl" | "ltr" {
 }
 
 // ── External store #2: عرض الشاشة (لحساب visibleCount / isCenterMode) ────
-// بنعمل subscribe لـ resize مع rAF throttling زي الأصل، لكن من غير setState
-// مباشر جوه الـ effect؛ القيمة الخام (width) بس هي اللي بتتخزن عن طريق
-// useSyncExternalStore، والباقي (visibleCount, isCenterMode) بيتحسب في
-// الـ render نفسه كقيم مشتقة (derived) — أرخص وأنضف من state إضافية.
 function subscribeWidth(callback: () => void) {
   let raf: number;
   const handler = () => {
@@ -53,7 +47,6 @@ function getWidthSnapshot(): number {
   return window.innerWidth;
 }
 function getWidthServerSnapshot(): number {
-  // افتراض ديسكتوب وقت الـ SSR؛ هيتصحح فورًا على الكلاينت بعد أول قراءة حقيقية
   return 1280;
 }
 
@@ -90,8 +83,6 @@ export default function GSAPSlider<T extends { id?: string | number }>(
   const rawId = useId();
   const paginationId = `gsap-pagination-${rawId.replace(/:/g, "")}`;
 
-  // ✅ من غير useEffect ولا setState — القيمة بتتحدث تلقائيًا لما الـ
-  // external source يتغيّر، والـ React بيتكفل بإعادة الـ render بنفسه.
   const dir = useSyncExternalStore(
     subscribeDir,
     getDirSnapshot,
@@ -115,9 +106,6 @@ export default function GSAPSlider<T extends { id?: string | number }>(
 
   const isCenterMode = centerModeMobile && isMobile;
 
-  // ✅ ده استخدام سليم للـ effect: بنزامن نظام خارجي (Swiper instance) مع
-  // آخر قيمة من React state — مش العكس. مطابق تمامًا للنمط اللي React
-  // بينصح بيه في رسالة الخطأ نفسها.
   useEffect(() => {
     swiperRef.current?.changeLanguageDirection(dir);
   }, [dir]);
@@ -130,7 +118,6 @@ export default function GSAPSlider<T extends { id?: string | number }>(
 
   const effectiveVisible = isCenterMode ? 1 : visibleCount;
 
-  // حماية: مش بنفعّل الـ loop غير لو في عناصر كافية لتجنب كسر عرض الكاردات
   const useLoop = infinite && totalItems > effectiveVisible * 2;
 
   const showPaginationContainer = showDots && totalItems > effectiveVisible;
@@ -170,11 +157,7 @@ export default function GSAPSlider<T extends { id?: string | number }>(
             slidesPerView={isCenterMode ? "auto" : visibleCount}
             spaceBetween={spaceBetween}
             centeredSlides={useCenteredSlides}
-            // loop={useLoop}
             loop={true}
-            // loopAdditionalSlides={
-            //   useLoop ? Math.max(effectiveVisible * 2, 4) : undefined
-            // }
             allowTouchMove={enableDrag}
             grabCursor={enableDrag}
             speed={600}
@@ -192,20 +175,11 @@ export default function GSAPSlider<T extends { id?: string | number }>(
                 ? {
                     el: `[id="${paginationId}"]`,
                     clickable: true,
-                    bulletActiveClass:
-                      "swiper-pagination-bullet-active !w-7 !bg-sky-500 dark:!bg-sky-400 shadow-sm shadow-sky-400/50",
-                    renderBullet: (_index, bulletClassName) =>
-                      `<span class="${bulletClassName} !opacity-100 !rounded-full bg-slate-300 dark:bg-slate-700 hover:bg-slate-400 transition-all duration-500 cursor-pointer inline-block"></span>`,
                   }
                 : false
             }
             style={{
               overflow: "visible",
-              ...({
-                "--swiper-pagination-bullet-width": "10px",
-                "--swiper-pagination-bullet-height": "10px",
-                "--swiper-pagination-bullet-horizontal-gap": "4px",
-              } as React.CSSProperties),
               ...(isCenterMode
                 ? ({
                     "--swiper-center-offset": `${(100 - centerCardWidthPercent) / 2}%`,
@@ -261,6 +235,42 @@ export default function GSAPSlider<T extends { id?: string | number }>(
           id={paginationId}
           className="flex items-center justify-center gap-1 px-1 mt-3 sm:mt-4"
         />
+      )}
+
+      {showPaginationContainer && (
+        <style jsx global>{`
+          #${paginationId} .swiper-pagination-bullet {
+            width: 12px;
+            height: 12px;
+            border-radius: 9999px;
+            margin: 0 2px !important;
+            background-color: transparent;
+            border: 1.5px solid rgb(148 163 184);
+            opacity: 1;
+            cursor: pointer;
+            transition: width 0.35s ease, background-color 0.35s ease,
+              border-color 0.35s ease;
+          }
+          #${paginationId} .swiper-pagination-bullet:hover {
+            border-color: rgb(100 116 139); /* slate-500 */
+          }
+          #${paginationId} .swiper-pagination-bullet-active {
+            width: 26px;
+            background-color: rgb(14 165 233); /* sky-500 */
+            border-color: rgb(14 165 233);
+          }
+
+          .dark #${paginationId} .swiper-pagination-bullet {
+            border-color: rgb(71 85 105); /* slate-600 */
+          }
+          .dark #${paginationId} .swiper-pagination-bullet:hover {
+            border-color: rgb(100 116 139); /* slate-500 */
+          }
+          .dark #${paginationId} .swiper-pagination-bullet-active {
+            background-color: rgb(56 189 248); /* sky-400 */
+            border-color: rgb(56 189 248);
+          }
+        `}</style>
       )}
     </div>
   );

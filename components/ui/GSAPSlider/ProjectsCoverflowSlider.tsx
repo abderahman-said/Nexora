@@ -1,12 +1,11 @@
 "use client";
 
-import { useId, useRef, useSyncExternalStore  } from "react";
+import { useId, useRef, useSyncExternalStore } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
-import { A11y, Autoplay, EffectCoverflow, Pagination } from "swiper/modules";
+import { A11y, Autoplay, Pagination } from "swiper/modules";
 import type { Swiper as SwiperType } from "swiper";
 
 import "swiper/css";
-import "swiper/css/effect-coverflow";
 import "swiper/css/pagination";
 import { ProjectsCoverflowSliderProps } from "@/types/project";
 
@@ -17,8 +16,6 @@ const subscribeDir = (cb: () => void) => {
 };
 const getDir = () => (document.documentElement.dir as "rtl" | "ltr") || "rtl";
 const getDirSSR = () => "rtl" as const;
-
-
 
 export default function ProjectsCoverflowSlider({
   items,
@@ -48,26 +45,18 @@ export default function ProjectsCoverflowSlider({
       <div className="w-full overflow-x-hidden py-8 md:py-10 select-none">
         <Swiper
           dir={dir}
-          modules={[EffectCoverflow, Autoplay, A11y, Pagination]}
-          effect="coverflow"
+          modules={[Autoplay, A11y, Pagination]}
           grabCursor={enableDrag}
           allowTouchMove={enableDrag}
           watchSlidesProgress
           centeredSlides
           loop={loop}
           speed={650}
-          slidesPerView={1.3}
-          spaceBetween={16}
+          slidesPerView={1.15}
+          spaceBetween={10}
           breakpoints={{
-            640: { slidesPerView: 2, spaceBetween: 20 },
-            1024: { slidesPerView: 3, spaceBetween: 28 },
-          }}
-          coverflowEffect={{
-            rotate: 0,
-            stretch: 0,
-            depth: 120,
-            modifier: 1.6,
-            slideShadows: false,
+            640: { slidesPerView: 2.2, spaceBetween: 28 },
+            1024: { slidesPerView: 3, spaceBetween: 36 },
           }}
           autoplay={
             autoplay
@@ -79,10 +68,6 @@ export default function ProjectsCoverflowSlider({
               ? {
                   el: `[id="${paginationId}"]`,
                   clickable: true,
-                  bulletActiveClass:
-                    "swiper-pagination-bullet-active !w-7 !h-[12px] !bg-sky-500 dark:!bg-sky-400 shadow-sm shadow-sky-400/50",
-                  renderBullet: (_i, cls) =>
-                    `<span class="${cls} !opacity-100 !w-[12px] !h-[12px] !rounded-full !bg-transparent border !border-slate-400 dark:!border-slate-500  transition-all duration-500 cursor-pointer inline-block"></span>`,
                 }
               : false
           }
@@ -93,8 +78,11 @@ export default function ProjectsCoverflowSlider({
             <SwiperSlide key={item.id ?? index} className="!h-auto">
               {({ isActive }) => (
                 <div
-                  className="h-full transition-opacity duration-500 ease-out"
-                  style={{ opacity: isActive ? 1 : 0.6 }}
+                  className="h-full origin-center transition-transform duration-500 ease-out"
+                  style={{
+                    transform: `scale(${isActive ? 1.08 : 0.9})`,
+                    zIndex: isActive ? 10 : 1,
+                  }}
                 >
                   {renderItem(item, index, isActive)}
                 </div>
@@ -105,7 +93,46 @@ export default function ProjectsCoverflowSlider({
       </div>
 
       {showPagination && (
-        <div id={paginationId} className="flex items-center justify-center gap-1 px-1 mt-3 sm:mt-4" />
+        <div
+          id={paginationId}
+          className="flex items-center justify-center gap-1 px-1 mt-3 sm:mt-4"
+        />
+      )}
+
+      {showPagination && (
+        <style jsx global>{`
+          #${paginationId} .swiper-pagination-bullet {
+            width: 12px;
+            height: 12px;
+            border-radius: 9999px;
+            margin: 0 2px !important;
+            background-color: transparent;
+            border: 1.5px solid rgb(148 163 184);
+            opacity: 1;
+            cursor: pointer;
+            transition: width 0.35s ease, background-color 0.35s ease,
+              border-color 0.35s ease;
+          }
+          #${paginationId} .swiper-pagination-bullet:hover {
+            border-color: rgb(100 116 139);
+          }
+          #${paginationId} .swiper-pagination-bullet-active {
+            width: 26px;
+            background-color: rgb(14 165 233);
+            border-color: rgb(14 165 233);
+          }
+
+          .dark #${paginationId} .swiper-pagination-bullet {
+            border-color: rgb(71 85 105);
+          }
+          .dark #${paginationId} .swiper-pagination-bullet:hover {
+            border-color: rgb(100 116 139);
+          }
+          .dark #${paginationId} .swiper-pagination-bullet-active {
+            background-color: rgb(56 189 248);
+            border-color: rgb(56 189 248);
+          }
+        `}</style>
       )}
     </div>
   );

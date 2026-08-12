@@ -57,14 +57,14 @@ export default function ProjectsSection() {
           ref={sliderWrapperRef}
           className="w-full mt-[-10px] md:!mt-[-35px]"
         >
-         <ProjectsCoverflowSlider
-  items={allProjects}
-  showDots
-  autoplay={false}
-  pauseOnHover={false}
-  enableDrag
-  renderItem={(p) => <ProjectCard key={p.id} p={p} />}
-/>
+          <ProjectsCoverflowSlider
+            items={allProjects}
+            showDots
+            autoplay={false}
+            pauseOnHover={false}
+            enableDrag
+            renderItem={(p) => <ProjectCard key={p.id} p={p} />}
+          />
         </div>
       </Container>
     </section>
