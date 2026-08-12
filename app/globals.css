@@ -186,50 +186,7 @@ html[lang="en"] body {
   background: #0f172a;
 }
 
-
-
-
-/* body.is-transitioning {
-  pointer-events: none !important;
-}
-body.is-transitioning .js-cursor-bubble {
-  opacity: 0 !important;
-  transform: scale(0) !important;
-  display: none !important;
-} */
-
-/* ─── Instant Theme Switch: block all transitions during dark/light toggle ─── */
-/* html.theme-switching *,
-html.theme-switching *::before,
-html.theme-switching *::after {
-  transition: none !important;
-  animation: none !important;
-} */
-
-
-/* .scroll-section {
-  position: relative;
-} */
-
-/* ─── TEMP: Force all GSAP-animated elements visible (disable scroll animations) ─── */
-/* .bento-card,
-.process-step,
-.hw-feature,
-.about-feature,
-.animate-as-card,
-.scroll-section h2,
-.scroll-section h3,
-.scroll-section p {
-  opacity: 1 !important;
-} */
-
-
-/* استثناء الأقسام اللي فيها GSAP ScrollTrigger pinning */
-/* .scroll-section.pin-container,
-.scroll-section:has(.pin-container) {
-  content-visibility: visible;
-  contain-intrinsic-size: auto;
-} */
+ 
 /* ─── Keyframes ──────────────────────────────────────────────────────── */
 @keyframes spin {
   to {

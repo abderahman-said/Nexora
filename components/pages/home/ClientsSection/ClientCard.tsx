@@ -14,7 +14,7 @@ export function ClientCard({ client }: ClientCardProps) {
                 shadow-xl shadow-slate-200/40 dark:shadow-none
                 hover:border-blue-500/60 dark:hover:border-sky-400/60
                 hover:shadow-2xl hover:shadow-blue-500/20 dark:hover:shadow-blue-500/20
-                hover:-translate-y-2 hover:scale-[1.01]
+                md:hover:-translate-y-2 md:hover:scale-[1.01]
                 transition-all duration-500 ease-out
                 h-full
             "

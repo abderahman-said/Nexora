@@ -15,7 +15,7 @@ export function TeamCard({ member }: TeamCardProps) {
                 bg-white dark:bg-[#0c101d]
                 border rounded-3xl p-5
                 transition-all duration-300 ease-out
-                overflow-hidden hover:-translate-y-2
+                overflow-hidden md:hover:-translate-y-2
                 ${
                   isFounder
                     ? "border-amber-400/80 dark:border-amber-500/60 shadow-2xl shadow-amber-500/20 hover:border-amber-400 dark:hover:border-amber-400 hover:shadow-amber-500/30"
