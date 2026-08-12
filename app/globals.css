@@ -115,8 +115,8 @@ html[lang="en"] body {
   --glass-bg: rgba(15, 23, 42, 0.8);
 }
 
-html , body {
-  overflow-x: hidden;
+html, body {
+  overflow-x: hidden  
 }
 @layer base {
   *,
@@ -128,11 +128,9 @@ html , body {
   }
 
   html {
-    background-color: var(--bg);
-    scroll-behavior: auto !important;
-    scrollbar-width: thin;
-    scrollbar-color: rgba(0, 0, 0, 0.2) transparent;
-    overflow-x: hidden;
+    /* scroll-behavior: auto !important; */
+    /* scrollbar-width: thin; */
+    /* scrollbar-color: rgba(0, 0, 0, 0.2) transparent; */
     font-size: 16px;
   }
 
@@ -196,29 +194,27 @@ html , body {
 
 
 
-body.is-transitioning {
+/* body.is-transitioning {
   pointer-events: none !important;
 }
 body.is-transitioning .js-cursor-bubble {
   opacity: 0 !important;
   transform: scale(0) !important;
   display: none !important;
-}
+} */
 
 /* ─── Instant Theme Switch: block all transitions during dark/light toggle ─── */
-html.theme-switching *,
+/* html.theme-switching *,
 html.theme-switching *::before,
 html.theme-switching *::after {
   transition: none !important;
   animation: none !important;
-}
+} */
 
 
-/* ─── Content Sections ───────────────────────────────────────────────── */
 .scroll-section {
   position: relative;
-  /* isolate paint layers to prevent full-page repaints on scroll */
-  isolation: isolate;
+  /* Removed isolation: isolate as it causes iOS Safari to drop layers during fast scrolling, leading to empty spaces */
 }
 
 /* ─── TEMP: Force all GSAP-animated elements visible (disable scroll animations) ─── */
@@ -237,11 +233,11 @@ html.theme-switching *::after {
 
 
 /* استثناء الأقسام اللي فيها GSAP ScrollTrigger pinning */
-.scroll-section.pin-container,
+/* .scroll-section.pin-container,
 .scroll-section:has(.pin-container) {
   content-visibility: visible;
   contain-intrinsic-size: auto;
-}
+} */
 /* ─── Keyframes ──────────────────────────────────────────────────────── */
 @keyframes spin {
   to {
@@ -347,4 +343,4 @@ html[dir="ltr"] .swiper-slide {
   margin-left: 0 !important;
 }
 
-
+
