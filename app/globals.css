@@ -75,7 +75,6 @@ html[lang="en"] body {
   /* Glass */
   --glass-border: 1px solid rgba(0, 0, 0, 0.08);
   --glass-bg: rgba(255, 255, 255, 0.75);
-  --glass-blur: blur(20px);
 
   /* Hero margin (for border-radius scroll effect) */
   --hero-margin: 0px;

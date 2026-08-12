@@ -12,7 +12,7 @@ export function InteractiveCircleButton({ href, children }: InteractiveCircleBut
       target="_blank"
       rel="noopener noreferrer"
       aria-label={typeof children === "string" ? children : "Contact Us"}
-      className="group relative flex h-36 w-36 flex-col items-center justify-center rounded-full border border-slate-300 dark:border-white/25 bg-white dark:bg-white/5 backdrop-blur-sm overflow-hidden text-slate-900 dark:text-white shadow-xl cursor-pointer transition-all duration-200 hover:scale-105 hover:border-blue-500 dark:hover:border-blue-400 hover:shadow-[0_0_30px_rgba(59,130,246,0.2)] dark:hover:shadow-[0_0_30px_rgba(59,130,246,0.3)]"
+      className="group relative flex h-36 w-36 flex-col items-center justify-center rounded-full border border-slate-300 dark:border-white/25 bg-white dark:bg-white/10 overflow-hidden text-slate-900 dark:text-white shadow-xl cursor-pointer transition-all duration-200 hover:scale-105 hover:border-blue-500 dark:hover:border-blue-400 hover:shadow-[0_0_30px_rgba(59,130,246,0.2)] dark:hover:shadow-[0_0_30px_rgba(59,130,246,0.3)]"
     >
       {/* Background Gradient Circle on Hover */}
       <span

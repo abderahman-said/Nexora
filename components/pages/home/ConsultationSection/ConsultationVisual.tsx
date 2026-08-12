@@ -32,7 +32,7 @@ export default function ConsultationVisual() {
 
                 <div className="
                     absolute bottom-4 start-4 end-4 z-10 p-3.5 rounded-xl
-                    bg-white/95 dark:bg-slate-900/85 backdrop-blur-md border border-slate-200/80 dark:border-slate-700/80
+                    bg-white/95 dark:bg-slate-900/95 border border-slate-200/80 dark:border-slate-700/80
                     flex items-center justify-between gap-3 shadow-xl
                 ">
                     <div className="flex items-center gap-2.5">

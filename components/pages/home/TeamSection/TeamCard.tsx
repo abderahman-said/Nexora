@@ -42,7 +42,7 @@ export function TeamCard({ member }: TeamCardProps) {
 
         {/* Founder Crown Badge */}
         {isFounder && (
-          <div className="absolute top-3 end-3 bg-gradient-to-r from-amber-500 to-yellow-500 text-white px-1.5 md:px-3 py-1 md:py-1.5 rounded-full text-[10px] md:text-xs font-medium flex items-center gap-1 md:gap-1.5 shadow-lg shadow-amber-500/40 z-10 border border-white/20 backdrop-blur-sm">
+          <div className="absolute top-3 end-3 bg-gradient-to-r from-amber-500 to-yellow-500 text-white px-1.5 md:px-3 py-1 md:py-1.5 rounded-full text-[10px] md:text-xs font-medium flex items-center gap-1 md:gap-1.5 shadow-lg shadow-amber-500/40 z-10 border border-white/20">
             <Crown className="w-3 h-3 md:w-3.5 md:h-3.5" />
             <span className="tracking-wide uppercase ">{t('founder_badge')}</span>
           </div>
