@@ -1,39 +1,22 @@
-import React, { useCallback } from 'react';
+import React from 'react';
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
 import { ArrowRight } from 'lucide-react';
 
 interface MobileNavLinksProps {
-  linksContainerRef: React.RefObject<HTMLUListElement | null>;
   navLinks: { label: string; href: string }[];
-  /** Close the drawer first, then run the callback once animation finishes */
-  closeMenuThenRun: (cb: () => void) => void;
+  closeMenu: () => void;
 }
 
-export function MobileNavLinks({ linksContainerRef, navLinks, closeMenuThenRun }: MobileNavLinksProps) {
-  const router = useRouter();
-
-  const handleNavClick = useCallback(
-    (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
-      e.preventDefault();
-      // Close the drawer completely, THEN navigate.
-      // This prevents the close animation and route transition from racing.
-      closeMenuThenRun(() => {
-        router.push(href);
-      });
-    },
-    [router, closeMenuThenRun],
-  );
-
+export function MobileNavLinks({ navLinks, closeMenu }: MobileNavLinksProps) {
   return (
     <nav className="flex flex-col justify-center" aria-label="Main navigation">
-      <ul ref={linksContainerRef} className="list-none p-0 m-0">
+      <ul className="list-none p-0 m-0">
         {navLinks.map(({ label, href }) => (
           <li key={href} className="relative">
             <Link
               href={href}
               prefetch={true}
-              onClick={(e) => handleNavClick(e, href)}
+              onClick={closeMenu}
               style={{ touchAction: 'manipulation' }}
               className="group flex items-center justify-between gap-4 py-2 border-b border-slate-100 dark:border-white/[0.06]"
             >

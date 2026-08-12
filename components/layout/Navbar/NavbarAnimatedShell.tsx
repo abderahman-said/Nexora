@@ -14,8 +14,8 @@ export function NavbarAnimatedShell({ children }: NavbarAnimatedShellProps) {
   return (
     <header
       ref={navRef}
-      className="group fixed left-0 top-0 z-[1000] w-full pointer-events-none transition-[padding] duration-500 ease-[cubic-bezier(0.16,1,0.3,1)]"
-      style={{ transition: "transform 0.35s cubic-bezier(0.16,1,0.3,1), padding 0.5s cubic-bezier(0.16,1,0.3,1)" }}
+      className="group fixed left-0 top-0 z-[1000] w-full pointer-events-none transition-all duration-150 ease-out"
+      style={{ transition: "transform 0.15s ease-out, padding 0.15s ease-out" }}
     >
       <Container
         ref={navInnerRef}

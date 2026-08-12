@@ -9,18 +9,15 @@ import logoLight from "@/public/assets/logo.png";
 import logoDark from "@/public/assets/logo_dark.png";
 
 interface MobileNavHeaderProps {
-  drawerHeaderRef: React.RefObject<HTMLDivElement | null>;
   closeMenu: () => void;
 }
 
 export function MobileNavHeader({
-  drawerHeaderRef,
   closeMenu,
 }: MobileNavHeaderProps) {
   const locale = useLocale();
   return (
     <div
-      ref={drawerHeaderRef}
       className="flex items-center justify-between shrink-0 pb-2 sm:pb-4 border-b border-slate-100 dark:border-white/[0.07]"
     >
       <Link href={`/${locale}`} className="inline-block" style={{ touchAction: 'manipulation' }} onClick={() => React.startTransition(closeMenu)}>

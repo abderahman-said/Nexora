@@ -9,7 +9,6 @@ import {
 } from "@/components/icons/SocialIcons";
 
 interface MobileNavFooterProps {
-  footerInfoRef: React.RefObject<HTMLDivElement | null>;
   contact: {
     shortAddress: string;
     phone: string;
@@ -21,13 +20,12 @@ interface MobileNavFooterProps {
 }
 
 export function MobileNavFooter({
-  footerInfoRef,
   contact,
   map,
   social,
 }: MobileNavFooterProps) {
   return (
-    <div ref={footerInfoRef} className="mt-auto space-y-4 shrink-0 pb-6 sm:pb-0">
+    <div className="mt-auto space-y-4 shrink-0 pb-6 sm:pb-0">
       <div className="grid grid-cols-1 gap-1.5 sm:gap-2 text-[10px] md:text-xs">
         <Link
           href={map.linkUrl}
