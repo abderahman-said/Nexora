@@ -132,12 +132,11 @@ export default function GSAPSlider<T extends { id?: string | number }>(
       }}
     >
       <div className="w-full overflow-x-hidden">
-        <div className="w-full pt-8 pb-3 md:pb-6 px-2 md:px-3 py-4 select-none">
+        <div className="w-full pt-12 pb-10 md:pb-12 px-2 md:px-3 select-none">
           <Swiper
             key={`${effectiveVisible}-${useLoop}`}
             modules={[Autoplay, A11y, Pagination]}
             dir={dir}
-            watchSlidesProgress={true}
             onSwiper={(sw) => {
               swiperRef.current = sw;
               syncActiveIndex(sw);

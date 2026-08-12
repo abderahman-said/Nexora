@@ -19,9 +19,7 @@ export function MobileNavLinks({ linksContainerRef, navLinks, closeMenuThenRun }
       // Close the drawer completely, THEN navigate.
       // This prevents the close animation and route transition from racing.
       closeMenuThenRun(() => {
-        React.startTransition(() => {
-          router.push(href);
-        });
+        router.push(href);
       });
     },
     [router, closeMenuThenRun],

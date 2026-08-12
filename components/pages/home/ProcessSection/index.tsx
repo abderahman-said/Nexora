@@ -20,7 +20,7 @@ export default function ProcessSection() {
       <Container className="relative z-10">
         {/* ── Section Header ── */}
         <SectionHeader
-          className="mb-8 md:mb-10"
+          className="mb-6 md:mb-8"
           title={
             <span className="inline-flex items-center gap-3">
               <span className="relative flex h-3.5 w-3.5 shrink-0">

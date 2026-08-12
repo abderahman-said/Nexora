@@ -69,8 +69,8 @@ export default function HeroBackground({ glowRef }: HeroBackgroundProps) {
           />
         </video>
 
-        <div className="absolute inset-0 bg-slate-900/5 dark:hidden mix-blend-overlay pointer-events-none" />
-        <div className="hidden dark:block absolute inset-0 bg-blue-950/20 mix-blend-multiply pointer-events-none" />
+        <div className="absolute inset-0 bg-slate-900/10 dark:hidden pointer-events-none" />
+        <div className="hidden dark:block absolute inset-0 bg-blue-950/40 pointer-events-none" />
       </div>
 
       <div
