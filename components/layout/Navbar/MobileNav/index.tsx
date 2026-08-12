@@ -42,9 +42,9 @@ function unlockBodyScroll() {
   document.body.style.overflow = "";
 }
 
-// Cancel all pending Web Animations on an element (safe no-op if none)
+// Cancel all pending Web Animations on an element (safe no-op if none or unsupported)
 function cancelAnims(el: HTMLElement | null) {
-  if (!el) return;
+  if (!el || typeof el.getAnimations !== "function") return;
   el.getAnimations().forEach((a) => a.cancel());
 }
 
@@ -75,12 +75,16 @@ export function MobileNav() {
 
   // Pending close-then-navigate callback
   const pendingNavRef = useRef<(() => void) | null>(null);
+  const animIdRef = useRef(0);
+  const wasOpenRef = useRef(false);
 
   // ─── OPEN ───────────────────────────────────────────────────────────────────
   const runOpenAnimation = useCallback(() => {
     const backdrop = backdropRef.current;
     const drawer = drawerRef.current;
     if (!backdrop || !drawer) return;
+
+    const animId = ++animIdRef.current;
 
     // Cancel any leftover animations from a previous open/close cycle
     cancelAnims(backdrop);
@@ -89,6 +93,22 @@ export function MobileNav() {
     // Make visible
     backdrop.style.display = "block";
     drawer.style.display = "flex";
+    
+    // Fallback for very old browsers missing Web Animations API
+    if (typeof drawer.animate !== "function") {
+      backdrop.style.opacity = "1";
+      drawer.style.transform = "translateX(0)";
+      if (menuIconRef.current) {
+        menuIconRef.current.style.opacity = "0";
+        menuIconRef.current.style.transform = "rotate(90deg) scale(0.6)";
+      }
+      if (closeIconRef.current) {
+        closeIconRef.current.style.opacity = "1";
+        closeIconRef.current.style.transform = "rotate(0deg) scale(1)";
+      }
+      return;
+    }
+
     // Promote drawer to its own GPU layer for the slide animation
     drawer.style.willChange = "transform";
 
@@ -117,6 +137,7 @@ export function MobileNav() {
     );
 
     drawerAnim.onfinish = () => {
+      if (animIdRef.current !== animId) return;
       // Release will-change after animation — avoids permanent GPU memory cost
       if (drawer) drawer.style.willChange = "auto";
     };
@@ -151,9 +172,31 @@ export function MobileNav() {
         return;
       }
 
+      const animId = ++animIdRef.current;
+
       // Cancel lingering open animations immediately
       cancelAnims(backdrop);
       cancelAnims(drawer);
+
+      // Fallback for very old browsers
+      if (typeof drawer.animate !== "function") {
+        backdrop.style.display = "none";
+        drawer.style.display = "none";
+        backdrop.style.opacity = "0";
+        const slideTo = isRtl ? "100%" : "-100%";
+        drawer.style.transform = `translateX(${slideTo})`;
+        if (menuIconRef.current) {
+          menuIconRef.current.style.opacity = "1";
+          menuIconRef.current.style.transform = "rotate(0deg) scale(1)";
+        }
+        if (closeIconRef.current) {
+          closeIconRef.current.style.opacity = "0";
+          closeIconRef.current.style.transform = "rotate(90deg) scale(0.6)";
+        }
+        unlockBodyScroll();
+        onDone?.();
+        return;
+      }
 
       // Promote for GPU slide-out
       drawer.style.willChange = "transform";
@@ -194,8 +237,8 @@ export function MobileNav() {
         { duration: closeDuration, easing: "ease-in", fill: "forwards" },
       );
 
-
       drawerAnim.onfinish = () => {
+        if (animIdRef.current !== animId) return;
         backdrop.style.display = "none";
         drawer.style.display = "none";
         drawer.style.willChange = "auto";
@@ -210,17 +253,23 @@ export function MobileNav() {
   useEffect(() => {
     if (!mounted) return;
     if (isOpen) {
+      wasOpenRef.current = true;
       lockBodyScroll();
       runOpenAnimation();
     } else {
-      // Check if there's a pending navigation waiting for close to finish
-      const nav = pendingNavRef.current;
-      pendingNavRef.current = null;
-      runCloseAnimation(nav ?? undefined);
+      if (wasOpenRef.current) {
+        // Check if there's a pending navigation waiting for close to finish
+        const nav = pendingNavRef.current;
+        pendingNavRef.current = null;
+        runCloseAnimation(nav ?? undefined);
+      }
     }
   }, [isOpen, mounted, runOpenAnimation, runCloseAnimation]);
 
-  useEffect(() => unlockBodyScroll, []);
+  // Ensure body scroll is unlocked on unmount
+  useEffect(() => {
+    return () => unlockBodyScroll();
+  }, []);
 
   useCloseOnEscape(isOpen, () => setIsOpen(false));
 
@@ -303,3 +352,4 @@ export function MobileNav() {
     </>
   );
 }
+

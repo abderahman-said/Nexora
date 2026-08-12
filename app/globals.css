@@ -335,3 +335,10 @@ html[lang="en"] .swiper-slide,
 html[dir="ltr"] .swiper-slide {
   margin-left: 0 !important;
 }
+
+/* ─── PERFORMANCE: Disable all CSS animations site-wide ─── */
+*,
+*::before,
+*::after {
+  animation: none !important;
+}
