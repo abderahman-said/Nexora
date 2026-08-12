@@ -1,14 +1,14 @@
 "use client";
 
 import { useRef } from "react";
-import Link from 'next/link';
+import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import { useLocale, useTranslations } from "next-intl";
 import ProjectCard from "./ProjectCard";
 import { projectService } from "@/lib/services/projectService";
 import SectionHeader from "@/components/ui/SectionHeader";
 import Container from "@/components/ui/Container";
-import GSAPSlider from "@/components/ui/GSAPSlider";
+import ProjectsCoverflowSlider from "@/components/ui/GSAPSlider/ProjectsCoverflowSlider";
 
 export default function ProjectsSection() {
   const locale = useLocale();
@@ -57,19 +57,14 @@ export default function ProjectsSection() {
           ref={sliderWrapperRef}
           className="w-full mt-[-10px] md:!mt-[-35px]"
         >
-          <GSAPSlider
-            items={allProjects}
-            defaultVisibleCount={3}
-            mobileVisibleCount={1}
-            centerModeMobile={true}
-            centerCardWidthPercent={76}
-            showDots={true}
-            autoplay={false}
-            pauseOnHover={false}
-            enableDrag={true}
-            infinite={true}
-            renderItem={(p) => <ProjectCard key={p.id} p={p} />}
-          />
+         <ProjectsCoverflowSlider
+  items={allProjects}
+  showDots
+  autoplay={false}
+  pauseOnHover={false}
+  enableDrag
+  renderItem={(p) => <ProjectCard key={p.id} p={p} />}
+/>
         </div>
       </Container>
     </section>

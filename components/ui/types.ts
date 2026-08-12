@@ -18,31 +18,31 @@ export interface SkeletonTextProps {
 export type StatusColor = 'info' | 'success' | 'warning' | 'error' | 'blue' | 'cyan' | 'indigo' | 'amber';
 
 export interface StatusStyle {
-    dot: string;
-    text: string;
-    tagBorder: string;
-    highlight: string;
+  dot: string;
+  text: string;
+  tagBorder: string;
+  highlight: string;
 }
 
 export interface CornerFrameProps {
-    children: ReactNode;
-    extraClass?: string;
+  children: ReactNode;
+  extraClass?: string;
 }
 
 export interface SectionHeaderProps {
-    badge?: string;
-    tag?: string;
-    badgeColor?: StatusColor;
-    title?: ReactNode;
-    highlight?: string;
-    subtitle?: string;
-    align?: 'left' | 'center' | 'between';
-    as?: ElementType;
-    size?: 'hero' | 'default';
-    titleRef?: Ref<HTMLElement>;
-    rightElement?: ReactNode;
-    className?: string;
-    animClass?: string;
+  badge?: string;
+  tag?: string;
+  badgeColor?: StatusColor;
+  title?: ReactNode;
+  highlight?: string;
+  subtitle?: string;
+  align?: 'left' | 'center' | 'between';
+  as?: ElementType;
+  size?: 'hero' | 'default';
+  titleRef?: Ref<HTMLElement>;
+  rightElement?: ReactNode;
+  className?: string;
+  animClass?: string;
 }
 
 // في types.ts بتاع GSAPSlider
@@ -60,7 +60,7 @@ export interface GSAPSliderProps<T> {
   className?: string;
   centerModeMobile?: boolean;
   centerCardWidthPercent?: number;
-  infinite?: boolean; 
+  infinite?: boolean;
 }
 
 export interface NavButtonProps {
@@ -83,27 +83,27 @@ export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElemen
 }
 
 export interface FormInputProps extends ComponentPropsWithRef<'input'> {
-    label?: string;
-    required?: boolean;
-    icon?: ElementType | null;
-    isTextarea?: boolean;
-    rows?: number;
-    error?: string;
-    containerClassName?: string;
-    inputClassName?: string;
+  label?: string;
+  required?: boolean;
+  icon?: ElementType | null;
+  isTextarea?: boolean;
+  rows?: number;
+  error?: string;
+  containerClassName?: string;
+  inputClassName?: string;
 }
 
 export interface InteractiveCardProps {
-    stepNumber?: string | number;
-    serial?: string | number;
-    badge?: string;
-    icon?: ElementType;
-    title: string;
-    description: string;
-    features?: string[];
-    buttonText?: string;
-    buttonLink?: string;
-    className?: string;
+  stepNumber?: string | number;
+  serial?: string | number;
+  badge?: string;
+  icon?: ElementType;
+  title: string;
+  description: string;
+  features?: string[];
+  buttonText?: string;
+  buttonLink?: string;
+  className?: string;
 }
 
 export interface MagnetProps extends HTMLAttributes<HTMLDivElement> {
@@ -123,15 +123,15 @@ export interface OptimizedImageProps extends Omit<import('next/image').ImageProp
 
 
 export interface SharedHeroProps {
-    id: string;
-    titlePrefix: string;
-    titleHighlight: string;
-    breadcrumbLabel: string;
-    backgroundImage?: string;
+  id: string;
+  titlePrefix: string;
+  titleHighlight: string;
+  breadcrumbLabel: string;
+  backgroundImage?: string;
 }
 
 export interface ThemeToggleProps {
-    className?: string;
+  className?: string;
 }
 
 export interface ContainerProps extends HTMLAttributes<HTMLDivElement> {
@@ -140,5 +140,5 @@ export interface ContainerProps extends HTMLAttributes<HTMLDivElement> {
 }
 
 export interface LanguageToggleProps {
-    className?: string;
+  className?: string;
 }

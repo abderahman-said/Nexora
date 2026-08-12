@@ -193,16 +193,18 @@ export default function GSAPSlider<T extends { id?: string | number }>(
                     el: `[id="${paginationId}"]`,
                     clickable: true,
                     bulletActiveClass:
-                      "!w-7 !bg-sky-500 dark:!bg-sky-400 shadow-sm shadow-sky-400/50 !opacity-100 !rounded-full",
+                      "swiper-pagination-bullet-active !w-7 !bg-sky-500 dark:!bg-sky-400 shadow-sm shadow-sky-400/50",
                     renderBullet: (_index, bulletClassName) =>
-                      `<span class="${bulletClassName} !mx-0 h-2.5 w-2.5 !opacity-100 !rounded-full bg-slate-300 dark:bg-slate-700 hover:bg-slate-400 transition-all duration-500 cursor-pointer inline-block"></span>`,
+                      `<span class="${bulletClassName} !opacity-100 !rounded-full bg-slate-300 dark:bg-slate-700 hover:bg-slate-400 transition-all duration-500 cursor-pointer inline-block"></span>`,
                   }
                 : false
             }
             style={{
               overflow: "visible",
               ...({
-                "--swiper-pagination-bullet-horizontal-gap": "0px",
+                "--swiper-pagination-bullet-width": "10px",
+                "--swiper-pagination-bullet-height": "10px",
+                "--swiper-pagination-bullet-horizontal-gap": "4px",
               } as React.CSSProperties),
               ...(isCenterMode
                 ? ({
