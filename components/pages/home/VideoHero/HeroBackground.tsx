@@ -49,25 +49,8 @@ export default function HeroBackground() {
       }
     }, 300);
 
-    // iOS Low Power Mode / Gesture restriction fallback: attempt play on user interaction
-    const handleUserInteraction = () => {
-      if (video.paused) {
-        playVideo();
-      }
-      window.removeEventListener("touchstart", handleUserInteraction);
-      window.removeEventListener("click", handleUserInteraction);
-      window.removeEventListener("scroll", handleUserInteraction);
-    };
-
-    window.addEventListener("touchstart", handleUserInteraction, { passive: true });
-    window.addEventListener("click", handleUserInteraction, { passive: true });
-    window.addEventListener("scroll", handleUserInteraction, { passive: true });
-
     return () => {
       window.clearTimeout(timeout);
-      window.removeEventListener("touchstart", handleUserInteraction);
-      window.removeEventListener("click", handleUserInteraction);
-      window.removeEventListener("scroll", handleUserInteraction);
     };
   }, []);
 

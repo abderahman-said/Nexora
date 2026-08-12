@@ -41,9 +41,42 @@ function LoaderContent() {
       }, 120);
     };
 
+    const handleGlobalClick = (e: MouseEvent) => {
+      const anchor = (e.target as HTMLElement)?.closest("a");
+      if (!anchor) return;
+
+      const href = anchor.getAttribute("href");
+      if (!href) return;
+
+      // Ignore external links, mailto/tel, hash links, target="_blank", or download links
+      if (
+        href.startsWith("#") ||
+        href.startsWith("mailto:") ||
+        href.startsWith("tel:") ||
+        anchor.target === "_blank" ||
+        anchor.hasAttribute("download")
+      ) {
+        return;
+      }
+
+      // Check if it's an internal route that actually changes the pathname
+      try {
+        const url = new URL(anchor.href, window.location.origin);
+        if (
+          url.origin === window.location.origin &&
+          url.pathname !== window.location.pathname
+        ) {
+          handleStart();
+        }
+      } catch {}
+    };
+
     window.addEventListener("start-nav-loader", handleStart);
+    document.addEventListener("click", handleGlobalClick, { capture: true });
+
     return () => {
       window.removeEventListener("start-nav-loader", handleStart);
+      document.removeEventListener("click", handleGlobalClick, { capture: true });
       if (timer) clearTimeout(timer);
     };
   }, [pathname]);

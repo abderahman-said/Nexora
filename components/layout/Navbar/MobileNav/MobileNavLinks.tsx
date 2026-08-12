@@ -28,7 +28,6 @@ export function MobileNavLinks({ navLinks, closeMenu }: MobileNavLinksProps) {
           <li key={href} className="relative">
             <Link
               href={href}
-              prefetch={true}
               onClick={() => handleLinkClick(href)}
               style={{ touchAction: 'manipulation' }}
               className="group flex items-center justify-between gap-4 py-2 border-b border-slate-100 dark:border-white/[0.06]"
