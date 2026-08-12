@@ -15,6 +15,8 @@ const OptimizedImage: React.FC<OptimizedImageProps> = ({
   quality = 75,
   placeholder = 'empty',
   blurDataURL,
+  loading,
+  decoding = 'async',
   ...props
 }) => {
   const defaultBlurDataURL = blurDataURL || DEFAULT_BLUR_DATA_URL;
@@ -26,6 +28,8 @@ const OptimizedImage: React.FC<OptimizedImageProps> = ({
       width={width}
       height={height}
       priority={priority}
+      loading={priority ? undefined : (loading || 'lazy')}
+      decoding={decoding}
       className={className}
       sizes={sizes}
       quality={quality}
