@@ -95,21 +95,20 @@ export default function HeroBackground() {
   return (
     <>
       {/* Preload the MP4 hero video */}
-      <link
+      {/* <link
         rel="preload"
         as="video"
         href={APP_CONSTANTS.VIDEO.HERO_MP4}
         type="video/mp4"
-      />
+      /> */}
 
       <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none">
         {/* Poster / fallback */}
         <div
-          className={`absolute inset-0 scale-105 transition-opacity duration-700 ${
-            isVideoReady && !videoError
+          className={`absolute inset-0 scale-105 transition-opacity duration-700 ${isVideoReady && !videoError
               ? "opacity-0"
               : "opacity-100"
-          }`}
+            }`}
         >
           <Image
             src="/assets/hero_poster.webp"
@@ -143,11 +142,10 @@ export default function HeroBackground() {
             }
           }}
           onError={handleVideoError}
-          className={`absolute inset-0 w-full h-full object-cover scale-105 pointer-events-none transition-opacity duration-700 ${
-            isVideoReady && !videoError
+          className={`absolute inset-0 w-full h-full object-cover scale-105 pointer-events-none transition-opacity duration-700 ${isVideoReady && !videoError
               ? "opacity-80"
               : "opacity-0"
-          }`}
+            }`}
         >
           {/* H.264 MP4 - primary / best iOS compatibility */}
           <source
