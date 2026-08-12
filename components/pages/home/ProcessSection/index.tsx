@@ -51,7 +51,8 @@ export default function ProcessSection() {
             autoplay={false}
             pauseOnHover={false}
             enableDrag={true}
-            infinite={true}
+                    infinite={true}
+
           />
         </div>
       </Container>
