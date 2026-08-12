@@ -129,7 +129,7 @@ export default function GSAPSlider<T extends { id?: string | number }>(
         swiperRef.current.slideTo(target);
       }
     },
-    [maxIndex, useLoop, effectiveVisible, totalItems],
+    [useLoop, effectiveVisible, totalItems],
   );
 
   // syncActiveIndex: نحول الـ realIndex لرقم صفحة (0-based) داخل نطاق الـ dots
