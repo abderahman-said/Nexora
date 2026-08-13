@@ -26,11 +26,11 @@ export default function ConsultationSection() {
           {/* Ambient Glow Effects */}
           <div
             aria-hidden="true"
-            className="absolute top-0 right-0 w-96 h-96 bg-blue-600/10 dark:bg-sky-500/10 blur-3xl rounded-full pointer-events-none"
+            className="absolute top-0 right-0 w-96 h-96 bg-[radial-gradient(circle,rgba(37,99,235,0.15)_0%,transparent_70%)] dark:bg-[radial-gradient(circle,rgba(14,165,233,0.15)_0%,transparent_70%)] rounded-full pointer-events-none"
           />
           <div
             aria-hidden="true"
-            className="absolute bottom-0 left-0 w-96 h-96 bg-indigo-600/10 dark:bg-blue-500/10 blur-3xl rounded-full pointer-events-none"
+            className="absolute bottom-0 left-0 w-96 h-96 bg-[radial-gradient(circle,rgba(79,70,229,0.15)_0%,transparent_70%)] dark:bg-[radial-gradient(circle,rgba(37,99,235,0.15)_0%,transparent_70%)] rounded-full pointer-events-none"
           />
 
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center p-6 sm:p-10 lg:p-14">

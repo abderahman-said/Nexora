@@ -14,7 +14,7 @@ export function FooterSidePanel({ sidePanelRef }: FooterSidePanelProps) {
             ref={sidePanelRef}
             className="w-full lg:w-[350px] xl:w-[390px] bg-slate-100 dark:bg-[#0c1120] p-8 lg:p-10 flex flex-col justify-between items-center text-center shrink-0 border-t lg:border-t-0 border-slate-200 dark:border-slate-800/80 relative overflow-hidden"
         >
-            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-48 h-48 bg-blue-600/10 rounded-full blur-3xl pointer-events-none" />
+            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-48 h-48 bg-[radial-gradient(circle,rgba(37,99,235,0.25)_0%,transparent_70%)] rounded-full pointer-events-none" />
 
             <div className="space-y-2 mt-2 relative z-10">
                 <h3 className="text-2xl lg:text-3xl font-extrabold text-slate-900 dark:text-white tracking-tight">

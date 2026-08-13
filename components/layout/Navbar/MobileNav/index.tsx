@@ -131,10 +131,10 @@ export function MobileNav() {
                 freeze. The outer shell owns the transform; the inner shell
                 clips the content. */}
             <div
-              className={`fixed top-0 z-[99999] h-[100dvh] w-[75vw] max-w-[360px] start-0 will-change-transform transition-transform duration-150 ease-out ${
+              className={`fixed top-0 z-[99999] h-[100dvh] w-[75vw] max-w-[360px] start-0 transition-transform duration-200 ease-out ${
                 isOpen
-                  ? "translate-x-0 pointer-events-auto"
-                  : "-translate-x-full rtl:translate-x-full pointer-events-none"
+                  ? "translate-x-0 pointer-events-auto visible [will-change:transform]"
+                  : "-translate-x-full rtl:translate-x-full pointer-events-none invisible [will-change:auto]"
               }`}
             >
             {/* Inner shell: clips content, separate from the transform layer */}
@@ -147,7 +147,7 @@ export function MobileNav() {
               {hasOpenedOnce && (
                 <div
                   className="flex flex-col flex-1 px-5 sm:px-8 pt-4 pb-8 gap-4 md:gap-8 relative z-10 overflow-y-auto overflow-x-hidden overscroll-contain"
-                  style={{ touchAction: "pan-y", WebkitOverflowScrolling: "auto" }}
+                  style={{ touchAction: "pan-y", WebkitOverflowScrolling: "touch" }}
                 >
                   <MobileNavHeader closeMenu={closeMenu} />
 

@@ -43,7 +43,7 @@ export default function ServiceCards() {
 
           <BackgroundLines />
           {/* Background Radial Glow */}
-          <div className="absolute -top-24 -end-24 w-96 h-96 rounded-full bg-blue-600/20 blur-3xl pointer-events-none" />
+          <div className="absolute -top-24 -end-24 w-96 h-96 rounded-full bg-[radial-gradient(circle,rgba(37,99,235,0.25)_0%,transparent_70%)] pointer-events-none" />
 
           {/* Header Content Row */}
           <div className="relative z-10 flex flex-col md:flex-row md:items-end justify-between gap-8">

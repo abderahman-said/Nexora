@@ -155,7 +155,7 @@ export default function GSAPSlider<T extends { id?: string | number }>(
             slidesPerView={isCenterMode ? "auto" : visibleCount}
             spaceBetween={spaceBetween}
             centeredSlides={useCenteredSlides}
-            loop={true}
+            loop={useLoop}
             allowTouchMove={enableDrag}
             grabCursor={enableDrag}
             speed={600}

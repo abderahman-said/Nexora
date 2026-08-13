@@ -32,7 +32,7 @@ export default function SharedHero({
         <div className="absolute inset-0 bg-gradient-to-r from-slate-50/95 via-white/90 to-slate-50/95 dark:from-[#060913]/90 dark:via-[#060913]/70 dark:to-[#060913]/90" />
         <div className="absolute inset-0 bg-gradient-to-t from-slate-100/90 via-transparent to-slate-50/80 dark:from-[#060913] dark:via-transparent dark:to-[#060913]/80" />
 
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[300px] bg-blue-500/10 dark:bg-blue-600/20 blur-[120px] rounded-full" />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[300px] bg-[radial-gradient(ellipse_at_center,rgba(59,130,246,0.15)_0%,transparent_70%)] dark:bg-[radial-gradient(ellipse_at_center,rgba(37,99,235,0.25)_0%,transparent_70%)] rounded-full pointer-events-none" />
       </div>
 
       <div

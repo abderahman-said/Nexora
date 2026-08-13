@@ -225,4 +225,24 @@ html[dir="ltr"] .swiper-slide {
   margin-left: 0 !important;
 }
 
+/* ─── iOS WebKit Performance & Touch Optimizations ────────────────── */
+*,
+*::before,
+*::after {
+  -webkit-tap-highlight-color: transparent;
+}
+
+.overflow-y-auto,
+.overflow-y-scroll,
+.overflow-x-auto,
+.overflow-x-scroll,
+.scroll-touch {
+  -webkit-overflow-scrolling: touch;
+}
+
+html, body {
+  -webkit-text-size-adjust: 100%;
+}
+
+
 

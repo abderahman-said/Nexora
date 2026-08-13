@@ -33,7 +33,6 @@ function LoaderContent() {
     const handleStart = () => {
       targetPathnameRef.current = pathname;
       setIsLoading(true);
-      setShowDots(true);
     };
 
     const handleGlobalClick = (e: MouseEvent) => {

@@ -16,6 +16,7 @@ export async function generateStaticParams() {
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string, locale: string }> }): Promise<Metadata> {
     const { slug, locale } = await params;
+    setRequestLocale(locale);
     const t = await getTranslations({ locale, namespace: 'homeServices' });
     const services = getServices(t);
     const service = services.find((s) => s.slug === slug);
