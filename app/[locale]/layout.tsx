@@ -6,7 +6,6 @@ import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
 import FloatingWhatsApp from '@/components/layout/FloatingWhatsApp';
 import { NextIntlClientProvider } from 'next-intl';
-import { GlobalNavigationLoader } from '@/components/ui/GlobalNavigationLoader';
 import { getMessages, setRequestLocale } from 'next-intl/server';
 import type { Metadata, Viewport } from 'next';
 import React from 'react';
@@ -225,7 +224,6 @@ export default async function LocaleLayout({
       <body className={`${inter.variable} ${cairo.variable} font-sans bg-[#f8fafc] site-grid-bg text-slate-900 dark:bg-[#090d16] dark:text-slate-100 antialiased`} suppressHydrationWarning>
         <ThemeProvider>
           <NextIntlClientProvider messages={messages}>
-            <GlobalNavigationLoader />
             <SvgSymbols />
             <div className="flex min-h-[100dvh] flex-col overflow-x-clip">
               <Navbar />
