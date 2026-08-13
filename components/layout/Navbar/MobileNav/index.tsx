@@ -1,6 +1,6 @@
 "use client";
 
-import React, {
+import {
   useState,
   useEffect,
   useCallback,
@@ -81,14 +81,21 @@ export function MobileNav() {
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, [isOpen]);
 
-  // toggleMenu is the only place isOpen ever flips to true, so we mark
-  // hasOpenedOnce directly here (an event handler) instead of watching
-  // isOpen in an effect. Setting it to true again on close is harmless —
-  // React bails out since the value doesn't actually change.
   const toggleMenu = useCallback(() => {
     setIsOpen((prev) => !prev);
-    setHasOpenedOnce(true);
   }, []);
+
+  // Mount the drawer's content (header/links/footer) one frame AFTER the
+  // open transform has started, instead of in the same commit as isOpen.
+  // Building that subtree (images, several Links, toggles) is real work —
+  // doing it in the same tick the transition starts steals the transition's
+  // first frame(s) on slower devices, which is what showed up as a freeze
+  // the moment the menu was opened.
+  useEffect(() => {
+    if (!isOpen || hasOpenedOnce) return;
+    const raf = requestAnimationFrame(() => setHasOpenedOnce(true));
+    return () => cancelAnimationFrame(raf);
+  }, [isOpen, hasOpenedOnce]);
 
   const closeMenu = useCallback(() => {
     setIsOpen(false);

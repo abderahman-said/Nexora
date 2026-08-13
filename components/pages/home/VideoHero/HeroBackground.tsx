@@ -54,6 +54,30 @@ export default function HeroBackground() {
     };
   }, []);
 
+  // Pause the video while it's scrolled out of view and resume when it's
+  // back in view. Without this, the video keeps decoding frames forever
+  // (even in the footer), which piles onto iOS Safari's memory/GPU budget
+  // and is a major contributor to the tile-cache eviction that shows up as
+  // blank sections during fast scrolling on lower-memory iPhones.
+  useEffect(() => {
+    const video = videoRef.current;
+    if (!video) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          video.play().catch(() => {});
+        } else {
+          video.pause();
+        }
+      },
+      { threshold: 0 },
+    );
+
+    observer.observe(video);
+    return () => observer.disconnect();
+  }, []);
+
   const handleVideoReady = () => {
     setVideoError(false);
     setIsVideoReady(true);
