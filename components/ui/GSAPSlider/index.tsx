@@ -130,12 +130,14 @@ export default function GSAPSlider<T extends { id?: string | number }>(
   return (
     <div
       className={`relative w-full ${className}`}
+      /*
       onMouseEnter={() => {
         if (pauseOnHover && autoplay) swiperRef.current?.autoplay.pause();
       }}
       onMouseLeave={() => {
         if (pauseOnHover && autoplay) swiperRef.current?.autoplay.resume();
       }}
+      */
     >
       <div className="w-full overflow-x-clip">
         <div className="w-full pt-12 pb-10 md:pb-12 px-2 md:px-3 select-none">

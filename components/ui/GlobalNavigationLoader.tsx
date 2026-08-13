@@ -30,15 +30,10 @@ function LoaderContent() {
   const targetPathnameRef = React.useRef<string | null>(null);
 
   useEffect(() => {
-    let timer: NodeJS.Timeout | null = null;
-
     const handleStart = () => {
       targetPathnameRef.current = pathname;
-      // Defer loader by 120ms so fast navigations don't flash, and the mobile
-      // drawer slide-out animation finishes smoothly without competing for main-thread CPU/GPU.
-      timer = setTimeout(() => {
-        setIsLoading(true);
-      }, 120);
+      setIsLoading(true);
+      setShowDots(true);
     };
 
     const handleGlobalClick = (e: MouseEvent) => {
@@ -77,7 +72,6 @@ function LoaderContent() {
     return () => {
       window.removeEventListener("start-nav-loader", handleStart);
       document.removeEventListener("click", handleGlobalClick, { capture: true });
-      if (timer) clearTimeout(timer);
     };
   }, [pathname]);
 

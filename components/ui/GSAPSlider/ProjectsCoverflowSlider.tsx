@@ -39,8 +39,10 @@ export default function ProjectsCoverflowSlider({
   return (
     <div
       className={`relative w-full ${className}`}
+      /*
       onMouseEnter={() => pauseOnHover && autoplay && swiperRef.current?.autoplay.pause()}
       onMouseLeave={() => pauseOnHover && autoplay && swiperRef.current?.autoplay.resume()}
+      */
     >
       <div className="w-full overflow-x-clip py-8 md:py-10 select-none">
         <Swiper
