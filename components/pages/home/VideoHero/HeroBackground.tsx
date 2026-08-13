@@ -1,64 +1,126 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, useCallback } from "react";
 import Image from "next/image";
 import { APP_CONSTANTS } from "@/lib/constants";
 
 export default function HeroBackground() {
-  const [isVideoReady, setIsVideoReady] = useState(false);
+  const [isVideoLoaded, setIsVideoLoaded] = useState(false);
   const [videoError, setVideoError] = useState(false);
 
-  const videoRef = useRef<HTMLVideoElement>(null);
+  const videoRef = useRef<HTMLVideoElement | null>(null);
+
+  const attemptPlay = useCallback(() => {
+    const video = videoRef.current;
+    if (!video) return;
+
+    // Ensure WebKit & iOS muted autoplay requirements are strictly set on DOM element
+    video.muted = true;
+    video.defaultMuted = true;
+    video.playsInline = true;
+
+    if (video.paused) {
+      const playPromise = video.play();
+      if (playPromise !== undefined) {
+        playPromise
+          .then(() => {
+            setVideoError(false);
+            setIsVideoLoaded(true);
+          })
+          .catch((err) => {
+            console.warn("Autoplay deferred by browser policy:", err);
+          });
+      }
+    } else if (video.currentTime > 0) {
+      setIsVideoLoaded(true);
+    }
+  }, []);
 
   useEffect(() => {
     const video = videoRef.current;
-
     if (!video) return;
 
-    // Important for iOS Safari autoplay
+    // Critical WebKit & iOS autoplay configuration attributes
     video.muted = true;
+    video.defaultMuted = true;
     video.playsInline = true;
+    video.setAttribute("muted", "");
+    video.setAttribute("playsinline", "true");
+    video.setAttribute("webkit-playsinline", "true");
+    video.setAttribute("x5-playsinline", "true");
 
-    const handleReady = () => {
+    // Immediate playback attempt
+    attemptPlay();
+
+    // Event handlers for video element events
+    const handlePlaying = () => {
       setVideoError(false);
-      setIsVideoReady(true);
+      setIsVideoLoaded(true);
     };
 
-    // If video is already buffering/ready
-    if (video.readyState >= 2 && !video.paused) {
-      handleReady();
-    }
-
-    const playVideo = async () => {
-      try {
-        video.muted = true;
-        await video.play();
-        handleReady();
-      } catch (error) {
-        console.warn("Video autoplay prevented:", error);
-      }
+    const handleCanPlay = () => {
+      attemptPlay();
     };
 
-    // Try immediately
-    playVideo();
+    video.addEventListener("loadedmetadata", handleCanPlay);
+    video.addEventListener("loadeddata", handleCanPlay);
+    video.addEventListener("canplay", handleCanPlay);
+    video.addEventListener("canplaythrough", handleCanPlay);
+    video.addEventListener("playing", handlePlaying);
 
-    // Extra attempt after the browser has initialized the video
-    const timeout = window.setTimeout(() => {
-      if (video.paused) {
-        playVideo();
+    // Immediate retries on user interaction or page visibility change
+    const handleUserInteraction = () => {
+      attemptPlay();
+    };
+
+    const events = [
+      "touchstart",
+      "touchend",
+      "mousedown",
+      "mousemove",
+      "pointerdown",
+      "scroll",
+      "click",
+      "keydown",
+      "pageshow",
+      "visibilitychange",
+      "focus"
+    ];
+
+    events.forEach((evt) => {
+      window.addEventListener(evt, handleUserInteraction, { passive: true });
+    });
+
+    // Smart polling retry loop for initial network buffering delay
+    let retryCount = 0;
+    const maxRetries = 24; // 24 * 250ms = 6 seconds retry window for network load
+    const intervalId = setInterval(() => {
+      retryCount++;
+      if (video && !video.paused && video.currentTime > 0) {
+        setIsVideoLoaded(true);
+        clearInterval(intervalId);
+      } else if (retryCount > maxRetries) {
+        clearInterval(intervalId);
+      } else {
+        attemptPlay();
       }
-    }, 300);
+    }, 250);
 
     return () => {
-      window.clearTimeout(timeout);
-    };
-  }, []);
+      clearInterval(intervalId);
+      video.removeEventListener("loadedmetadata", handleCanPlay);
+      video.removeEventListener("loadeddata", handleCanPlay);
+      video.removeEventListener("canplay", handleCanPlay);
+      video.removeEventListener("canplaythrough", handleCanPlay);
+      video.removeEventListener("playing", handlePlaying);
 
-  // Pause the video while it's scrolled out of view and resume when it's
-  // back in view. Without this, the video keeps decoding frames forever
-  // (even in the footer), which piles onto iOS Safari's memory/GPU budget
-  // and is a major contributor to the tile-cache eviction that shows up as
-  // blank sections during fast scrolling on lower-memory iPhones.
+      events.forEach((evt) => {
+        window.removeEventListener(evt, handleUserInteraction);
+      });
+    };
+  }, [attemptPlay]);
+
+  // IntersectionObserver: Pause when scrolled far out of view, resume when back in view
   useEffect(() => {
     const video = videoRef.current;
     if (!video) return;
@@ -66,56 +128,37 @@ export default function HeroBackground() {
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
-          video.play().catch(() => {});
+          attemptPlay();
         } else {
-          video.pause();
+          if (!video.paused) {
+            video.pause();
+          }
         }
       },
-      { threshold: 0 },
+      { threshold: 0.01, rootMargin: "100px" }
     );
 
     observer.observe(video);
     return () => observer.disconnect();
-  }, []);
-
-  const handleVideoReady = () => {
-    setVideoError(false);
-    setIsVideoReady(true);
-  };
+  }, [attemptPlay]);
 
   const handleVideoError = (
     event: React.SyntheticEvent<HTMLVideoElement, Event>
   ) => {
     const video = event.currentTarget;
-
-    console.error("Hero video failed:", {
-      error: video.error,
-      code: video.error?.code,
-      message: video.error?.message,
-      src: video.currentSrc,
-    });
-
+    console.error("Hero video error:", video.error);
     setVideoError(true);
-    setIsVideoReady(false);
+    setIsVideoLoaded(false);
   };
 
   return (
     <>
-      {/* Preload the MP4 hero video */}
-      {/* <link
-        rel="preload"
-        as="video"
-        href={APP_CONSTANTS.VIDEO.HERO_MP4}
-        type="video/mp4"
-      /> */}
-
       <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none">
-        {/* Poster / fallback */}
+        {/* Poster image (always visible underneath until video renders) */}
         <div
-          className={`absolute inset-0 scale-105 transition-opacity duration-700 ${isVideoReady && !videoError
-              ? "opacity-0"
-              : "opacity-100"
-            }`}
+          className={`absolute inset-0 scale-105 transition-opacity duration-700 ${
+            isVideoLoaded && !videoError ? "opacity-0" : "opacity-100"
+          }`}
         >
           <Image
             src="/assets/hero_poster.webp"
@@ -130,29 +173,32 @@ export default function HeroBackground() {
 
         {/* Hero Video */}
         <video
-          ref={videoRef}
+          ref={(el) => {
+            videoRef.current = el;
+            if (el) {
+              el.muted = true;
+              el.defaultMuted = true;
+              el.playsInline = true;
+            }
+          }}
           autoPlay
           muted
           loop
           playsInline
+          {...{
+            "webkit-playsinline": "true",
+            "x5-playsinline": "true",
+            "x5-video-player-type": "h5-page",
+            "x5-video-player-fullscreen": "true"
+          }}
           preload="auto"
           controls={false}
           disablePictureInPicture
           disableRemotePlayback
-          onLoadedMetadata={handleVideoReady}
-          onLoadedData={handleVideoReady}
-          onCanPlay={handleVideoReady}
-          onPlaying={handleVideoReady}
-          onTimeUpdate={() => {
-            if (!isVideoReady && !videoError) {
-              handleVideoReady();
-            }
-          }}
           onError={handleVideoError}
-          className={`absolute inset-0 w-full h-full object-cover scale-105 pointer-events-none transition-opacity duration-700 ${isVideoReady && !videoError
-              ? "opacity-80"
-              : "opacity-0"
-            }`}
+          className={`absolute inset-0 w-full h-full object-cover scale-105 pointer-events-none transition-opacity duration-700 ${
+            videoError ? "opacity-0" : "opacity-80"
+          }`}
         >
           {/* H.264 MP4 - primary / best iOS compatibility */}
           <source
