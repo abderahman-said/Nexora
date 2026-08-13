@@ -1,7 +1,7 @@
   import React from 'react';
   import Link from 'next/link';
   import { ArrowRight } from 'lucide-react';
-  // import { usePathname } from 'next/navigation';
+  import { usePathname } from 'next/navigation';
 
   interface MobileNavLinksProps {
     navLinks: { label: string; href: string }[];
@@ -9,17 +9,16 @@
   }
 
   export function MobileNavLinks({ navLinks, closeMenu }: MobileNavLinksProps) {
-    // const pathname = usePathname();
-    console.log("closeMenu", closeMenu);
-    // const handleLinkClick = (href: string) => {
-    //   // Close the menu first — this is the state update that kicks off the
-    //   // drawer's transform transition, so let it start before we dispatch
-    //   // anything else in the same tick.
-    //   closeMenu();
-    //   if (href !== pathname && !href.startsWith('#')) {
-    //     window.dispatchEvent(new Event('start-nav-loader'));
-    //   }
-    // };
+    const pathname = usePathname();
+    const handleLinkClick = (href: string) => {
+      // Close the menu first — this is the state update that kicks off the
+      // drawer's transform transition, so let it start before we dispatch
+      // anything else in the same tick.
+      closeMenu();
+      if (href !== pathname && !href.startsWith('#')) {
+        window.dispatchEvent(new Event('start-nav-loader'));
+      }
+    };
 
     return (
       <nav className="flex flex-col justify-center" aria-label="Main navigation">
@@ -28,7 +27,7 @@
             <li key={href} className="relative">
               <Link
                 href={href}
-                // onClick={() => handleLinkClick(href)}
+                onClick={() => handleLinkClick(href)}
                 style={{ touchAction: 'manipulation' }}
                 className="group flex items-center justify-between gap-4 py-2 border-b border-slate-100 dark:border-white/[0.06]"
               >
