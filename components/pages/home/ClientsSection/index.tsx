@@ -28,10 +28,14 @@ export default function ClientsSection() {
                     overflow-hidden text-start md:text-center
                 "
         >
-          {/* Background Image */}
+          {/* Background Image (pre-baked per theme to avoid a live CSS filter repaint cost) */}
           <div
             aria-hidden="true"
-            className="absolute rounded-3xl inset-0 bg-[url('/assets/testi_bg_3.webp')] bg-cover bg-center bg-no-repeat pointer-events-none [filter:invert(100%)_sepia(3%)_saturate(0%)_hue-rotate(121deg)_brightness(104%)_contrast(100%)] dark:[filter:none]"
+            className="absolute rounded-3xl inset-0 bg-[url('/assets/testi_bg_3_light.webp')] bg-cover bg-center bg-no-repeat pointer-events-none dark:hidden"
+          />
+          <div
+            aria-hidden="true"
+            className="hidden absolute rounded-3xl inset-0 bg-[url('/assets/testi_bg_3.webp')] bg-cover bg-center bg-no-repeat pointer-events-none dark:block"
           />
 
           {/* Section Header Content */}
