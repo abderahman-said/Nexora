@@ -1,10 +1,10 @@
 import { RefObject, ReactNode, ReactElement } from 'react';
 
 export interface UseFooterGSAPProps {
-  footerRef: RefObject<HTMLElement | null>;
-  columnsRef: RefObject<HTMLElement | null>;
-  sidePanelRef: RefObject<HTMLElement | null>;
-  bgRef: RefObject<HTMLElement | null>;
+  footerRef: RefObject<HTMLElement>;
+  columnsRef: RefObject<HTMLElement>;
+  sidePanelRef: RefObject<HTMLElement>;
+  bgRef: RefObject<HTMLElement>;
 }
 
 export interface InteractiveCircleButtonProps {
@@ -13,7 +13,7 @@ export interface InteractiveCircleButtonProps {
 }
 
 export interface FooterSidePanelProps {
-    sidePanelRef?: RefObject<HTMLDivElement | null>;
+    sidePanelRef?: RefObject<HTMLDivElement>;
 }
 
 export interface FooterAnimatedShellProps {

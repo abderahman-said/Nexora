@@ -2,14 +2,14 @@ import { CountryOption } from "@/types/country";
 import { ChangeEvent, RefObject } from "react";
 
 export interface PhoneNumberFieldProps {
-    inputRef: RefObject<HTMLInputElement | null>;
+    inputRef: RefObject<HTMLInputElement>;
     rawNumber: string;
     phoneLength: number;
     onChange: (e: ChangeEvent<HTMLInputElement>) => void;
 }
 
 export interface CountrySelectorDropdownProps {
-    searchInputRef: RefObject<HTMLInputElement | null>;
+    searchInputRef: RefObject<HTMLInputElement>;
     searchQuery: string;
     onSearchChange: (e: ChangeEvent<HTMLInputElement>) => void;
     filteredCountries: CountryOption[];

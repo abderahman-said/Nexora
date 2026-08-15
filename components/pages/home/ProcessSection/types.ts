@@ -25,7 +25,7 @@ export interface ProcessCardProps {
 }
 
 export interface UseCardGridGSAPProps {
-  sectionRef: RefObject<HTMLDivElement | null>;
+  sectionRef: RefObject<HTMLDivElement>;
   cardsRef: RefObject<(HTMLDivElement | null)[]>;
-  waveRef: RefObject<SVGSVGElement | null>;
+  waveRef: RefObject<SVGSVGElement>;
 }
