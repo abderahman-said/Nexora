@@ -1,46 +1,4 @@
-import { BrandLogo, SocialIconLink, ServiceCardData, AnimationConfig } from "@/types/data";
-
-// Marquee brand logos
-export const brands: BrandLogo[] = [
-    { name: "oxxio", src: "/assets/Brand Logos SVG/oxxio_logo.svg" },
-    { name: "hema", src: "/assets/Brand Logos SVG/hema_logo.svg" },
-    { name: "kfc", src: "/assets/Brand Logos SVG/kfc_logo.svg" },
-    { name: "swapfiets", src: "/assets/Brand Logos SVG/swapfiets_logo.svg" },
-    { name: "anwb", src: "/assets/Brand Logos SVG/anwb_logo.svg" },
-    { name: "netflix", src: "/assets/Brand Logos SVG/netflix_logo.svg" },
-    { name: "ace-tate", src: "/assets/Brand Logos SVG/ace_tate_logo.svg" },
-    { name: "getir", src: "/assets/Brand Logos SVG/getir_logo.svg" }
-];
-
-// Marquee background colors
-export const colors: string[] = [
-    "var(--color-green)",
-    "var(--color-lightblue)",
-    "var(--color-darkblue)",
-    "var(--color-lightgreen)",
-    "var(--color-orange)",
-    "var(--color-maroon)",
-    "var(--color-pink)"
-];
-
-// Footer social icon links
-export const SOCIAL_ICONS: SocialIconLink[] = [
-    {
-        href: 'https://web.facebook.com/NexoraSolutionsEg',
-        label: 'Facebook',
-        icon: 'Facebook'
-    },
-    {
-        href: 'https://www.instagram.com/nexora.solutions.eg?igsh=OXp1eWRta3pveXhm&utm_source=qr',
-        label: 'Instagram',
-        icon: 'Instagram'
-    },
-    {
-        href: 'https://www.linkedin.com/company/nexora-solutions-co/',
-        label: 'LinkedIn',
-        icon: 'Linkedin'
-    }
-];
+import { ServiceCardData } from "@/types/data";
 
 // Service cards data
 export const CARDS_DATA: ServiceCardData[] = [
@@ -110,14 +68,3 @@ export const CARDS_DATA: ServiceCardData[] = [
         ]
     }
 ];
-
-// Animation Configurations
-export const ANIMATION_CONFIG: AnimationConfig = {
-    transitionScribble: {
-        strokeWidthStart: "8%",
-        strokeWidthMax: "31%",
-        scale: 0.7,
-        durationIn: 2.2,
-        durationOut: 2.7
-    }
-};

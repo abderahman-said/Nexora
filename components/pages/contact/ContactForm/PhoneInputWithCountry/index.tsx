@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState, useRef, useEffect, useMemo, ChangeEvent } from 'react';
-import { COUNTRIES } from '@/lib/COUNTRIES';
+import { COUNTRIES } from '@/lib/countries';
 import { CountryOption } from '@/types/country';
 import type { PhoneInputWithCountryProps } from '../types';
 import { useLocale } from 'next-intl';
