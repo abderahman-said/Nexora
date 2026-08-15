@@ -1,9 +1,9 @@
-import nextPlugin from "@next/eslint-plugin-next";
+import nextConfig from "eslint-config-next";
 
 const eslintConfig = [
-  nextPlugin.flatConfig.coreWebVitals,
+  ...nextConfig,
   {
-    ignores: [".next/*", "out/*", "build/*", "next-env.d.ts"],
+    ignores: [".next/*", "out/*", "build/*", "node_modules/*"],
   },
 ];
 

@@ -36,8 +36,14 @@ export async function generateMetadata({
   const { locale } = await params;
   const isAr = locale === 'ar';
   
-  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL 
-    || (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : 'https://nexora-solutions.co');
+  const getSiteUrl = () => {
+    const envUrl = process.env.NEXT_PUBLIC_SITE_URL || (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : 'https://nexora-solutions.co');
+    if (envUrl.startsWith('http://') || envUrl.startsWith('https://')) {
+      return envUrl;
+    }
+    return `https://${envUrl}`;
+  };
+  const siteUrl = getSiteUrl();
 
   return {
     metadataBase: new URL(siteUrl),
