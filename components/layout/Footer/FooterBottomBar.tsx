@@ -24,8 +24,6 @@ export function FooterBottomBar() {
                     {t('footer.termsOfService')}
                 </Link>
             </div>
-          
-            <p className="text-[11px] text-slate-400 dark:text-slate-500">{t('footer.tagline')}</p>
         </div>
     );
 }
