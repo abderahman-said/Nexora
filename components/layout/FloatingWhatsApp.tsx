@@ -9,24 +9,8 @@ export default function FloatingWhatsApp() {
   const { contact } = useSiteData();
 
   useEffect(() => {
-    let rafId: number | null = null;
-    
-    const handleScroll = () => {
-      if (rafId !== null) return;
-      rafId = requestAnimationFrame(() => {
-        rafId = null;
-        const shouldBeVisible = window.scrollY > window.innerHeight * 0.7;
-        setIsVisible((prev) => (prev !== shouldBeVisible ? shouldBeVisible : prev));
-      });
-    };
-
-    handleScroll();
-
-    window.addEventListener("scroll", handleScroll, { passive: true });
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-      if (rafId !== null) cancelAnimationFrame(rafId);
-    };
+    const timer = setTimeout(() => setIsVisible(true), 300);
+    return () => clearTimeout(timer);
   }, []);
 
   return (
