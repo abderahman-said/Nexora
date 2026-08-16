@@ -9,13 +9,13 @@ export function ProcessCard({ step }: ProcessCardProps) {
 
   return (
     <InteractiveCard
-      stepNumber={step.step}
       badge={step.badge}
       icon={step.icon}
       title={step.title}
       description={step.description}
       features={step.features}
-      className="h-full min-h-[320px] md:min-h-[363px]"
+      className="h-full min-h-[241px] md:min-h-[287px]"
+      variant="ghost"
     />
   );
 }

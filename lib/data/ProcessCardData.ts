@@ -4,16 +4,6 @@ import { useTranslations } from 'next-intl';
 
 export const getSteps = (t: ReturnType<typeof useTranslations>): Step[] => [
     {
-        step: '01',
-        title: t('steps.step1.title'),
-        badge: t('steps.step1.badge'),
-        description: t('steps.step1.description'),
-        features: [t('steps.step1.feature_1'), t('steps.step1.feature_2'), t('steps.step1.feature_3')],
-        icon: ClipboardList,
-        accent: '#2563eb',
-        link: '#contact',
-    },
-    {
         step: '02',
         title: t('steps.step2.title'),
         badge: t('steps.step2.badge'),

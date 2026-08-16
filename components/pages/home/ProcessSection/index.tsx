@@ -15,12 +15,12 @@ export default function ProcessSection() {
   return (
     <section
       id="process"
-      className="scroll-section relative w-full py-8 md:py-12 site-grid-bg overflow-hidden"
+      className="scroll-section relative w-full py-4 md:py-8 site-grid-bg overflow-hidden"
     >
       <Container className="relative z-10">
         {/* ── Section Header ── */}
         <SectionHeader
-          className="mb-6 md:mb-8"
+          className="mb-4 md:mb-6"
           title={
             <span className="inline-flex items-center gap-3">
               <span className="relative flex h-3.5 w-3.5 shrink-0">
