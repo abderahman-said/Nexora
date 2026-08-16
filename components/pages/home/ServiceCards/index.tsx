@@ -34,7 +34,7 @@ export default function ServiceCards() {
 
 
           {/* Header Content Row */}
-          <div className="relative z-10 flex flex-col md:flex-row md:items-end justify-between gap-8">
+          <div className="relative z-10 flex  items-end justify-between gap-8">
             {/* Left Title & Tag */}
             <div className="max-w-2xl space-y-4">
               <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-blue-50 dark:bg-blue-950/80 border border-blue-200/80 dark:border-blue-800/80 text-blue-600 dark:text-blue-400 font-bold text-xs tracking-wider uppercase shadow-sm">
@@ -54,16 +54,10 @@ export default function ServiceCards() {
             <div className="shrink-0">
               <Link
                 href={`/${locale}/services`}
-                className="
-                                    inline-flex items-center gap-2.5 px-7 py-3.5 rounded-full
-                                    bg-gradient-to-r from-blue-600 to-sky-600 text-white
-                                    font-bold text-xs tracking-wider uppercase
-                                    shadow-lg shadow-blue-500/25 hover:shadow-xl hover:shadow-blue-500/40
-                                    hover:-translate-y-0.5 transition-all duration-300 group
-                                "
+                className="inline-flex whitespace-nowrap items-center gap-2 rounded-full bg-gradient-to-r from-blue-600 to-sky-600 px-3 md:px-6 py-1.5 md:py-2.5 text-[10px] md:text-xs lg:text-base font-bold uppercase tracking-wider text-white shadow-md shadow-blue-500/20 transition-all hover:-translate-y-0.5 hover:shadow-lg hover:shadow-blue-500/35 group"
               >
                 <span>{t("button_view_all")}</span>
-                <ArrowRight className="w-4 h-4   transition-transform duration-300 group-hover:translate-x-1 rtl:rotate-180 rtl:group-hover:-translate-x-1" />
+                <ArrowRight className="h-4 w-4 rtl:scale-x-[-1] transition-transform duration-300 group-hover:translate-x-1 rtl:group-hover:-translate-x-1" />
               </Link>
             </div>
           </div>
