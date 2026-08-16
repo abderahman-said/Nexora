@@ -18,7 +18,7 @@ const HorizontalWords = () => {
         className="scroll-section relative w-full py-8 bg-transparent dark:bg-[#090d16] site-grid-bg overflow-hidden"
       >
         <Container className="relative z-10">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-16 items-center pt-10">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-16 items-center">
             {/* ── LEFT COLUMN: Structured Team Visual & Glass Chips ── */}
             <div className="lg:col-span-5 flex justify-center">
               <AboutVisual />
