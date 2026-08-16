@@ -8,7 +8,7 @@ import GSAPSlider from "@/components/ui/GSAPSlider";
 import { getServices } from "@/lib/data/servicesData";
 import { ServiceCard } from "./ServiceCard";
 import Container from "@/components/ui/Container";
-import BackgroundLines from "./BackgroundLines";
+
 
 export default function ServiceCards() {
   const locale = useLocale();
@@ -22,7 +22,7 @@ export default function ServiceCards() {
     >
       <Container className="relative z-10">
         {/* Banner Container */}
-        <div
+        {/* <div
           className="
                     relative rounded-3xl sm:rounded-[2.5rem]
                     bg-slate-900 dark:bg-slate-950
@@ -30,10 +30,8 @@ export default function ServiceCards() {
                     p-6 sm:p-12 lg:p-16  !pb-44 md:!pb-[240px]
                     overflow-hidden
                 "
-        >
-          <BackgroundLines />
-          {/* Background Radial Glow */}
-          <div className="absolute -top-24 -end-24 w-96 h-96 rounded-full bg-[radial-gradient(circle,rgba(37,99,235,0.25)_0%,transparent_70%)] pointer-events-none" />
+        > */}
+
 
           {/* Header Content Row */}
           <div className="relative z-10 flex flex-col md:flex-row md:items-end justify-between gap-8">
@@ -69,14 +67,14 @@ export default function ServiceCards() {
               </Link>
             </div>
           </div>
-        </div>
+        {/* </div> */}
 
         {/* Overlapping Reusable GSAP Cards Slider Row */}
-        <div className="relative z-20 -mt-[171px] md:-mt-[210px] px-2 sm:px-4">
+        <div className="relative z-20  ">
           <GSAPSlider
             items={servicesData}
             renderItem={(item) => (
-              <ServiceCard service={item} className=" h-[338px] md:h-[409px]" />
+              <ServiceCard service={item} className=" min-h-[354px] md:min-h-[409px]" />
             )}
             defaultVisibleCount={3}
             mobileVisibleCount={1}
