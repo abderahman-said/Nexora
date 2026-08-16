@@ -5,7 +5,7 @@ export default function HeroContent() {
   const t = useTranslations("homeHero");
 
   return (
-    <div className="relative z-10 md:mt-[-50px] mt-0 flex flex-col items-start text-start max-w-[990px]">
+    <div className="relative z-10 md:mt-[-50px] mt-0 flex flex-col items-start text-start max-w-[1100px]">
       {/* Main Headline */}
       <h1 className="text-3xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-white dark:text-white !leading-[1.5] mb-4 sm:mb-6">
         <span className="split-word">{t("title_we")}</span>{" "}
