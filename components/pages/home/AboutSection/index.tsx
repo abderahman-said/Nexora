@@ -18,13 +18,13 @@ const HorizontalWords = () => {
         className="scroll-section relative w-full pb-8 bg-transparent dark:bg-[#090d16] site-grid-bg overflow-hidden"
       >
         {/* Background Ambient Glows */}
-        <div
+        {/* <div
           aria-hidden="true"
           className="absolute inset-0 pointer-events-none overflow-hidden"
         >
           <div className="absolute top-1/4 start-0 w-96 h-96 rounded-full bg-[radial-gradient(circle,rgba(59,130,246,0.12)_0%,transparent_70%)] dark:bg-[radial-gradient(circle,rgba(37,99,235,0.15)_0%,transparent_70%)] pointer-events-none" />
           <div className="absolute bottom-1/4 end-0 w-96 h-96 rounded-full bg-[radial-gradient(circle,rgba(14,165,233,0.12)_0%,transparent_70%)] dark:bg-[radial-gradient(circle,rgba(2,132,199,0.15)_0%,transparent_70%)] pointer-events-none" />
-        </div>
+        </div> */}
 
         <Container className="relative z-10">
           <div className="pt-8 flex flex-col space-y-6">
