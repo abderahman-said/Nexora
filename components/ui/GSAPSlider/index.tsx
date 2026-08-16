@@ -6,16 +6,15 @@ import React, {
   useEffect,
   useCallback,
   useId,
+  useMemo,
   useSyncExternalStore,
 } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
-import { Autoplay, A11y, Pagination } from "swiper/modules";
+import { Autoplay, A11y } from "swiper/modules";
 import type { Swiper as SwiperType } from "swiper";
 import type { GSAPSliderProps } from "../types";
 
 import "swiper/css";
-import "swiper/css/pagination";
-import "swiper/css/scrollbar";
 
 // ── External store #1: اتجاه الصفحة (rtl/ltr) ─────────────────────────────
 function subscribeDir(callback: () => void) {
@@ -79,9 +78,6 @@ export default function GSAPSlider<T extends { id?: string | number }>(
   const swiperRef = useRef<SwiperType | null>(null);
   const [realActiveIndex, setRealActiveIndex] = useState(0);
 
-  const rawId = useId();
-  const paginationId = `gsap-pagination-${rawId.replace(/:/g, "")}`;
-
   const dir = useSyncExternalStore(
     subscribeDir,
     getDirSnapshot,
@@ -111,39 +107,36 @@ export default function GSAPSlider<T extends { id?: string | number }>(
 
   const totalItems = items.length;
 
+  // ── Duplicate items when totalItems < 6 so Swiper loop mode has enough slides to peek on both sides ──
+  const displayItems = useMemo(() => {
+    if (infinite && totalItems > 1 && totalItems < 6) {
+      return [...items, ...items, ...items];
+    }
+    return items;
+  }, [items, infinite, totalItems]);
+
   const useCenteredSlides = isCenterMode;
-
   const effectiveVisible = isCenterMode ? 1 : visibleCount;
-
-  const useLoop = infinite && totalItems > effectiveVisible * 2;
-
+  const useLoop = infinite && totalItems > 1;
   const showPaginationContainer = showDots && totalItems > effectiveVisible;
 
   const syncActiveIndex = useCallback((sw: SwiperType) => {
-    setRealActiveIndex(sw.realIndex);
-  }, []);
+    if (totalItems > 0) {
+      setRealActiveIndex(sw.realIndex % totalItems);
+    }
+  }, [totalItems]);
 
   if (totalItems === 0) return null;
 
   const spaceBetween = isCenterMode ? 12 : 14;
 
   return (
-    <div
-      className={`relative w-full ${className}`}
-      /*
-      onMouseEnter={() => {
-        if (pauseOnHover && autoplay) swiperRef.current?.autoplay.pause();
-      }}
-      onMouseLeave={() => {
-        if (pauseOnHover && autoplay) swiperRef.current?.autoplay.resume();
-      }}
-      */
-    >
+    <div className={`relative w-full ${className}`}>
       <div className="w-full overflow-x-clip">
         <div className="w-full pt-8 pb-8 md:pb-12 px-2 md:px-3 select-none">
           <Swiper
-            key={`${effectiveVisible}-${useLoop}`}
-            modules={[Autoplay, A11y, Pagination]}
+            key={`${effectiveVisible}-${useLoop}-${dir}-${displayItems.length}`}
+            modules={[Autoplay, A11y]}
             dir={dir}
             onSwiper={(sw: SwiperType) => {
               swiperRef.current = sw;
@@ -155,7 +148,7 @@ export default function GSAPSlider<T extends { id?: string | number }>(
             slidesPerView={isCenterMode ? "auto" : visibleCount}
             spaceBetween={spaceBetween}
             centeredSlides={useCenteredSlides}
-            loop={true}
+            loop={useLoop}
             allowTouchMove={enableDrag}
             grabCursor={enableDrag}
             speed={600}
@@ -165,14 +158,6 @@ export default function GSAPSlider<T extends { id?: string | number }>(
                     delay: autoplayInterval,
                     disableOnInteraction: false,
                     pauseOnMouseEnter: pauseOnHover,
-                  }
-                : false
-            }
-            pagination={
-              showPaginationContainer
-                ? {
-                    el: `[id="${paginationId}"]`,
-                    clickable: true,
                   }
                 : false
             }
@@ -187,12 +172,13 @@ export default function GSAPSlider<T extends { id?: string | number }>(
             className="w-full !overflow-visible"
             wrapperClass="items-stretch"
           >
-            {items.map((item, index) => {
-              const slideIsActive = index === realActiveIndex;
+            {displayItems.map((item, index) => {
+              const realIndex = index % totalItems;
+              const slideIsActive = realIndex === realActiveIndex;
 
               return (
                 <SwiperSlide
-                  key={(item as { id?: string | number }).id ?? index}
+                  key={`${(item as { id?: string | number }).id ?? realIndex}-${index}`}
                   style={
                     isCenterMode
                       ? { width: `${centerCardWidthPercent}%` }
@@ -200,7 +186,7 @@ export default function GSAPSlider<T extends { id?: string | number }>(
                   }
                 >
                   <div className="h-full flex flex-col">
-                    {renderItem?.(item, index, slideIsActive) ?? null}
+                    {renderItem?.(item, realIndex, slideIsActive) ?? null}
                   </div>
                 </SwiperSlide>
               );
@@ -210,46 +196,24 @@ export default function GSAPSlider<T extends { id?: string | number }>(
       </div>
 
       {showPaginationContainer && (
-        <div
-          id={paginationId}
-          className="flex items-center justify-center gap-1 px-1 mt-0"
-        />
-      )}
-
-      {showPaginationContainer && (
-        <style jsx global>{`
-          #${paginationId} .swiper-pagination-bullet {
-            width: 12px;
-            height: 12px;
-            border-radius: 9999px;
-            margin: 0 2px !important;
-            background-color: transparent;
-            border: 1.5px solid rgb(148 163 184);
-            opacity: 1;
-            cursor: pointer;
-            transition: width 0.35s ease, background-color 0.35s ease,
-              border-color 0.35s ease;
-          }
-          #${paginationId} .swiper-pagination-bullet:hover {
-            border-color: rgb(100 116 139); /* slate-500 */
-          }
-          #${paginationId} .swiper-pagination-bullet-active {
-            width: 26px;
-            background-color: rgb(14 165 233); /* sky-500 */
-            border-color: rgb(14 165 233);
-          }
-
-          .dark #${paginationId} .swiper-pagination-bullet {
-            border-color: rgb(71 85 105); /* slate-600 */
-          }
-          .dark #${paginationId} .swiper-pagination-bullet:hover {
-            border-color: rgb(100 116 139); /* slate-500 */
-          }
-          .dark #${paginationId} .swiper-pagination-bullet-active {
-            background-color: rgb(56 189 248); /* sky-400 */
-            border-color: rgb(56 189 248);
-          }
-        `}</style>
+        <div className="flex items-center justify-center gap-1.5 px-1 mt-1">
+          {items.map((_, idx) => (
+            <button
+              key={idx}
+              onClick={() => {
+                if (swiperRef.current) {
+                  swiperRef.current.slideToLoop(idx);
+                }
+              }}
+              className={`h-3 rounded-full transition-all duration-350 ${
+                idx === realActiveIndex
+                  ? "w-7 bg-sky-500 dark:bg-sky-400"
+                  : "w-3 bg-slate-300 dark:bg-slate-700 hover:bg-slate-400 dark:hover:bg-slate-600"
+              }`}
+              aria-label={`Go to slide ${idx + 1}`}
+            />
+          ))}
+        </div>
       )}
     </div>
   );

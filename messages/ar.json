@@ -107,7 +107,7 @@
     "mission_desc": "تقديم هندسة برمجيات عالية الأداء، تجمع بين الاكواد النظيفة والأنظمة القابلة للتوسع لدفع النمو الملموس.",
     "mission_feature_1": "أمان المؤسسات",
     "mission_feature_2": "بنية مرنة",
-    "button_story": "اكتشف قصتنا",
+    "button_story": "عرض المزيد",
     "stats_number": "+250",
     "visual_years": "+10 سنوات",
     "visual_excellence": "التميز في الصناعة",
@@ -118,7 +118,7 @@
     "badge": "أحدث الخدمات",
     "title_main": "خدماتنا",
     "title_highlight": "",
-    "button_view_all": "عرض جميع الخدمات",
+    "button_view_all": "عرض المزيد",
     "items": {
       "business_analysis": {
         "title": "تحليل الأعمال",
@@ -252,7 +252,7 @@
     "feature_1": "تدقيق تقني مجاني",
     "feature_2": "محمي باتفاقية سرية",
     "feature_3": "إنجاز سريع",
-    "button_contact": "اتصل بنا الآن",
+    "button_contact": "عرض المزيد",
     "button_whatsapp": "واتساب سريع"
   },
   "nav": {

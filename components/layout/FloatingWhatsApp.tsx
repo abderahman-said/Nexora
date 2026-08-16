@@ -15,20 +15,21 @@ export default function FloatingWhatsApp() {
 
   return (
     <div
-      className={`fixed bottom-16 end-[-6px] sm:bottom-20 sm:end-[-10px] z-50 flex flex-col gap-2 sm:gap-3 transition-[transform,opacity] duration-500 ease-out transform ${
+      className={`fixed end-[-6px] bottom-20 sm:end-[-10px] z-50 flex flex-col gap-2.5 sm:gap-3 transition-[transform,opacity] duration-500 ease-out transform ${
         isVisible
           ? "translate-y-0 opacity-100 scale-100"
           : "translate-y-12 opacity-0 scale-50 pointer-events-none"
       }`}
     >
+      {/* Phone Link */}
       <Link
         href={`tel:${contact.phone.replace(/\s/g, "")}`}
-        className="group relative flex items-center justify-start ps-4 sm:ps-6 w-[62px] h-[48px] sm:w-[80px] sm:h-[52px] bg-transparent backdrop-blur-md border border-slate-300/50 dark:border-white/20 text-slate-800 dark:text-white rounded-s-full shadow-lg dark:shadow-2xl hover:bg-white/20 dark:hover:bg-white/10 transition-colors duration-150"
+        className="group relative flex items-center justify-start ps-4 sm:ps-6 w-[62px] h-[48px] sm:w-[80px] sm:h-[52px] bg-white/80 dark:bg-slate-900/80  border border-blue-500/40 dark:border-blue-400/40 rounded-s-full shadow-lg hover:shadow-blue-500/20 hover:border-blue-500 hover:scale-105 transition-all duration-300"
         aria-label="Call us"
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
-          className="w-6 h-6 sm:w-[25px] sm:h-[25px]"
+          className="w-6 h-6 sm:w-[25px] sm:h-[25px] text-blue-600 dark:text-sky-400 drop-shadow-[0_0_6px_rgba(37,99,235,0.4)] transition-transform duration-300 group-hover:scale-110"
           viewBox="0 0 24 24"
         >
           <path
@@ -38,16 +39,17 @@ export default function FloatingWhatsApp() {
         </svg>
       </Link>
 
+      {/* WhatsApp Link */}
       <Link
         href={contact.whatsapp}
         target="_blank"
         rel="noopener noreferrer"
-        className="group relative flex items-center justify-start ps-4 sm:ps-6 w-[62px] h-[48px] sm:w-[80px] sm:h-[52px] bg-transparent backdrop-blur-md border border-slate-300/50 dark:border-white/20 text-slate-800 dark:text-white rounded-s-full shadow-lg dark:shadow-2xl hover:bg-white/20 dark:hover:bg-white/10 transition-colors duration-150"
+        className="group relative flex items-center justify-start ps-4 sm:ps-6 w-[62px] h-[48px] sm:w-[80px] sm:h-[52px] bg-white/80 dark:bg-slate-900/80  border border-emerald-500/40 dark:border-emerald-400/40 rounded-s-full shadow-lg hover:shadow-emerald-500/20 hover:border-emerald-500 hover:scale-105 transition-all duration-300"
         aria-label="Chat on WhatsApp"
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
-          className="w-6 h-6 sm:w-[25px] sm:h-[25px]"
+          className="w-6 h-6 sm:w-[25px] sm:h-[25px] text-[#25D366] drop-shadow-[0_0_6px_rgba(37,211,102,0.4)] transition-transform duration-300 group-hover:scale-110"
           viewBox="0 0 32 32"
           fill="currentColor"
         >

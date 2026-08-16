@@ -105,7 +105,7 @@
     "mission_desc": "To deliver high-performance software engineering, combining clean code with scalable systems to drive measurable growth.",
     "mission_feature_1": "Enterprise Security",
     "mission_feature_2": "Agile Architecture",
-    "button_story": "DISCOVER OUR STORY",
+    "button_story": "See More",
     "stats_number": "250+",
     "visual_years": "10+ Years",
     "visual_excellence": "Industry Excellence",
@@ -116,7 +116,7 @@
     "badge": "LATEST SERVICES",
     "title_main": "Services",
     "title_highlight": "",
-    "button_view_all": "VIEW ALL",
+    "button_view_all": "See More",
     "items": {
       "business_analysis": {
         "title": "Business Analysis",
@@ -250,7 +250,7 @@
     "feature_1": "Free Tech Audit",
     "feature_2": "NDA Protected",
     "feature_3": "Fast Turnaround",
-    "button_contact": "CONTACT US NOW",
+    "button_contact": "See More",
     "button_whatsapp": "QUICK WHATSAPP"
   },
   "nav": {
