@@ -13,7 +13,7 @@ export default function AboutValues() {
     return (
         <section
             id="about-values"
-            className="scroll-section relative w-full py-16 sm:py-24 bg-slate-100/90 dark:bg-[#090d16] border-b border-slate-200/90 dark:border-slate-800/80 site-grid-bg overflow-hidden transition-colors duration-300"
+            className="scroll-section relative w-full py-16 sm:py-20 bg-slate-100/90 dark:bg-[#090d16] site-grid-bg overflow-hidden transition-colors duration-300"
         >
             <Container className="relative z-10">
                 <div className="  mb-14 space-y-6">

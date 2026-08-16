@@ -46,7 +46,7 @@ export default function SingleServicePage({ service }: SingleServicePageProps) {
             </section>
 
             {/* Features Section */}
-            <section className="scroll-section relative w-full py-16 sm:py-24 bg-white dark:bg-[#060913] border-b border-slate-200/90 dark:border-slate-800/80 transition-colors duration-300">
+            <section className="scroll-section relative w-full py-16 sm:py-20 bg-white dark:bg-[#060913] border-b border-slate-200/90 dark:border-slate-800/80 transition-colors duration-300">
                 <Container className="relative z-10">
                     <SectionHeader
                         badge={t('key_features_badge')}
@@ -54,7 +54,7 @@ export default function SingleServicePage({ service }: SingleServicePageProps) {
                         subtitle={t('what_we_offer_subtitle', { serviceTitle: service.title })}
                         align="center"
                     />
-                    
+
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-12">
                         {service.features.map((feature, index) => (
                             <div
@@ -77,7 +77,7 @@ export default function SingleServicePage({ service }: SingleServicePageProps) {
             </section>
 
             {/* CTA Section */}
-            <section className="scroll-section relative w-full py-16 sm:py-24 bg-slate-50 dark:bg-[#0a0f1e] transition-colors duration-300">
+            <section className="scroll-section relative w-full py-16 sm:py-20 bg-slate-50 dark:bg-[#0a0f1e] transition-colors duration-300">
                 <Container className="relative z-10">
                     <div className="max-w-3xl mx-auto text-center">
                         <h2 className="text-3xl sm:text-4xl font-extrabold text-slate-900 dark:text-white mb-4">

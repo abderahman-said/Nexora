@@ -12,7 +12,7 @@ export default function ServiceProcess() {
   const STEPS = getSteps(tProcess);
   const t = useTranslations("services_page.process");
   return (
-    <section className="scroll-section relative w-full py-16 sm:py-24 bg-slate-50 dark:bg-[#0a0f1e] border-b border-slate-200/90 dark:border-slate-800/80 transition-colors duration-300">
+    <section className="scroll-section relative w-full py-16 sm:py-20 bg-slate-50 dark:bg-[#0a0f1e] border-b border-slate-200/90 dark:border-slate-800/80 transition-colors duration-300">
       <Container className="relative z-10">
         <SectionHeader
           badge={t("badge")}

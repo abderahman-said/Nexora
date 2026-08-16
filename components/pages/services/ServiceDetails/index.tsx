@@ -12,7 +12,7 @@ export default function ServiceDetails() {
     const SERVICES = getServices(tServices);
     const t = useTranslations('services_page.details');
     return (
-        <section className="scroll-section relative w-full py-16 sm:py-24 bg-white dark:bg-[#060913] border-b border-slate-200/90 dark:border-slate-800/80 transition-colors duration-300">
+        <section className="scroll-section relative w-full py-16 sm:py-20 bg-white dark:bg-[#060913] border-b border-slate-200/90 dark:border-slate-800/80 transition-colors duration-300">
             <Container className="relative z-10">
                 <SectionHeader
                     badge={t('badge')}
@@ -20,7 +20,7 @@ export default function ServiceDetails() {
                     subtitle={t('subtitle')}
                     align="center"
                 />
-                
+
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-12">
                     {SERVICES.map((service) => (
                         <ServiceCard key={service.id} service={service} className={"!py-12"} />
