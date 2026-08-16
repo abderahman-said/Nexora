@@ -14,7 +14,7 @@ export default function ClientsSection() {
   return (
     <section
       id="testimonials"
-      className="scroll-section relative w-full py-4 md:py-6 site-grid-bg overflow-hidden"
+      className="scroll-section relative w-full pt-4 md:pt-6 site-grid-bg overflow-hidden"
     >
       <Container className="relative z-10">
         {/* Section Header */}
