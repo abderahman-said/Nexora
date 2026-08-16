@@ -83,10 +83,10 @@
     "lastUpdated": "آخر تحديث:"
   },
   "homeHero": {
-    "title_we": "نحن ",
-    "title_build": "نبني ",
-    "title_digital_products": "منتجات رقمية ",
-    "title_grow_business": "تنمي أعمالك",
+    "title_we": "خدمات تكنولوجية متطورة ",
+    "title_build": "بخبرة واسعة ",
+    "title_digital_products": "وحلول مبتكرة ",
+    "title_grow_business": "مع نيكسورا للحلول",
     "description": "نيكسورا للحلول الرقمية شركة متخصصة في تقديم حلول تقنية مبتكرة تساعد الشركات على النمو والتطور. نربط بين الخبرة التقنية وفهم احتياجات السوق لتقديم حلول مخصصة للشركات في مصر والسعودية والشرق الأوسط، من البرمجيات والمواقع إلى تطبيقات الهواتف.",
     "about_us": "من نحن",
     "whatsapp_us": "راسلنا على واتساب",
@@ -182,8 +182,8 @@
     }
   },
   "homeProcess": {
-    "title_main": "كيف نعمل ",
-    "title_highlight": "معك!",
+    "title_main": "كيف نعمل",
+    "title_highlight": "",
     "steps": {
       "step1": {
         "title": "اختر مشروعاً",
@@ -232,8 +232,8 @@
   },
   "homeClients": {
     "badge": "آراء العملاء",
-    "title_main": "ماذا يقول عملاؤنا ",
-    "title_highlight": "عنا",
+    "title_main": "آراء عملائنا",
+    "title_highlight": "",
     "items": {
       "c1": {
         "name": "عبد الرحمن مختار",

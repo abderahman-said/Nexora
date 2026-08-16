@@ -81,10 +81,10 @@
     "contactUsDesc": "For questions about these Terms of Service, please contact us at legal@nexora.solutions"
   },
   "homeHero": {
-    "title_we": "We ",
-    "title_build": "Build ",
-    "title_digital_products": "Digital Products ",
-    "title_grow_business": "That Grow Your Business",
+    "title_we": "Advanced Tech Services ",
+    "title_build": "With Deep Expertise ",
+    "title_digital_products": "& Innovative Solutions ",
+    "title_grow_business": "With Nexora Solutions",
     "description": "We transform your ideas into powerful web, mobile, and software solutions that drive business growth. Every solution is built for performance, scalability, and long-term success.",
     "about_us": "ABOUT US",
     "whatsapp_us": "WhatsApp Us",
@@ -114,8 +114,8 @@
   },
   "homeServices": {
     "badge": "LATEST SERVICES",
-    "title_main": "We Provide Exclusive Service For ",
-    "title_highlight": "Your Business",
+    "title_main": "Services",
+    "title_highlight": "",
     "button_view_all": "VIEW ALL SERVICES",
     "items": {
       "business_analysis": {
@@ -180,8 +180,8 @@
     }
   },
   "homeProcess": {
-    "title_main": "How To Work ",
-    "title_highlight": "It!",
+    "title_main": "How We Work",
+    "title_highlight": "",
     "steps": {
       "step1": {
         "title": "Select a project",
@@ -230,8 +230,8 @@
   },
   "homeClients": {
     "badge": "CUSTOMER FEEDBACK",
-    "title_main": "What Happy Clients Say ",
-    "title_highlight": "About Us",
+    "title_main": "Client Testimonials",
+    "title_highlight": "",
     "items": {
       "c1": {
         "name": "Abdelrahman Mokhtar",
