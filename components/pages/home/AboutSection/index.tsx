@@ -30,7 +30,7 @@ const HorizontalWords = () => {
           <div className="pt-8 flex flex-col space-y-6">
             {/* Header Content Row with space-between button */}
             <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
-              <div className="max-w-3xl space-y-4">
+              <div className="max-w-4xl space-y-4">
                 {/* Section Badge / Status Tag */}
                 <div>
                   <div className="inline-flex items-center gap-2.5 px-4 py-2 rounded-full bg-blue-50 dark:bg-blue-950/60 border border-blue-200 dark:border-blue-800/60 text-blue-600 dark:text-sky-400 font-bold text-xs tracking-wider uppercase shadow-sm">
@@ -42,7 +42,7 @@ const HorizontalWords = () => {
                 </div>
 
                 {/* Main Section Headline */}
-                <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-slate-900 dark:text-white tracking-tight leading-[1.6]!">
+                <h2 className="text-3xl  md:text-[45px] font-extrabold text-slate-900 dark:text-white tracking-tight leading-[1.6]!">
                   {t('title_main')}{" "}
                   <span className="bg-gradient-to-r from-blue-600 via-sky-500 to-indigo-600 bg-clip-text text-transparent">
                     {t('title_highlight')}
@@ -63,7 +63,7 @@ const HorizontalWords = () => {
             </div>
 
             {/* Section Lead Description */}
-            <p className="text-base sm:text-lg text-slate-600 dark:text-slate-300 leading-relaxed font-normal max-w-4xl">
+            <p className="text-base sm:text-lg text-slate-600 dark:text-slate-300 leading-relaxed font-normal leading-[2]!  ">
               {t('description')}
             </p>
 
