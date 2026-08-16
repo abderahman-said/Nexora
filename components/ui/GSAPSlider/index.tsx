@@ -133,7 +133,7 @@ export default function GSAPSlider<T extends { id?: string | number }>(
   return (
     <div className={`relative w-full ${className}`}>
       <div className="w-full overflow-x-clip">
-        <div className="w-full pt-8 pb-8 md:pb-12 px-2 md:px-3 select-none">
+        <div className="w-full pt-8 pb-6 md:pb-6 px-2 md:px-3 select-none">
           <Swiper
             key={`${effectiveVisible}-${useLoop}-${dir}-${displayItems.length}`}
             modules={[Autoplay, A11y]}

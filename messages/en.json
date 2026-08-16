@@ -192,25 +192,25 @@
         "feature_3": "ROI Strategy"
       },
       "step2": {
-        "title": "Project analysis",
+        "title": "Project Analysis",
         "badge": "ANALYSIS",
-        "description": "Comprehensive data modeling and system architecture analysis for optimal performance.",
+        "description": "We start by studying your project and understanding its goals and needs accurately. We analyze the nature of the users and the market to define requirements and establish a clear vision for a technical solution that efficiently achieves your goals.",
         "feature_1": "Architecture Blueprint",
         "feature_2": "Data Flow Design",
         "feature_3": "Security Audit"
       },
       "step3": {
-        "title": "Plan Execute",
+        "title": "Planning and Execution",
         "badge": "EXECUTION",
-        "description": "Sprint execution, agile development, and clean code implementation with rigorous testing.",
+        "description": "We transform the vision into a complete product by planning the workflow and developing the solution to the highest quality standards. Continuous and precise testing ensures performance, security, and a seamless user experience.",
         "feature_1": "Sprint Development",
         "feature_2": "Automated Testing",
         "feature_3": "Code Quality Check"
       },
       "step4": {
-        "title": "Deliver result",
+        "title": "Delivering Results",
         "badge": "DELIVERY",
-        "description": "Seamless cloud deployment, high availability release, and measurable business growth.",
+        "description": "We deliver a fully integrated, ready-to-use end product designed to efficiently achieve your project's goals. This guarantees a professional user experience and reliable performance that is scalable for the future.",
         "feature_1": "Zero-Downtime Launch",
         "feature_2": "Performance Audits",
         "feature_3": "24/7 Monitoring"

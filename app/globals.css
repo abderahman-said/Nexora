@@ -29,8 +29,8 @@
 /* Locale Font Overrides */
 html[lang="ar"],
 html[lang="ar"] body {
-  --font-sans: var(--next-font-cairo), "Cairo", sans-serif !important;
-  font-family: var(--next-font-cairo), "Cairo", sans-serif !important;
+  --font-sans: var(--next-font-zain), "Zain", sans-serif !important;
+  font-family: var(--next-font-zain), "Zain", sans-serif !important;
 }
 
 /* Fix Arabic disconnected letters specifically overriding Tailwind tracking utilities */

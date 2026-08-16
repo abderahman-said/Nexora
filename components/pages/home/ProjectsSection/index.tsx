@@ -17,7 +17,7 @@ export default function ProjectsSection() {
   return (
     <section
       id="portfolio"
-      className="scroll-section relative w-full py-8 md:py-10 transition-colors duration-300 overflow-hidden"
+      className="scroll-section relative w-full py-4 md:py-6 transition-colors duration-300 overflow-hidden"
     >
       <Container>
         {/* Section Header */}

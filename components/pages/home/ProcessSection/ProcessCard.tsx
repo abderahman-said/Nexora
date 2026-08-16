@@ -13,7 +13,7 @@ export function ProcessCard({ step }: ProcessCardProps) {
       icon={step.icon}
       title={step.title}
       description={step.description}
-      className="h-full min-h-[241px] md:min-h-[287px]"
+      // className="h-full min-h-[100px] md:min-h-[141px]"
       variant="ghost"
     />
   );

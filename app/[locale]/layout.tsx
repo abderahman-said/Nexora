@@ -1,4 +1,4 @@
-import { Inter, Cairo } from 'next/font/google';
+import { Inter, Zain } from 'next/font/google';
 import '../globals.css';
 import { ThemeProvider } from '@/context/ThemeContext';
 import SvgSymbols from '@/components/icons/SvgSymbols';
@@ -17,11 +17,12 @@ const inter = Inter({
   preload: true,
 });
 
-const cairo = Cairo({
+const zain = Zain({
   subsets: ['arabic'],
-  variable: '--next-font-cairo',
+  variable: '--next-font-zain',
   display: 'swap',
   preload: true,
+  weight: ['200', '300', '400', '700', '800', '900']
 });
 
 export function generateStaticParams() {
@@ -227,7 +228,7 @@ export default async function LocaleLayout({
           }}
         />
       </head>
-      <body className={`${inter.variable} ${cairo.variable} font-sans bg-[#f8fafc] site-grid-bg text-slate-900 dark:bg-[#090d16] dark:text-slate-100 antialiased`} suppressHydrationWarning>
+      <body className={`${inter.variable} ${zain.variable} font-sans bg-[#f8fafc] site-grid-bg text-slate-900 dark:bg-[#090d16] dark:text-slate-100 antialiased`} suppressHydrationWarning>
         <ThemeProvider>
           <NextIntlClientProvider messages={messages}>
             <SvgSymbols />
