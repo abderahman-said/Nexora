@@ -36,7 +36,7 @@ export default function InteractiveCard({
         "animate-as-card group relative flex flex-col justify-between",
         "bg-white dark:bg-[#0c101d]",
         "border border-slate-200/90 dark:border-slate-800/90 rounded-3xl",
-        "p-3 md:p-8",
+        "p-3 md:p-4",
         stepNumber && "!pt-16 mt-3",
         "shadow-xl shadow-slate-200/40 dark:shadow-none",
         "hover:border-blue-500/60 dark:hover:border-sky-400/60",

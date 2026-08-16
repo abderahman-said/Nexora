@@ -29,7 +29,7 @@ export default function FloatingWhatsApp() {
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
-          className="w-6 h-6 sm:w-[25px] sm:h-[25px] text-blue-600 dark:text-sky-400 drop-shadow-[0_0_6px_rgba(37,99,235,0.4)] transition-transform duration-300 group-hover:scale-110"
+          className="w-6 h-6 sm:w-[25px] sm:h-[25px] text-blue-600 dark:text-sky-400 drop-shadow-[0_0_6px_rgba(37,99,235,0.4)] transition-transform duration-300 group-hover:scale-110 animate-[heartbeat_2.5s_ease-in-out_infinite]"
           viewBox="0 0 24 24"
         >
           <path
@@ -49,7 +49,7 @@ export default function FloatingWhatsApp() {
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
-          className="w-6 h-6 sm:w-[25px] sm:h-[25px] text-[#25D366] drop-shadow-[0_0_6px_rgba(37,211,102,0.4)] transition-transform duration-300 group-hover:scale-110"
+          className="w-6 h-6 sm:w-[25px] sm:h-[25px] text-[#25D366] drop-shadow-[0_0_6px_rgba(37,211,102,0.4)] transition-transform duration-300 group-hover:scale-110 animate-[heartbeat_2.5s_ease-in-out_infinite]"
           viewBox="0 0 32 32"
           fill="currentColor"
         >
