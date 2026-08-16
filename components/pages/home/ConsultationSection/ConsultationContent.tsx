@@ -33,16 +33,10 @@ export default function ConsultationContent() {
       <div className="pt-2">
         <Link
           href={`/${locale}/contact`}
-          className="
-            inline-flex items-center justify-center gap-3 px-4 md:px-8 py-2.5 md:py-4 rounded-xl
-            bg-gradient-to-r from-blue-600 via-sky-500 to-indigo-600 text-white
-            font-bold text-xs sm:text-sm tracking-wider uppercase
-            shadow-lg shadow-blue-500/30 hover:shadow-xl hover:shadow-blue-500/50
-            hover:scale-[1.02] active:scale-95 transition-all duration-300 group
-          "
+          className="inline-flex whitespace-nowrap items-center gap-2 rounded-full bg-gradient-to-r from-blue-600 to-sky-600 px-4 md:px-6 py-2.5 md:py-3 text-xs sm:text-sm lg:text-base font-bold uppercase tracking-wider text-white shadow-md shadow-blue-500/20 transition-all hover:-translate-y-0.5 hover:shadow-lg hover:shadow-blue-500/35 group"
         >
           <span>{t('button_contact')}</span>
-          <ArrowRight className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1 rtl:rotate-180 rtl:group-hover:-translate-x-1" />
+          <ArrowRight className="w-4 h-4 rtl:scale-x-[-1] transition-transform duration-300 group-hover:translate-x-1 rtl:group-hover:-translate-x-1" />
         </Link>
       </div>
     </div>

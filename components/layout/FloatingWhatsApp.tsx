@@ -23,12 +23,12 @@ export default function FloatingWhatsApp() {
     >
       <Link
         href={`tel:${contact.phone.replace(/\s/g, "")}`}
-        className="group relative flex items-center justify-start ps-3.5 sm:ps-6 w-[50px] h-[40px] sm:w-[80px] sm:h-[52px] bg-transparent backdrop-blur-md border border-slate-300/50 dark:border-white/20 text-slate-800 dark:text-white rounded-s-full shadow-lg dark:shadow-2xl hover:bg-white/20 dark:hover:bg-white/10 transition-colors duration-150"
+        className="group relative flex items-center justify-start ps-4 sm:ps-6 w-[62px] h-[48px] sm:w-[80px] sm:h-[52px] bg-transparent backdrop-blur-md border border-slate-300/50 dark:border-white/20 text-slate-800 dark:text-white rounded-s-full shadow-lg dark:shadow-2xl hover:bg-white/20 dark:hover:bg-white/10 transition-colors duration-150"
         aria-label="Call us"
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
-          className="w-5 h-5 sm:w-[25px] sm:h-[25px]"
+          className="w-6 h-6 sm:w-[25px] sm:h-[25px]"
           viewBox="0 0 24 24"
         >
           <path
@@ -42,12 +42,12 @@ export default function FloatingWhatsApp() {
         href={contact.whatsapp}
         target="_blank"
         rel="noopener noreferrer"
-        className="group relative flex items-center justify-start ps-3.5 sm:ps-6 w-[50px] h-[40px] sm:w-[80px] sm:h-[52px] bg-transparent backdrop-blur-md border border-slate-300/50 dark:border-white/20 text-slate-800 dark:text-white rounded-s-full shadow-lg dark:shadow-2xl hover:bg-white/20 dark:hover:bg-white/10 transition-colors duration-150"
+        className="group relative flex items-center justify-start ps-4 sm:ps-6 w-[62px] h-[48px] sm:w-[80px] sm:h-[52px] bg-transparent backdrop-blur-md border border-slate-300/50 dark:border-white/20 text-slate-800 dark:text-white rounded-s-full shadow-lg dark:shadow-2xl hover:bg-white/20 dark:hover:bg-white/10 transition-colors duration-150"
         aria-label="Chat on WhatsApp"
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
-          className="w-5 h-5 sm:w-[25px] sm:h-[25px]"
+          className="w-6 h-6 sm:w-[25px] sm:h-[25px]"
           viewBox="0 0 32 32"
           fill="currentColor"
         >
