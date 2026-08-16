@@ -106,7 +106,7 @@ export default function InteractiveCard({
         </div>
 
         {/* Feature Bullets List */}
-        {features.length > 0 && (
+        {/* {features.length > 0 && (
           <div
             className={cn(
               "relative z-10 flex flex-wrap gap-2 justify-center",
@@ -132,7 +132,7 @@ export default function InteractiveCard({
               </div>
             ))}
           </div>
-        )}
+        )} */}
       </div>
     </Wrapper>
   );
