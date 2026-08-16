@@ -22,7 +22,7 @@ export default function AboutValues() {
                         <span>{t('values.badge')}</span>
                     </div>
 
-                    <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-slate-900 dark:text-white tracking-tight">
+                    <h2 className="text-[25px] sm:text-[31px] lg:text-[43px] font-extrabold text-slate-900 dark:text-white tracking-tight">
                         {t('values.title_main')}{' '}
                         <span className="bg-gradient-to-r from-blue-600 via-sky-400 to-indigo-500 bg-clip-text text-transparent">
                             {t('values.title_highlight')}

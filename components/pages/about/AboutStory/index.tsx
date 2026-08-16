@@ -21,7 +21,7 @@ export default function AboutStory() {
                             <span>{COMPANY_STORY.subtitle}</span>
                         </div>
 
-                        <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-slate-900 dark:text-white tracking-tight leading-[1.18]">
+                        <h2 className="text-[25px] sm:text-[31px] lg:text-[43px] font-extrabold text-slate-900 dark:text-white tracking-tight leading-[1.18]">
                             {COMPANY_STORY.title}
                         </h2>
 

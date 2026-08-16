@@ -1,14 +1,13 @@
 import React from "react";
 import Image from "next/image";
+import { useTranslations } from "next-intl";
 
 export default function AboutVisual() {
-  return (
-    <div
-      className="relative w-full max-w-[560px] mx-auto lg:mx-0"
-    >
-      <div className="absolute -inset-4 bg-[radial-gradient(circle,rgba(37,99,235,0.18)_0%,transparent_70%)] rounded-3xl pointer-events-none" />
+  const t = useTranslations("homeAbout");
 
-      <div className="relative z-10 w-full aspect-[4/3.2] sm:aspect-[4/3] rounded-3xl overflow-hidden border border-slate-200/80 dark:border-slate-800 shadow-2xl shadow-slate-900/10 dark:shadow-blue-950/40 group">
+  return (
+    <div className="relative  z-10 w-full aspect-[4/3.2] sm:aspect-[4/3] rounded-3xl overflow-hidden border border-slate-200/80 dark:border-slate-800 shadow-2xl shadow-slate-900/10 dark:shadow-blue-950/40 group">
+ 
         {/* Team Image */}
         <Image
           src="/about-team.webp"
@@ -19,7 +18,7 @@ export default function AboutVisual() {
           decoding="async"
           sizes="(max-width: 640px) 380px, (max-width: 1024px) 50vw, 560px"
         />
-      </div>
+     
     </div>
   );
 }
