@@ -31,16 +31,6 @@ export default function ServiceCards() {
                     overflow-hidden
                 "
         >
-          {/* Background Texture Image (pre-baked per theme to avoid a live CSS filter repaint cost) */}
-          <div
-            aria-hidden="true"
-            className="absolute rounded-3xl inset-0 bg-[url('/service_bg_light.webp')] bg-cover bg-center bg-no-repeat pointer-events-none dark:hidden"
-          />
-          <div
-            aria-hidden="true"
-            className="hidden absolute rounded-3xl inset-0 bg-[url('/service_bg.webp')] bg-cover bg-center bg-no-repeat pointer-events-none dark:block"
-          />
-
           <BackgroundLines />
           {/* Background Radial Glow */}
           <div className="absolute -top-24 -end-24 w-96 h-96 rounded-full bg-[radial-gradient(circle,rgba(37,99,235,0.25)_0%,transparent_70%)] pointer-events-none" />
@@ -86,7 +76,7 @@ export default function ServiceCards() {
           <GSAPSlider
             items={servicesData}
             renderItem={(item) => (
-              <ServiceCard service={item} className=" h-[279px] md:h-[377px]" />
+              <ServiceCard service={item} className=" h-[338px] md:h-[409px]" />
             )}
             defaultVisibleCount={3}
             mobileVisibleCount={1}

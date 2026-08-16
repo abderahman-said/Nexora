@@ -3,13 +3,14 @@
 import React from 'react';
 import InteractiveCard from '@/components/ui/InteractiveCard';
 import type { ServiceCardProps } from './types';
-import { BarChart3, Cpu, Globe, Palette } from 'lucide-react';
+import { BarChart3, Cpu, Globe, Palette, Smartphone } from 'lucide-react';
 
 const ICON_MAP: Record<string, React.ComponentType<{ className?: string }>> = {
     BarChart3,
     Cpu,
     Globe,
     Palette,
+    Smartphone,
 };
 
 export function ServiceCard({ service , className }: ServiceCardProps) {

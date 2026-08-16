@@ -127,20 +127,37 @@
         "feature_3": "ROI Optimization"
       },
       "software_services": {
-        "title": "Software Services",
-        "badge": "ARCHITECTURE",
-        "description": "End-to-end custom software architecture engineered for high performance, security, and seamless integration.",
-        "feature_1": "Custom Microservices",
-        "feature_2": "Enterprise Security",
-        "feature_3": "Cloud Automation"
+        "title": "Custom Software Development",
+        "badge": "CUSTOM SOFTWARE",
+        "description": "From day one, we share your vision and help turn it into reality through tailored integrated solutions designed for your unique business needs.",
+        "feature_1": "Planning",
+        "feature_2": "Analysis",
+        "feature_3": "Design",
+        "feature_4": "Development",
+        "feature_5": "Testing",
+        "feature_6": "Deployment"
       },
       "web_development": {
         "title": "Web Development",
         "badge": "FULL-STACK",
-        "description": "High-speed, responsive web platforms built with Next.js, modern frameworks, and cloud-native backends.",
-        "feature_1": "Next.js & React",
-        "feature_2": "API Integration",
-        "feature_3": "High Performance"
+        "description": "We transform ideas into smooth, user-friendly experiences for target users, ensuring your digital vision is achieved and boosting your company's growth through custom, cutting-edge technology.",
+        "feature_1": "Research",
+        "feature_2": "Planning",
+        "feature_3": "Design",
+        "feature_4": "Development",
+        "feature_5": "Testing",
+        "feature_6": "Maintenance"
+      },
+      "mobile_development": {
+        "title": "Mobile App Development",
+        "badge": "MOBILE APP",
+        "description": "We craft innovative, user-friendly mobile applications that provide fast and effective access to what customers are looking for, delivering a seamless experience.",
+        "feature_1": "Requirements & Analysis",
+        "feature_2": "Planning",
+        "feature_3": "Design",
+        "feature_4": "Mobile Development",
+        "feature_5": "Testing",
+        "feature_6": "Deployment"
       },
       "ui_ux_design": {
         "title": "UI/UX Design",
