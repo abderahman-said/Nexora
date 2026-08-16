@@ -100,16 +100,16 @@ export default function InteractiveCard({
           <h3 className="text-base md:text-xl font-extrabold text-slate-900 dark:text-white tracking-tight group-hover:text-blue-600 dark:group-hover:text-sky-400 transition-colors duration-300">
             {title}
           </h3>
-          <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-300 leading-relaxed font-normal">
+          <p className="text-[10px] sm:text-sm text-slate-600 dark:text-slate-300 leading-relaxed font-normal">
             {description}
           </p>
         </div>
 
         {/* Feature Bullets List */}
-        {/* {features.length > 0 && (
+        {features.length > 0 && (
           <div
             className={cn(
-              "relative z-10 flex flex-wrap gap-2 justify-center",
+              "relative z-10 flex flex-wrap gap-2 mt-4 justify-center",
               "pt-4 border-t border-slate-100 dark:border-slate-800/80",
               buttonText ? "mb-4" : "mb-0",
             )}
@@ -132,7 +132,7 @@ export default function InteractiveCard({
               </div>
             ))}
           </div>
-        )} */}
+        )}
       </div>
     </Wrapper>
   );

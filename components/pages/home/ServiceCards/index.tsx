@@ -58,7 +58,7 @@ export default function ServiceCards() {
             renderItem={(item) => (
               <ServiceCard
                 service={item}
-                className=" min-h-[251px] md:min-h-[281px]"
+                className=" min-h-[301px] md:min-h-[393px]"
               />
             )}
             defaultVisibleCount={3}
