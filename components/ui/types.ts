@@ -104,6 +104,7 @@ export interface InteractiveCardProps {
   buttonText?: string;
   buttonLink?: string;
   className?: string;
+  variant?: 'default' | 'ghost';
 }
 
 export interface MagnetProps extends HTMLAttributes<HTMLDivElement> {

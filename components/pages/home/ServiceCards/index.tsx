@@ -24,7 +24,7 @@ export default function ServiceCards() {
         {/* Section Header */}
         <SectionHeader
           align="between"
-          className="!mb-6 md:!mb-8"
+          className="!mb-0"
           title={
             <span className="inline-flex items-center gap-3">
               <span className="relative flex h-3.5 w-3.5 shrink-0">
@@ -58,7 +58,7 @@ export default function ServiceCards() {
             renderItem={(item) => (
               <ServiceCard
                 service={item}
-                className=" min-h-[354px] md:min-h-[409px]"
+                className=" min-h-[354px] md:min-h-[380px]"
               />
             )}
             defaultVisibleCount={3}

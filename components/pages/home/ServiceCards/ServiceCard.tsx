@@ -25,6 +25,7 @@ export function ServiceCard({ service , className }: ServiceCardProps) {
             features={service.features}
             buttonLink={service.link}
             className={className}
+            variant="ghost"
         />
     );
 }

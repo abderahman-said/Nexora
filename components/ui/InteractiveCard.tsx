@@ -16,6 +16,7 @@ export default function InteractiveCard({
   buttonText,
   buttonLink,
   className = "",
+  variant = "default",
 }: InteractiveCardProps) {
   const locale = useLocale();
   const Wrapper: React.ElementType = buttonLink ? Link : "div";
@@ -29,24 +30,30 @@ export default function InteractiveCard({
 
   const props = buttonLink ? { href: formattedLink } : {};
 
+  const isGhost = variant === "ghost";
+
   return (
     <Wrapper
       {...props}
       className={cn(
-        "animate-as-card group relative flex flex-col justify-between",
-        "bg-white dark:bg-[#0c101d]",
-        "border border-slate-200/90 dark:border-slate-800/90 rounded-3xl",
+        "animate-as-card group relative flex flex-col justify-between rounded-3xl",
         "p-3 md:p-4",
         stepNumber && "!pt-16 mt-3",
-        "shadow-xl shadow-slate-200/40 dark:shadow-none",
-        "hover:border-blue-500/60 dark:hover:border-sky-400/60",
-        "hover:shadow-2xl hover:shadow-blue-500/20 dark:hover:shadow-blue-500/20",
         "md:hover:-translate-y-1 transition-all duration-150 ease-out",
+        isGhost 
+          ? "bg-transparent border-transparent shadow-none"
+          : cn(
+              "bg-white dark:bg-[#0c101d]",
+              "border border-slate-200/90 dark:border-slate-800/90",
+              "shadow-xl shadow-slate-200/40 dark:shadow-none",
+              "hover:border-blue-500/60 dark:hover:border-sky-400/60",
+              "hover:shadow-2xl hover:shadow-blue-500/20 dark:hover:shadow-blue-500/20"
+            ),
         className,
       )}
     >
       {/* Hover Inner Mesh Gradient Overlay */}
-      <div className="absolute inset-0 bg-gradient-to-b from-blue-500/5 via-sky-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none rounded-3xl" />
+      {!isGhost && <div className="absolute inset-0 bg-gradient-to-b from-blue-500/5 via-sky-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none rounded-3xl" />}
 
       {/* Overlapping Top Number Badge */}
       {stepNumber && (
