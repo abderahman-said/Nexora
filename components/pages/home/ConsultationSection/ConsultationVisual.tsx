@@ -10,12 +10,12 @@ export default function ConsultationVisual() {
     const { contact } = useSiteData();
     const t = useTranslations("homeConsultation");
     return (
-        <div className="lg:col-span-5 relative group">
+        <div className="lg:col-span-4 relative group max-w-sm lg:max-w-none mx-auto w-full">
             {/* Outer Glow frame on hover */}
             <div className="absolute -inset-1 rounded-3xl bg-gradient-to-r from-blue-600 via-sky-400 to-indigo-600 opacity-20 group-hover:opacity-60 blur-lg transition-opacity duration-500 pointer-events-none" />
 
             {/* Image Container */}
-            <div className="relative rounded-2xl sm:rounded-3xl overflow-hidden aspect-[4/3] lg:aspect-[5/6] border border-slate-200 dark:border-slate-800 bg-slate-950 shadow-xl">
+            <div className="relative rounded-2xl sm:rounded-3xl overflow-hidden aspect-[4/3] lg:aspect-[1/1] border border-slate-200 dark:border-slate-800 bg-slate-950 shadow-xl">
                 <Image
                     src="/assets/contact_consultation.webp"
                     alt="Expert Business & Tech Solutions Consultant"
@@ -23,7 +23,7 @@ export default function ConsultationVisual() {
                     height={840}
                     loading="lazy"
                     decoding="async"
-                    sizes="(max-width: 1024px) 100vw, 550px"
+                    sizes="(max-width: 1024px) 100vw, 400px"
                     className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-700 ease-out"
                 />
 

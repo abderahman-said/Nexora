@@ -131,7 +131,7 @@ export default function SectionHeader({
   if (align === "between") {
     return (
       <CornerFrame
-        extraClass={`mb-6 md:mb-8 flex items-center justify-between gap-8 px-0 py-0 md:px-8 md:py-6 max-[900px]:items-center ${className}`}
+        extraClass={`mb-6 md:mb-8 flex items-center justify-between gap-3 px-0 py-0 md:px-8 md:py-6 max-[900px]:items-center ${className}`}
       >
         <div className="max-w-[720px]">
           {CodeTagBadge}
