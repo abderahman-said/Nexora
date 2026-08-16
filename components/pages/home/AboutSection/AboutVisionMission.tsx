@@ -8,9 +8,6 @@ export default function AboutVisionMission() {
     <div className="w-full pt-4">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12">
         <div className="space-y-4">
-          <div className="text-xs font-bold tracking-widest text-blue-600 dark:text-sky-400 uppercase">
-            {t("vision_tag")}
-          </div>
           <h3 className="text-xl font-extrabold text-slate-900 dark:text-white">
             {t("vision_title")}
           </h3>
@@ -19,9 +16,6 @@ export default function AboutVisionMission() {
           </p>
         </div>
         <div className="space-y-4">
-          <div className="text-xs font-bold tracking-widest text-sky-600 dark:text-sky-400 uppercase">
-            {t("mission_tag")}
-          </div>
           <h3 className="text-xl font-extrabold text-slate-900 dark:text-white">
             {t("mission_title")}
           </h3>
