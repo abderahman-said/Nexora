@@ -96,7 +96,7 @@ export default function InteractiveCard({
       {/* Content Body */}
       <div className="flex-1 flex flex-col justify-between">
         {/* Title & Description */}
-        <div className="relative z-10 text-center space-y-2">
+        <div className="relative z-10 text-center space-y-3">
           <h3 className="text-base md:text-xl font-extrabold text-slate-900 dark:text-white tracking-tight group-hover:text-blue-600 dark:group-hover:text-sky-400 transition-colors duration-300">
             {title}
           </h3>
