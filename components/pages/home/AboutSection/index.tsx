@@ -3,7 +3,7 @@
 import React from "react";
 import Link from "next/link";
 import { Layers, ArrowRight } from "lucide-react";
-import AboutVisionMission from "./AboutVisionMission";
+// import AboutVisionMission from "./AboutVisionMission";
 import Container from "@/components/ui/Container";
 import { useLocale, useTranslations } from "next-intl";
 
@@ -68,7 +68,7 @@ const HorizontalWords = () => {
             </p>
 
             {/* ── Vision & Mission (Replacing Tabs) ── */}
-            <AboutVisionMission />
+            {/* <AboutVisionMission /> */}
           </div>
         </Container>
       </section>
