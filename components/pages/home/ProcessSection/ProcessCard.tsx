@@ -13,7 +13,6 @@ export function ProcessCard({ step }: ProcessCardProps) {
       icon={step.icon}
       title={step.title}
       description={step.description}
-      features={step.features}
       className="h-full min-h-[241px] md:min-h-[287px]"
       variant="ghost"
     />
