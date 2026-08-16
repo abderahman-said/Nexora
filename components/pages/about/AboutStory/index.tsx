@@ -11,7 +11,7 @@ export default function AboutStory() {
     return (
         <section
             id="about-story"
-            className="scroll-section relative w-full  bg-slate-100/90 dark:bg-[#090d16] site-grid-bg overflow-hidden transition-colors duration-300"
+            className="scroll-section relative w-full pt-16 sm:pt-20  bg-slate-100/90 dark:bg-[#090d16] site-grid-bg overflow-hidden transition-colors duration-300"
         >
             <Container className="relative z-10">
                 <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
