@@ -98,7 +98,7 @@ export default function ProjectsCoverflowSlider({
       {showPagination && (
         <div
           id={paginationId}
-          className="flex items-center justify-center gap-1 px-1 mt-3 sm:mt-4"
+          className="flex items-center justify-center gap-1 px-1 mt-0"
         />
       )}
 

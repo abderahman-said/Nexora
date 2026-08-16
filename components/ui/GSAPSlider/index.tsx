@@ -140,7 +140,7 @@ export default function GSAPSlider<T extends { id?: string | number }>(
       */
     >
       <div className="w-full overflow-x-clip">
-        <div className="w-full pt-12 pb-10 md:pb-12 px-2 md:px-3 select-none">
+        <div className="w-full pt-8 pb-8 md:pb-12 px-2 md:px-3 select-none">
           <Swiper
             key={`${effectiveVisible}-${useLoop}`}
             modules={[Autoplay, A11y, Pagination]}
@@ -155,7 +155,7 @@ export default function GSAPSlider<T extends { id?: string | number }>(
             slidesPerView={isCenterMode ? "auto" : visibleCount}
             spaceBetween={spaceBetween}
             centeredSlides={useCenteredSlides}
-            loop={useLoop}
+            loop={true}
             allowTouchMove={enableDrag}
             grabCursor={enableDrag}
             speed={600}
@@ -212,7 +212,7 @@ export default function GSAPSlider<T extends { id?: string | number }>(
       {showPaginationContainer && (
         <div
           id={paginationId}
-          className="flex items-center justify-center gap-1 px-1 mt-3 sm:mt-4"
+          className="flex items-center justify-center gap-1 px-1 mt-0"
         />
       )}
 
