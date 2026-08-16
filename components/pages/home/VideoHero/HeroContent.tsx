@@ -17,7 +17,7 @@ export default function HeroContent() {
       </h1>
 
       {/* Paragraph Description */}
-      <p className="text-base sm:text-xl lg:text-2xl text-white/90 dark:text-slate-200 font-medium !leading-[1.8] max-w-3xl mb-6 sm:mb-8">
+      <p className="text-base sm:text-xl lg:text-2xl text-white/90 dark:text-slate-200 font-medium !leading-[1.8] max-w-4xl mb-6 sm:mb-8">
         {t("description")}
       </p>
     </div>
