@@ -30,26 +30,13 @@ const HorizontalWords = () => {
           <div className="pt-8 flex flex-col space-y-6">
             {/* Header Content Row with space-between button */}
             <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
-              <div className="max-w-4xl space-y-4">
-                {/* Section Badge / Status Tag */}
-                <div>
-                  <div className="inline-flex items-center gap-2.5 px-4 py-2 rounded-full bg-blue-50 dark:bg-blue-950/60 border border-blue-200 dark:border-blue-800/60 text-blue-600 dark:text-sky-400 font-bold text-xs tracking-wider uppercase shadow-sm">
-                    <div className="w-5 h-5 rounded-md bg-blue-600 dark:bg-sky-500 flex items-center justify-center text-white">
-                      <Layers className="w-3.5 h-3.5" />
-                    </div>
-                    <span>{t('badge')}</span>
-                  </div>
-                </div>
-
-                {/* Main Section Headline */}
-                <h2 className="text-3xl  md:text-[45px] font-extrabold text-slate-900 dark:text-white tracking-tight leading-[1.6]!">
+             
+                <h2 className="max-w-4xl text-3xl  md:text-[45px] font-extrabold text-slate-900 dark:text-white tracking-tight leading-[1.6]!">
                   {t('title_main')}{" "}
                   <span className="bg-gradient-to-r from-blue-600 via-sky-500 to-indigo-600 bg-clip-text text-transparent">
                     {t('title_highlight')}
                   </span>
                 </h2>
-              </div>
-
               {/* Action Button (Space-Between aligned) */}
               <div className="shrink-0">
                 <Link
@@ -63,7 +50,7 @@ const HorizontalWords = () => {
             </div>
 
             {/* Section Lead Description */}
-            <p className="text-base sm:text-lg text-slate-600 dark:text-slate-300 leading-relaxed font-normal leading-[2]!  ">
+            <p className="text-base sm:text-lg text-slate-600 dark:text-slate-300 leading-relaxed font-normal leading-[2]! md:max-w-[75%] ">
               {t('description')}
             </p>
 
