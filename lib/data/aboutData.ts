@@ -51,6 +51,12 @@ export const getCompanyStory = (t: ReturnType<typeof useTranslations>): CompanyS
     paragraphs: [
         t('story.p1'),
         t('story.p2'),
+        t('story.p3'),
+        t('story.p4'),
+        t('story.p5'),
+        t('story.p6'),
+        t('story.p7'),
+        t('story.p8'),
     ],
     highlights: [
         { title: t('story.highlight1_title'), desc: t('story.highlight1_desc') },

@@ -93,23 +93,7 @@ export default function AboutVisionMission() {
         </div>
       </div>
 
-      <div className="pt-4 border-t border-slate-200 dark:border-slate-800 space-y-3">
-        {COMPANY_STORY.highlights.map((h, idx) => (
-          <div key={idx} className="flex items-start gap-3">
-            <div className="w-5 h-5 rounded-full bg-blue-600/10 text-blue-600 dark:text-sky-400 flex items-center justify-center shrink-0 mt-0.5">
-              <CheckCircle2 className="w-3.5 h-3.5" />
-            </div>
-            <div>
-              <strong className="text-slate-900 dark:text-white text-sm font-bold block">
-                {h.title}
-              </strong>
-              <span className="text-xs text-slate-500 dark:text-slate-400">
-                {h.desc}
-              </span>
-            </div>
-          </div>
-        ))}
-      </div>
+
     </div>
   );
 }

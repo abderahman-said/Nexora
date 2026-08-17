@@ -16,10 +16,6 @@ export default function AboutStory() {
             <Container className="relative z-10">
                 <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
                     <div className="lg:col-span-6 space-y-6">
-                        <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-blue-50 dark:bg-blue-950/80 border border-blue-200/80 dark:border-blue-800/80 text-blue-600 dark:text-sky-400 font-bold text-xs tracking-wider uppercase shadow-sm">
-                            <Layers className="w-3.5 h-3.5" />
-                            <span>{COMPANY_STORY.subtitle}</span>
-                        </div>
 
                         <h2 className="text-[25px] sm:text-[31px] lg:text-[43px] font-extrabold text-slate-900 dark:text-white tracking-tight leading-[1.18]">
                             {COMPANY_STORY.title}
