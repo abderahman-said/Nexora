@@ -255,12 +255,38 @@
     "button_contact": "تواصل معنا",
     "button_whatsapp": "واتساب سريع"
   },
+  "homeBlog": {
+    "badge": "أحدث المقالات",
+    "title_main": "المدونة",
+    "title_highlight": "",
+    "button_view_all": "عرض المزيد",
+    "read_more": "اقرأ المزيد",
+    "items": {
+      "post1": {
+        "title": "تطوير موقع متعدد اللغات يستهدف السعودية ومصر"
+      },
+      "post2": {
+        "title": "شركة برمجة ولا فريلانسر؟ مقارنة بالأرقام: المخاطر، الجودة، إدارة المشروع، والضمان"
+      },
+      "post3": {
+        "title": "اختيار التقنية المناسبة لموقعك: WordPress vs Next.js (متى كل خيار منطقي تجاريًا)"
+      }
+    }
+  },
+  "blog": {
+    "hero": {
+      "prefix": "المدونة",
+      "highlight": "",
+      "breadcrumb": "المدونة"
+    }
+  },
   "nav": {
     "home": "الرئيسية",
     "about": "من نحن",
     "services": "الخدمات",
     "ourWork": "أعمالنا",
     "process": "عملية العمل",
+    "blog": "المدونة",
     "contact": "اتصل بنا"
   },
   "footer": {

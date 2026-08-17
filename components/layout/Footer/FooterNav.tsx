@@ -10,6 +10,7 @@ export function FooterNav() {
     const navItems = [
         { label: t('footer.aboutUs'), href: "about" },
         { label: t('footer.ourServices'), href: "services" },
+        { label: t('nav.blog'), href: "blog" },
         { label: t('footer.getInTouch'), href: "contact" },
     ];
 

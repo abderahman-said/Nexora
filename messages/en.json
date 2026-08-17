@@ -253,12 +253,38 @@
     "button_contact": "Contact Us",
     "button_whatsapp": "QUICK WHATSAPP"
   },
+  "homeBlog": {
+    "badge": "LATEST ARTICLES",
+    "title_main": "Our Blog",
+    "title_highlight": "",
+    "button_view_all": "See More",
+    "read_more": "Read More",
+    "items": {
+      "post1": {
+        "title": "Developing a Multilingual Website Targeting Saudi Arabia and Egypt"
+      },
+      "post2": {
+        "title": "Software Company vs. Freelancer? A Data-Driven Comparison: Risks, Quality, Project Management, and Warranty"
+      },
+      "post3": {
+        "title": "Choosing the Right Tech for Your Website: WordPress vs Next.js (When Each is Commercially Logical)"
+      }
+    }
+  },
+  "blog": {
+    "hero": {
+      "prefix": "Our",
+      "highlight": "Blog",
+      "breadcrumb": "Blog"
+    }
+  },
   "nav": {
     "home": "Home",
     "about": "About Us",
     "services": "Services",
     "ourWork": "Our Work",
     "process": "Process",
+    "blog": "Blog",
     "contact": "Contact Us"
   },
   "footer": {

@@ -6,6 +6,7 @@ import ProcessSection from "@/components/pages/home/ProcessSection";
 import TeamSection from "@/components/pages/home/TeamSection";
 import ConsultationSection from "@/components/pages/home/ConsultationSection";
 import ClientsSection from "@/components/pages/home/ClientsSection";
+import BlogSection from "@/components/pages/home/BlogSection";
 
 import { setRequestLocale } from 'next-intl/server';
 
@@ -25,6 +26,7 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
             <ProcessSection />
             <TeamSection />
             <ClientsSection />
+            <BlogSection />
             <ConsultationSection />
         </main>
     );

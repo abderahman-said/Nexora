@@ -50,7 +50,7 @@ export default function ContactInfo() {
                                         className="
                                             inline-flex items-center gap-2 text-xs font-extrabold uppercase tracking-wider
                                             text-blue-600 dark:text-sky-400 group-hover:text-blue-700 dark:group-hover:text-sky-300
-                                            pt-3 border-t border-slate-200/80 dark:border-slate-800/80 transition-colors
+                                             transition-colors
                                         "
                                     >
                                         <span>{item.actionText}</span>
