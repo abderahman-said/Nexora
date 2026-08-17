@@ -18,6 +18,7 @@ export default function PhoneInputWithCountry({
     required = false,
     value = '',
     error = '',
+    placeholder,
     onChange,
     containerClassName = '',
 }: PhoneInputWithCountryProps) {
@@ -149,6 +150,7 @@ export default function PhoneInputWithCountry({
                         inputRef={inputRef}
                         rawNumber={rawNumber}
                         phoneLength={selectedCountry.phoneLength}
+                        placeholder={placeholder}
                         onChange={handleInputChange}
                     />
                 </div>

@@ -5,6 +5,7 @@ export interface PhoneNumberFieldProps {
     inputRef: RefObject<HTMLInputElement | null>;
     rawNumber: string;
     phoneLength: number;
+    placeholder?: string;
     onChange: (e: ChangeEvent<HTMLInputElement>) => void;
 }
 

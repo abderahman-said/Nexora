@@ -22,10 +22,6 @@ export default function ContactInfo() {
                                 key={item.id}
                                 className="
                                     group relative p-6 rounded-3xl
-                                    bg-slate-50/80 dark:bg-[#0c101d]
-                                    border border-slate-200/80 dark:border-slate-800/80
-                                    hover:border-blue-500/50 dark:hover:border-sky-400/50
-                                    hover:shadow-xl hover:shadow-blue-500/10
                                     transition-all duration-300 flex flex-col justify-between space-y-5
                                 "
                             >

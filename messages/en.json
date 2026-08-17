@@ -348,16 +348,12 @@
         }
     },
     "vision_mission": {
-        "vision_badge": "FORWARD FOCUS",
-        "vision_title": "Our Vision",
-        "vision_desc": "To engineer transformative, resilient digital ecosystems that empower global enterprises to pioneer AI & cloud innovation.",
-        "vision_f1": "Future-Proof Systems",
-        "vision_f2": "AI Integration",
-        "mission_badge": "OUR PURPOSE",
         "mission_title": "Our Mission",
-        "mission_desc": "To deliver high-performance software engineering, combining clean code with scalable systems to drive measurable growth.",
-        "mission_f1": "Enterprise Security",
-        "mission_f2": "Agile Architecture"
+        "mission_desc1": "At <bold>Nexora Solutions</bold>, our mission is to turn ideas into real digital products that combine thoughtful design, strong software engineering, and reliable performance. We develop technological solutions that help companies and business owners build a professional digital presence, optimize their operations, and reach their customers more efficiently.",
+        "mission_desc2": "We believe that successful technology is not just code or design, but an integrated solution built around business and user needs, capable of evolving and growing over time.",
+        "vision_title": "Our Vision",
+        "vision_desc1": "To become a trusted technology partner for companies and businesses seeking growth and digital transformation, and to contribute to building a generation of digital products and platforms that combine innovation, quality, and usability.",
+        "vision_desc2": "We strive to build solutions that go beyond meeting current requirements, serving as a scalable digital foundation that empowers our clients to compete and grow in a fast-changing market."
     }
   },
   "contact": {
@@ -380,14 +376,15 @@
         "badge": "SEND US A MESSAGE",
         "title": "Get In Touch With Us",
         "name_label": "Name",
-        "name_placeholder": "e.g. John",
+        "name_placeholder": "Enter your full name",
         "email_label": "Email Address",
-        "email_placeholder": "john@example.com",
+        "email_placeholder": "name@example.com",
         "phone_label": "Phone Number",
+        "phone_placeholder": "Enter your phone number",
         "subject_label": "Subject",
-        "subject_placeholder": "Project Inquiry / General Question",
+        "subject_placeholder": "e.g. Website development for my company",
         "message_label": "Message",
-        "message_placeholder": "Write your message here...",
+        "message_placeholder": "Write your project details or inquiry here...",
         "btn_sending": "Sending Message...",
         "btn_send": "SEND MESSAGE",
         "search_country": "Search country or code...",

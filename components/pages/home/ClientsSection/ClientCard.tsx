@@ -8,12 +8,7 @@ export function ClientCard({ client }: ClientCardProps) {
         <div
             className="animate-as-card
                 group relative flex flex-col justify-between
-                bg-white dark:bg-[#0c101d]
-                border border-slate-200/90 dark:border-slate-800/90
                 rounded-3xl p-5 pt-8
-                shadow-xl shadow-slate-200/40 dark:shadow-none
-                hover:border-blue-500/60 dark:hover:border-sky-400/60
-                hover:shadow-2xl hover:shadow-blue-500/20 dark:hover:shadow-blue-500/20
                 md:hover:-translate-y-2 md:hover:scale-[1.01]
                 transition-all duration-500 ease-out
                 h-full

@@ -75,6 +75,7 @@ export default function ContactInquiryForm() {
                         <PhoneInputWithCountry
                             label={t('phone_label')}
                             required
+                            placeholder={t.has('phone_placeholder') ? t('phone_placeholder') : undefined}
                             value={formData.phone}
                             error={errors.phone}
                             onChange={handlePhoneChange}

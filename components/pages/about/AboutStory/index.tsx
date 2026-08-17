@@ -14,14 +14,12 @@ export default function AboutStory() {
             className="scroll-section relative w-full pt-16 sm:pt-20  bg-slate-100/90 dark:bg-[#090d16] site-grid-bg overflow-hidden transition-colors duration-300"
         >
             <Container className="relative z-10">
-                <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
-                    <div className="lg:col-span-6 space-y-6">
 
                         <h2 className="text-[25px] sm:text-[31px] lg:text-[43px] font-extrabold text-slate-900 dark:text-white tracking-tight leading-[1.18]">
                             {COMPANY_STORY.title}
                         </h2>
 
-                        <p className="text-slate-700 dark:text-slate-200 font-medium text-base sm:text-lg leading-relaxed">
+                        <p className="leading-[2]! text-slate-700 dark:text-slate-200 font-medium text-base sm:text-lg leading-relaxed pt-6">
                             {COMPANY_STORY.description}
                         </p>
 
@@ -31,14 +29,8 @@ export default function AboutStory() {
                             ))}
                         </div>
 
-                       
-
-                    </div>
- <div className="lg:col-span-6 relative">
                         <AboutVisionMission />
-                    </div>
 
-                </div>
             </Container>
         </section>
     );

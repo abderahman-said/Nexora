@@ -39,6 +39,7 @@ export interface PhoneInputWithCountryProps {
     required?: boolean;
     value?: string;
     error?: string;
+    placeholder?: string;
     onChange?: (e: PhoneInputChangeEvent) => void;
     containerClassName?: string;
 }

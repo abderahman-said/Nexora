@@ -7,6 +7,7 @@ export default function PhoneNumberField({
   inputRef,
   rawNumber,
   phoneLength,
+  placeholder,
   onChange,
 }: PhoneNumberFieldProps) {
   return (
@@ -15,14 +16,14 @@ export default function PhoneNumberField({
         ref={inputRef}
         type="tel"
         inputMode="numeric"
-        placeholder={`${"X".repeat(phoneLength)}`}
+        placeholder={placeholder || `${"X".repeat(phoneLength)}`}
         maxLength={phoneLength}
         value={rawNumber}
         onChange={onChange}
         className="
                     w-full py-3 px-4 bg-transparent 
                     text-xs sm:text-sm font-medium rtl:text-right
-                    focus:outline-none placeholder:text-slate-400 dark:placeholder:text-slate-600
+                    focus:outline-none 
                     text-slate-900 dark:text-white rounded-e-2xl
                 "
       />
