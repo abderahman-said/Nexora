@@ -10,7 +10,7 @@ export default function ConsultationSection() {
     <section
       id="consultation"
       suppressHydrationWarning
-      className="scroll-section relative w-full py-10 md:py-20 site-grid-bg overflow-hidden"
+      className="scroll-section relative w-full py-10 md:py-20 site-grid-bg"
     >
       <Container className="relative z-10">
         {/* ── Main consultation Card Container ── */}
