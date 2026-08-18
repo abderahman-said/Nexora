@@ -19,7 +19,7 @@ export default function InteractiveCard({
   variant = "default",
 }: InteractiveCardProps) {
   const locale = useLocale();
-  const Wrapper: React.ElementType = buttonLink ? Link : "div";
+  const Wrapper: React.ElementType = "div";
 
   let formattedLink = buttonLink;
   if (buttonLink && buttonLink.startsWith("/")) {
@@ -28,7 +28,7 @@ export default function InteractiveCard({
     }
   }
 
-  const props = buttonLink ? { href: formattedLink } : {};
+  const props = {};
 
   const isGhost = variant === "ghost";
 
@@ -36,18 +36,16 @@ export default function InteractiveCard({
     <Wrapper
       {...props}
       className={cn(
-        "animate-as-card group relative flex flex-col justify-between rounded-3xl",
+        "group relative flex flex-col justify-between rounded-3xl",
         "p-3 md:p-4",
         stepNumber && "!pt-16 mt-3",
-        "md:hover:-translate-y-1 transition-all duration-150 ease-out",
+        "transition-all duration-150 ease-out",
         isGhost 
           ? "bg-transparent border-transparent shadow-none"
           : cn(
               "bg-white dark:bg-[#0c101d]",
               "border border-slate-200/90 dark:border-slate-800/90",
-              "shadow-xl shadow-slate-200/40 dark:shadow-none",
-              "hover:border-blue-500/60 dark:hover:border-sky-400/60",
-              "hover:shadow-2xl hover:shadow-blue-500/20 dark:hover:shadow-blue-500/20"
+              "shadow-xl shadow-slate-200/40 dark:shadow-none"
             ),
         className,
       )}
@@ -100,37 +98,20 @@ export default function InteractiveCard({
           <h3 className="text-base md:text-xl font-extrabold text-slate-900 dark:text-white tracking-tight group-hover:text-blue-600 dark:group-hover:text-sky-400 transition-colors duration-300">
             {title}
           </h3>
-          <p className="text-[10px] sm:text-sm text-slate-600 dark:text-slate-300 leading-relaxed font-normal">
+          <p className="text-xs sm:text-[15px] text-slate-600 dark:text-slate-300 leading-relaxed font-normal">
             {description}
           </p>
         </div>
 
-        {/* Feature Bullets List */}
-        {features.length > 0 && (
-          <div
-            className={cn(
-              "relative z-10 flex flex-wrap gap-2 mt-4 justify-center",
-              "pt-4 border-t border-slate-100 dark:border-slate-800/80",
-              buttonText ? "mb-4" : "mb-0",
-            )}
-          >
-            {features.map((feature, fIdx) => (
-              <div
-                key={fIdx}
-                className={cn(
-                  "flex items-center w-fit gap-1 md:gap-2 px-1   py-1 md:px-2 md:py-1.5 rounded-xl",
-                  "bg-slate-50 dark:bg-slate-900/80",
-                  "border border-slate-200/60 dark:border-slate-800/60",
-                  "group-hover:border-blue-500/30 dark:group-hover:border-sky-500/30",
-                  "transition-colors duration-300",
-                )}
-              >
-                <CheckCircle2 className="w-2.5 h-2.5 md:w-3.5 md:h-3.5 text-blue-600 dark:text-sky-400 shrink-0" />
-                <span className="text-[9px] md:text-xs font-semibold text-slate-700 dark:text-slate-300">
-                  {feature}
-                </span>
-              </div>
-            ))}
+        {/* Read More Button */}
+        {formattedLink && (
+          <div className="mt-6 flex justify-center pb-2">
+            <Link
+              href={formattedLink}
+              className="inline-flex whitespace-nowrap items-center gap-2 px-4 md:px-6 py-2.5 md:py-3 text-xs sm:text-sm lg:text-base font-semibold uppercase tracking-wider text-blue-600 dark:text-blue-400 transition-all hover:text-blue-700 dark:hover:text-blue-300 hover:-translate-y-0.5 group"
+            >
+              <span>{buttonText || "اقرأ المزيد"}</span>
+            </Link>
           </div>
         )}
       </div>

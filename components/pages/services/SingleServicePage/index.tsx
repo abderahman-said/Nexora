@@ -59,7 +59,7 @@ export default function SingleServicePage({ service }: SingleServicePageProps) {
                         {service.features.map((feature, index) => (
                             <div
                                 key={index}
-                                className="p-6 rounded-2xl bg-slate-50 dark:bg-slate-900/60 border border-slate-200/80 dark:border-slate-800/80 hover:border-blue-500/50 dark:hover:border-sky-400/50 transition-colors"
+                                className="p-6 rounded-2xl bg-transparent transition-colors"
                             >
                                 <div className="w-12 h-12 rounded-xl bg-blue-500/10 dark:bg-blue-600/30 border border-blue-500/20 dark:border-blue-500/50 flex items-center justify-center text-blue-600 dark:text-sky-400 mb-4">
                                     <span className="text-2xl font-bold">{index + 1}</span>

@@ -7,7 +7,7 @@ export default function VideoHero() {
         <section
             id="hero"
             className="
-                relative min-h-[90dvh] md:min-h-[100dvh] flex flex-col items-center justify-center
+                relative min-h-[90svh] md:min-h-[100svh] flex flex-col items-center justify-center
                 overflow-hidden bg-[#f8fafc] dark:bg-[#090d16]
                  pt-[96px] pb-14 md:pb-20
                  md:pt-24

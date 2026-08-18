@@ -232,7 +232,7 @@ export default async function LocaleLayout({
         <ThemeProvider>
           <NextIntlClientProvider messages={messages}>
             <SvgSymbols />
-            <div className="flex min-h-[100dvh] flex-col overflow-x-clip">
+            <div className="flex min-h-[100svh] flex-col overflow-x-clip">
               <Navbar />
               {children}
               <Footer />
