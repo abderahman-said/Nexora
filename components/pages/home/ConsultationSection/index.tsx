@@ -16,8 +16,7 @@ export default function ConsultationSection() {
         {/* ── Main consultation Card Container ── */}
         <div
           className="animate-as-card
-                    relative rounded-3xl lg:rounded-[2.5rem]
-                    overflow-hidden
+                    relative  
                 "
         >
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
