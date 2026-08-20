@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { CheckCircle2 } from "lucide-react";
+import { CheckCircle2, ArrowRight } from "lucide-react";
 import Link from "next/link";
 import { useLocale } from "next-intl";
 import type { InteractiveCardProps } from "./types";
@@ -111,6 +111,7 @@ export default function InteractiveCard({
               className="inline-flex whitespace-nowrap items-center gap-2 px-4 md:px-6 py-2.5 md:py-3 text-xs sm:text-sm lg:text-base font-semibold uppercase tracking-wider text-slate-500 hover:text-blue-600 dark:text-slate-400 dark:hover:text-blue-400 transition-all hover:-translate-y-0.5 group"
             >
               <span>{buttonText || "اقرأ المزيد"}</span>
+              <ArrowRight className="w-4 h-4 rtl:scale-x-[-1] transition-transform duration-300 group-hover:translate-x-1 rtl:group-hover:-translate-x-1" />
             </Link>
           </div>
         )}
