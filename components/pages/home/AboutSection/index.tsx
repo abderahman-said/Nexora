@@ -35,7 +35,7 @@ const HorizontalWords = () => {
               </p>
               <Link
                 href={`/${locale}/about`}
-                className=" w-fit inline-flex whitespace-nowrap items-center gap-2  text-xs sm:text-sm lg:text-base font-semibold uppercase tracking-wider text-blue-600 dark:text-blue-400 transition-all hover:text-blue-700 dark:hover:text-blue-300 hover:-translate-y-0.5 group"
+                className=" w-fit inline-flex whitespace-nowrap items-center gap-2  text-xs sm:text-sm lg:text-base font-semibold uppercase tracking-wider text-slate-500 hover:text-blue-600 dark:text-slate-400 dark:hover:text-blue-400 transition-all hover:-translate-y-0.5 group"
               >
                 <span>{t("button_story")}</span>
                 <ArrowRight className="w-4 h-4 rtl:scale-x-[-1] transition-transform duration-300 group-hover:translate-x-1 rtl:group-hover:-translate-x-1" />
